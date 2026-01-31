@@ -1,6 +1,6 @@
 import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/apiError.js";
-import { getContactTagIds, resolveAnalyticAccountId } from "../services/autoAnalyticService.js";
+import { getContactTagIds, resolveAnalyticAccountId, } from "../services/autoAnalyticService.js";
 import { calculatePaymentStatus } from "../services/paymentService.js";
 import { formatBadgeLabel, formatCurrency, formatDate, mapDocStatusToBadge, } from "../utils/formatters.js";
 import { assertDocStatusTransition } from "../utils/workflow.js";
@@ -27,6 +27,7 @@ export const createVendorBill = async (data) => {
             if (line.productId) {
                 const product = await tx.product.findUnique({
                     where: { id: line.productId },
+                    select: { categoryId: true },
                 });
                 categoryId = product?.categoryId ?? null;
             }
@@ -40,6 +41,9 @@ export const createVendorBill = async (data) => {
                     contactId: data.vendorId,
                     contactTagIds,
                 });
+            const analyticAccountId = line.analyticAccountId ?? resolvedAnalytic?.analyticAccountId ?? null;
+            const autoAnalyticModelId = resolvedAnalytic?.modelId ?? null;
+            const autoAnalyticRuleId = resolvedAnalytic?.ruleId ?? null;
             const taxRate = line.taxRate ?? 0;
             const lineTotal = line.qty * line.unitPrice * (1 + taxRate / 100);
             totalAmount += lineTotal;
@@ -47,9 +51,9 @@ export const createVendorBill = async (data) => {
                 data: {
                     vendorBillId: bill.id,
                     productId: line.productId ?? null,
-                    analyticAccountId: line.analyticAccountId ?? resolvedAnalytic?.analyticAccountId ?? null,
-                    autoAnalyticModelId: resolvedAnalytic?.modelId ?? null,
-                    autoAnalyticRuleId: resolvedAnalytic?.ruleId ?? null,
+                    analyticAccountId,
+                    autoAnalyticModelId,
+                    autoAnalyticRuleId,
                     matchedFieldsCount: resolvedAnalytic?.matchedFieldsCount ?? null,
                     glAccountId: line.glAccountId ?? null,
                     description: line.description ?? null,
@@ -67,7 +71,7 @@ export const createVendorBill = async (data) => {
                 paymentState: calculatePaymentStatus(0, totalAmount),
             },
         });
-    });
+    }, { timeout: 15000 });
 };
 export const createVendorBillFromPO = async (poId, billNo, billDate) => {
     return prisma.$transaction(async (tx) => {

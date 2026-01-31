@@ -1,6 +1,9 @@
 import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/apiError.js";
-import { getContactTagIds, resolveAnalyticAccountId } from "../services/autoAnalyticService.js";
+import {
+  getContactTagIds,
+  resolveAnalyticAccountId,
+} from "../services/autoAnalyticService.js";
 import { calculatePaymentStatus } from "../services/paymentService.js";
 import {
   formatBadgeLabel,
@@ -48,7 +51,11 @@ export const createInvoice = async (data: {
       });
 
       const productIds = Array.from(
-        new Set(data.lines.map((line) => line.productId).filter(Boolean)) as string[],
+        new Set(
+          data.lines
+            .map((line) => line.productId)
+            .filter((id): id is string => Boolean(id)),
+        ),
       );
       const products = productIds.length
         ? await tx.product.findMany({
@@ -56,12 +63,16 @@ export const createInvoice = async (data: {
             select: { id: true, categoryId: true },
           })
         : [];
-      const productMap = new Map(products.map((product) => [product.id, product]));
+      const productMap = new Map(
+        products.map((product) => [product.id, product]),
+      );
 
       let totalAmount = 0;
       const linePayloads = await Promise.all(
         data.lines.map(async (line) => {
-          const product = line.productId ? productMap.get(line.productId) : null;
+          const product = line.productId
+            ? productMap.get(line.productId)
+            : null;
           if (line.productId && !product) {
             throw new ApiError(400, "Invalid product");
           }
@@ -83,7 +94,10 @@ export const createInvoice = async (data: {
           return {
             customerInvoiceId: invoice.id,
             productId: line.productId ?? null,
-            analyticAccountId: line.analyticAccountId ?? resolvedAnalytic?.analyticAccountId ?? null,
+            analyticAccountId:
+              line.analyticAccountId ??
+              resolvedAnalytic?.analyticAccountId ??
+              null,
             autoAnalyticModelId: resolvedAnalytic?.modelId ?? null,
             autoAnalyticRuleId: resolvedAnalytic?.ruleId ?? null,
             matchedFieldsCount: resolvedAnalytic?.matchedFieldsCount ?? null,
@@ -234,7 +248,10 @@ export const updateInvoice = async (
     if (data.status) {
       assertDocStatusTransition(current.status, data.status as any);
     }
-    const { totalAmount, paidAmount, paymentState, ...rest } = data as Record<string, unknown>;
+    const { totalAmount, paidAmount, paymentState, ...rest } = data as Record<
+      string,
+      unknown
+    >;
     return await prisma.customerInvoice.update({ where: { id }, data: rest });
   } catch (error) {
     throw new ApiError(404, "Invoice not found", error);
@@ -267,7 +284,10 @@ export const getInvoicePdf = async (id: string) => {
     };
   });
 
-  const subtotal = lines.reduce((sum, line) => sum + line.qty * line.unitPrice, 0);
+  const subtotal = lines.reduce(
+    (sum, line) => sum + line.qty * line.unitPrice,
+    0,
+  );
   const grandTotal = lines.reduce((sum, line) => sum + line.lineTotal, 0);
   const taxTotal = grandTotal - subtotal;
 
@@ -294,5 +314,94 @@ export const getInvoicePdf = async (id: string) => {
   return {
     buffer,
     filename: `${invoice.invoiceNo}.pdf`,
+  };
+};
+
+export const resolvePurchaseOrderCostCenter = async (data: {
+  companyId: string;
+  vendorId: string;
+  productId: string;
+}) => {
+  const contactTagIds = await getContactTagIds(data.vendorId);
+  const product = await prisma.product.findUnique({
+    where: { id: data.productId },
+    select: { categoryId: true, name: true },
+  });
+
+  if (!product) {
+    throw new ApiError(404, "Product not found");
+  }
+
+  const resolved = await resolveAnalyticAccountId({
+    companyId: data.companyId,
+    docType: "purchase_order",
+    productId: data.productId,
+    categoryId: product.categoryId,
+    contactId: data.vendorId,
+    contactTagIds,
+  });
+
+  let analyticAccountId = resolved?.analyticAccountId;
+  let mode = resolved ? "rule" : "fallback";
+
+  if (!analyticAccountId) {
+    const operationsAccount = await prisma.analyticAccount.findFirst({
+      where: {
+        companyId: data.companyId,
+        name: "Operations",
+        isActive: true,
+      },
+    });
+
+    if (operationsAccount) {
+      analyticAccountId = operationsAccount.id;
+      mode = "fallback";
+    } else {
+      const anyAccount = await prisma.analyticAccount.findFirst({
+        where: {
+          companyId: data.companyId,
+          isActive: true,
+        },
+      });
+
+      if (anyAccount) {
+        analyticAccountId = anyAccount.id;
+        mode = "fallback";
+      } else {
+        const newAccount = await prisma.analyticAccount.create({
+          data: {
+            companyId: data.companyId,
+            name: "Operations",
+            code: "OPS-001",
+            isActive: true,
+          },
+        });
+        analyticAccountId = newAccount.id;
+        mode = "created";
+      }
+    }
+  }
+
+  const analyticAccount = await prisma.analyticAccount.findUnique({
+    where: { id: analyticAccountId },
+    select: { id: true, name: true },
+  });
+
+  console.log("Auto cost center resolved:", {
+    analyticAccountId,
+    analyticAccountName: analyticAccount?.name,
+    modelId: resolved?.modelId,
+    ruleId: resolved?.ruleId,
+    matchedFieldsCount: resolved?.matchedFieldsCount,
+    mode,
+  });
+
+  return {
+    analyticAccountId,
+    analyticAccountName: analyticAccount?.name,
+    modelId: resolved?.modelId,
+    ruleId: resolved?.ruleId,
+    matchedFieldsCount: resolved?.matchedFieldsCount,
+    mode,
   };
 };

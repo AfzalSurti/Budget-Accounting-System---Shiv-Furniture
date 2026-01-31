@@ -146,4 +146,16 @@ export declare const getInvoicePdf: (id: string) => Promise<{
     buffer: Buffer<ArrayBufferLike>;
     filename: string;
 }>;
+export declare const resolvePurchaseOrderCostCenter: (data: {
+    companyId: string;
+    vendorId: string;
+    productId: string;
+}) => Promise<{
+    analyticAccountId: string;
+    analyticAccountName: string | undefined;
+    modelId: string | undefined;
+    ruleId: string | undefined;
+    matchedFieldsCount: number | undefined;
+    mode: string;
+}>;
 //# sourceMappingURL=invoiceController.d.ts.map
