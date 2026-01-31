@@ -2,6 +2,14 @@ import { prisma } from "../config/prisma.js";
 import { Prisma } from "../generated/prisma/client.js";
 import { ApiError } from "../utils/apiError.js";
 export const createContact = async (data) => {
+    await prisma.company.upsert({
+        where: { id: data.companyId },
+        update: {},
+        create: {
+            id: data.companyId,
+            name: "Shiv Furniture",
+        },
+    });
     const createData = {
         company: { connect: { id: data.companyId } },
         contactType: data.contactType,

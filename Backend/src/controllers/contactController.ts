@@ -12,6 +12,15 @@ export const createContact = async (data: {
   billingAddress?: Prisma.InputJsonValue | null;
   shippingAddress?: Prisma.InputJsonValue | null;
 }) => {
+  await prisma.company.upsert({
+    where: { id: data.companyId },
+    update: {},
+    create: {
+      id: data.companyId,
+      name: "Shiv Furniture",
+    },
+  });
+
   const createData: Prisma.ContactCreateInput = {
     company: { connect: { id: data.companyId } },
     contactType: data.contactType,
