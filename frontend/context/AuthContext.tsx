@@ -2,7 +2,8 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User, AuthState, UserRole } from '@/lib/types/user';
-import { API_V1, getStoredToken, setStoredToken } from '@/config';
+import { API_V1, getStoredToken, setStoredToken, getStoredUser, setStoredUser, clearAuth } from '@/config';
+import { toast } from 'sonner';
 
 interface AuthContextType extends AuthState {
   login: (identifier: string, password: string) => Promise<User>;
@@ -31,25 +32,36 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Check for existing session on mount
     const checkAuth = async () => {
       try {
-        const storedUser = localStorage.getItem('user');
+        const storedUser = getStoredUser();
         const token = getStoredToken();
-        if (storedUser) {
-          setUser(JSON.parse(storedUser));
-        }
-        if (token) {
-          const res = await fetch(`${API_V1}/auth/me`, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          if (res.ok) {
-            const payload = await res.json();
-            if (payload?.data) {
-              setUser(payload.data);
-              localStorage.setItem('user', JSON.stringify(payload.data));
+        
+        if (storedUser && token) {
+          setUser(storedUser);
+          
+          // Verify token is still valid
+          try {
+            const res = await fetch(`${API_V1}/auth/me`, {
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            if (res.ok) {
+              const payload = await res.json();
+              if (payload?.data) {
+                setUser(payload.data);
+                setStoredUser(payload.data);
+              }
+            } else {
+              // Token is invalid, clear auth
+              clearAuth();
+              setUser(null);
             }
+          } catch (error) {
+            console.error('Token validation failed:', error);
+            // Keep the cached user data, token might be temporarily unreachable
           }
         }
       } catch (error) {
         console.error('Auth check failed:', error);
+        clearAuth();
       } finally {
         setIsLoading(false);
       }
@@ -71,15 +83,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const details = Array.isArray(error?.details)
           ? error.details.map((d: { message?: string }) => d.message).filter(Boolean).join(", ")
           : "";
-        throw new Error(details || error?.message || "Login failed");
+        const message = details || error?.message || "Login failed";
+        toast.error(message);
+        throw new Error(message);
       }
       const payload = await res.json();
       const user = payload?.data?.user as User;
       const token = payload?.data?.token as string;
-      if (token) setStoredToken(token);
-      setUser(user);
-      localStorage.setItem('user', JSON.stringify(user));
-      return user;
+      
+      if (token) {
+        setStoredToken(token);
+        setStoredUser(user);
+        setUser(user);
+        toast.success('Login successful!');
+        return user;
+      }
+      throw new Error('No token received');
     } catch (error) {
       console.error('Login failed:', error);
       throw error;
@@ -101,15 +120,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const details = Array.isArray(error?.details)
           ? error.details.map((d: { message?: string }) => d.message).filter(Boolean).join(", ")
           : "";
-        throw new Error(details || error?.message || "Signup failed");
+        const message = details || error?.message || "Signup failed";
+        toast.error(message);
+        throw new Error(message);
       }
       const payload = await res.json();
       const user = payload?.data?.user as User;
       const token = payload?.data?.token as string;
-      if (token) setStoredToken(token);
-      setUser(user);
-      localStorage.setItem('user', JSON.stringify(user));
-      return user;
+      
+      if (token) {
+        setStoredToken(token);
+        setStoredUser(user);
+        setUser(user);
+        toast.success('Account created successfully!');
+        return user;
+      }
+      throw new Error('No token received');
     } catch (error) {
       console.error('Signup failed:', error);
       throw error;
@@ -120,8 +146,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('user');
-    setStoredToken(null);
+    clearAuth();
+    toast.success('Logged out successfully');
     window.location.href = '/auth/login';
   };
 
