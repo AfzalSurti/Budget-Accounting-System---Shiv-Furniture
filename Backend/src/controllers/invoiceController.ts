@@ -3,6 +3,7 @@ import { ApiError } from "../utils/apiError.js";
 import { resolveAnalyticAccountId } from "../services/autoAnalyticService.js";
 import { calculatePaymentStatus } from "../services/paymentService.js";
 import {
+  formatBadgeLabel,
   formatCurrency,
   formatDate,
   mapDocStatusToBadge,
@@ -175,9 +176,12 @@ export const listInvoicesTable = async (companyId: string) => {
     recordId: invoice.id,
     customer: invoice.customer.displayName,
     amount: formatCurrency(Number(invoice.totalAmount), invoice.currency),
-    dueDate: formatDate(invoice.dueDate),
-    issueDate: formatDate(invoice.invoiceDate),
+    dueDate: formatDate(invoice.dueDate) ?? "",
+    issueDate: formatDate(invoice.invoiceDate) ?? "",
     status: mapDocStatusToBadge(invoice.status, invoice.paymentState),
+    statusLabel: formatBadgeLabel(
+      mapDocStatusToBadge(invoice.status, invoice.paymentState),
+    ),
   }));
 };
 

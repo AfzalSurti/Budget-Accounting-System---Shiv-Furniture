@@ -308,6 +308,8 @@ model Budget {
   totalBudgeted  Decimal      @default(0) @map("total_budgeted") @db.Decimal(18, 2)
   totalActual    Decimal      @default(0) @map("total_actual") @db.Decimal(18, 2)
   totalRemaining Decimal      @default(0) @map("total_remaining") @db.Decimal(18, 2)
+  totalForecast  Decimal      @default(0) @map("total_forecast") @db.Decimal(18, 2)
+  utilizationPct Decimal      @default(0) @map("utilization_pct") @db.Decimal(6, 2)
   createdBy      String?      @map("created_by") @db.Uuid
   createdAt      DateTime     @default(now()) @map("created_at")
   approvedAt     DateTime?    @map("approved_at")

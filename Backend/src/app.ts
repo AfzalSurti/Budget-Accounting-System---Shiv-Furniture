@@ -20,12 +20,14 @@ import { swaggerUi, swaggerSpec } from "./docs/swagger.js";
 export const app = express();
 
 app.use(helmet());
+const defaultOrigins = ["http://localhost:3000", "http://127.0.0.1:3000"];
+const configuredOrigins = env.CORS_ORIGIN.split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 const allowedOrigins =
   env.CORS_ORIGIN === "*"
     ? true
-    : env.CORS_ORIGIN.split(",")
-        .map((origin) => origin.trim())
-        .filter(Boolean);
+    : Array.from(new Set([...defaultOrigins, ...configuredOrigins]));
 
 app.use(
   cors({

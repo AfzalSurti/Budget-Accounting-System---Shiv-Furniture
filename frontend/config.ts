@@ -11,6 +11,9 @@ const normalizedBase = API_BASE_URL.endsWith("/api/v1")
 
 export const API_V1 = `${normalizedBase}/api/v1`;
 
+export const DEFAULT_COMPANY_ID =
+  process.env.NEXT_PUBLIC_COMPANY_ID || "00000000-0000-0000-0000-000000000001";
+
 export const getStoredToken = () => {
   if (typeof window === "undefined") return null;
   return localStorage.getItem("token");

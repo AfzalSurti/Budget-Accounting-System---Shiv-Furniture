@@ -3,36 +3,47 @@
 // Wrapped by PortalLayout; no AppLayout to avoid duplicate nav
 import { DataTable } from "@/components/ui/data-table";
 import { StatusBadge } from "@/components/ui/status-badge";
+import { apiGet } from "@/lib/api";
 import { Download, Eye } from "lucide-react";
+import { useEffect, useState } from "react";
 
-const vendorInvoicesData = [
-  {
-    id: "VB-2026-001",
-    vendor: "Office Supplies Ltd.",
-    amount: "₹3,250.00",
-    dueDate: "2026-02-15",
-    status: "pending" as const,
-    issueDate: "2026-01-28",
-  },
-  {
-    id: "VB-2026-002",
-    vendor: "Equipment Rentals Co.",
-    amount: "₹5,500.00",
-    dueDate: "2026-02-10",
-    status: "completed" as const,
-    issueDate: "2026-01-27",
-  },
-  {
-    id: "VB-2026-003",
-    vendor: "Utility Services Inc.",
-    amount: "₹8,200.00",
-    dueDate: "2026-02-05",
-    status: "pending" as const,
-    issueDate: "2026-01-25",
-  },
-];
+type StatusType =
+  | "active"
+  | "inactive"
+  | "pending"
+  | "completed"
+  | "failed"
+  | "warning";
+
+interface PortalBillRow {
+  id: string;
+  recordId?: string;
+  vendor: string;
+  amount: string;
+  dueDate: string;
+  status: StatusType;
+  statusLabel?: string;
+  issueDate: string;
+}
 
 export default function PortalBillsPage() {
+  const [vendorInvoicesData, setVendorInvoicesData] = useState<PortalBillRow[]>(
+    [],
+  );
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const data = await apiGet<PortalBillRow[]>("/portal/bills?view=table");
+        setVendorInvoicesData(data ?? []);
+      } catch (error) {
+        console.error("Failed to load portal bills:", error);
+      }
+    };
+
+    load();
+  }, []);
+
   const columns = [
     {
       key: "issueDate" as const,
@@ -61,7 +72,9 @@ export default function PortalBillsPage() {
     {
       key: "status" as const,
       label: "Status",
-      render: (value: string) => <StatusBadge status={value as any} label={value} />,
+      render: (value: string, row: PortalBillRow) => (
+        <StatusBadge status={value as any} label={row.statusLabel ?? value} />
+      ),
     },
   ];
 
@@ -69,7 +82,9 @@ export default function PortalBillsPage() {
     <div>
       <div className="mb-8">
         <h1 className="section-heading mb-2">My Bills (Vendor Invoices)</h1>
-        <p className="text-slate-600 dark:text-slate-400">Track and pay your vendor bills</p>
+        <p className="text-slate-600 dark:text-slate-400">
+          Track and pay your vendor bills
+        </p>
       </div>
 
       <DataTable columns={columns} data={vendorInvoicesData} />

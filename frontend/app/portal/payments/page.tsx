@@ -3,35 +3,46 @@
 // Wrapped by PortalLayout; no AppLayout to avoid duplicate nav
 import { DataTable } from "@/components/ui/data-table";
 import { StatusBadge } from "@/components/ui/status-badge";
+import { apiGet } from "@/lib/api";
+import { useEffect, useState } from "react";
 
-const paymentsData = [
-  {
-    id: "PAY-2026-001",
-    description: "Invoice INV-PORTAL-0141 Payment",
-    amount: "₹8,750.00",
-    date: "2026-01-27",
-    method: "Bank Transfer",
-    status: "completed" as const,
-  },
-  {
-    id: "PAY-2026-002",
-    description: "Vendor Payment - ABC Corp",
-    amount: "₹5,500.00",
-    date: "2026-01-26",
-    method: "Credit Card",
-    status: "completed" as const,
-  },
-  {
-    id: "PAY-2026-003",
-    description: "Invoice INV-PORTAL-0140 Payment",
-    amount: "₹15,200.00",
-    date: "2026-01-25",
-    method: "ACH",
-    status: "pending" as const,
-  },
-];
+type StatusType =
+  | "active"
+  | "inactive"
+  | "pending"
+  | "completed"
+  | "failed"
+  | "warning";
+
+interface PortalPaymentRow {
+  id: string;
+  recordId?: string;
+  description: string;
+  amount: string;
+  date: string;
+  method: string;
+  status: StatusType;
+  statusLabel?: string;
+}
 
 export default function PortalPaymentsPage() {
+  const [paymentsData, setPaymentsData] = useState<PortalPaymentRow[]>([]);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const data = await apiGet<PortalPaymentRow[]>(
+          "/portal/payments?view=table",
+        );
+        setPaymentsData(data ?? []);
+      } catch (error) {
+        console.error("Failed to load portal payments:", error);
+      }
+    };
+
+    load();
+  }, []);
+
   const columns = [
     {
       key: "date" as const,
@@ -58,7 +69,9 @@ export default function PortalPaymentsPage() {
     {
       key: "status" as const,
       label: "Status",
-      render: (value: string) => <StatusBadge status={value as any} label={value} />,
+      render: (value: string, row: PortalPaymentRow) => (
+        <StatusBadge status={value as any} label={row.statusLabel ?? value} />
+      ),
     },
   ];
 
@@ -66,7 +79,9 @@ export default function PortalPaymentsPage() {
     <div>
       <div className="mb-8">
         <h1 className="section-heading mb-2">Payment History</h1>
-        <p className="text-slate-600 dark:text-slate-400">View all your payments</p>
+        <p className="text-slate-600 dark:text-slate-400">
+          View all your payments
+        </p>
       </div>
 
       <DataTable columns={columns} data={paymentsData} />

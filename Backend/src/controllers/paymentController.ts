@@ -5,6 +5,7 @@ import {
   applyPaymentToInvoice,
 } from "../services/paymentService.js";
 import {
+  formatBadgeLabel,
   formatCurrency,
   formatDate,
   formatPaymentMethod,
@@ -136,9 +137,10 @@ export const listPaymentsTable = async (companyId: string) => {
       recordId: payment.id,
       description,
       amount: formatCurrency(Number(payment.amount)),
-      date: formatDate(payment.paymentDate),
+      date: formatDate(payment.paymentDate) ?? "",
       method: formatPaymentMethod(payment.method),
       status: mapPaymentStatusToBadge(payment.status),
+      statusLabel: formatBadgeLabel(mapPaymentStatusToBadge(payment.status)),
     };
   });
 };

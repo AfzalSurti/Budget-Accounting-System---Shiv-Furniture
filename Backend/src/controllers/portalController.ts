@@ -2,6 +2,7 @@ import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/apiError.js";
 import { createPayment } from "./paymentController.js";
 import {
+  formatBadgeLabel,
   formatCurrency,
   formatDate,
   formatPaymentMethod,
@@ -38,9 +39,12 @@ export const listPortalInvoicesTable = async (contactId: string) => {
     id: invoice.invoiceNo,
     recordId: invoice.id,
     amount: formatCurrency(Number(invoice.totalAmount), invoice.currency),
-    dueDate: formatDate(invoice.dueDate),
-    issueDate: formatDate(invoice.invoiceDate),
+    dueDate: formatDate(invoice.dueDate) ?? "",
+    issueDate: formatDate(invoice.invoiceDate) ?? "",
     status: mapDocStatusToBadge(invoice.status, invoice.paymentState),
+    statusLabel: formatBadgeLabel(
+      mapDocStatusToBadge(invoice.status, invoice.paymentState),
+    ),
   }));
 };
 
@@ -74,9 +78,12 @@ export const listPortalBillsTable = async (contactId: string) => {
     recordId: bill.id,
     vendor: bill.vendor.displayName,
     amount: formatCurrency(Number(bill.totalAmount), bill.currency),
-    dueDate: formatDate(bill.dueDate),
-    issueDate: formatDate(bill.billDate),
+    dueDate: formatDate(bill.dueDate) ?? "",
+    issueDate: formatDate(bill.billDate) ?? "",
     status: mapDocStatusToBadge(bill.status, bill.paymentState),
+    statusLabel: formatBadgeLabel(
+      mapDocStatusToBadge(bill.status, bill.paymentState),
+    ),
   }));
 };
 
@@ -114,9 +121,10 @@ export const listPortalSalesOrdersTable = async (contactId: string) => {
       recordId: order.id,
       customer: order.customer.displayName,
       amount: formatCurrency(totalAmount, order.currency),
-      issueDate: formatDate(order.orderDate),
-      deliveryDate: formatDate(order.deliveryDate),
+      issueDate: formatDate(order.orderDate) ?? "",
+      deliveryDate: formatDate(order.deliveryDate) ?? "",
       status: mapOrderStatusToBadge(order.status),
+      statusLabel: formatBadgeLabel(mapOrderStatusToBadge(order.status)),
     };
   });
 };
@@ -155,9 +163,10 @@ export const listPortalPurchaseOrdersTable = async (contactId: string) => {
       recordId: order.id,
       vendor: order.vendor.displayName,
       amount: formatCurrency(totalAmount, order.currency),
-      issueDate: formatDate(order.orderDate),
-      deliveryDate: formatDate(order.deliveryDate),
+      issueDate: formatDate(order.orderDate) ?? "",
+      deliveryDate: formatDate(order.deliveryDate) ?? "",
       status: mapOrderStatusToBadge(order.status),
+      statusLabel: formatBadgeLabel(mapOrderStatusToBadge(order.status)),
     };
   });
 };
@@ -198,9 +207,10 @@ export const listPortalPaymentsTable = async (contactId: string) => {
       recordId: payment.id,
       description,
       amount: formatCurrency(Number(payment.amount)),
-      date: formatDate(payment.paymentDate),
+      date: formatDate(payment.paymentDate) ?? "",
       method: formatPaymentMethod(payment.method),
       status: mapPaymentStatusToBadge(payment.status),
+      statusLabel: formatBadgeLabel(mapPaymentStatusToBadge(payment.status)),
     };
   });
 };

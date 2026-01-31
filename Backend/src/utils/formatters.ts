@@ -46,6 +46,13 @@ export const mapPaymentStatusToBadge = (
   return "pending" as const;
 };
 
+export const formatBadgeLabel = (value: string) => {
+  if (!value) return "";
+  return value
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (match) => match.toUpperCase());
+};
+
 export const formatPaymentMethod = (
   method: "cash" | "bank" | "upi" | "card" | "online" | "other",
 ) => {

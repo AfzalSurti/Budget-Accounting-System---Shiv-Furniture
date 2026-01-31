@@ -3,36 +3,48 @@
 import { AppLayout } from "@/components/layout/app-layout";
 import { DataTable } from "@/components/ui/data-table";
 import { StatusBadge } from "@/components/ui/status-badge";
+import { DEFAULT_COMPANY_ID } from "@/config";
+import { apiGet } from "@/lib/api";
 import { Plus } from "lucide-react";
+import { useEffect, useState } from "react";
 
-const salesOrdersData = [
-  {
-    id: "SO-2026-001",
-    customer: "ABC Manufacturing Co.",
-    date: "2026-01-28",
-    amount: "₹35,600.00",
-    status: "active" as const,
-    deliveryDate: "2026-02-10",
-  },
-  {
-    id: "SO-2026-002",
-    customer: "Global Trading LLC",
-    date: "2026-01-25",
-    amount: "₹22,400.00",
-    status: "completed" as const,
-    deliveryDate: "2026-01-28",
-  },
-  {
-    id: "SO-2026-003",
-    customer: "Premium Retail Group",
-    date: "2026-01-20",
-    amount: "₹48,900.00",
-    status: "active" as const,
-    deliveryDate: "2026-02-15",
-  },
-];
+type StatusType =
+  | "active"
+  | "inactive"
+  | "pending"
+  | "completed"
+  | "failed"
+  | "warning";
+
+interface SalesOrderRow {
+  id: string;
+  recordId?: string;
+  customer: string;
+  date: string;
+  amount: string;
+  status: StatusType;
+  statusLabel?: string;
+  deliveryDate: string;
+}
 
 export default function SalesOrdersPage() {
+  const [salesOrdersData, setSalesOrdersData] = useState<SalesOrderRow[]>([]);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const data = await apiGet<SalesOrderRow[]>(
+          `/sales-orders?companyId=${DEFAULT_COMPANY_ID}&view=table`,
+        );
+        setSalesOrdersData(data ?? []);
+      } catch (error) {
+        console.error("Failed to load sales orders:", error);
+      }
+    };
+
+    load();
+  }, []);
+
   const columns = [
     {
       key: "date" as const,
@@ -60,7 +72,9 @@ export default function SalesOrdersPage() {
     {
       key: "status" as const,
       label: "Status",
-      render: (value: string) => <StatusBadge status={value as any} label={value} />,
+      render: (value: string, row: SalesOrderRow) => (
+        <StatusBadge status={value as any} label={row.statusLabel ?? value} />
+      ),
     },
   ];
 
@@ -69,7 +83,9 @@ export default function SalesOrdersPage() {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
         <div>
           <h1 className="section-heading mb-2">Sales Orders</h1>
-          <p className="text-slate-600 dark:text-slate-400">Manage sales orders and fulfillment</p>
+          <p className="text-slate-600 dark:text-slate-400">
+            Manage sales orders and fulfillment
+          </p>
         </div>
         <button className="btn-primary inline-flex items-center gap-2 mt-4 md:mt-0">
           <Plus className="w-5 h-5" />

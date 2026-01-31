@@ -3,32 +3,47 @@
 // Wrapped by PortalLayout; no AppLayout to avoid duplicate nav
 import { DataTable } from "@/components/ui/data-table";
 import { StatusBadge } from "@/components/ui/status-badge";
+import { apiGet } from "@/lib/api";
+import { useEffect, useState } from "react";
 
-const portalInvoicesData = [
-  {
-    id: "INV-PORTAL-0142",
-    amount: "₹12,500.00",
-    dueDate: "2026-02-15",
-    status: "pending" as const,
-    issueDate: "2026-01-28",
-  },
-  {
-    id: "INV-PORTAL-0141",
-    amount: "₹8,750.00",
-    dueDate: "2026-02-10",
-    status: "completed" as const,
-    issueDate: "2026-01-27",
-  },
-  {
-    id: "INV-PORTAL-0140",
-    amount: "₹15,200.00",
-    dueDate: "2026-02-20",
-    status: "pending" as const,
-    issueDate: "2026-01-25",
-  },
-];
+type StatusType =
+  | "active"
+  | "inactive"
+  | "pending"
+  | "completed"
+  | "failed"
+  | "warning";
+
+interface PortalInvoiceRow {
+  id: string;
+  recordId?: string;
+  amount: string;
+  dueDate: string;
+  status: StatusType;
+  statusLabel?: string;
+  issueDate: string;
+}
 
 export default function PortalInvoicesPage() {
+  const [portalInvoicesData, setPortalInvoicesData] = useState<
+    PortalInvoiceRow[]
+  >([]);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const data = await apiGet<PortalInvoiceRow[]>(
+          "/portal/invoices?view=table",
+        );
+        setPortalInvoicesData(data ?? []);
+      } catch (error) {
+        console.error("Failed to load portal invoices:", error);
+      }
+    };
+
+    load();
+  }, []);
+
   const columns = [
     {
       key: "issueDate" as const,
@@ -52,7 +67,9 @@ export default function PortalInvoicesPage() {
     {
       key: "status" as const,
       label: "Status",
-      render: (value: string) => <StatusBadge status={value as any} label={value} />,
+      render: (value: string, row: PortalInvoiceRow) => (
+        <StatusBadge status={value as any} label={row.statusLabel ?? value} />
+      ),
     },
   ];
 
@@ -60,7 +77,9 @@ export default function PortalInvoicesPage() {
     <div>
       <div className="mb-8">
         <h1 className="section-heading mb-2">My Invoices</h1>
-        <p className="text-slate-600 dark:text-slate-400">Download and view your invoices</p>
+        <p className="text-slate-600 dark:text-slate-400">
+          Download and view your invoices
+        </p>
       </div>
 
       <DataTable columns={columns} data={portalInvoicesData} />

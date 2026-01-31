@@ -2,6 +2,7 @@ import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/apiError.js";
 import { resolveAnalyticAccountId } from "../services/autoAnalyticService.js";
 import {
+  formatBadgeLabel,
   formatCurrency,
   formatDate,
   mapOrderStatusToBadge,
@@ -112,9 +113,10 @@ export const listSalesOrdersTable = async (companyId: string) => {
       recordId: order.id,
       customer: order.customer.displayName,
       amount: formatCurrency(totalAmount, order.currency),
-      date: formatDate(order.orderDate),
-      deliveryDate: formatDate(order.deliveryDate),
+      date: formatDate(order.orderDate) ?? "",
+      deliveryDate: formatDate(order.deliveryDate) ?? "",
       status: mapOrderStatusToBadge(order.status),
+      statusLabel: formatBadgeLabel(mapOrderStatusToBadge(order.status)),
     };
   });
 };
