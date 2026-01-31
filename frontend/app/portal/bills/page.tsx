@@ -3,8 +3,7 @@
 // Wrapped by PortalLayout; no AppLayout to avoid duplicate nav
 import { DataTable } from "@/components/ui/data-table";
 import { StatusBadge } from "@/components/ui/status-badge";
-import { apiGet } from "@/lib/api";
-import { Download, Eye } from "lucide-react";
+import { apiDownload, apiGet } from "@/lib/api";
 import { useEffect, useState } from "react";
 
 type StatusType =
@@ -19,6 +18,9 @@ interface PortalBillRow {
   id: string;
   recordId?: string;
   vendor: string;
+  totalAmount?: number;
+  paidAmount?: number;
+  paymentState?: string;
   amount: string;
   dueDate: string;
   status: StatusType;
@@ -44,6 +46,21 @@ export default function PortalBillsPage() {
     load();
   }, []);
 
+  const remainingFor = (row: PortalBillRow) => {
+    const total = row.totalAmount ?? 0;
+    const paid = row.paidAmount ?? 0;
+    return Math.max(0, total - paid);
+  };
+
+  const handleDownloadPdf = async (row: PortalBillRow) => {
+    if (!row.recordId) return;
+    try {
+      await apiDownload(`/portal/bills/${row.recordId}/pdf`, `${row.id}.pdf`);
+    } catch (downloadError) {
+      console.error("Failed to download PDF:", downloadError);
+    }
+  };
+
   const columns = [
     {
       key: "issueDate" as const,
@@ -66,6 +83,24 @@ export default function PortalBillsPage() {
       className: "font-mono font-bold",
     },
     {
+      key: "recordId" as const,
+      label: "Paid %",
+      render: (_value: string | undefined, row: PortalBillRow) => {
+        const total = row.totalAmount ?? 0;
+        const paid = row.paidAmount ?? 0;
+        const pct = total > 0 ? Math.min(100, (paid / total) * 100) : 0;
+        return <span className="text-xs font-semibold">{pct.toFixed(1)}%</span>;
+      },
+    },
+    {
+      key: "recordId" as const,
+      label: "Remaining",
+      render: (_value: string | undefined, row: PortalBillRow) => {
+        const remaining = remainingFor(row);
+        return <span className="text-xs font-semibold">INR {remaining.toFixed(2)}</span>;
+      },
+    },
+    {
       key: "dueDate" as const,
       label: "Due Date",
     },
@@ -74,6 +109,18 @@ export default function PortalBillsPage() {
       label: "Status",
       render: (value: string, row: PortalBillRow) => (
         <StatusBadge status={value as any} label={row.statusLabel ?? value} />
+      ),
+    },
+    {
+      key: "recordId" as const,
+      label: "Actions",
+      render: (_value: string | undefined, row: PortalBillRow) => (
+        <button
+          onClick={() => handleDownloadPdf(row)}
+          className="text-xs font-semibold text-slate-600 hover:underline"
+        >
+          PDF
+        </button>
       ),
     },
   ];

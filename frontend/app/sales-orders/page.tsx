@@ -33,6 +33,7 @@ interface BackendContact {
   id: string;
   displayName: string;
   contactType: "customer" | "vendor" | "both" | "internal";
+  isPortalUser?: boolean;
 }
 
 interface BackendProduct {
@@ -113,26 +114,21 @@ export default function SalesOrdersPage() {
   }, [loadOrders, loadLookups]);
 
   const handleExportPDF = () => {
-    const columnMapping = {
-      date: "Date",
-      id: "SO #",
-      customer: "Customer",
-      amount: "Amount",
-      deliveryDate: "Delivery Date",
-      status: "Status",
-    };
+    const columns = [
+      { header: "Date", key: "date" },
+      { header: "SO #", key: "id" },
+      { header: "Customer", key: "customer" },
+      { header: "Amount", key: "amount" },
+      { header: "Delivery Date", key: "deliveryDate" },
+      { header: "Status", key: "status" },
+    ];
 
     const processedData = salesOrdersData.map((row) => ({
       ...row,
       status: row.statusLabel ?? row.status,
     }));
 
-    exportTableToPDF(
-      processedData,
-      columnMapping,
-      "Sales Orders",
-      "sales-orders",
-    );
+    exportTableToPDF("Sales Orders", columns, processedData, "sales-orders.pdf");
   };
 
   const handleUpdateStatus = async (row: SalesOrderRow, status: "confirmed" | "done") => {
@@ -447,7 +443,7 @@ function SalesOrderDialog({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-sm">
-      <div className="w-full max-w-5xl rounded-[36px] border border-brand-primary/30 bg-white p-8 text-brand-dark shadow-[0_25px_120px_rgba(15,23,42,0.18)] dark:border-brand-primary/40 dark:bg-slate-900 dark:text-brand-light">
+      <div className="w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-[36px] border border-brand-primary/30 bg-white p-8 text-brand-dark shadow-[0_25px_120px_rgba(15,23,42,0.18)] dark:border-brand-primary/40 dark:bg-slate-900 dark:text-brand-light">
         <div className="flex items-center justify-between border-b border-brand-primary/20 pb-4">
           <h2 className="text-2xl font-semibold">Create Sales Order</h2>
           <button onClick={onClose} className="rounded-full border border-brand-primary/40 p-2 hover:bg-brand-primary/10">
@@ -465,7 +461,7 @@ function SalesOrderDialog({
               >
                 {customers.map((c) => (
                   <option key={c.id} value={c.id}>
-                    {c.displayName}
+                    {c.displayName}{c.isPortalUser ? " (Portal)" : ""}
                   </option>
                 ))}
               </select>

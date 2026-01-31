@@ -83,6 +83,8 @@ export declare const listVendorBillsTable: (companyId: string) => Promise<{
     rawStatus: import("../generated/prisma/index.js").$Enums.DocStatus;
     paymentState: string;
     vendor: string;
+    totalAmount: number;
+    paidAmount: number;
     amount: string;
     dueDate: string;
     date: string;

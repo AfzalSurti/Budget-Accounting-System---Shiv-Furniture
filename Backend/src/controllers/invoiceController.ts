@@ -30,73 +30,87 @@ export const createInvoice = async (data: {
     taxRate?: number;
   }>;
 }) => {
-  return prisma.$transaction(async (tx) => {
-    let totalAmount = 0;
-    const contactTagIds = await getContactTagIds(data.customerId);
-    const invoice = await tx.customerInvoice.create({
-      data: {
-        companyId: data.companyId,
-        customerId: data.customerId,
-        invoiceNo: data.invoiceNo,
-        invoiceDate: new Date(data.invoiceDate),
-        dueDate: data.dueDate ? new Date(data.dueDate) : null,
-        status: data.status,
-        currency: data.currency ?? "INR",
-        soId: data.soId ?? null,
-        paymentState: "not_paid",
-      },
-    });
-
-    for (const line of data.lines) {
-      let categoryId: string | null = null;
-      if (line.productId) {
-        const product = await tx.product.findUnique({
-          where: { id: line.productId },
-        });
-        categoryId = product?.categoryId ?? null;
-      }
-
-      const resolvedAnalytic = line.analyticAccountId
-        ? null
-        : await resolveAnalyticAccountId({
-            companyId: data.companyId,
-            docType: "customer_invoice",
-            productId: line.productId ?? null,
-            categoryId,
-            contactId: data.customerId,
-            contactTagIds,
-          });
-
-      const taxRate = line.taxRate ?? 0;
-      const lineTotal = line.qty * line.unitPrice * (1 + taxRate / 100);
-      totalAmount += lineTotal;
-
-      await tx.customerInvoiceLine.create({
+  return prisma.$transaction(
+    async (tx) => {
+      const contactTagIds = await getContactTagIds(data.customerId);
+      const invoice = await tx.customerInvoice.create({
         data: {
-          customerInvoiceId: invoice.id,
-          productId: line.productId ?? null,
-          analyticAccountId: line.analyticAccountId ?? resolvedAnalytic?.analyticAccountId ?? null,
-          autoAnalyticModelId: resolvedAnalytic?.modelId ?? null,
-          autoAnalyticRuleId: resolvedAnalytic?.ruleId ?? null,
-          matchedFieldsCount: resolvedAnalytic?.matchedFieldsCount ?? null,
-          glAccountId: line.glAccountId ?? null,
-          description: line.description ?? null,
-          qty: line.qty,
-          unitPrice: line.unitPrice,
-          taxRate,
-          lineTotal,
+          companyId: data.companyId,
+          customerId: data.customerId,
+          invoiceNo: data.invoiceNo,
+          invoiceDate: new Date(data.invoiceDate),
+          dueDate: data.dueDate ? new Date(data.dueDate) : null,
+          status: data.status,
+          currency: data.currency ?? "INR",
+          soId: data.soId ?? null,
+          paymentState: "not_paid",
         },
       });
-    }
 
-    return tx.customerInvoice.update({
-      where: { id: invoice.id },
-      data: {
-        totalAmount,
-        paymentState: calculatePaymentStatus(0, totalAmount),
-      },
-    });
-  });
+      const productIds = Array.from(
+        new Set(data.lines.map((line) => line.productId).filter(Boolean)) as string[],
+      );
+      const products = productIds.length
+        ? await tx.product.findMany({
+            where: { id: { in: productIds } },
+            select: { id: true, categoryId: true },
+          })
+        : [];
+      const productMap = new Map(products.map((product) => [product.id, product]));
+
+      let totalAmount = 0;
+      const linePayloads = await Promise.all(
+        data.lines.map(async (line) => {
+          const product = line.productId ? productMap.get(line.productId) : null;
+          if (line.productId && !product) {
+            throw new ApiError(400, "Invalid product");
+          }
+          const resolvedAnalytic = line.analyticAccountId
+            ? null
+            : await resolveAnalyticAccountId({
+                companyId: data.companyId,
+                docType: "customer_invoice",
+                productId: line.productId ?? null,
+                categoryId: product?.categoryId ?? null,
+                contactId: data.customerId,
+                contactTagIds,
+              });
+
+          const taxRate = line.taxRate ?? 0;
+          const lineTotal = line.qty * line.unitPrice * (1 + taxRate / 100);
+          totalAmount += lineTotal;
+
+          return {
+            customerInvoiceId: invoice.id,
+            productId: line.productId ?? null,
+            analyticAccountId: line.analyticAccountId ?? resolvedAnalytic?.analyticAccountId ?? null,
+            autoAnalyticModelId: resolvedAnalytic?.modelId ?? null,
+            autoAnalyticRuleId: resolvedAnalytic?.ruleId ?? null,
+            matchedFieldsCount: resolvedAnalytic?.matchedFieldsCount ?? null,
+            glAccountId: line.glAccountId ?? null,
+            description: line.description ?? null,
+            qty: line.qty,
+            unitPrice: line.unitPrice,
+            taxRate,
+            lineTotal,
+          };
+        }),
+      );
+
+      if (linePayloads.length > 0) {
+        await tx.customerInvoiceLine.createMany({ data: linePayloads });
+      }
+
+      return tx.customerInvoice.update({
+        where: { id: invoice.id },
+        data: {
+          totalAmount,
+          paymentState: calculatePaymentStatus(0, totalAmount),
+        },
+      });
+    },
+    { timeout: 15000 },
+  );
 };
 
 export const createInvoiceFromSO = async (
@@ -170,6 +184,7 @@ export const listInvoicesTable = async (companyId: string) => {
       invoiceDate: true,
       dueDate: true,
       totalAmount: true,
+      paidAmount: true,
       currency: true,
       status: true,
       paymentState: true,
@@ -184,6 +199,8 @@ export const listInvoicesTable = async (companyId: string) => {
     rawStatus: invoice.status,
     paymentState: invoice.paymentState,
     customer: invoice.customer.displayName,
+    totalAmount: Number(invoice.totalAmount),
+    paidAmount: Number(invoice.paidAmount ?? 0),
     amount: formatCurrency(Number(invoice.totalAmount), invoice.currency),
     dueDate: formatDate(invoice.dueDate) ?? "",
     issueDate: formatDate(invoice.invoiceDate) ?? "",

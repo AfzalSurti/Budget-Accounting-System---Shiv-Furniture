@@ -5,6 +5,7 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { DataTable } from "@/components/ui/data-table";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Plus } from "lucide-react";
+import Link from "next/link";
 
 const salesOrdersData = [
   {
@@ -65,16 +66,22 @@ export default function SalesOrdersPage() {
     },
   ];
 
-  return (      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+  return (
+    <AppLayout>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
         <div>
           <h1 className="section-heading mb-2">Sales Orders</h1>
-          <p className="text-slate-600 dark:text-slate-400">Manage sales orders and fulfillment</p>
+          <p className="text-slate-600 dark:text-slate-400">
+            Manage sales orders and fulfillment
+          </p>
         </div>
-        <button className="btn-primary inline-flex items-center gap-2 mt-4 md:mt-0">
+        <Link href="/sales-orders" className="btn-primary inline-flex items-center gap-2 mt-4 md:mt-0">
           <Plus className="w-5 h-5" />
           New SO
-        </button>
+        </Link>
       </div>
 
-      <DataTable columns={columns} data={salesOrdersData} />  );
+      <DataTable columns={columns} data={salesOrdersData} />
+    </AppLayout>
+  );
 }

@@ -22,6 +22,8 @@ interface VendorBillRow {
   recordId?: string;
   rawStatus?: "draft" | "posted" | "cancelled";
   paymentState?: string;
+  totalAmount?: number;
+  paidAmount?: number;
   vendor: string;
   date: string;
   amount: string;
@@ -34,6 +36,7 @@ interface BackendContact {
   id: string;
   displayName: string;
   contactType: "customer" | "vendor" | "both" | "internal";
+  isPortalUser?: boolean;
 }
 
 interface BackendProduct {
@@ -112,22 +115,21 @@ export default function VendorBillsPage() {
   }, [loadBills, loadLookups]);
 
   const handleExportPDF = () => {
-    exportTableToPDF(
-      "Vendor Bills",
-      [
-        { header: "Date", key: "date" },
-        { header: "Bill #", key: "id" },
-        { header: "Vendor", key: "vendor" },
-        { header: "Amount", key: "amount" },
-        { header: "Due Date", key: "dueDate" },
-        { header: "Status", key: "statusLabel" },
-      ],
-      vendorBillsData.map(row => ({
-        ...row,
-        statusLabel: row.statusLabel || row.status
-      })),
-      "Vendor_Bills.pdf"
-    );
+    const columns = [
+      { header: "Date", key: "date" },
+      { header: "Bill #", key: "id" },
+      { header: "Vendor", key: "vendor" },
+      { header: "Amount", key: "amount" },
+      { header: "Due Date", key: "dueDate" },
+      { header: "Status", key: "status" },
+    ];
+
+    const processedData = vendorBillsData.map((row) => ({
+      ...row,
+      status: row.statusLabel || row.status,
+    }));
+
+    exportTableToPDF("Vendor Bills", columns, processedData, "Vendor_Bills.pdf");
   };
 
   const handlePostBill = async (row: VendorBillRow) => {
@@ -204,6 +206,26 @@ export default function VendorBillsPage() {
       key: "amount" as const,
       label: "Amount",
       className: "font-mono font-bold",
+    },
+    {
+      key: "recordId" as const,
+      label: "Paid %",
+      render: (_value: string | undefined, row: VendorBillRow) => {
+        const total = row.totalAmount ?? 0;
+        const paid = row.paidAmount ?? 0;
+        const pct = total > 0 ? Math.min(100, (paid / total) * 100) : 0;
+        return <span className="text-xs font-semibold">{pct.toFixed(1)}%</span>;
+      },
+    },
+    {
+      key: "recordId" as const,
+      label: "Remaining",
+      render: (_value: string | undefined, row: VendorBillRow) => {
+        const total = row.totalAmount ?? 0;
+        const paid = row.paidAmount ?? 0;
+        const remaining = Math.max(0, total - paid);
+        return <span className="text-xs font-semibold">INR {remaining.toFixed(2)}</span>;
+      },
     },
     {
       key: "dueDate" as const,
@@ -419,7 +441,7 @@ function VendorBillDialog({
               >
                 {vendors.map((v) => (
                   <option key={v.id} value={v.id}>
-                    {v.displayName}
+                    {v.displayName}{v.isPortalUser ? " (Portal)" : ""}
                   </option>
                 ))}
               </select>

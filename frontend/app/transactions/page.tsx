@@ -126,21 +126,21 @@ export default function TransactionsPage() {
       }))
     );
 
-    exportTableToPDF(
-      formattedData.map((row) => ({
-        ...row,
-        statusLabel: row.statusLabel || row.status,
-      })),
-      [
-        { header: "Date", key: "date" },
-        { header: "Transaction #", key: "transactionNumber" },
-        { header: "Type", key: "type" },
-        { header: "Description", key: "description" },
-        { header: "Amount", key: "amount" },
-        { header: "Status", key: "statusLabel" },
-      ],
-      "Transactions_Report"
-    );
+    const columns = [
+      { header: "Date", key: "date" },
+      { header: "Transaction #", key: "transactionNumber" },
+      { header: "Type", key: "type" },
+      { header: "Description", key: "description" },
+      { header: "Amount", key: "amount" },
+      { header: "Status", key: "status" },
+    ];
+
+    const processedData = formattedData.map((row) => ({
+      ...row,
+      status: row.statusLabel || row.status,
+    }));
+
+    exportTableToPDF("Transactions Report", columns, processedData, "Transactions_Report.pdf");
   };
 
   return (
@@ -413,3 +413,4 @@ export default function TransactionsPage() {
     </AppLayout>
   );
 }
+

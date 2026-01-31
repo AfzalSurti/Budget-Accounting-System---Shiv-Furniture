@@ -29,6 +29,7 @@ import {
 import { motion } from "framer-motion";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 
 interface SummaryRow {
   budgeted: number;
@@ -224,6 +225,43 @@ export default function DashboardPage() {
           );
         })}
       </motion.div>
+
+      <div className="grid md:grid-cols-2 gap-6 mb-10">
+        <Link
+          href="/sales-orders"
+          className="group rounded-2xl border border-brand-primary/20 bg-white/80 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-brand-primary/30 dark:bg-slate-900/70"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs uppercase tracking-widest text-brand-dark/60 dark:text-brand-light/70">Quick Access</p>
+              <h3 className="mt-2 text-2xl font-semibold text-brand-dark dark:text-white">Sales Orders</h3>
+              <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+                Create and manage SOs with invoice generation.
+              </p>
+            </div>
+            <div className="rounded-full border border-brand-primary/30 bg-brand-primary/10 px-4 py-2 text-xs font-semibold text-brand-primary">
+              New SO
+            </div>
+          </div>
+        </Link>
+        <Link
+          href="/purchase-orders"
+          className="group rounded-2xl border border-brand-accent/20 bg-white/80 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-brand-accent/30 dark:bg-slate-900/70"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs uppercase tracking-widest text-brand-dark/60 dark:text-brand-light/70">Quick Access</p>
+              <h3 className="mt-2 text-2xl font-semibold text-brand-dark dark:text-white">Purchase Orders</h3>
+              <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+                Create POs and convert them to vendor bills.
+              </p>
+            </div>
+            <div className="rounded-full border border-brand-accent/30 bg-brand-accent/10 px-4 py-2 text-xs font-semibold text-brand-accent">
+              New PO
+            </div>
+          </div>
+        </Link>
+      </div>
 
       <div className="grid lg:grid-cols-3 gap-6 mb-10">
         <motion.div
