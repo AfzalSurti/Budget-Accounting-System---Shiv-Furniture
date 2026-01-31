@@ -15,8 +15,8 @@ const main = async () => {
     data: {
       companyId: company.id,
       contactType: "customer",
-      displayName: "Demo Customer",
-      email: "customer@example.com",
+      displayName: "Rahul Verma",
+      email: "rahul.verma@example.in",
     },
   });
 

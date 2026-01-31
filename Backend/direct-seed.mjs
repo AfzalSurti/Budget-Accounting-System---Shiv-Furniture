@@ -44,18 +44,18 @@ async function main() {
     await client.query(
       `INSERT INTO products (id, company_id, category_id, sku, name, cost_price, sale_price) 
        VALUES (gen_random_uuid(), $1, $2, $3, $4, $5, $6)`,
-      [companyId, categoryId, 'WF001', 'Wooden Chair', 500, 1000]
+      [companyId, categoryId, 'WF001', 'Sheesham Wood Chair', 2500, 4500]
     );
-    console.log('✅ Created product: Wooden Chair');
+    console.log('✅ Created product: Sheesham Wood Chair');
 
     // Create Contacts
     await client.query(
       `INSERT INTO contacts (id, company_id, contact_type, display_name, email) 
        VALUES (gen_random_uuid(), $1, $2, $3, $4),
               (gen_random_uuid(), $1, $5, $6, $7)`,
-      [companyId, 'vendor', 'Wood Supplier Ltd', 'vendor@example.com', 'customer', 'John Doe', 'customer@example.com']
+      [companyId, 'vendor', 'Sharma Timber Suppliers', 'vendor@sharmatimber.in', 'customer', 'Rahul Verma', 'rahul.verma@example.in']
     );
-    console.log('✅ Created vendor and customer');
+    console.log('✅ Created vendor and customer (IN)');
 
     // Create Analytic Account
     await client.query(

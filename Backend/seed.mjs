@@ -54,10 +54,10 @@ async function main() {
       companyId: company.id,
       categoryId: category.id,
       sku: 'WF001',
-      name: 'Wooden Chair',
-      description: 'Premium wooden chair',
-      costPrice: 500,
-      sellingPrice: 1000,
+      name: 'Sheesham Wood Chair',
+      description: 'Premium sheesham wood chair',
+      costPrice: 2500,
+      sellingPrice: 4500,
     },
   });
 
@@ -68,8 +68,8 @@ async function main() {
     data: {
       companyId: company.id,
       type: 'vendor',
-      name: 'Wood Supplier Ltd',
-      email: 'vendor@example.com',
+      name: 'Sharma Timber Suppliers',
+      email: 'vendor@sharmatimber.in',
     },
   });
 
@@ -80,8 +80,8 @@ async function main() {
     data: {
       companyId: company.id,
       type: 'customer',
-      name: 'John Doe',
-      email: 'customer@example.com',
+      name: 'Rahul Verma',
+      email: 'rahul.verma@example.in',
     },
   });
 

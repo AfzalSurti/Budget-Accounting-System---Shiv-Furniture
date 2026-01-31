@@ -53,9 +53,9 @@ async function main() {
         companyId: company.id,
         categoryId: category.id,
         sku: 'WF001',
-        name: 'Wooden Chair',
-        costPrice: 500,
-        salePrice: 1000,
+        name: 'Sheesham Wood Chair',
+        costPrice: 2500,
+        salePrice: 4500,
       },
     });
 
@@ -66,8 +66,8 @@ async function main() {
       data: {
         companyId: company.id,
         contactType: 'vendor',
-        displayName: 'Wood Supplier Ltd',
-        email: 'vendor@example.com',
+        displayName: 'Sharma Timber Suppliers',
+        email: 'vendor@sharmatimber.in',
       },
     });
 
@@ -78,8 +78,8 @@ async function main() {
       data: {
         companyId: company.id,
         contactType: 'customer',
-        displayName: 'John Doe',
-        email: 'customer@example.com',
+        displayName: 'Rahul Verma',
+        email: 'rahul.verma@example.in',
       },
     });
 

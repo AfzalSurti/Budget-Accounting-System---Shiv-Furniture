@@ -25,10 +25,10 @@ interface ProductDraft {
 const DEFAULT_CATEGORIES = ["Living", "Office", "Outdoor", "Bedroom"];
 
 const INITIAL_PRODUCTS: ProductRecord[] = [
-  { id: "PRD001", name: "Regent Sofa", category: "Living", salesPrice: 22500, purchasePrice: 15250, status: "confirm" },
-  { id: "PRD002", name: "Aero Work Desk", category: "Office", salesPrice: 18200, purchasePrice: 12100, status: "confirm" },
-  { id: "PRD003", name: "Verve Patio Chair", category: "Outdoor", salesPrice: 7500, purchasePrice: 4800, status: "new" },
-  { id: "PRD004", name: "Noir Bed Frame", category: "Bedroom", salesPrice: 28990, purchasePrice: 21000, status: "archived" },
+  { id: "PRD001", name: "Sheesham Wood Sofa", category: "Living", salesPrice: 22500, purchasePrice: 15250, status: "confirm" },
+  { id: "PRD002", name: "Teak Office Table", category: "Office", salesPrice: 18200, purchasePrice: 12100, status: "confirm" },
+  { id: "PRD003", name: "Mango Wood Patio Chair", category: "Outdoor", salesPrice: 7500, purchasePrice: 4800, status: "new" },
+  { id: "PRD004", name: "Neem Wood Bed Frame", category: "Bedroom", salesPrice: 28990, purchasePrice: 21000, status: "archived" },
 ];
 
 const FILTER_TABS: { label: string; value: ProductStatus | "all" }[] = [
