@@ -5,7 +5,11 @@ const rawBase =
 
 export const API_BASE_URL = rawBase.replace(/\/$/, "");
 
-export const API_V1 = `${API_BASE_URL}/api/v1`;
+const normalizedBase = API_BASE_URL.endsWith("/api/v1")
+  ? API_BASE_URL.replace(/\/api\/v1$/, "")
+  : API_BASE_URL;
+
+export const API_V1 = `${normalizedBase}/api/v1`;
 
 export const getStoredToken = () => {
   if (typeof window === "undefined") return null;
