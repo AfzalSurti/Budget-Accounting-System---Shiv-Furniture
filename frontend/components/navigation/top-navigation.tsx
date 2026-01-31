@@ -14,10 +14,10 @@ const primaryNavItems = [
   { label: "Dashboard", href: "/dashboard" },
   { label: "Transactions", href: "/transactions" },
   { label: "Budgets", href: "/budgets" },
-  { label: "AI Insights", href: "/ai-insights" },
   { label: "Reports", href: "/reports" },
   { label: "Contacts", href: "/contacts" },
   { label: "Products", href: "/products" },
+  { label: "Cost Centers", href: "/analytics" },
 ];
 
 export function TopNavigation() {

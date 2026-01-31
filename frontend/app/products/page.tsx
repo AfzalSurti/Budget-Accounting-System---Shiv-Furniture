@@ -48,12 +48,12 @@ export default function ProductsPage() {
   return (
     <AppLayout>
       <div className="space-y-8">
-        <header className="rounded-[32px] border border-brand-primary/20 bg-white p-6 text-brand-dark shadow-[0_25px_80px_rgba(15,23,42,0.12)] dark:border-brand-primary/30 dark:bg-slate-900/95 dark:text-brand-light dark:shadow-[0_25px_80px_rgba(15,23,42,0.45)]">
-          <div className="mt-6 relative flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:justify-center">
-            <h1 className="text-center text-3xl font-semibold text-brand-dark dark:text-brand-light">Products</h1>
+        <header className="rounded-[24px] border border-brand-primary/20 bg-white p-4 text-brand-dark shadow-[0_18px_50px_rgba(15,23,42,0.12)] dark:border-brand-primary/30 dark:bg-slate-900/95 dark:text-brand-light dark:shadow-[0_18px_50px_rgba(15,23,42,0.45)]">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <h1 className="text-left text-2xl font-semibold text-brand-dark dark:text-brand-light">Products</h1>
             <button
               onClick={() => setDialogOpen(true)}
-              className="inline-flex items-center gap-2 rounded-full border border-brand-primary/40 bg-brand-primary/10 px-6 py-3 text-sm font-semibold text-brand-primary transition hover:bg-brand-primary/20 dark:bg-brand-primary/20 dark:text-brand-light dark:hover:bg-brand-primary/30 sm:absolute sm:right-0"
+              className="inline-flex items-center gap-2 rounded-full border border-brand-primary/40 bg-brand-primary/10 px-4 py-2 text-sm font-semibold text-brand-primary transition hover:bg-brand-primary/20 dark:bg-brand-primary/20 dark:text-brand-light dark:hover:bg-brand-primary/30"
             >
               <Plus className="h-4 w-4" />
               New Product

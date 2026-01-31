@@ -262,7 +262,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Quick Actions */}
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -295,15 +295,7 @@ export default function DashboardPage() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="card p-6 hover:shadow-xl transition-shadow duration-300"
         >
-          <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-brand-dark dark:text-white">AI-Powered Insights</h3>
-            <Link
-              href="/admin/ai-insights"
-              className="text-sm font-semibold text-brand-primary hover:text-brand-accent transition-colors"
-            >
-              View AI Insights
-            </Link>
-          </div>
+          <h3 className="text-lg font-semibold text-brand-dark dark:text-white mb-4">AI-Powered Insights</h3>
           <div className="space-y-3">
             {[
               { type: "Opportunity", title: "Cost Optimization", desc: "Potential savings identified", color: "emerald" },
@@ -336,6 +328,26 @@ export default function DashboardPage() {
               </div>
             ))}
           </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="card p-6 hover:shadow-xl transition-shadow duration-300"
+        >
+          <div className="mb-3 flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-brand-dark dark:text-white">AI Insights</h3>
+          </div>
+          <p className="text-sm text-slate-600 dark:text-slate-400 mb-5">
+            Explore forecasts, anomalies, and optimization opportunities.
+          </p>
+          <Link
+            href="/admin/ai-insights"
+            className="inline-flex items-center gap-2 rounded-full border border-brand-primary/40 bg-brand-primary/10 px-4 py-2 text-sm font-semibold text-brand-primary transition hover:bg-brand-primary/20 dark:bg-brand-primary/20 dark:text-white dark:hover:bg-brand-primary/30"
+          >
+            Open AI Insights
+          </Link>
         </motion.div>
       </div>
     </AppLayout>
