@@ -3,6 +3,7 @@ const productBody = Joi.object({
     companyId: Joi.string().uuid().required(),
     name: Joi.string().required(),
     categoryId: Joi.string().uuid().allow(null),
+    categoryName: Joi.string().allow(null, ""),
     sku: Joi.string().allow(null, ""),
     uom: Joi.string().default("unit"),
     salePrice: Joi.number().min(0).optional(),

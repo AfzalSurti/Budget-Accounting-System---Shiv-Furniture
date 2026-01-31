@@ -1,7 +1,9 @@
+import { Prisma } from "../generated/prisma/client.js";
 export declare const createProduct: (data: {
     companyId: string;
     name: string;
     categoryId?: string | null;
+    categoryName?: string | null;
     sku?: string | null;
     uom?: string;
     salePrice?: number;
@@ -16,11 +18,15 @@ export declare const createProduct: (data: {
     companyId: string;
     sku: string | null;
     uom: string;
-    salePrice: import("@prisma/client-runtime-utils").Decimal;
-    costPrice: import("@prisma/client-runtime-utils").Decimal;
+    salePrice: Prisma.Decimal;
+    costPrice: Prisma.Decimal;
     categoryId: string | null;
 }>;
-export declare const listProducts: (companyId: string) => Promise<{
+export declare const listProducts: (companyId: string) => Promise<({
+    category: {
+        name: string;
+    } | null;
+} & {
     id: string;
     createdAt: Date;
     name: string;
@@ -29,10 +35,10 @@ export declare const listProducts: (companyId: string) => Promise<{
     companyId: string;
     sku: string | null;
     uom: string;
-    salePrice: import("@prisma/client-runtime-utils").Decimal;
-    costPrice: import("@prisma/client-runtime-utils").Decimal;
+    salePrice: Prisma.Decimal;
+    costPrice: Prisma.Decimal;
     categoryId: string | null;
-}[]>;
+})[]>;
 export declare const getProduct: (id: string) => Promise<{
     id: string;
     createdAt: Date;
@@ -42,8 +48,8 @@ export declare const getProduct: (id: string) => Promise<{
     companyId: string;
     sku: string | null;
     uom: string;
-    salePrice: import("@prisma/client-runtime-utils").Decimal;
-    costPrice: import("@prisma/client-runtime-utils").Decimal;
+    salePrice: Prisma.Decimal;
+    costPrice: Prisma.Decimal;
     categoryId: string | null;
 }>;
 export declare const updateProduct: (id: string, data: Partial<Record<string, unknown>>) => Promise<{
@@ -55,8 +61,8 @@ export declare const updateProduct: (id: string, data: Partial<Record<string, un
     companyId: string;
     sku: string | null;
     uom: string;
-    salePrice: import("@prisma/client-runtime-utils").Decimal;
-    costPrice: import("@prisma/client-runtime-utils").Decimal;
+    salePrice: Prisma.Decimal;
+    costPrice: Prisma.Decimal;
     categoryId: string | null;
 }>;
 export declare const archiveProduct: (id: string) => Promise<{
@@ -68,8 +74,8 @@ export declare const archiveProduct: (id: string) => Promise<{
     companyId: string;
     sku: string | null;
     uom: string;
-    salePrice: import("@prisma/client-runtime-utils").Decimal;
-    costPrice: import("@prisma/client-runtime-utils").Decimal;
+    salePrice: Prisma.Decimal;
+    costPrice: Prisma.Decimal;
     categoryId: string | null;
 }>;
 //# sourceMappingURL=productController.d.ts.map

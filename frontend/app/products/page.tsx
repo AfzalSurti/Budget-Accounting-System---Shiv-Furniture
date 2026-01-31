@@ -1,7 +1,9 @@
 "use client";
 
 import { AppLayout } from "@/components/layout/app-layout";
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { DEFAULT_COMPANY_ID } from "@/config";
+import { apiGet, apiPost } from "@/lib/api";
+import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { Plus, UploadCloud, X } from "lucide-react";
 
 type ProductStatus = "new" | "confirm" | "archived";
@@ -22,27 +24,92 @@ interface ProductDraft {
   purchasePrice: number;
 }
 
+interface BackendProduct {
+  id: string;
+  name: string;
+  categoryId: string | null;
+  category?: { name: string } | null;
+  salePrice: number | string | null;
+  costPrice: number | string | null;
+  isActive: boolean;
+}
+
 const DEFAULT_CATEGORIES = ["Living", "Office", "Outdoor", "Bedroom"];
 
-const INITIAL_PRODUCTS: ProductRecord[] = [
-  { id: "PRD001", name: "Sheesham Wood Sofa", category: "Living", salesPrice: 22500, purchasePrice: 15250, status: "confirm" },
-  { id: "PRD002", name: "Teak Office Table", category: "Office", salesPrice: 18200, purchasePrice: 12100, status: "confirm" },
-  { id: "PRD003", name: "Mango Wood Patio Chair", category: "Outdoor", salesPrice: 7500, purchasePrice: 4800, status: "new" },
-  { id: "PRD004", name: "Neem Wood Bed Frame", category: "Bedroom", salesPrice: 28990, purchasePrice: 21000, status: "archived" },
-];
+const mapProduct = (product: BackendProduct): ProductRecord => {
+  const categoryName = product.category?.name || "Uncategorized";
+  const sale = product.salePrice === null ? 0 : Number(product.salePrice);
+  const cost = product.costPrice === null ? 0 : Number(product.costPrice);
+  return {
+    id: product.id,
+    name: product.name,
+    category: categoryName,
+    salesPrice: Number.isFinite(sale) ? sale : 0,
+    purchasePrice: Number.isFinite(cost) ? cost : 0,
+    status: product.isActive ? "confirm" : "archived",
+  };
+};
 
 export default function ProductsPage() {
-  const [products, setProducts] = useState<ProductRecord[]>(INITIAL_PRODUCTS);
-  const [categories, setCategories] = useState(DEFAULT_CATEGORIES);
+  const [products, setProducts] = useState<ProductRecord[]>([]);
+  const [categories, setCategories] = useState<string[]>(DEFAULT_CATEGORIES);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
 
   const filteredProducts = useMemo(() => products, [products]);
 
-  const handleCreateProduct = (draft: ProductDraft) => {
-    const nextId = `PRD${(products.length + 1).toString().padStart(3, "0")}`;
-    const record: ProductRecord = { id: nextId, status: "confirm", ...draft };
-    setProducts((prev) => [...prev, record]);
-    setDialogOpen(false);
+  const loadProducts = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await apiGet<BackendProduct[]>(
+        `/products?companyId=${DEFAULT_COMPANY_ID}`,
+      );
+      const mapped = (data ?? []).map(mapProduct);
+      setProducts(mapped);
+
+      const categorySet = new Set(DEFAULT_CATEGORIES);
+      mapped.forEach((item) => {
+        if (item.category) {
+          categorySet.add(item.category);
+        }
+      });
+      setCategories(Array.from(categorySet));
+    } catch (loadError) {
+      const message = loadError instanceof Error ? loadError.message : "Failed to load products";
+      console.error("Failed to load products:", loadError);
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadProducts();
+  }, [loadProducts]);
+
+  const handleCreateProduct = async (draft: ProductDraft) => {
+    setIsSaving(true);
+    setError(null);
+    try {
+      await apiPost<BackendProduct, Record<string, unknown>>("/products", {
+        companyId: DEFAULT_COMPANY_ID,
+        name: draft.name.trim(),
+        categoryName: draft.category.trim(),
+        salePrice: draft.salesPrice,
+        costPrice: draft.purchasePrice,
+      });
+      await loadProducts();
+      setDialogOpen(false);
+    } catch (createError) {
+      const message = createError instanceof Error ? createError.message : "Failed to create product";
+      console.error("Failed to create product:", createError);
+      setError(message);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -66,32 +133,43 @@ export default function ProductsPage() {
             Product Name
           </div>
           <div className="divide-y divide-brand-primary/20">
-            {filteredProducts.map((product) => (
-              <article key={product.id} className="grid gap-4 px-8 py-5 text-sm md:grid-cols-4">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.4em] text-brand-accent">{product.id}</p>
-                  <p className="text-lg font-semibold">{product.name}</p>
-                  <p className="text-xs text-brand-light/80">Category: {product.category}</p>
-                </div>
-                <div className="text-brand-dark/70 dark:text-brand-light/80">
-                  <p className="text-xs uppercase tracking-[0.4em] text-brand-accent">Sales Price</p>
-                  <p className="mt-1 text-2xl font-semibold">{formatPrice(product.salesPrice)}</p>
-                </div>
-                <div className="text-brand-dark/70 dark:text-brand-light/80">
-                  <p className="text-xs uppercase tracking-[0.4em] text-brand-accent">Purchase Price</p>
-                  <p className="mt-1 text-2xl font-semibold">{formatPrice(product.purchasePrice)}</p>
-                </div>
-                <div className="flex items-center justify-end">
-                  <span className="rounded-full border border-brand-primary/40 px-4 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-brand-dark/70 dark:text-brand-light/80">
-                    {product.status}
-                  </span>
-                </div>
-              </article>
-            ))}
-            {filteredProducts.length === 0 && (
+            {error && (
+              <p className="px-8 py-4 text-sm text-red-600">{error}</p>
+            )}
+            {loading ? (
               <p className="px-8 py-10 text-center text-sm text-brand-dark/70 dark:text-brand-light/80">
-                No products under this state yet. Use the New Product dialog to create one.
+                Loading products from the database...
               </p>
+            ) : (
+              <>
+                {filteredProducts.map((product) => (
+                  <article key={product.id} className="grid gap-4 px-8 py-5 text-sm md:grid-cols-4">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.4em] text-brand-accent">{product.id}</p>
+                      <p className="text-lg font-semibold">{product.name}</p>
+                      <p className="text-xs text-brand-light/80">Category: {product.category}</p>
+                    </div>
+                    <div className="text-brand-dark/70 dark:text-brand-light/80">
+                      <p className="text-xs uppercase tracking-[0.4em] text-brand-accent">Sales Price</p>
+                      <p className="mt-1 text-2xl font-semibold">{formatPrice(product.salesPrice)}</p>
+                    </div>
+                    <div className="text-brand-dark/70 dark:text-brand-light/80">
+                      <p className="text-xs uppercase tracking-[0.4em] text-brand-accent">Purchase Price</p>
+                      <p className="mt-1 text-2xl font-semibold">{formatPrice(product.purchasePrice)}</p>
+                    </div>
+                    <div className="flex items-center justify-end">
+                      <span className="rounded-full border border-brand-primary/40 px-4 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-brand-dark/70 dark:text-brand-light/80">
+                        {product.status}
+                      </span>
+                    </div>
+                  </article>
+                ))}
+                {filteredProducts.length === 0 && (
+                  <p className="px-8 py-10 text-center text-sm text-brand-dark/70 dark:text-brand-light/80">
+                    No products under this state yet. Use the New Product dialog to create one.
+                  </p>
+                )}
+              </>
             )}
           </div>
         </section>
@@ -104,6 +182,7 @@ export default function ProductsPage() {
           }
           onSubmit={handleCreateProduct}
           onClose={() => setDialogOpen(false)}
+          isSaving={isSaving}
         />
       )}
     </AppLayout>
@@ -115,11 +194,13 @@ function ProductDialog({
   onSubmit,
   onClose,
   onCreateCategory,
+  isSaving,
 }: {
   categories: string[];
   onSubmit: (draft: ProductDraft) => void;
   onClose: () => void;
   onCreateCategory: (value: string) => void;
+  isSaving: boolean;
 }) {
   const [form, setForm] = useState({
     name: "",
@@ -130,7 +211,6 @@ function ProductDialog({
   const [categoryDraft, setCategoryDraft] = useState("");
   const [categoryOptions, setCategoryOptions] = useState(categories);
 
-  // Keep local options in sync when parent list changes.
   useEffect(() => {
     setCategoryOptions(categories);
     setForm((prev) => {
@@ -147,9 +227,9 @@ function ProductDialog({
     const purchase = Number(form.purchasePrice || 0);
     onSubmit({
       name: form.name.trim(),
-      category: form.category.trim(),
-      salesPrice: sales,
-      purchasePrice: purchase,
+      category: form.category.trim() || "Uncategorized",
+      salesPrice: Number.isFinite(sales) ? sales : 0,
+      purchasePrice: Number.isFinite(purchase) ? purchase : 0,
     });
   };
 
@@ -244,10 +324,19 @@ function ProductDialog({
             *Category can be created and saved on the fly (many-to-one). All product creations flow through this dialog to keep master data curated.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <button type="submit" className="flex-1 rounded-full border border-brand-primary/60 bg-brand-primary/20 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-brand-primary dark:bg-brand-primary/30 dark:text-brand-light">
-              Create
+            <button
+              type="submit"
+              disabled={isSaving}
+              className="flex-1 rounded-full border border-brand-primary/60 bg-brand-primary/20 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-brand-primary disabled:cursor-not-allowed disabled:opacity-60 dark:bg-brand-primary/30 dark:text-brand-light"
+            >
+              {isSaving ? "Creating..." : "Create"}
             </button>
-            <button type="button" onClick={onClose} className="flex-1 rounded-full border border-brand-primary/40 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-brand-dark/70 dark:text-brand-light/80">
+            <button
+              type="button"
+              onClick={onClose}
+              disabled={isSaving}
+              className="flex-1 rounded-full border border-brand-primary/40 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-brand-dark/70 disabled:cursor-not-allowed disabled:opacity-60 dark:text-brand-light/80"
+            >
               Cancel
             </button>
           </div>

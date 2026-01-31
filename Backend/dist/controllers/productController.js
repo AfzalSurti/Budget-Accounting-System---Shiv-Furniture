@@ -1,11 +1,47 @@
 import { prisma } from "../config/prisma.js";
+import { Prisma } from "../generated/prisma/client.js";
 import { ApiError } from "../utils/apiError.js";
 export const createProduct = async (data) => {
-    return prisma.product.create({ data });
+    await prisma.company.upsert({
+        where: { id: data.companyId },
+        update: {},
+        create: {
+            id: data.companyId,
+            name: "Shiv Furniture",
+        },
+    });
+    let categoryId = data.categoryId ?? null;
+    const categoryName = data.categoryName?.trim();
+    if (!categoryId && categoryName) {
+        const category = await prisma.productCategory.upsert({
+            where: { companyId_name: { companyId: data.companyId, name: categoryName } },
+            update: {},
+            create: {
+                companyId: data.companyId,
+                name: categoryName,
+            },
+        });
+        categoryId = category.id;
+    }
+    const createData = {
+        companyId: data.companyId,
+        name: data.name,
+        categoryId,
+        sku: data.sku ?? null,
+        uom: data.uom ?? "unit",
+    };
+    if (data.salePrice !== undefined)
+        createData.salePrice = data.salePrice;
+    if (data.costPrice !== undefined)
+        createData.costPrice = data.costPrice;
+    if (data.isActive !== undefined)
+        createData.isActive = data.isActive;
+    return prisma.product.create({ data: createData });
 };
 export const listProducts = async (companyId) => {
     return prisma.product.findMany({
         where: { companyId },
+        include: { category: { select: { name: true } } },
         orderBy: { createdAt: "desc" },
     });
 };

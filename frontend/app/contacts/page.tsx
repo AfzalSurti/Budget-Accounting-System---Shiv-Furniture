@@ -1,10 +1,14 @@
 "use client";
 
 import { AppLayout } from "@/components/layout/app-layout";
-import { type ReactNode, useMemo, useState } from "react";
+import { DEFAULT_COMPANY_ID } from "@/config";
+import { apiGet, apiPost } from "@/lib/api";
+import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { Mail, MapPin, Phone, Plus, UploadCloud, X } from "lucide-react";
 
 type ContactStatus = "new" | "confirm" | "archived";
+
+type ContactType = "customer" | "vendor" | "both" | "internal";
 
 interface ContactRecord {
   id: string;
@@ -23,88 +27,129 @@ interface ContactRecord {
   avatarLabel?: string;
 }
 
-interface ContactDraft extends Omit<ContactRecord, "id" | "status"> {}
+interface ContactDraft extends Omit<ContactRecord, "id" | "status" | "tags"> {
+  contactType: ContactType;
+}
 
-const DEFAULT_TAGS = ["B2B", "MSME", "Retailer", "Local"];
+interface BackendContact {
+  id: string;
+  contactType: ContactType;
+  displayName: string;
+  email: string | null;
+  phone: string | null;
+  billingAddress?: unknown;
+  shippingAddress?: unknown;
+  isActive: boolean;
+}
 
-const INITIAL_CONTACTS: ContactRecord[] = [
-  {
-    id: "CON001",
-    name: "Bharat Industries Pvt. Ltd.",
-    email: "contact@bharatindustries.in",
-    phone: "+91 98765 43210",
-    address: {
-      street: "12 Industrial Area",
-      city: "Pune",
-      state: "MH",
-      country: "India",
-      postalCode: "411001",
-    },
-    tags: ["B2B", "MSME"],
-    status: "confirm",
-  },
-  {
-    id: "CON002",
-    name: "Sharma Traders",
-    email: "purchase@sharmatraders.in",
-    phone: "+91 91234 56789",
-    address: {
-      street: "7 MG Road",
-      city: "Bengaluru",
-      state: "KA",
-      country: "India",
-      postalCode: "560001",
-    },
-    tags: ["Retailer"],
-    status: "new",
-  },
-  {
-    id: "CON003",
-    name: "Kolkata Retail Hub",
-    email: "accounts@kolkataretail.in",
-    phone: "+91 99876 54321",
-    address: {
-      street: "88 Park Street",
-      city: "Kolkata",
-      state: "WB",
-      country: "India",
-      postalCode: "700016",
-    },
-    tags: ["Local", "Retailer"],
-    status: "confirm",
-  },
-  {
-    id: "CON004",
-    name: "Delhi Tech Solutions",
-    email: "billing@delhitech.in",
-    phone: "+91 90123 45678",
-    address: {
-      street: "59 Nehru Place",
-      city: "New Delhi",
-      state: "DL",
-      country: "India",
-      postalCode: "110019",
-    },
-    tags: ["B2B"],
-    status: "archived",
-  },
-];
+const EMPTY_ADDRESS = {
+  street: "",
+  city: "",
+  state: "",
+  country: "",
+  postalCode: "",
+};
+
+const toAddress = (value: unknown): ContactRecord["address"] => {
+  if (!value || typeof value !== "object") {
+    return { ...EMPTY_ADDRESS };
+  }
+  const address = value as Record<string, unknown>;
+  return {
+    street: typeof address.street === "string" ? address.street : "",
+    city: typeof address.city === "string" ? address.city : "",
+    state: typeof address.state === "string" ? address.state : "",
+    country: typeof address.country === "string" ? address.country : "",
+    postalCode: typeof address.postalCode === "string" ? address.postalCode : "",
+  };
+};
+
+const toTagLabels = (contactType: ContactType): string[] => {
+  switch (contactType) {
+    case "both":
+      return ["Customer", "Vendor"];
+    case "customer":
+      return ["Customer"];
+    case "vendor":
+      return ["Vendor"];
+    case "internal":
+      return ["Internal"];
+    default:
+      return [];
+  }
+};
+
+const mapContact = (contact: BackendContact): ContactRecord => {
+  const addressSource = contact.billingAddress ?? contact.shippingAddress;
+  return {
+    id: contact.id,
+    name: contact.displayName,
+    email: contact.email ?? "",
+    phone: contact.phone ?? "",
+    address: toAddress(addressSource),
+    tags: toTagLabels(contact.contactType),
+    status: contact.isActive ? "confirm" : "archived",
+  };
+};
+
+const buildAddressPayload = (address: ContactRecord["address"]) => {
+  const hasAnyValue = Object.values(address).some((value) => value.trim().length > 0);
+  return hasAnyValue ? { ...address } : null;
+};
 
 export default function ContactsPage() {
-  const [contacts, setContacts] = useState<ContactRecord[]>(INITIAL_CONTACTS);
+  const [contacts, setContacts] = useState<ContactRecord[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
 
   const filteredContacts = useMemo(() => contacts, [contacts]);
 
-  const handleCreateContact = (draft: ContactDraft) => {
-    const nextId = `CON${(contacts.length + 1).toString().padStart(3, "0")}`;
-    const record: ContactRecord = {
-      id: nextId,
-      status: "confirm",
-      ...draft,
-    };
-    setContacts((prev) => [...prev, record]);
-    setDialogOpen(false);
+  const loadContacts = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await apiGet<BackendContact[]>(
+        `/contacts?companyId=${DEFAULT_COMPANY_ID}`,
+      );
+      setContacts((data ?? []).map(mapContact));
+    } catch (loadError) {
+      const message = loadError instanceof Error ? loadError.message : "Failed to load contacts";
+      console.error("Failed to load contacts:", loadError);
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadContacts();
+  }, [loadContacts]);
+
+  const handleCreateContact = async (draft: ContactDraft) => {
+    setIsSaving(true);
+    setError(null);
+    const addressPayload = buildAddressPayload(draft.address);
+    try {
+      await apiPost<BackendContact, Record<string, unknown>>("/contacts", {
+        companyId: DEFAULT_COMPANY_ID,
+        contactType: draft.contactType,
+        displayName: draft.name,
+        email: draft.email.trim() ? draft.email.trim() : null,
+        phone: draft.phone.trim() ? draft.phone.trim() : null,
+        billingAddress: addressPayload,
+        shippingAddress: addressPayload,
+      });
+      await loadContacts();
+      setDialogOpen(false);
+    } catch (createError) {
+      const message = createError instanceof Error ? createError.message : "Failed to create contact";
+      console.error("Failed to create contact:", createError);
+      setError(message);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -132,73 +177,91 @@ export default function ContactsPage() {
               Click New to open the creation dialog
             </span>
           </div>
-          <div className="space-y-4">
-            {filteredContacts.map((contact) => (
-              <article
-                key={contact.id}
-                className="rounded-3xl border border-slate-200/60 bg-white/80 px-5 py-4 shadow-sm dark:border-slate-700 dark:bg-slate-800/70"
-              >
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.4em] text-brand-accent">{contact.id}</p>
-                    <h3 className="text-xl font-semibold text-slate-900 dark:text-white">{contact.name}</h3>
+          {error && (
+            <p className="mb-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+              {error}
+            </p>
+          )}
+          {loading ? (
+            <p className="rounded-3xl border border-dashed border-slate-300/60 px-5 py-10 text-center text-sm text-slate-500 dark:border-slate-600 dark:text-slate-400">
+              Loading contacts from the database...
+            </p>
+          ) : (
+            <div className="space-y-4">
+              {filteredContacts.map((contact) => (
+                <article
+                  key={contact.id}
+                  className="rounded-3xl border border-slate-200/60 bg-white/80 px-5 py-4 shadow-sm dark:border-slate-700 dark:bg-slate-800/70"
+                >
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.4em] text-brand-accent">{contact.id}</p>
+                      <h3 className="text-xl font-semibold text-slate-900 dark:text-white">{contact.name}</h3>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {contact.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-full border border-brand-primary/40 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-primary dark:border-brand-primary/40 dark:text-brand-light/80"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <div className="flex flex-wrap gap-2">
-                    {contact.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full border border-brand-primary/40 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-primary dark:border-brand-primary/40 dark:text-brand-light/80"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                  <div className="mt-4 grid gap-4 text-sm text-slate-600 dark:text-slate-300 md:grid-cols-3">
+                    <div className="flex items-center gap-2">
+                      <Mail className="h-4 w-4 text-brand-primary" />
+                      {contact.email}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Phone className="h-4 w-4 text-brand-primary" />
+                      {contact.phone}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <MapPin className="h-4 w-4 text-brand-primary" />
+                      {`${contact.address.city}, ${contact.address.state} • ${contact.address.country}`}
+                    </div>
                   </div>
-                </div>
-                <div className="mt-4 grid gap-4 text-sm text-slate-600 dark:text-slate-300 md:grid-cols-3">
-                  <div className="flex items-center gap-2">
-                    <Mail className="h-4 w-4 text-brand-primary" />
-                    {contact.email}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Phone className="h-4 w-4 text-brand-primary" />
-                    {contact.phone}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4 text-brand-primary" />
-                    {`${contact.address.city}, ${contact.address.state} • ${contact.address.country}`}
-                  </div>
-                </div>
-              </article>
-            ))}
-            {filteredContacts.length === 0 && (
-              <p className="rounded-3xl border border-dashed border-slate-300/60 px-5 py-10 text-center text-sm text-slate-500 dark:border-slate-600 dark:text-slate-400">
-                No contacts under this state yet. Use the New Contact dialog to create one.
-              </p>
-            )}
-          </div>
+                </article>
+              ))}
+              {filteredContacts.length === 0 && (
+                <p className="rounded-3xl border border-dashed border-slate-300/60 px-5 py-10 text-center text-sm text-slate-500 dark:border-slate-600 dark:text-slate-400">
+                  No contacts under this state yet. Use the New Contact dialog to create one.
+                </p>
+              )}
+            </div>
+          )}
         </section>
       </div>
       {dialogOpen && (
         <ContactDialog
           onClose={() => setDialogOpen(false)}
           onSubmit={handleCreateContact}
+          isSaving={isSaving}
         />
       )}
     </AppLayout>
   );
 }
 
-function ContactDialog({ onClose, onSubmit }: { onClose: () => void; onSubmit: (draft: ContactDraft) => void }) {
+function ContactDialog({
+  onClose,
+  onSubmit,
+  isSaving,
+}: {
+  onClose: () => void;
+  onSubmit: (draft: ContactDraft) => void;
+  isSaving: boolean;
+}) {
   const [form, setForm] = useState<ContactDraft>({
     name: "",
     email: "",
     phone: "",
+    contactType: "customer",
     address: { street: "", city: "", state: "", country: "", postalCode: "" },
-    tags: [],
     avatarLabel: "",
   });
-  const [availableTags, setAvailableTags] = useState(DEFAULT_TAGS);
-  const [tagDraft, setTagDraft] = useState("");
 
   const handleChange = (field: keyof ContactDraft, value: any) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -206,27 +269,6 @@ function ContactDialog({ onClose, onSubmit }: { onClose: () => void; onSubmit: (
 
   const handleAddressChange = (field: keyof ContactDraft["address"], value: string) => {
     setForm((prev) => ({ ...prev, address: { ...prev.address, [field]: value } }));
-  };
-
-  const toggleTag = (tag: string) => {
-    handleChange(
-      "tags",
-      form.tags.includes(tag)
-        ? form.tags.filter((t) => t !== tag)
-        : [...form.tags, tag]
-    );
-  };
-
-  const handleAddTag = () => {
-    const trimmed = tagDraft.trim();
-    if (!trimmed) return;
-    if (!availableTags.includes(trimmed)) {
-      setAvailableTags((prev) => [...prev, trimmed]);
-    }
-    if (!form.tags.includes(trimmed)) {
-      handleChange("tags", [...form.tags, trimmed]);
-    }
-    setTagDraft("");
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -252,6 +294,18 @@ function ContactDialog({ onClose, onSubmit }: { onClose: () => void; onSubmit: (
                 onChange={(e) => handleChange("name", e.target.value)}
                 className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 text-lg focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
               />
+            </FormField>
+            <FormField label="Contact Type">
+              <select
+                value={form.contactType}
+                onChange={(e) => handleChange("contactType", e.target.value as ContactType)}
+                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
+              >
+                <option value="customer">Customer</option>
+                <option value="vendor">Vendor</option>
+                <option value="both">Both</option>
+                <option value="internal">Internal</option>
+              </select>
             </FormField>
             <FormField label="Email">
               <input
@@ -307,36 +361,6 @@ function ContactDialog({ onClose, onSubmit }: { onClose: () => void; onSubmit: (
                 />
               </FormField>
             </div>
-            <div>
-              <div className="mb-2 text-sm font-semibold uppercase tracking-widest text-brand-dark/70 dark:text-brand-light/80">Tags</div>
-              <div className="flex flex-wrap gap-2">
-                {availableTags.map((tag) => (
-                  <button
-                    type="button"
-                    key={tag}
-                    onClick={() => toggleTag(tag)}
-                    className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide ${
-                      form.tags.includes(tag)
-                        ? "border-brand-primary/60 bg-brand-primary/20 text-brand-primary dark:border-brand-light/80 dark:bg-brand-primary/30 dark:text-brand-light"
-                        : "border-brand-primary/40 text-brand-dark/70 dark:text-brand-light/80"
-                    }`}
-                  >
-                    {tag}
-                  </button>
-                ))}
-              </div>
-              <div className="mt-3 flex gap-2">
-                <input
-                  value={tagDraft}
-                  onChange={(e) => setTagDraft(e.target.value)}
-                  placeholder="Add new tag on the fly"
-                  className="flex-1 rounded-full border border-brand-primary/40 bg-transparent px-3 py-2 text-sm focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
-                />
-                <button type="button" onClick={handleAddTag} className="rounded-full border border-brand-primary/40 px-4 py-2 text-sm font-semibold">
-                  Save Tag
-                </button>
-              </div>
-            </div>
           </div>
           <div className="space-y-6">
             <div className="rounded-3xl border border-brand-primary/40 p-6 text-center">
@@ -353,20 +377,19 @@ function ContactDialog({ onClose, onSubmit }: { onClose: () => void; onSubmit: (
                 {form.avatarLabel ? form.avatarLabel : "Select File"}
               </label>
             </div>
-            <p className="text-xs text-brand-dark/60 dark:text-brand-light/70">
-              *Tags can be created and saved on the fly (many-to-many). A contact can belong to multiple analytical segments.
-            </p>
             <div className="flex flex-col gap-3 sm:flex-row">
               <button
                 type="submit"
-                className="flex-1 rounded-full border border-brand-primary/60 bg-brand-primary/20 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-brand-primary dark:bg-brand-primary/30 dark:text-brand-light"
+                disabled={isSaving}
+                className="flex-1 rounded-full border border-brand-primary/60 bg-brand-primary/20 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-brand-primary disabled:cursor-not-allowed disabled:opacity-60 dark:bg-brand-primary/30 dark:text-brand-light"
               >
-                Create
+                {isSaving ? "Creating..." : "Create"}
               </button>
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 rounded-full border border-brand-primary/40 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-brand-dark/70 dark:text-brand-light/80"
+                disabled={isSaving}
+                className="flex-1 rounded-full border border-brand-primary/40 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-brand-dark/70 disabled:cursor-not-allowed disabled:opacity-60 dark:text-brand-light/80"
               >
                 Cancel
               </button>
