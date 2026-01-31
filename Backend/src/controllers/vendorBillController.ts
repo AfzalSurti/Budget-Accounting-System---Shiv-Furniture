@@ -48,8 +48,8 @@ export const createVendorBill = async (data: {
       });
 
       const productIds = Array.from(
-        new Set(data.lines.map((line) => line.productId).filter(Boolean)) as string[],
-      );
+        new Set(data.lines.map((line) => line.productId).filter(Boolean))
+      ) as string[];
       const products = productIds.length
         ? await tx.product.findMany({
             where: { id: { in: productIds } },

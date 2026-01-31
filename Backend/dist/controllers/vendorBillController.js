@@ -7,7 +7,6 @@ import { assertDocStatusTransition } from "../utils/workflow.js";
 import { renderDocumentPdf } from "../utils/pdf.js";
 export const createVendorBill = async (data) => {
     return prisma.$transaction(async (tx) => {
-        let totalAmount = 0;
         const contactTagIds = await getContactTagIds(data.vendorId);
         const bill = await tx.vendorBill.create({
             data: {
@@ -22,13 +21,19 @@ export const createVendorBill = async (data) => {
                 paymentState: "not_paid",
             },
         });
-        for (const line of data.lines) {
-            let categoryId = null;
-            if (line.productId) {
-                const product = await tx.product.findUnique({
-                    where: { id: line.productId },
-                });
-                categoryId = product?.categoryId ?? null;
+        const productIds = Array.from(new Set(data.lines.map((line) => line.productId).filter(Boolean)));
+        const products = productIds.length
+            ? await tx.product.findMany({
+                where: { id: { in: productIds } },
+                select: { id: true, categoryId: true },
+            })
+            : [];
+        const productMap = new Map(products.map((product) => [product.id, product]));
+        let totalAmount = 0;
+        const linePayloads = await Promise.all(data.lines.map(async (line) => {
+            const product = line.productId ? productMap.get(line.productId) : null;
+            if (line.productId && !product) {
+                throw new ApiError(400, "Invalid product");
             }
             const resolvedAnalytic = line.analyticAccountId
                 ? null
@@ -36,29 +41,30 @@ export const createVendorBill = async (data) => {
                     companyId: data.companyId,
                     docType: "vendor_bill",
                     productId: line.productId ?? null,
-                    categoryId,
+                    categoryId: product?.categoryId ?? null,
                     contactId: data.vendorId,
                     contactTagIds,
                 });
             const taxRate = line.taxRate ?? 0;
             const lineTotal = line.qty * line.unitPrice * (1 + taxRate / 100);
             totalAmount += lineTotal;
-            await tx.vendorBillLine.create({
-                data: {
-                    vendorBillId: bill.id,
-                    productId: line.productId ?? null,
-                    analyticAccountId: line.analyticAccountId ?? resolvedAnalytic?.analyticAccountId ?? null,
-                    autoAnalyticModelId: resolvedAnalytic?.modelId ?? null,
-                    autoAnalyticRuleId: resolvedAnalytic?.ruleId ?? null,
-                    matchedFieldsCount: resolvedAnalytic?.matchedFieldsCount ?? null,
-                    glAccountId: line.glAccountId ?? null,
-                    description: line.description ?? null,
-                    qty: line.qty,
-                    unitPrice: line.unitPrice,
-                    taxRate,
-                    lineTotal,
-                },
-            });
+            return {
+                vendorBillId: bill.id,
+                productId: line.productId ?? null,
+                analyticAccountId: line.analyticAccountId ?? resolvedAnalytic?.analyticAccountId ?? null,
+                autoAnalyticModelId: resolvedAnalytic?.modelId ?? null,
+                autoAnalyticRuleId: resolvedAnalytic?.ruleId ?? null,
+                matchedFieldsCount: resolvedAnalytic?.matchedFieldsCount ?? null,
+                glAccountId: line.glAccountId ?? null,
+                description: line.description ?? null,
+                qty: line.qty,
+                unitPrice: line.unitPrice,
+                taxRate,
+                lineTotal,
+            };
+        }));
+        if (linePayloads.length > 0) {
+            await tx.vendorBillLine.createMany({ data: linePayloads });
         }
         return tx.vendorBill.update({
             where: { id: bill.id },
@@ -67,7 +73,7 @@ export const createVendorBill = async (data) => {
                 paymentState: calculatePaymentStatus(0, totalAmount),
             },
         });
-    });
+    }, { timeout: 15000 });
 };
 export const createVendorBillFromPO = async (poId, billNo, billDate) => {
     return prisma.$transaction(async (tx) => {
