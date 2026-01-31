@@ -31,66 +31,29 @@ const INITIAL_PRODUCTS: ProductRecord[] = [
   { id: "PRD004", name: "Neem Wood Bed Frame", category: "Bedroom", salesPrice: 28990, purchasePrice: 21000, status: "archived" },
 ];
 
-const FILTER_TABS: { label: string; value: ProductStatus | "all" }[] = [
-  { label: "New", value: "new" },
-  { label: "Confirm", value: "confirm" },
-  { label: "Archived", value: "archived" },
-];
-
 export default function ProductsPage() {
   const [products, setProducts] = useState<ProductRecord[]>(INITIAL_PRODUCTS);
   const [categories, setCategories] = useState(DEFAULT_CATEGORIES);
-  const [activeTab, setActiveTab] = useState<ProductStatus | "all">("confirm");
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const filteredProducts = useMemo(() => {
-    if (activeTab === "all") return products;
-    return products.filter((product) => product.status === activeTab);
-  }, [products, activeTab]);
+  const filteredProducts = useMemo(() => products, [products]);
 
   const handleCreateProduct = (draft: ProductDraft) => {
     const nextId = `PRD${(products.length + 1).toString().padStart(3, "0")}`;
     const record: ProductRecord = { id: nextId, status: "confirm", ...draft };
     setProducts((prev) => [...prev, record]);
-    setActiveTab("confirm");
     setDialogOpen(false);
   };
 
   return (
     <AppLayout>
       <div className="space-y-8">
-        <header className="rounded-[32px] border border-pink-200/30 bg-slate-900/95 p-6 text-pink-100 shadow-[0_25px_80px_rgba(15,23,42,0.45)]">
-          <div className="flex flex-wrap gap-3 text-sm font-semibold uppercase tracking-wide">
-            {FILTER_TABS.map((tab) => (
-              <button
-                key={tab.value}
-                onClick={() => setActiveTab(tab.value)}
-                className={`rounded-full border px-5 py-2 transition ${
-                  activeTab === tab.value
-                    ? "border-pink-300 bg-pink-300/10 text-pink-50"
-                    : "border-pink-200/30 text-pink-200 hover:border-pink-200/60"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-            <div className="ml-auto flex gap-3">
-              <button className="rounded-full border border-pink-200/30 px-5 py-2 text-pink-200 hover:border-pink-200/60">
-                Home
-              </button>
-              <button className="rounded-full border border-pink-200/30 px-5 py-2 text-pink-200 hover:border-pink-200/60">
-                Back
-              </button>
-            </div>
-          </div>
-          <div className="mt-6 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-sm uppercase tracking-[0.3em] text-pink-300">Master Data</p>
-              <h1 className="text-3xl font-semibold text-pink-50">Products</h1>
-            </div>
+        <header className="rounded-[32px] border border-brand-primary/20 bg-white p-6 text-brand-dark shadow-[0_25px_80px_rgba(15,23,42,0.12)] dark:border-brand-primary/30 dark:bg-slate-900/95 dark:text-brand-light dark:shadow-[0_25px_80px_rgba(15,23,42,0.45)]">
+          <div className="mt-6 relative flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:justify-center">
+            <h1 className="text-center text-3xl font-semibold text-brand-dark dark:text-brand-light">Products</h1>
             <button
               onClick={() => setDialogOpen(true)}
-              className="inline-flex items-center gap-2 rounded-full border border-pink-200/40 bg-pink-500/20 px-6 py-3 text-sm font-semibold text-pink-50 transition hover:bg-pink-500/30"
+              className="inline-flex items-center gap-2 rounded-full border border-brand-primary/40 bg-brand-primary/10 px-6 py-3 text-sm font-semibold text-brand-primary transition hover:bg-brand-primary/20 dark:bg-brand-primary/20 dark:text-brand-light dark:hover:bg-brand-primary/30 sm:absolute sm:right-0"
             >
               <Plus className="h-4 w-4" />
               New Product
@@ -98,35 +61,35 @@ export default function ProductsPage() {
           </div>
         </header>
 
-        <section className="rounded-[32px] border border-pink-100/40 bg-black text-pink-100 shadow-[0_25px_80px_rgba(0,0,0,0.35)]">
-          <div className="rounded-t-[32px] border-b border-pink-200/40 px-8 py-4 text-sm uppercase tracking-[0.4em]">
+        <section className="rounded-[32px] border border-brand-primary/20 bg-white text-brand-dark shadow-[0_25px_80px_rgba(15,23,42,0.12)] dark:bg-black dark:text-brand-light dark:shadow-[0_25px_80px_rgba(0,0,0,0.35)]">
+          <div className="rounded-t-[32px] border-b border-brand-primary/30 px-8 py-4 text-sm uppercase tracking-[0.4em]">
             Product Name
           </div>
-          <div className="divide-y divide-pink-200/20">
+          <div className="divide-y divide-brand-primary/20">
             {filteredProducts.map((product) => (
               <article key={product.id} className="grid gap-4 px-8 py-5 text-sm md:grid-cols-4">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.4em] text-pink-400">{product.id}</p>
+                  <p className="text-xs uppercase tracking-[0.4em] text-brand-accent">{product.id}</p>
                   <p className="text-lg font-semibold">{product.name}</p>
-                  <p className="text-xs text-pink-300">Category: {product.category}</p>
+                  <p className="text-xs text-brand-light/80">Category: {product.category}</p>
                 </div>
-                <div className="text-pink-200">
-                  <p className="text-xs uppercase tracking-[0.4em] text-pink-400">Sales Price</p>
+                <div className="text-brand-dark/70 dark:text-brand-light/80">
+                  <p className="text-xs uppercase tracking-[0.4em] text-brand-accent">Sales Price</p>
                   <p className="mt-1 text-2xl font-semibold">{formatPrice(product.salesPrice)}</p>
                 </div>
-                <div className="text-pink-200">
-                  <p className="text-xs uppercase tracking-[0.4em] text-pink-400">Purchase Price</p>
+                <div className="text-brand-dark/70 dark:text-brand-light/80">
+                  <p className="text-xs uppercase tracking-[0.4em] text-brand-accent">Purchase Price</p>
                   <p className="mt-1 text-2xl font-semibold">{formatPrice(product.purchasePrice)}</p>
                 </div>
                 <div className="flex items-center justify-end">
-                  <span className="rounded-full border border-pink-200/40 px-4 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-pink-200">
+                  <span className="rounded-full border border-brand-primary/40 px-4 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-brand-dark/70 dark:text-brand-light/80">
                     {product.status}
                   </span>
                 </div>
               </article>
             ))}
             {filteredProducts.length === 0 && (
-              <p className="px-8 py-10 text-center text-sm text-pink-300">
+              <p className="px-8 py-10 text-center text-sm text-brand-dark/70 dark:text-brand-light/80">
                 No products under this state yet. Use the New Product dialog to create one.
               </p>
             )}
@@ -203,10 +166,10 @@ function ProductDialog({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-sm">
-      <div className="w-full max-w-3xl rounded-[36px] border border-pink-200/40 bg-slate-900 p-8 text-pink-100 shadow-[0_25px_120px_rgba(15,23,42,0.8)]">
-        <div className="flex items-center justify-between border-b border-pink-200/20 pb-4">
+      <div className="w-full max-w-3xl rounded-[36px] border border-brand-primary/30 bg-white p-8 text-brand-dark shadow-[0_25px_120px_rgba(15,23,42,0.18)] dark:border-brand-primary/40 dark:bg-slate-900 dark:text-brand-light dark:shadow-[0_25px_120px_rgba(15,23,42,0.8)]">
+        <div className="flex items-center justify-between border-b border-brand-primary/20 pb-4">
           <h2 className="text-2xl font-semibold">Create Product</h2>
-          <button onClick={onClose} aria-label="Close dialog" className="rounded-full border border-pink-200/40 p-2 hover:bg-pink-500/10">
+          <button onClick={onClose} aria-label="Close dialog" className="rounded-full border border-brand-primary/40 p-2 hover:bg-brand-primary/10">
             <X className="h-4 w-4" />
           </button>
         </div>
@@ -217,14 +180,14 @@ function ProductDialog({
                 required
                 value={form.name}
                 onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
-                className="w-full border-b border-dashed border-pink-300 bg-transparent px-1 py-2 text-lg focus:border-pink-100 focus:outline-none"
+                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 text-lg focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
               />
             </FormField>
             <FormField label="Category">
               <select
                 value={form.category}
                 onChange={(e) => setForm((prev) => ({ ...prev, category: e.target.value }))}
-                className="w-full rounded-full border border-pink-200/40 bg-transparent px-4 py-2 text-sm focus:border-pink-100 focus:outline-none"
+                className="w-full rounded-full border border-brand-primary/40 bg-transparent px-4 py-2 text-sm focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
               >
                 {categoryOptions.map((option) => (
                   <option key={option} value={option} className="bg-slate-900">
@@ -237,9 +200,9 @@ function ProductDialog({
                   value={categoryDraft}
                   onChange={(e) => setCategoryDraft(e.target.value)}
                   placeholder="Create & Save on the fly"
-                  className="flex-1 rounded-full border border-pink-200/40 bg-transparent px-3 py-2 text-sm focus:border-pink-100 focus:outline-none"
+                  className="flex-1 rounded-full border border-brand-primary/40 bg-transparent px-3 py-2 text-sm focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
                 />
-                <button type="button" onClick={handleAddCategory} className="rounded-full border border-pink-200/40 px-4 py-2 text-sm font-semibold">
+                <button type="button" onClick={handleAddCategory} className="rounded-full border border-brand-primary/40 px-4 py-2 text-sm font-semibold">
                   Save
                 </button>
               </div>
@@ -252,9 +215,9 @@ function ProductDialog({
                 step="0.01"
                 value={form.salesPrice}
                 onChange={(e) => setForm((prev) => ({ ...prev, salesPrice: e.target.value }))}
-                className="w-full border-b border-dashed border-pink-300 bg-transparent px-1 py-2 text-lg focus:border-pink-100 focus:outline-none"
+                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 text-lg focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
               />
-              <p className="mt-1 text-xs text-pink-300">Shown as Rs value inside the catalog.</p>
+              <p className="mt-1 text-xs text-brand-dark/60 dark:text-brand-light/80">Shown as Rs value inside the catalog.</p>
             </FormField>
             <FormField label="Purchase Price">
               <input
@@ -264,27 +227,27 @@ function ProductDialog({
                 step="0.01"
                 value={form.purchasePrice}
                 onChange={(e) => setForm((prev) => ({ ...prev, purchasePrice: e.target.value }))}
-                className="w-full border-b border-dashed border-pink-300 bg-transparent px-1 py-2 text-lg focus:border-pink-100 focus:outline-none"
+                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 text-lg focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
               />
             </FormField>
           </div>
-          <div className="rounded-3xl border border-pink-200/40 p-6 text-center">
-            <p className="text-xs uppercase tracking-[0.4em] text-pink-200">Upload image</p>
-            <p className="mt-2 text-xs text-pink-300">Optional reference render</p>
-            <label className="mt-4 inline-flex items-center gap-2 rounded-full border border-pink-200/60 px-5 py-2 text-sm font-semibold">
+          <div className="rounded-3xl border border-brand-primary/40 p-6 text-center">
+            <p className="text-xs uppercase tracking-[0.4em] text-brand-dark/70 dark:text-brand-light/80">Upload image</p>
+            <p className="mt-2 text-xs text-brand-dark/60 dark:text-brand-light/70">Optional reference render</p>
+            <label className="mt-4 inline-flex items-center gap-2 rounded-full border border-brand-primary/60 px-5 py-2 text-sm font-semibold">
               <UploadCloud className="h-4 w-4" />
               <input type="file" className="hidden" accept="image/*" />
               Attach File
             </label>
           </div>
-          <p className="text-xs text-pink-300">
+          <p className="text-xs text-brand-dark/60 dark:text-brand-light/70">
             *Category can be created and saved on the fly (many-to-one). All product creations flow through this dialog to keep master data curated.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <button type="submit" className="flex-1 rounded-full border border-pink-200/60 bg-pink-500/30 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-pink-50">
+            <button type="submit" className="flex-1 rounded-full border border-brand-primary/60 bg-brand-primary/20 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-brand-primary dark:bg-brand-primary/30 dark:text-brand-light">
               Create
             </button>
-            <button type="button" onClick={onClose} className="flex-1 rounded-full border border-pink-200/40 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-pink-200">
+            <button type="button" onClick={onClose} className="flex-1 rounded-full border border-brand-primary/40 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-brand-dark/70 dark:text-brand-light/80">
               Cancel
             </button>
           </div>
@@ -296,7 +259,7 @@ function ProductDialog({
 
 function FormField({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <label className="block text-xs font-semibold uppercase tracking-[0.4em] text-pink-200">
+    <label className="block text-xs font-semibold uppercase tracking-[0.4em] text-brand-dark/70 dark:text-brand-light/80">
       {label}
       <div className="mt-1 space-y-2">{children}</div>
     </label>

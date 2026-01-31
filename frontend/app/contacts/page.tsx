@@ -90,21 +90,11 @@ const INITIAL_CONTACTS: ContactRecord[] = [
   },
 ];
 
-const FILTER_TABS: { label: string; value: ContactStatus | "all" }[] = [
-  { label: "New", value: "new" },
-  { label: "Confirm", value: "confirm" },
-  { label: "Archived", value: "archived" },
-];
-
 export default function ContactsPage() {
   const [contacts, setContacts] = useState<ContactRecord[]>(INITIAL_CONTACTS);
-  const [activeTab, setActiveTab] = useState<ContactStatus | "all">("confirm");
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const filteredContacts = useMemo(() => {
-    if (activeTab === "all") return contacts;
-    return contacts.filter((contact) => contact.status === activeTab);
-  }, [contacts, activeTab]);
+  const filteredContacts = useMemo(() => contacts, [contacts]);
 
   const handleCreateContact = (draft: ContactDraft) => {
     const nextId = `CON${(contacts.length + 1).toString().padStart(3, "0")}`;
@@ -114,45 +104,18 @@ export default function ContactsPage() {
       ...draft,
     };
     setContacts((prev) => [...prev, record]);
-    setActiveTab("confirm");
     setDialogOpen(false);
   };
 
   return (
     <AppLayout>
       <div className="space-y-8">
-        <header className="rounded-[32px] border border-pink-200/30 bg-slate-900/95 p-6 text-pink-100 shadow-[0_25px_80px_rgba(15,23,42,0.45)]">
-          <div className="flex flex-wrap gap-3 text-sm font-semibold uppercase tracking-wide">
-            {FILTER_TABS.map((tab) => (
-              <button
-                key={tab.value}
-                onClick={() => setActiveTab(tab.value)}
-                className={`rounded-full border px-5 py-2 transition ${
-                  activeTab === tab.value
-                    ? "border-pink-300 bg-pink-300/10 text-pink-50"
-                    : "border-pink-200/30 text-pink-200 hover:border-pink-200/60"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-            <div className="ml-auto flex gap-3">
-              <button className="rounded-full border border-pink-200/30 px-5 py-2 text-pink-200 hover:border-pink-200/60">
-                Home
-              </button>
-              <button className="rounded-full border border-pink-200/30 px-5 py-2 text-pink-200 hover:border-pink-200/60">
-                Back
-              </button>
-            </div>
-          </div>
-          <div className="mt-6 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-sm uppercase tracking-[0.3em] text-pink-300">Analytic Master</p>
-              <h1 className="text-3xl font-semibold text-pink-50">Contacts</h1>
-            </div>
+        <header className="rounded-[32px] border border-brand-primary/20 bg-white p-6 text-brand-dark shadow-[0_25px_80px_rgba(15,23,42,0.12)] dark:border-brand-primary/30 dark:bg-slate-900/95 dark:text-brand-light dark:shadow-[0_25px_80px_rgba(15,23,42,0.45)]">
+          <div className="mt-6 relative flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:justify-center">
+            <h1 className="text-center text-3xl font-semibold text-brand-dark dark:text-brand-light">Contacts</h1>
             <button
               onClick={() => setDialogOpen(true)}
-              className="inline-flex items-center gap-2 rounded-full border border-pink-200/40 bg-pink-500/20 px-6 py-3 text-sm font-semibold text-pink-50 transition hover:bg-pink-500/30"
+              className="inline-flex items-center gap-2 rounded-full border border-brand-primary/40 bg-brand-primary/10 px-6 py-3 text-sm font-semibold text-brand-primary transition hover:bg-brand-primary/20 dark:bg-brand-primary/20 dark:text-brand-light dark:hover:bg-brand-primary/30 sm:absolute sm:right-0"
             >
               <Plus className="h-4 w-4" />
               New Contact
@@ -163,7 +126,7 @@ export default function ContactsPage() {
         <section className="rounded-[32px] border border-slate-200/40 bg-white/70 p-6 shadow-lg shadow-slate-200/40 dark:border-slate-700/60 dark:bg-slate-900/60">
           <div className="mb-6 flex items-center justify-between">
             <h2 className="text-lg font-semibold text-slate-900 dark:text-white">
-              {activeTab === "all" ? "All Contacts" : `${activeTab.charAt(0).toUpperCase()}${activeTab.slice(1)} Contacts`} ({filteredContacts.length})
+              All Contacts ({filteredContacts.length})
             </h2>
             <span className="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">
               Click New to open the creation dialog
@@ -177,14 +140,14 @@ export default function ContactsPage() {
               >
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <p className="text-xs uppercase tracking-[0.4em] text-pink-500">{contact.id}</p>
+                    <p className="text-xs uppercase tracking-[0.4em] text-brand-accent">{contact.id}</p>
                     <h3 className="text-xl font-semibold text-slate-900 dark:text-white">{contact.name}</h3>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {contact.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="rounded-full border border-pink-200/70 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-pink-600 dark:border-pink-400/40 dark:text-pink-300"
+                        className="rounded-full border border-brand-primary/40 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-primary dark:border-brand-primary/40 dark:text-brand-light/80"
                       >
                         {tag}
                       </span>
@@ -193,15 +156,15 @@ export default function ContactsPage() {
                 </div>
                 <div className="mt-4 grid gap-4 text-sm text-slate-600 dark:text-slate-300 md:grid-cols-3">
                   <div className="flex items-center gap-2">
-                    <Mail className="h-4 w-4 text-pink-500" />
+                    <Mail className="h-4 w-4 text-brand-primary" />
                     {contact.email}
                   </div>
                   <div className="flex items-center gap-2">
-                    <Phone className="h-4 w-4 text-pink-500" />
+                    <Phone className="h-4 w-4 text-brand-primary" />
                     {contact.phone}
                   </div>
                   <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4 text-pink-500" />
+                    <MapPin className="h-4 w-4 text-brand-primary" />
                     {`${contact.address.city}, ${contact.address.state} • ${contact.address.country}`}
                   </div>
                 </div>
@@ -273,10 +236,10 @@ function ContactDialog({ onClose, onSubmit }: { onClose: () => void; onSubmit: (
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-sm">
-      <div className="w-full max-w-5xl rounded-[36px] border border-pink-200/40 bg-slate-900 p-8 text-pink-100 shadow-[0_25px_120px_rgba(15,23,42,0.8)]">
-        <div className="flex items-center justify-between border-b border-pink-200/20 pb-4">
+      <div className="w-full max-w-5xl rounded-[36px] border border-brand-primary/30 bg-white p-8 text-brand-dark shadow-[0_25px_120px_rgba(15,23,42,0.18)] dark:border-brand-primary/40 dark:bg-slate-900 dark:text-brand-light dark:shadow-[0_25px_120px_rgba(15,23,42,0.8)]">
+        <div className="flex items-center justify-between border-b border-brand-primary/20 pb-4">
           <h2 className="text-2xl font-semibold">Create Contact</h2>
-          <button onClick={onClose} aria-label="Close dialog" className="rounded-full border border-pink-200/40 p-2 hover:bg-pink-500/10">
+          <button onClick={onClose} aria-label="Close dialog" className="rounded-full border border-brand-primary/40 p-2 hover:bg-brand-primary/10">
             <X className="h-4 w-4" />
           </button>
         </div>
@@ -287,7 +250,7 @@ function ContactDialog({ onClose, onSubmit }: { onClose: () => void; onSubmit: (
                 required
                 value={form.name}
                 onChange={(e) => handleChange("name", e.target.value)}
-                className="w-full border-b border-dashed border-pink-300 bg-transparent px-1 py-2 text-lg focus:border-pink-100 focus:outline-none"
+                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 text-lg focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
               />
             </FormField>
             <FormField label="Email">
@@ -296,7 +259,7 @@ function ContactDialog({ onClose, onSubmit }: { onClose: () => void; onSubmit: (
                 type="email"
                 value={form.email}
                 onChange={(e) => handleChange("email", e.target.value)}
-                className="w-full border-b border-dashed border-pink-300 bg-transparent px-1 py-2 focus:border-pink-100 focus:outline-none"
+                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
               />
             </FormField>
             <FormField label="Phone">
@@ -304,7 +267,7 @@ function ContactDialog({ onClose, onSubmit }: { onClose: () => void; onSubmit: (
                 required
                 value={form.phone}
                 onChange={(e) => handleChange("phone", e.target.value)}
-                className="w-full border-b border-dashed border-pink-300 bg-transparent px-1 py-2 focus:border-pink-100 focus:outline-none"
+                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
               />
             </FormField>
             <div className="grid gap-4 md:grid-cols-2">
@@ -312,40 +275,40 @@ function ContactDialog({ onClose, onSubmit }: { onClose: () => void; onSubmit: (
                 <input
                   value={form.address.street}
                   onChange={(e) => handleAddressChange("street", e.target.value)}
-                  className="w-full border-b border-dashed border-pink-300 bg-transparent px-1 py-2 focus:border-pink-100 focus:outline-none"
+                  className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
                 />
               </FormField>
               <FormField label="City">
                 <input
                   value={form.address.city}
                   onChange={(e) => handleAddressChange("city", e.target.value)}
-                  className="w-full border-b border-dashed border-pink-300 bg-transparent px-1 py-2 focus:border-pink-100 focus:outline-none"
+                  className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
                 />
               </FormField>
               <FormField label="State">
                 <input
                   value={form.address.state}
                   onChange={(e) => handleAddressChange("state", e.target.value)}
-                  className="w-full border-b border-dashed border-pink-300 bg-transparent px-1 py-2 focus:border-pink-100 focus:outline-none"
+                  className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
                 />
               </FormField>
               <FormField label="Country">
                 <input
                   value={form.address.country}
                   onChange={(e) => handleAddressChange("country", e.target.value)}
-                  className="w-full border-b border-dashed border-pink-300 bg-transparent px-1 py-2 focus:border-pink-100 focus:outline-none"
+                  className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
                 />
               </FormField>
               <FormField label="Pincode">
                 <input
                   value={form.address.postalCode}
                   onChange={(e) => handleAddressChange("postalCode", e.target.value)}
-                  className="w-full border-b border-dashed border-pink-300 bg-transparent px-1 py-2 focus:border-pink-100 focus:outline-none"
+                  className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
                 />
               </FormField>
             </div>
             <div>
-              <div className="mb-2 text-sm font-semibold uppercase tracking-widest text-pink-200">Tags</div>
+              <div className="mb-2 text-sm font-semibold uppercase tracking-widest text-brand-dark/70 dark:text-brand-light/80">Tags</div>
               <div className="flex flex-wrap gap-2">
                 {availableTags.map((tag) => (
                   <button
@@ -354,8 +317,8 @@ function ContactDialog({ onClose, onSubmit }: { onClose: () => void; onSubmit: (
                     onClick={() => toggleTag(tag)}
                     className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide ${
                       form.tags.includes(tag)
-                        ? "border-pink-100 bg-pink-500/30 text-pink-50"
-                        : "border-pink-200/40 text-pink-200"
+                        ? "border-brand-primary/60 bg-brand-primary/20 text-brand-primary dark:border-brand-light/80 dark:bg-brand-primary/30 dark:text-brand-light"
+                        : "border-brand-primary/40 text-brand-dark/70 dark:text-brand-light/80"
                     }`}
                   >
                     {tag}
@@ -367,19 +330,19 @@ function ContactDialog({ onClose, onSubmit }: { onClose: () => void; onSubmit: (
                   value={tagDraft}
                   onChange={(e) => setTagDraft(e.target.value)}
                   placeholder="Add new tag on the fly"
-                  className="flex-1 rounded-full border border-pink-200/40 bg-transparent px-3 py-2 text-sm focus:border-pink-100 focus:outline-none"
+                  className="flex-1 rounded-full border border-brand-primary/40 bg-transparent px-3 py-2 text-sm focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
                 />
-                <button type="button" onClick={handleAddTag} className="rounded-full border border-pink-200/40 px-4 py-2 text-sm font-semibold">
+                <button type="button" onClick={handleAddTag} className="rounded-full border border-brand-primary/40 px-4 py-2 text-sm font-semibold">
                   Save Tag
                 </button>
               </div>
             </div>
           </div>
           <div className="space-y-6">
-            <div className="rounded-3xl border border-pink-200/40 p-6 text-center">
-              <p className="text-sm uppercase tracking-[0.4em] text-pink-200">Upload image</p>
-              <p className="mt-2 text-xs text-pink-300">PNG, JPG up to 5MB</p>
-              <label className="mt-6 inline-flex items-center gap-2 rounded-full border border-pink-200/60 px-5 py-2 text-sm font-semibold">
+            <div className="rounded-3xl border border-brand-primary/40 p-6 text-center">
+              <p className="text-sm uppercase tracking-[0.4em] text-brand-dark/70 dark:text-brand-light/80">Upload image</p>
+              <p className="mt-2 text-xs text-brand-dark/60 dark:text-brand-light/70">PNG, JPG up to 5MB</p>
+              <label className="mt-6 inline-flex items-center gap-2 rounded-full border border-brand-primary/60 px-5 py-2 text-sm font-semibold">
                 <UploadCloud className="h-4 w-4" />
                 <input
                   type="file"
@@ -390,20 +353,20 @@ function ContactDialog({ onClose, onSubmit }: { onClose: () => void; onSubmit: (
                 {form.avatarLabel ? form.avatarLabel : "Select File"}
               </label>
             </div>
-            <p className="text-xs text-pink-300">
+            <p className="text-xs text-brand-dark/60 dark:text-brand-light/70">
               *Tags can be created and saved on the fly (many-to-many). A contact can belong to multiple analytical segments.
             </p>
             <div className="flex flex-col gap-3 sm:flex-row">
               <button
                 type="submit"
-                className="flex-1 rounded-full border border-pink-200/60 bg-pink-500/30 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-pink-50"
+                className="flex-1 rounded-full border border-brand-primary/60 bg-brand-primary/20 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-brand-primary dark:bg-brand-primary/30 dark:text-brand-light"
               >
                 Create
               </button>
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 rounded-full border border-pink-200/40 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-pink-200"
+                className="flex-1 rounded-full border border-brand-primary/40 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-brand-dark/70 dark:text-brand-light/80"
               >
                 Cancel
               </button>
@@ -417,7 +380,7 @@ function ContactDialog({ onClose, onSubmit }: { onClose: () => void; onSubmit: (
 
 function FormField({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <label className="block text-xs font-semibold uppercase tracking-[0.4em] text-pink-200">
+    <label className="block text-xs font-semibold uppercase tracking-[0.4em] text-brand-dark/70 dark:text-brand-light/80">
       {label}
       <div className="mt-1">{children}</div>
     </label>

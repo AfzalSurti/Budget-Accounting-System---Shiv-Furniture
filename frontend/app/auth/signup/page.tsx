@@ -11,7 +11,7 @@ import type { UserRole } from "@/lib/types/user";
 
 export default function SignupPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [selectedRole, setSelectedRole] = useState<UserRole>("PORTAL");
+  const selectedRole: UserRole = "PORTAL";
   const [email, setEmail] = useState("");
   const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
@@ -26,9 +26,6 @@ export default function SignupPage() {
     setError(null);
 
     try {
-      if (selectedRole === "ADMIN") {
-        throw new Error("Admin signup is restricted. Please contact your administrator.");
-      }
       if (loginId.length !== 6) {
         throw new Error("Login ID must be exactly 6 characters.");
       }
@@ -155,28 +152,6 @@ export default function SignupPage() {
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
-                  Role
-                </label>
-                <div className="relative">
-                  <select
-                    value={selectedRole}
-                    onChange={(e) => setSelectedRole(e.target.value as UserRole)}
-                    className="w-full appearance-none px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary/40 focus:border-brand-primary pr-10"
-                  >
-                    <option value="PORTAL">Portal User</option>
-                    <option value="ADMIN">Admin</option>
-                  </select>
-                  <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-slate-400">
-                    <ArrowRight className="w-4 h-4 rotate-90" />
-                  </span>
-                </div>
-                <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
-                  Choose the portal role for self-service access. Admin signup requires approval.
-                </p>
-              </div>
-
-              <div>
                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                   Full Name
                 </label>
@@ -221,19 +196,6 @@ export default function SignupPage() {
                 />
               </div>
 
-              {selectedRole === "ADMIN" && (
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                    Company Name
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-primary/40 focus:border-brand-primary transition-all duration-200"
-                    placeholder="Your company name"
-                  />
-                </div>
-              )}
 
               <div>
                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">

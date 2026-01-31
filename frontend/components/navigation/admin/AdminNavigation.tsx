@@ -16,8 +16,8 @@ import {
   CreditCard, 
   Users, 
   Database, 
-  Brain, 
   FileBarChart,
+  LineChart,
   Menu, 
   X, 
   LogOut,
@@ -38,8 +38,8 @@ const iconMap: Record<string, any> = {
   '/admin/vendor-bills': Receipt,
   '/admin/payments': CreditCard,
   '/admin/contacts': Users,
+  '/analytics': LineChart,
   '/admin/master-data': Database,
-  '/admin/ai-insights': Brain,
   '/admin/reports': FileBarChart,
 };
 

@@ -14,8 +14,8 @@ export const adminRoutes: Route[] = [
   { path: '/admin/vendor-bills', label: 'Vendor Bills' },
   { path: '/admin/payments', label: 'Payments' },
   { path: '/admin/contacts', label: 'Contacts' },
+  { path: '/analytics', label: 'Cost Centers' },
   { path: '/admin/master-data', label: 'Master Data' },
-  { path: '/admin/ai-insights', label: 'AI Insights' },
   { path: '/admin/reports', label: 'Reports' },
 ];
 

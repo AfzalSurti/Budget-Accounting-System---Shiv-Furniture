@@ -1,6 +1,7 @@
 "use client";
 
 import { AppLayout } from "@/components/layout/app-layout";
+import Link from "next/link";
 
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { TrendingUp, AlertCircle, Target, IndianRupee, TrendingDown, ArrowUpRight, ArrowDownRight } from "lucide-react";
@@ -294,7 +295,15 @@ export default function DashboardPage() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="card p-6 hover:shadow-xl transition-shadow duration-300"
         >
-          <h3 className="text-lg font-semibold text-brand-dark dark:text-white mb-4">AI-Powered Insights</h3>
+          <div className="mb-4 flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-brand-dark dark:text-white">AI-Powered Insights</h3>
+            <Link
+              href="/admin/ai-insights"
+              className="text-sm font-semibold text-brand-primary hover:text-brand-accent transition-colors"
+            >
+              View AI Insights
+            </Link>
+          </div>
           <div className="space-y-3">
             {[
               { type: "Opportunity", title: "Cost Optimization", desc: "Potential savings identified", color: "emerald" },
