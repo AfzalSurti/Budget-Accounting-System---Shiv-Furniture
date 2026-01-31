@@ -4,6 +4,7 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { Download, FileText, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
+import { exportReportToPDF } from "@/lib/pdf-utils";
 
 const reportData = [
   { month: "Jan", revenue: 185000, expenses: 142000, profit: 43000 },
@@ -23,6 +24,25 @@ const costCenterReport = [
 ];
 
 export default function ReportsPage() {
+  const handleExportPDF = () => {
+    exportReportToPDF({
+      title: "Financial Summary Report",
+      date: new Date().toLocaleDateString('en-IN', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      }),
+      companyName: "Shiv Furniture",
+      data: reportData,
+      columns: [
+        { header: "Month", dataKey: "month" },
+        { header: "Revenue (₹)", dataKey: "revenue" },
+        { header: "Expenses (₹)", dataKey: "expenses" },
+        { header: "Profit (₹)", dataKey: "profit" },
+      ],
+    });
+  };
+
   return (
     <AppLayout>
       {/* Page Header - Official Report Style */}
@@ -40,7 +60,10 @@ export default function ReportsPage() {
             </p>
           </div>
           <div>
-            <button className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-primary text-white rounded-lg font-medium hover:bg-brand-primary/90 hover:shadow-md transition-all duration-200 shadow-sm active:scale-[0.98]">
+            <button 
+              onClick={handleExportPDF}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-primary text-white rounded-lg font-medium hover:bg-brand-primary/90 hover:shadow-md transition-all duration-200 shadow-sm active:scale-[0.98]"
+            >
               <Download className="w-4 h-4" />
               Export Report
             </button>

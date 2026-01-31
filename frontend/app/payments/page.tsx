@@ -5,7 +5,8 @@ import { DataTable } from "@/components/ui/data-table";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { DEFAULT_COMPANY_ID } from "@/config";
 import { apiGet } from "@/lib/api";
-import { Plus } from "lucide-react";
+import { exportTableToPDF } from "@/lib/pdf-utils";
+import { Download, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 
 type StatusType =
@@ -44,6 +45,31 @@ export default function PaymentsPage() {
 
     load();
   }, []);
+
+  const handleExportPDF = () => {
+    const pdfData = paymentsData.map(payment => ({
+      date: payment.date,
+      id: payment.id,
+      description: payment.description,
+      amount: payment.amount,
+      method: payment.method,
+      status: payment.statusLabel || payment.status,
+    }));
+
+    exportTableToPDF(
+      "Payments Report",
+      [
+        { header: "Date", key: "date" },
+        { header: "Payment #", key: "id" },
+        { header: "Description", key: "description" },
+        { header: "Amount", key: "amount" },
+        { header: "Method", key: "method" },
+        { header: "Status", key: "status" },
+      ],
+      pdfData,
+      "Payments_Report.pdf"
+    );
+  };
 
   const columns = [
     {
@@ -86,10 +112,19 @@ export default function PaymentsPage() {
             Manage all incoming and outgoing payments
           </p>
         </div>
-        <button className="btn-primary inline-flex items-center gap-2 mt-4 md:mt-0">
-          <Plus className="w-5 h-5" />
-          New Payment
-        </button>
+        <div className="flex gap-3 mt-4 md:mt-0">
+          <button
+            onClick={handleExportPDF}
+            className="btn-secondary inline-flex items-center gap-2"
+          >
+            <Download className="w-5 h-5" />
+            Export PDF
+          </button>
+          <button className="btn-primary inline-flex items-center gap-2">
+            <Plus className="w-5 h-5" />
+            New Payment
+          </button>
+        </div>
       </div>
 
       <DataTable columns={columns} data={paymentsData} />

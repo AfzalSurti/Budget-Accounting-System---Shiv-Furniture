@@ -99,7 +99,9 @@ export default function AIInsightsPage() {
         insight.type === "Anomaly"
       );
 
-  return (      {/* Page Header - Professional AI Positioning */}
+  return (
+    <>
+      {/* Page Header - Professional AI Positioning */}
       <div className="mb-8 pb-6 border-b border-slate-200/60 dark:border-slate-800">
         <div className="flex items-start justify-between">
           <div>
@@ -240,5 +242,8 @@ export default function AIInsightsPage() {
             </motion.div>
           );
         })}
-      </div>  );
+      </div>
+    </>
+  );
 }
+

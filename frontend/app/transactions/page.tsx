@@ -2,9 +2,10 @@
 
 import { AppLayout } from "@/components/layout/app-layout";
 import { motion } from "framer-motion";
-import { Plus, Search, Filter, ArrowUpRight, ArrowDownRight, FileText, X } from "lucide-react";
+import { Plus, Search, Filter, ArrowUpRight, ArrowDownRight, FileText, X, Download } from "lucide-react";
 import { useState, useEffect } from "react";
 import { API_V1, getStoredToken } from "@/config";
+import { exportTableToPDF } from "@/lib/pdf-utils";
 
 // Default company ID for now (should be fetched from auth context or config)
 const DEFAULT_COMPANY_ID = "00000000-0000-0000-0000-000000000001";
@@ -112,6 +113,36 @@ export default function TransactionsPage() {
     return sum + txnTotal;
   }, 0);
 
+  const handleExportPDF = () => {
+    const formattedData = transactions.flatMap((txn) => 
+      txn.lines.map((line) => ({
+        date: txn.entryDate,
+        transactionNumber: txn.id,
+        type: line.debit > 0 ? "Debit" : "Credit",
+        description: line.description || txn.memo || "—",
+        amount: line.debit > 0 ? `₹${line.debit.toFixed(2)}` : `₹${line.credit.toFixed(2)}`,
+        status: txn.status,
+        statusLabel: txn.status,
+      }))
+    );
+
+    exportTableToPDF(
+      formattedData.map((row) => ({
+        ...row,
+        statusLabel: row.statusLabel || row.status,
+      })),
+      [
+        { header: "Date", key: "date" },
+        { header: "Transaction #", key: "transactionNumber" },
+        { header: "Type", key: "type" },
+        { header: "Description", key: "description" },
+        { header: "Amount", key: "amount" },
+        { header: "Status", key: "statusLabel" },
+      ],
+      "Transactions_Report"
+    );
+  };
+
   return (
     <AppLayout>
       {/* Page Header */}
@@ -121,13 +152,22 @@ export default function TransactionsPage() {
             <h1 className="text-3xl font-semibold text-brand-dark dark:text-white mb-2">Transactions</h1>
             <p className="text-sm text-slate-500 dark:text-slate-400">Track and manage all financial transactions across cost centers</p>
           </div>
-          <button 
-            onClick={() => setShowNewTransactionModal(true)}
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-primary text-white rounded-lg font-medium hover:bg-brand-primary/90 transition-all duration-200 shadow-sm hover:shadow-md"
-          >
-            <Plus className="w-4 h-4" />
-            New Transaction
-          </button>
+          <div className="flex gap-3">
+            <button 
+              onClick={handleExportPDF}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-100 dark:bg-slate-800 text-brand-dark dark:text-white rounded-lg font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-200 shadow-sm hover:shadow-md"
+            >
+              <Download className="w-4 h-4" />
+              Export PDF
+            </button>
+            <button 
+              onClick={() => setShowNewTransactionModal(true)}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-primary text-white rounded-lg font-medium hover:bg-brand-primary/90 transition-all duration-200 shadow-sm hover:shadow-md"
+            >
+              <Plus className="w-4 h-4" />
+              New Transaction
+            </button>
+          </div>
         </div>
       </div>
 

@@ -2,9 +2,10 @@
 
 import { AppLayout } from "@/components/layout/app-layout";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
-import { Plus, AlertCircle, Pencil, X } from "lucide-react";
+import { Plus, AlertCircle, Pencil, X, Download } from "lucide-react";
 import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
+import { exportTableToPDF } from "@/lib/pdf-utils";
 
 const budgetsData = [
   {
@@ -93,6 +94,32 @@ export default function BudgetsPage() {
     );
   }, [budgets]);
 
+  const handleExportPDF = () => {
+    const columns = [
+      { header: 'Budget ID', key: 'id' },
+      { header: 'Budget Name', key: 'name' },
+      { header: 'Cost Center', key: 'costCenter' },
+      { header: 'Allocated', key: 'allocated' },
+      { header: 'Spent', key: 'spent' },
+      { header: 'Remaining', key: 'remaining' },
+      { header: 'Utilization', key: 'utilization' },
+      { header: 'Status', key: 'status' },
+    ];
+
+    const pdfData = budgets.map(budget => ({
+      id: budget.id,
+      name: budget.name,
+      costCenter: budget.costCenter,
+      allocated: budget.allocated,
+      spent: budget.spent,
+      remaining: budget.remaining,
+      utilization: budget.utilization,
+      status: budget.status === 'active' ? 'Active' : 'Warning',
+    }));
+
+    exportTableToPDF('Budget Summary Report', columns, pdfData, 'budget_summary.pdf');
+  };
+
   return (
     <AppLayout>
       {/* Page Header - Executive Level */}
@@ -102,10 +129,19 @@ export default function BudgetsPage() {
             <h1 className="text-3xl font-semibold text-brand-dark dark:text-white mb-2">Budget Management</h1>
             <p className="text-sm text-slate-500 dark:text-slate-400">Plan, monitor, and control budgets across cost centers with real-time insights</p>
           </div>
-          <button className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-primary text-white rounded-lg font-medium hover:bg-brand-primary/90 hover:shadow-md transition-all duration-200 shadow-sm active:scale-[0.98]">
-            <Plus className="w-4 h-4" />
-            Create Budget
-          </button>
+          <div className="flex items-center gap-3">
+            <button 
+              onClick={handleExportPDF}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-slate-800 text-brand-primary border border-brand-primary rounded-lg font-medium hover:bg-brand-primary/10 hover:shadow-md transition-all duration-200 shadow-sm active:scale-[0.98]"
+            >
+              <Download className="w-4 h-4" />
+              Export PDF
+            </button>
+            <button className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-primary text-white rounded-lg font-medium hover:bg-brand-primary/90 hover:shadow-md transition-all duration-200 shadow-sm active:scale-[0.98]">
+              <Plus className="w-4 h-4" />
+              Create Budget
+            </button>
+          </div>
         </div>
       </div>
 

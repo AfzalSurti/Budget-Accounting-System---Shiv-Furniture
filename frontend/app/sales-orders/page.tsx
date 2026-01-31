@@ -5,7 +5,8 @@ import { DataTable } from "@/components/ui/data-table";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { DEFAULT_COMPANY_ID } from "@/config";
 import { apiGet } from "@/lib/api";
-import { Plus } from "lucide-react";
+import { exportTableToPDF } from "@/lib/pdf-utils";
+import { Download, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 
 type StatusType =
@@ -44,6 +45,29 @@ export default function SalesOrdersPage() {
 
     load();
   }, []);
+
+  const handleExportPDF = () => {
+    const columnMapping = {
+      date: "Date",
+      id: "SO #",
+      customer: "Customer",
+      amount: "Amount",
+      deliveryDate: "Delivery Date",
+      status: "Status",
+    };
+
+    const processedData = salesOrdersData.map((row) => ({
+      ...row,
+      status: row.statusLabel ?? row.status,
+    }));
+
+    exportTableToPDF(
+      processedData,
+      columnMapping,
+      "Sales Orders",
+      "sales-orders",
+    );
+  };
 
   const columns = [
     {
@@ -87,10 +111,19 @@ export default function SalesOrdersPage() {
             Manage sales orders and fulfillment
           </p>
         </div>
-        <button className="btn-primary inline-flex items-center gap-2 mt-4 md:mt-0">
-          <Plus className="w-5 h-5" />
-          New SO
-        </button>
+        <div className="flex gap-2 mt-4 md:mt-0">
+          <button
+            onClick={handleExportPDF}
+            className="btn-secondary inline-flex items-center gap-2"
+          >
+            <Download className="w-5 h-5" />
+            Export PDF
+          </button>
+          <button className="btn-primary inline-flex items-center gap-2">
+            <Plus className="w-5 h-5" />
+            New SO
+          </button>
+        </div>
       </div>
 
       <DataTable columns={columns} data={salesOrdersData} />
