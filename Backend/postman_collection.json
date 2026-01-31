@@ -1,0 +1,55 @@
+{
+  "info": {
+    "name": "Shiv Furniture Budget Accounting API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth - Login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/v1/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "v1", "auth", "login"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\":\"admin@example.com\",\"password\":\"password\"}"
+        }
+      }
+    },
+    {
+      "name": "Contacts - List",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/contacts?companyId={{companyId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "contacts"],
+          "query": [{ "key": "companyId", "value": "{{companyId}}" }]
+        }
+      }
+    },
+    {
+      "name": "Budget vs Actual",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/reports/budget-vs-actual?companyId={{companyId}}&start=2025-01-01&end=2025-12-31",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "reports", "budget-vs-actual"],
+          "query": [
+            { "key": "companyId", "value": "{{companyId}}" },
+            { "key": "start", "value": "2025-01-01" },
+            { "key": "end", "value": "2025-12-31" }
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:4000" },
+    { "key": "token", "value": "" },
+    { "key": "companyId", "value": "" }
+  ]
+}

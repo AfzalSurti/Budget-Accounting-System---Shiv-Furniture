@@ -100,6 +100,11 @@ enum AccountType {
   expense
 }
 
+enum UserRole {
+  ADMIN
+  PORTAL
+}
+
 
 model Company {  // all details of a company using the system
   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
@@ -149,6 +154,7 @@ model Contact {  // contact details of customers and vendors
   payments              Payment[]
   journalLines          JournalLine[]
   autoAnalyticRules     AutoAnalyticRule[]
+  users                User[]
 
   @@unique([companyId, email])
   @@index([companyId, contactType])
@@ -605,4 +611,36 @@ model DocumentFile {  // files attached to various documents
 
   @@index([companyId, ownerType, ownerId])
   @@map("document_files")
+}
+
+model User {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  role         UserRole @default(ADMIN)
+  contactId    String?  @db.Uuid @map("contact_id")
+  isActive     Boolean  @default(true) @map("is_active")
+  tokenVersion Int      @default(0) @map("token_version")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  contact Contact? @relation(fields: [contactId], references: [id])
+  auditLogs AuditLog[]
+
+  @@map("users")
+}
+
+model AuditLog {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String?  @db.Uuid @map("user_id")
+  action    String
+  entity    String
+  entityId  String?  @map("entity_id")
+  metadata  Json?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User? @relation(fields: [userId], references: [id])
+
+  @@index([userId, entity])
+  @@map("audit_logs")
 }

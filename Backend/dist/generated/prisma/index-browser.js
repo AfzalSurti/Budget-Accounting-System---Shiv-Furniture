@@ -396,6 +396,28 @@ exports.Prisma.DocumentFileScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  passwordHash: 'passwordHash',
+  role: 'role',
+  contactId: 'contactId',
+  isActive: 'isActive',
+  tokenVersion: 'tokenVersion',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AuditLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  action: 'action',
+  entity: 'entity',
+  entityId: 'entityId',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -507,6 +529,11 @@ exports.DocOwnerType = exports.$Enums.DocOwnerType = {
   purchase_order: 'purchase_order'
 };
 
+exports.UserRole = exports.$Enums.UserRole = {
+  ADMIN: 'ADMIN',
+  PORTAL: 'PORTAL'
+};
+
 exports.Prisma.ModelName = {
   Company: 'Company',
   Contact: 'Contact',
@@ -531,7 +558,9 @@ exports.Prisma.ModelName = {
   CustomerInvoiceLine: 'CustomerInvoiceLine',
   Payment: 'Payment',
   PaymentAllocation: 'PaymentAllocation',
-  DocumentFile: 'DocumentFile'
+  DocumentFile: 'DocumentFile',
+  User: 'User',
+  AuditLog: 'AuditLog'
 };
 
 /**
