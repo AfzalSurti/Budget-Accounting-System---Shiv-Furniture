@@ -9,6 +9,17 @@ UPDATE "users"
 SET "login_id" = COALESCE("login_id", SUBSTRING(MD5("id"::text) FOR 8));
 ALTER TABLE "users" ALTER COLUMN "login_id" SET NOT NULL;
 CREATE UNIQUE INDEX IF NOT EXISTS "users_login_id_key" ON "users"("login_id");
+
+ALTER TABLE "contacts" ADD COLUMN IF NOT EXISTS "img_url" TEXT;
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_name='contacts' AND column_name='image_url'
+  ) THEN
+    UPDATE "contacts" SET "img_url" = COALESCE("img_url", "image_url");
+  END IF;
+END $$;
 `;
 
 const main = async () => {

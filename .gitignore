@@ -1,0 +1,10 @@
+node_modules/
+
+Backend/dist/
+Backend/tsconfig.tsbuildinfo
+
+*.log
+frontend/dev.log
+
+.env
+Backend/.env
