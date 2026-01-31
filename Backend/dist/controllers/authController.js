@@ -11,15 +11,22 @@ const signToken = (user) => {
     return jwt.sign({ sub: user.id, role: user.role, tokenVersion: user.tokenVersion, contactId: user.contactId ?? null }, env.JWT_SECRET, options);
 };
 export const register = async (payload) => {
-    const existing = await prisma.user.findUnique({ where: { email: payload.email } });
+    const normalizedEmail = payload.email.toLowerCase();
+    const normalizedLoginId = payload.loginId.toUpperCase();
+    const existing = await prisma.user.findUnique({ where: { email: normalizedEmail } });
     if (existing) {
         throw new ApiError(409, "Email already registered");
+    }
+    const existingLogin = await prisma.user.findUnique({ where: { loginId: normalizedLoginId } });
+    if (existingLogin) {
+        throw new ApiError(409, "Login ID already registered");
     }
     const passwordHash = await bcrypt.hash(payload.password, 10);
     const role = payload.role ?? "PORTAL";
     const user = await prisma.user.create({
         data: {
-            email: payload.email,
+            email: normalizedEmail,
+            loginId: normalizedLoginId,
             passwordHash,
             role,
             contactId: payload.contactId ?? null,
@@ -28,8 +35,15 @@ export const register = async (payload) => {
     const token = signToken({ id: user.id, role: user.role, tokenVersion: user.tokenVersion, contactId: user.contactId });
     return { user, token };
 };
-export const login = async (email, password) => {
-    const user = await prisma.user.findUnique({ where: { email } });
+export const login = async (identifier, password) => {
+    const trimmedIdentifier = identifier.trim();
+    const isEmail = trimmedIdentifier.includes("@");
+    const normalizedIdentifier = isEmail
+        ? trimmedIdentifier.toLowerCase()
+        : trimmedIdentifier.toUpperCase();
+    const user = isEmail
+        ? await prisma.user.findUnique({ where: { email: normalizedIdentifier } })
+        : await prisma.user.findUnique({ where: { loginId: normalizedIdentifier } });
     if (!user || !user.isActive) {
         throw new ApiError(401, "Invalid credentials");
     }

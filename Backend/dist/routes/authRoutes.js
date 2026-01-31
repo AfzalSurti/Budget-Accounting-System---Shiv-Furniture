@@ -9,16 +9,16 @@ import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/apiError.js";
 export const authRoutes = Router();
 authRoutes.post("/register", validateRequest(registerSchema), asyncHandler(async (req, res) => {
-    const { email, password, role, contactId } = req.body;
+    const { email, loginId, password, role, contactId } = req.body;
     if (role === "ADMIN") {
         throw new ApiError(403, "Admin registration is restricted");
     }
-    const result = await authController.register({ email, password, role, contactId });
+    const result = await authController.register({ email, loginId, password, role, contactId });
     res.status(201).json({ success: true, data: result });
 }));
 authRoutes.post("/login", validateRequest(loginSchema), asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
-    const result = await authController.login(email, password);
+    const { identifier, password } = req.body;
+    const result = await authController.login(identifier, password);
     res.json({ success: true, data: result });
 }));
 authRoutes.post("/logout", authenticateToken, asyncHandler(async (req, res) => {
@@ -34,13 +34,13 @@ authRoutes.get("/me", authenticateToken, asyncHandler(async (req, res) => {
     }
     const user = await prisma.user.findUnique({
         where: { id: req.user.id },
-        select: { id: true, email: true, role: true, contactId: true, isActive: true, createdAt: true },
+        select: { id: true, email: true, loginId: true, role: true, contactId: true, isActive: true, createdAt: true },
     });
     res.json({ success: true, data: user });
 }));
 authRoutes.post("/register-admin", authenticateToken, authorizeRole(["ADMIN"]), validateRequest(registerSchema), asyncHandler(async (req, res) => {
-    const { email, password, role, contactId } = req.body;
-    const result = await authController.register({ email, password, role, contactId });
+    const { email, loginId, password, role, contactId } = req.body;
+    const result = await authController.register({ email, loginId, password, role, contactId });
     res.status(201).json({ success: true, data: result });
 }));
 //# sourceMappingURL=authRoutes.js.map
