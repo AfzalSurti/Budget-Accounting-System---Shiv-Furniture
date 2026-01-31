@@ -9,7 +9,7 @@ const invoicesData = [
   {
     id: "INV-2026-0142",
     customer: "ABC Manufacturing Co.",
-    amount: "$12,500.00",
+    amount: "₹12,500.00",
     dueDate: "2026-02-15",
     status: "pending" as const,
     issueDate: "2026-01-28",
@@ -17,7 +17,7 @@ const invoicesData = [
   {
     id: "INV-2026-0141",
     customer: "XYZ Ltd.",
-    amount: "$8,750.00",
+    amount: "₹8,750.00",
     dueDate: "2026-02-10",
     status: "completed" as const,
     issueDate: "2026-01-27",
@@ -25,7 +25,7 @@ const invoicesData = [
   {
     id: "INV-2026-0140",
     customer: "Global Traders Inc.",
-    amount: "$15,200.00",
+    amount: "₹15,200.00",
     dueDate: "2026-02-20",
     status: "pending" as const,
     issueDate: "2026-01-25",
@@ -33,7 +33,7 @@ const invoicesData = [
   {
     id: "INV-2026-0139",
     customer: "Premium Retail Group",
-    amount: "$22,300.00",
+    amount: "₹22,300.00",
     dueDate: "2026-02-05",
     status: "completed" as const,
     issueDate: "2026-01-23",

@@ -1,7 +1,9 @@
 "use client";
 
 import { AppLayout } from "@/components/layout/app-layout";
-import { Brain, AlertTriangle, Lightbulb, Zap } from "lucide-react";
+import { Brain, AlertTriangle, Lightbulb, Zap, ChevronRight, Info } from "lucide-react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
 const insights = [
   {
@@ -32,7 +34,7 @@ const insights = [
     id: 3,
     type: "Anomaly",
     title: "Unusual Payment Pattern Detected",
-    description: "Administrative cost center shows 3 duplicate payments to vendor ABC Corp in the past 15 days. Total: $15,600",
+    description: "Administrative cost center shows 3 duplicate payments to vendor ABC Corp in the past 15 days. Total: ₹15,600",
     impact: "Medium",
     confidence: "91%",
     icon: Zap,
@@ -56,7 +58,7 @@ const insights = [
     id: 5,
     type: "Risk",
     title: "Forecasted Budget Shortfall",
-    description: "Based on current burn rate and projected growth, operations may need additional $32,000 by Q2 2026",
+    description: "Based on current burn rate and projected growth, operations may need additional ₹32,000 by Q2 2026",
     impact: "Medium",
     confidence: "85%",
     icon: AlertTriangle,
@@ -79,84 +81,164 @@ const insights = [
 ];
 
 export default function AIInsightsPage() {
+  const [activeFilter, setActiveFilter] = useState("All");
+
+  const filterCounts = {
+    All: insights.length,
+    Risks: insights.filter(i => i.type === "Risk").length,
+    Opportunities: insights.filter(i => i.type === "Opportunity").length,
+    Anomalies: insights.filter(i => i.type === "Anomaly").length,
+  };
+
+  const filteredInsights = activeFilter === "All" 
+    ? insights 
+    : insights.filter(insight => 
+        activeFilter === "Risks" ? insight.type === "Risk" :
+        activeFilter === "Opportunities" ? insight.type === "Opportunity" :
+        insight.type === "Anomaly"
+      );
+
   return (
     <AppLayout>
-      {/* Page Header */}
-      <div>
-        <div className="flex items-center gap-3 mb-2">
-          <Brain className="w-8 h-8 text-brand-accent" />
-          <h1 className="text-4xl font-serif font-bold text-brand-dark dark:text-white">AI Intelligence</h1>
+      {/* Page Header - Professional AI Positioning */}
+      <div className="mb-8 pb-6 border-b border-slate-200/60 dark:border-slate-800">
+        <div className="flex items-start justify-between">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2.5 bg-brand-primary/10 rounded-lg">
+                <Brain className="w-6 h-6 text-brand-primary" />
+              </div>
+              <h1 className="text-3xl font-semibold text-brand-dark dark:text-white">AI Intelligence</h1>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+                <Info className="w-3 h-3" />
+                Explainable AI
+              </span>
+            </div>
+            <p className="text-sm text-slate-500 dark:text-slate-400">
+              System-generated insights based on financial patterns and historical transaction data
+            </p>
+          </div>
         </div>
-        <p className="text-slate-600 dark:text-slate-400 mb-8">
-          Real-time financial insights powered by machine learning and pattern analysis
-        </p>
       </div>
 
-      {/* Filter Bar */}
-      <div className="flex gap-4 mb-8 overflow-x-auto pb-2">
-        {["All", "Risks", "Opportunities", "Anomalies"].map((filter) => (
+      {/* Category Filters */}
+      <div className="flex gap-3 mb-8 overflow-x-auto pb-2">
+        {Object.entries(filterCounts).map(([filter, count]) => (
           <button
             key={filter}
-            className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors duration-200 ${
-              filter === "All"
-                ? "bg-brand-primary text-white"
-                : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-brand-lighter dark:hover:bg-slate-700"
+            onClick={() => setActiveFilter(filter)}
+            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full font-medium whitespace-nowrap transition-all duration-200 ${
+              filter === activeFilter
+                ? "bg-brand-primary text-white shadow-sm"
+                : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
             }`}
           >
             {filter}
+            <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
+              filter === activeFilter
+                ? "bg-white/20 text-white"
+                : "bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300"
+            }`}>
+              {count}
+            </span>
           </button>
         ))}
       </div>
 
       {/* Insights Grid */}
       <div className="grid md:grid-cols-2 gap-6">
-        {insights.map((insight) => {
+        {filteredInsights.map((insight, idx) => {
           const Icon = insight.icon;
+          const isHighImpact = insight.impact === "High";
+          const isMediumImpact = insight.impact === "Medium";
+          const isLowImpact = insight.impact === "Low";
+          
           return (
-            <div
+            <motion.div
               key={insight.id}
-              className={`card border-l-4 overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer group ${insight.borderColor}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: idx * 0.08 }}
+              className={`card group cursor-pointer hover:shadow-lg transition-all duration-200 border-l-4 ${
+                isHighImpact ? "border-l-rose-500 dark:border-l-rose-600" :
+                isMediumImpact ? "border-l-amber-500 dark:border-l-amber-600" :
+                "border-l-slate-300 dark:border-l-slate-600"
+              } ${
+                isHighImpact ? "shadow-md" : ""
+              }`}
             >
               <div className="p-6">
+                {/* Header Section */}
                 <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-start gap-4">
-                    <div className={`p-3 bg-gradient-to-br ${insight.color} rounded-lg`}>
-                      <Icon className="w-5 h-5 text-white" />
+                  <div className="flex items-start gap-3">
+                    <div className={`p-2.5 rounded-lg ${
+                      insight.type === "Risk" ? "bg-rose-50 dark:bg-rose-900/20" :
+                      insight.type === "Opportunity" ? "bg-emerald-50 dark:bg-emerald-900/20" :
+                      "bg-amber-50 dark:bg-amber-900/20"
+                    }`}>
+                      <Icon className={`w-5 h-5 ${
+                        insight.type === "Risk" ? "text-rose-600 dark:text-rose-500" :
+                        insight.type === "Opportunity" ? "text-emerald-600 dark:text-emerald-500" :
+                        "text-amber-600 dark:text-amber-500"
+                      }`} />
                     </div>
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className={`text-xs font-bold px-3 py-1 rounded-full ${insight.bgColor} text-brand-dark dark:text-white`}>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${
+                          insight.type === "Risk" ? "bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-400 border border-rose-200/50 dark:border-rose-800/30" :
+                          insight.type === "Opportunity" ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border border-emerald-200/50 dark:border-emerald-800/30" :
+                          "bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 border border-amber-200/50 dark:border-amber-800/30"
+                        }`}>
                           {insight.type}
                         </span>
-                        <span className="text-xs font-mono bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded text-brand-primary">
-                          {insight.confidence}
-                        </span>
                       </div>
-                      <h3 className="text-lg font-bold text-brand-dark dark:text-white mb-2">
+                      <h3 className={`text-base font-semibold text-brand-dark dark:text-white mb-1 group-hover:text-brand-primary transition-colors ${
+                        isHighImpact ? "text-lg" : ""
+                      }`}>
                         {insight.title}
                       </h3>
                     </div>
                   </div>
-                  <span className={`text-xs font-bold px-2 py-1 rounded whitespace-nowrap ${
-                    insight.impact === "High"
-                      ? "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400"
-                      : insight.impact === "Medium"
-                      ? "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400"
-                      : "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400"
-                  }`}>
-                    {insight.impact} Impact
-                  </span>
+                  
+                  {/* Impact Badge */}
+                  <div className="flex flex-col items-end gap-2">
+                    <span className={`text-xs font-medium px-2.5 py-1 rounded-full whitespace-nowrap ${
+                      isHighImpact
+                        ? "bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-400 border border-rose-200/50 dark:border-rose-800/30"
+                        : isMediumImpact
+                        ? "bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 border border-amber-200/50 dark:border-amber-800/30"
+                        : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700"
+                    }`}>
+                      {insight.impact} Impact
+                    </span>
+                  </div>
                 </div>
 
-                <p className="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+                {/* Description */}
+                <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
                   {insight.description}
                 </p>
 
-                <button className="text-brand-primary font-semibold text-sm hover:text-brand-accent transition-colors duration-200">
-                  View Details →
-                </button>
+                {/* Footer */}
+                <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-slate-500 dark:text-slate-400">Confidence:</span>
+                    <span className="text-xs font-semibold font-mono text-brand-primary">{insight.confidence}</span>
+                  </div>
+                  <button className="inline-flex items-center gap-1 text-sm font-medium text-brand-primary hover:text-brand-accent transition-colors group-hover:gap-2 duration-200">
+                    View Analysis
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* Explainability Hint */}
+                <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 italic">
+                    Based on {insight.type === "Risk" ? "budget utilization patterns" : insight.type === "Opportunity" ? "historical spending data" : "transaction analysis"} over the last 90 days
+                  </p>
+                </div>
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>

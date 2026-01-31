@@ -7,21 +7,21 @@ import { StatusBadge } from "@/components/ui/status-badge";
 const portalInvoicesData = [
   {
     id: "INV-PORTAL-0142",
-    amount: "$12,500.00",
+    amount: "₹12,500.00",
     dueDate: "2026-02-15",
     status: "pending" as const,
     issueDate: "2026-01-28",
   },
   {
     id: "INV-PORTAL-0141",
-    amount: "$8,750.00",
+    amount: "₹8,750.00",
     dueDate: "2026-02-10",
     status: "completed" as const,
     issueDate: "2026-01-27",
   },
   {
     id: "INV-PORTAL-0140",
-    amount: "$15,200.00",
+    amount: "₹15,200.00",
     dueDate: "2026-02-20",
     status: "pending" as const,
     issueDate: "2026-01-25",

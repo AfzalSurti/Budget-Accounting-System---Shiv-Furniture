@@ -8,7 +8,7 @@ const poData = [
   {
     id: "PO-2026-001",
     vendor: "Equipment Supplier",
-    amount: "$25,000.00",
+    amount: "₹25,000.00",
     deliveryDate: "2026-02-15",
     status: "completed" as const,
     issueDate: "2026-01-10",
@@ -16,7 +16,7 @@ const poData = [
   {
     id: "PO-2026-002",
     vendor: "Raw Materials Co.",
-    amount: "$18,500.00",
+    amount: "₹18,500.00",
     deliveryDate: "2026-02-20",
     status: "active" as const,
     issueDate: "2026-01-20",
@@ -24,7 +24,7 @@ const poData = [
   {
     id: "PO-2026-003",
     vendor: "Office Supplies Ltd.",
-    amount: "$3,200.00",
+    amount: "₹3,200.00",
     deliveryDate: "2026-02-10",
     status: "pending" as const,
     issueDate: "2026-01-25",

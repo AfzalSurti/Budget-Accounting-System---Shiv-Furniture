@@ -9,7 +9,7 @@ const paymentsData = [
   {
     id: "PAY-2026-001",
     description: "Invoice INV-2026-0142 Payment",
-    amount: "$12,500.00",
+    amount: "₹12,500.00",
     date: "2026-01-28",
     method: "Bank Transfer",
     status: "completed" as const,
@@ -17,7 +17,7 @@ const paymentsData = [
   {
     id: "PAY-2026-002",
     description: "Vendor Payment - Raw Materials Co.",
-    amount: "$25,400.00",
+    amount: "₹25,400.00",
     date: "2026-01-25",
     method: "ACH",
     status: "completed" as const,
@@ -25,7 +25,7 @@ const paymentsData = [
   {
     id: "PAY-2026-003",
     description: "Refund - Client ABC",
-    amount: "$3,200.00",
+    amount: "₹3,200.00",
     date: "2026-01-22",
     method: "Credit Card",
     status: "pending" as const,

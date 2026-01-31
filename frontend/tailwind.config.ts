@@ -25,7 +25,7 @@ const config: Config = {
         info: "#3B82F6",
       },
       fontFamily: {
-        sans: ["Inter", ...defaultTheme.fontFamily.sans],
+        sans: ["Plus Jakarta Sans", ...defaultTheme.fontFamily.sans],
         serif: ["DM Serif Display", "Playfair Display", ...defaultTheme.fontFamily.serif],
         mono: ["JetBrains Mono", ...defaultTheme.fontFamily.mono],
       },

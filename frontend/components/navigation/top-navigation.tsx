@@ -32,15 +32,15 @@ export function TopNavigation() {
   return (
     <nav className="sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 flex-shrink-0">
             <Image
               src={currentTheme === "dark" ? "/logo_light.png" : "/logo_dark.png"}
               alt="Shiv Furniture ERP"
-              width={180}
-              height={60}
-              className="h-16 w-auto"
+              width={220}
+              height={80}
+              className="h-20 w-auto"
               priority
             />
           </Link>

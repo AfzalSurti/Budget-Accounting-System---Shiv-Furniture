@@ -9,7 +9,7 @@ const vendorInvoicesData = [
   {
     id: "VB-2026-001",
     vendor: "Office Supplies Ltd.",
-    amount: "$3,250.00",
+    amount: "₹3,250.00",
     dueDate: "2026-02-15",
     status: "pending" as const,
     issueDate: "2026-01-28",
@@ -17,7 +17,7 @@ const vendorInvoicesData = [
   {
     id: "VB-2026-002",
     vendor: "Equipment Rentals Co.",
-    amount: "$5,500.00",
+    amount: "₹5,500.00",
     dueDate: "2026-02-10",
     status: "completed" as const,
     issueDate: "2026-01-27",
@@ -25,7 +25,7 @@ const vendorInvoicesData = [
   {
     id: "VB-2026-003",
     vendor: "Utility Services Inc.",
-    amount: "$8,200.00",
+    amount: "₹8,200.00",
     dueDate: "2026-02-05",
     status: "pending" as const,
     issueDate: "2026-01-25",

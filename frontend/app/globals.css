@@ -6,6 +6,7 @@
   :root {
     --background: 255 255 255;
     --foreground: 3 4 94;
+    --grid-line: 144 224 239;
     
     --brand-dark: 3 4 94;
     --brand-primary: 0 119 182;
@@ -17,6 +18,7 @@
   .dark {
     --background: 15 23 42;
     --foreground: 241 245 249;
+    --grid-line: 0 119 182;
     
     --brand-dark: 3 4 94;
     --brand-primary: 0 119 182;
@@ -42,12 +44,49 @@
 
   /* Cards */
   .card {
-    @apply bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow duration-200;
+    @apply rounded-lg border transition-shadow duration-200;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-color: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(14px) saturate(1.2);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    box-shadow: 0 8px 24px rgba(0, 119, 182, 0.18);
+  }
+
+  .dark .card {
+    background-color: rgba(15, 23, 42, 0.6);
+    border-color: rgba(148, 163, 184, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 119, 182, 0.28);
   }
 
   /* Page container */
   .page-container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8;
+  }
+
+  /* Page grid background */
+  .page-grid {
+    @apply bg-white dark:bg-slate-950;
+    background-image:
+      linear-gradient(
+        rgba(var(--grid-line), 0.28) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        rgba(var(--grid-line), 0.28) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        rgba(var(--grid-line), 0.12) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        rgba(var(--grid-line), 0.12) 1px,
+        transparent 1px
+      );
+    background-size: 24px 24px, 24px 24px, 96px 96px, 96px 96px;
+    background-position: -1px -1px;
   }
 
   /* Section heading */
