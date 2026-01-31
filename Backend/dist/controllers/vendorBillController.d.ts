@@ -51,12 +51,12 @@ export declare const listVendorBills: (companyId: string) => Promise<({
         id: string;
         analyticAccountId: string | null;
         glAccountId: string | null;
+        productId: string | null;
         description: string | null;
         qty: import("@prisma/client-runtime-utils").Decimal;
         unitPrice: import("@prisma/client-runtime-utils").Decimal;
         taxRate: import("@prisma/client-runtime-utils").Decimal;
         lineTotal: import("@prisma/client-runtime-utils").Decimal;
-        productId: string | null;
         vendorBillId: string;
     }[];
 } & {
@@ -74,17 +74,26 @@ export declare const listVendorBills: (companyId: string) => Promise<({
     paidAmount: import("@prisma/client-runtime-utils").Decimal;
     paymentState: string;
 })[]>;
+export declare const listVendorBillsTable: (companyId: string) => Promise<{
+    id: string;
+    recordId: string;
+    vendor: string;
+    amount: string;
+    dueDate: string | null;
+    date: string | null;
+    status: "failed" | "completed" | "pending";
+}[]>;
 export declare const getVendorBill: (id: string) => Promise<{
     lines: {
         id: string;
         analyticAccountId: string | null;
         glAccountId: string | null;
+        productId: string | null;
         description: string | null;
         qty: import("@prisma/client-runtime-utils").Decimal;
         unitPrice: import("@prisma/client-runtime-utils").Decimal;
         taxRate: import("@prisma/client-runtime-utils").Decimal;
         lineTotal: import("@prisma/client-runtime-utils").Decimal;
-        productId: string | null;
         vendorBillId: string;
     }[];
 } & {

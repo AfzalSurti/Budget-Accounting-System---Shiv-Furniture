@@ -1,6 +1,7 @@
 import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/apiError.js";
-import { applyPaymentToBill, applyPaymentToInvoice } from "../services/paymentService.js";
+import { applyPaymentToBill, applyPaymentToInvoice, } from "../services/paymentService.js";
+import { formatCurrency, formatDate, formatPaymentMethod, mapPaymentStatusToBadge, } from "../utils/formatters.js";
 export const createPayment = async (data) => {
     const totalAllocation = data.allocations.reduce((sum, item) => sum + item.amount, 0);
     if (totalAllocation > data.amount) {
@@ -21,7 +22,9 @@ export const createPayment = async (data) => {
         });
         for (const allocation of data.allocations) {
             if (allocation.targetType === "customer_invoice") {
-                const invoice = await tx.customerInvoice.findUnique({ where: { id: allocation.targetId } });
+                const invoice = await tx.customerInvoice.findUnique({
+                    where: { id: allocation.targetId },
+                });
                 if (!invoice) {
                     throw new ApiError(404, "Invoice not found");
                 }
@@ -31,7 +34,9 @@ export const createPayment = async (data) => {
                 }
             }
             else {
-                const bill = await tx.vendorBill.findUnique({ where: { id: allocation.targetId } });
+                const bill = await tx.vendorBill.findUnique({
+                    where: { id: allocation.targetId },
+                });
                 if (!bill) {
                     throw new ApiError(404, "Vendor bill not found");
                 }
@@ -63,6 +68,38 @@ export const listPayments = async (companyId) => {
         where: { companyId },
         include: { allocations: true },
         orderBy: { createdAt: "desc" },
+    });
+};
+export const listPaymentsTable = async (companyId) => {
+    const payments = await prisma.payment.findMany({
+        where: { companyId },
+        select: {
+            id: true,
+            paymentDate: true,
+            method: true,
+            amount: true,
+            status: true,
+            reference: true,
+            direction: true,
+            contact: { select: { displayName: true } },
+        },
+        orderBy: { createdAt: "desc" },
+    });
+    return payments.map((payment) => {
+        const description = payment.reference
+            ? payment.reference
+            : payment.direction === "inbound"
+                ? `Invoice Payment - ${payment.contact.displayName}`
+                : `Vendor Payment - ${payment.contact.displayName}`;
+        return {
+            id: payment.reference ?? payment.id,
+            recordId: payment.id,
+            description,
+            amount: formatCurrency(Number(payment.amount)),
+            date: formatDate(payment.paymentDate),
+            method: formatPaymentMethod(payment.method),
+            status: mapPaymentStatusToBadge(payment.status),
+        };
     });
 };
 export const getPayment = async (id) => {

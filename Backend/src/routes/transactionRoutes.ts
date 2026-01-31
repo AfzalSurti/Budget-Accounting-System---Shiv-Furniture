@@ -33,7 +33,10 @@ import {
   listInvoiceSchema,
   convertInvoiceSchema,
 } from "../validators/invoiceValidators.js";
-import { createPaymentSchema, listPaymentSchema } from "../validators/paymentValidators.js";
+import {
+  createPaymentSchema,
+  listPaymentSchema,
+} from "../validators/paymentValidators.js";
 
 export const transactionRoutes = Router();
 
@@ -46,16 +49,24 @@ transactionRoutes.post(
   asyncHandler(async (req, res) => {
     const po = await purchaseController.createPurchaseOrder(req.body);
     res.status(201).json({ success: true, data: po });
-  })
+  }),
 );
 
 transactionRoutes.get(
   "/purchase-orders",
   validateRequest(listPurchaseOrderSchema),
   asyncHandler(async (req, res) => {
-    const pos = await purchaseController.listPurchaseOrders(req.query.companyId as string);
-    res.json({ success: true, data: pos });
-  })
+    const view = (req.query.view as string | undefined) ?? "raw";
+    const data =
+      view === "table"
+        ? await purchaseController.listPurchaseOrdersTable(
+            req.query.companyId as string,
+          )
+        : await purchaseController.listPurchaseOrders(
+            req.query.companyId as string,
+          );
+    res.json({ success: true, data });
+  }),
 );
 
 transactionRoutes.get(
@@ -63,16 +74,19 @@ transactionRoutes.get(
   asyncHandler(async (req, res) => {
     const po = await purchaseController.getPurchaseOrder(req.params.id!);
     res.json({ success: true, data: po });
-  })
+  }),
 );
 
 transactionRoutes.put(
   "/purchase-orders/:id",
   validateRequest(updatePurchaseOrderSchema),
   asyncHandler(async (req, res) => {
-    const po = await purchaseController.updatePurchaseOrder(req.params.id!, req.body);
+    const po = await purchaseController.updatePurchaseOrder(
+      req.params.id!,
+      req.body,
+    );
     res.json({ success: true, data: po });
-  })
+  }),
 );
 
 transactionRoutes.delete(
@@ -80,7 +94,7 @@ transactionRoutes.delete(
   asyncHandler(async (req, res) => {
     const po = await purchaseController.deletePurchaseOrder(req.params.id!);
     res.json({ success: true, data: po });
-  })
+  }),
 );
 
 // Vendor Bills
@@ -90,7 +104,7 @@ transactionRoutes.post(
   asyncHandler(async (req, res) => {
     const bill = await vendorBillController.createVendorBill(req.body);
     res.status(201).json({ success: true, data: bill });
-  })
+  }),
 );
 
 transactionRoutes.post(
@@ -100,19 +114,27 @@ transactionRoutes.post(
     const bill = await vendorBillController.createVendorBillFromPO(
       req.params.poId!,
       req.body.billNo,
-      req.body.billDate
+      req.body.billDate,
     );
     res.status(201).json({ success: true, data: bill });
-  })
+  }),
 );
 
 transactionRoutes.get(
   "/vendor-bills",
   validateRequest(listVendorBillSchema),
   asyncHandler(async (req, res) => {
-    const bills = await vendorBillController.listVendorBills(req.query.companyId as string);
-    res.json({ success: true, data: bills });
-  })
+    const view = (req.query.view as string | undefined) ?? "raw";
+    const data =
+      view === "table"
+        ? await vendorBillController.listVendorBillsTable(
+            req.query.companyId as string,
+          )
+        : await vendorBillController.listVendorBills(
+            req.query.companyId as string,
+          );
+    res.json({ success: true, data });
+  }),
 );
 
 transactionRoutes.get(
@@ -120,16 +142,19 @@ transactionRoutes.get(
   asyncHandler(async (req, res) => {
     const bill = await vendorBillController.getVendorBill(req.params.id!);
     res.json({ success: true, data: bill });
-  })
+  }),
 );
 
 transactionRoutes.put(
   "/vendor-bills/:id",
   validateRequest(updateVendorBillSchema),
   asyncHandler(async (req, res) => {
-    const bill = await vendorBillController.updateVendorBill(req.params.id!, req.body);
+    const bill = await vendorBillController.updateVendorBill(
+      req.params.id!,
+      req.body,
+    );
     res.json({ success: true, data: bill });
-  })
+  }),
 );
 
 // Sales Orders
@@ -139,16 +164,22 @@ transactionRoutes.post(
   asyncHandler(async (req, res) => {
     const so = await salesController.createSalesOrder(req.body);
     res.status(201).json({ success: true, data: so });
-  })
+  }),
 );
 
 transactionRoutes.get(
   "/sales-orders",
   validateRequest(listSalesOrderSchema),
   asyncHandler(async (req, res) => {
-    const sos = await salesController.listSalesOrders(req.query.companyId as string);
-    res.json({ success: true, data: sos });
-  })
+    const view = (req.query.view as string | undefined) ?? "raw";
+    const data =
+      view === "table"
+        ? await salesController.listSalesOrdersTable(
+            req.query.companyId as string,
+          )
+        : await salesController.listSalesOrders(req.query.companyId as string);
+    res.json({ success: true, data });
+  }),
 );
 
 transactionRoutes.get(
@@ -156,7 +187,7 @@ transactionRoutes.get(
   asyncHandler(async (req, res) => {
     const so = await salesController.getSalesOrder(req.params.id!);
     res.json({ success: true, data: so });
-  })
+  }),
 );
 
 transactionRoutes.put(
@@ -165,7 +196,7 @@ transactionRoutes.put(
   asyncHandler(async (req, res) => {
     const so = await salesController.updateSalesOrder(req.params.id!, req.body);
     res.json({ success: true, data: so });
-  })
+  }),
 );
 
 transactionRoutes.delete(
@@ -173,7 +204,7 @@ transactionRoutes.delete(
   asyncHandler(async (req, res) => {
     const so = await salesController.deleteSalesOrder(req.params.id!);
     res.json({ success: true, data: so });
-  })
+  }),
 );
 
 // Invoices
@@ -183,7 +214,7 @@ transactionRoutes.post(
   asyncHandler(async (req, res) => {
     const invoice = await invoiceController.createInvoice(req.body);
     res.status(201).json({ success: true, data: invoice });
-  })
+  }),
 );
 
 transactionRoutes.post(
@@ -193,19 +224,25 @@ transactionRoutes.post(
     const invoice = await invoiceController.createInvoiceFromSO(
       req.params.soId!,
       req.body.invoiceNo,
-      req.body.invoiceDate
+      req.body.invoiceDate,
     );
     res.status(201).json({ success: true, data: invoice });
-  })
+  }),
 );
 
 transactionRoutes.get(
   "/invoices",
   validateRequest(listInvoiceSchema),
   asyncHandler(async (req, res) => {
-    const invoices = await invoiceController.listInvoices(req.query.companyId as string);
-    res.json({ success: true, data: invoices });
-  })
+    const view = (req.query.view as string | undefined) ?? "raw";
+    const data =
+      view === "table"
+        ? await invoiceController.listInvoicesTable(
+            req.query.companyId as string,
+          )
+        : await invoiceController.listInvoices(req.query.companyId as string);
+    res.json({ success: true, data });
+  }),
 );
 
 transactionRoutes.get(
@@ -213,16 +250,24 @@ transactionRoutes.get(
   asyncHandler(async (req, res) => {
     const invoice = await invoiceController.getInvoice(req.params.id!);
     res.json({ success: true, data: invoice });
-  })
+  }),
 );
 
 transactionRoutes.put(
   "/invoices/:id",
   validateRequest(updateInvoiceSchema),
   asyncHandler(async (req, res) => {
-    const invoice = await invoiceController.updateInvoice(req.params.id!, req.body);
-    res.json({ success: true, data: invoice });
-  })
+    const view = (req.query.view as string | undefined) ?? "raw";
+    const data =
+      view === "table"
+        ? await vendorBillController.listVendorBillsTable(
+            req.query.companyId as string,
+          )
+        : await vendorBillController.listVendorBills(
+            req.query.companyId as string,
+          );
+    res.json({ success: true, data });
+  }),
 );
 
 // Payments
@@ -232,16 +277,22 @@ transactionRoutes.post(
   asyncHandler(async (req, res) => {
     const payment = await paymentController.createPayment(req.body);
     res.status(201).json({ success: true, data: payment });
-  })
+  }),
 );
 
 transactionRoutes.get(
   "/payments",
   validateRequest(listPaymentSchema),
   asyncHandler(async (req, res) => {
-    const payments = await paymentController.listPayments(req.query.companyId as string);
-    res.json({ success: true, data: payments });
-  })
+    const view = (req.query.view as string | undefined) ?? "raw";
+    const data =
+      view === "table"
+        ? await paymentController.listPaymentsTable(
+            req.query.companyId as string,
+          )
+        : await paymentController.listPayments(req.query.companyId as string);
+    res.json({ success: true, data });
+  }),
 );
 
 transactionRoutes.get(
@@ -249,7 +300,7 @@ transactionRoutes.get(
   asyncHandler(async (req, res) => {
     const payment = await paymentController.getPayment(req.params.id!);
     res.json({ success: true, data: payment });
-  })
+  }),
 );
 
 // Transactions (Journal Entries)
@@ -258,10 +309,10 @@ transactionRoutes.post(
   asyncHandler(async (req, res) => {
     const transaction = await transactionController.createTransaction(
       (req as any).user.id,
-      req.body
+      req.body,
     );
     res.status(201).json({ success: true, data: transaction });
-  }) as any
+  }) as any,
 );
 
 transactionRoutes.get(
@@ -273,10 +324,10 @@ transactionRoutes.get(
     const result = await transactionController.getTransactions(
       companyId,
       limit,
-      offset
+      offset,
     );
     res.json({ success: true, data: result });
-  }) as any
+  }) as any,
 );
 
 transactionRoutes.get(
@@ -285,12 +336,14 @@ transactionRoutes.get(
     const companyId = req.query.companyId as string;
     const transaction = await transactionController.getTransactionById(
       req.params.id!,
-      companyId
+      companyId,
     );
     if (!transaction) {
-      res.status(404).json({ success: false, message: "Transaction not found" });
+      res
+        .status(404)
+        .json({ success: false, message: "Transaction not found" });
     } else {
       res.json({ success: true, data: transaction });
     }
-  }) as any
+  }) as any,
 );

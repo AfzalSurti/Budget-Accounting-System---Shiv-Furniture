@@ -4,7 +4,10 @@ import { authorizeRole } from "../middlewares/authorizeRole.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { validateRequest } from "../middlewares/validateRequest.js";
 import * as portalController from "../controllers/portalController.js";
-import { portalListSchema, portalPaymentSchema } from "../validators/portalValidators.js";
+import {
+  portalListSchema,
+  portalPaymentSchema,
+} from "../validators/portalValidators.js";
 import { ApiError } from "../utils/apiError.js";
 
 export const portalRoutes = Router();
@@ -18,9 +21,13 @@ portalRoutes.get(
     if (!req.user?.contactId) {
       throw new ApiError(403, "Portal user not linked to a contact");
     }
-    const data = await portalController.listPortalInvoices(req.user.contactId);
+    const view = (req.query.view as string | undefined) ?? "raw";
+    const data =
+      view === "table"
+        ? await portalController.listPortalInvoicesTable(req.user.contactId)
+        : await portalController.listPortalInvoices(req.user.contactId);
     res.json({ success: true, data });
-  })
+  }),
 );
 
 portalRoutes.get(
@@ -30,9 +37,13 @@ portalRoutes.get(
     if (!req.user?.contactId) {
       throw new ApiError(403, "Portal user not linked to a contact");
     }
-    const data = await portalController.listPortalBills(req.user.contactId);
+    const view = (req.query.view as string | undefined) ?? "raw";
+    const data =
+      view === "table"
+        ? await portalController.listPortalBillsTable(req.user.contactId)
+        : await portalController.listPortalBills(req.user.contactId);
     res.json({ success: true, data });
-  })
+  }),
 );
 
 portalRoutes.get(
@@ -42,9 +53,13 @@ portalRoutes.get(
     if (!req.user?.contactId) {
       throw new ApiError(403, "Portal user not linked to a contact");
     }
-    const data = await portalController.listPortalSalesOrders(req.user.contactId);
+    const view = (req.query.view as string | undefined) ?? "raw";
+    const data =
+      view === "table"
+        ? await portalController.listPortalSalesOrdersTable(req.user.contactId)
+        : await portalController.listPortalSalesOrders(req.user.contactId);
     res.json({ success: true, data });
-  })
+  }),
 );
 
 portalRoutes.get(
@@ -54,9 +69,15 @@ portalRoutes.get(
     if (!req.user?.contactId) {
       throw new ApiError(403, "Portal user not linked to a contact");
     }
-    const data = await portalController.listPortalPurchaseOrders(req.user.contactId);
+    const view = (req.query.view as string | undefined) ?? "raw";
+    const data =
+      view === "table"
+        ? await portalController.listPortalPurchaseOrdersTable(
+            req.user.contactId,
+          )
+        : await portalController.listPortalPurchaseOrders(req.user.contactId);
     res.json({ success: true, data });
-  })
+  }),
 );
 
 portalRoutes.get(
@@ -66,9 +87,13 @@ portalRoutes.get(
     if (!req.user?.contactId) {
       throw new ApiError(403, "Portal user not linked to a contact");
     }
-    const data = await portalController.listPortalPayments(req.user.contactId);
+    const view = (req.query.view as string | undefined) ?? "raw";
+    const data =
+      view === "table"
+        ? await portalController.listPortalPaymentsTable(req.user.contactId)
+        : await portalController.listPortalPayments(req.user.contactId);
     res.json({ success: true, data });
-  })
+  }),
 );
 
 portalRoutes.get(
@@ -77,9 +102,12 @@ portalRoutes.get(
     if (!req.user?.contactId) {
       throw new ApiError(403, "Portal user not linked to a contact");
     }
-    const data = await portalController.downloadInvoicePdf(req.params.id!, req.user.contactId);
+    const data = await portalController.downloadInvoicePdf(
+      req.params.id!,
+      req.user.contactId,
+    );
     res.json({ success: true, data });
-  })
+  }),
 );
 
 portalRoutes.get(
@@ -88,9 +116,12 @@ portalRoutes.get(
     if (!req.user?.contactId) {
       throw new ApiError(403, "Portal user not linked to a contact");
     }
-    const data = await portalController.downloadBillPdf(req.params.id!, req.user.contactId);
+    const data = await portalController.downloadBillPdf(
+      req.params.id!,
+      req.user.contactId,
+    );
     res.json({ success: true, data });
-  })
+  }),
 );
 
 portalRoutes.post(
@@ -110,5 +141,5 @@ portalRoutes.post(
       allocations: req.body.allocations,
     });
     res.status(201).json({ success: true, data: payment });
-  })
+  }),
 );

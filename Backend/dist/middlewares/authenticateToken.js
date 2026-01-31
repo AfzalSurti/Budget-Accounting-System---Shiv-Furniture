@@ -10,9 +10,19 @@ export const authenticateToken = async (req, _res, next) => {
     const token = authHeader.replace("Bearer ", "");
     try {
         const payload = jwt.verify(token, env.JWT_SECRET);
+        const userId = payload.sub ?? payload.userId;
+        if (!userId) {
+            return next(new ApiError(401, "Invalid token payload"));
+        }
         const user = await prisma.user.findUnique({
-            where: { id: payload.sub },
-            select: { id: true, role: true, tokenVersion: true, isActive: true, contactId: true },
+            where: { id: userId },
+            select: {
+                id: true,
+                role: true,
+                tokenVersion: true,
+                isActive: true,
+                contactId: true,
+            },
         });
         if (!user || !user.isActive) {
             return next(new ApiError(401, "User not found or inactive"));

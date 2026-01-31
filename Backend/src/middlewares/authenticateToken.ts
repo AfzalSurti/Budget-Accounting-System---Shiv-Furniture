@@ -6,6 +6,7 @@ import { ApiError } from "../utils/apiError.js";
 
 type JwtPayload = {
   sub: string;
+  userId?: string;
   role: "ADMIN" | "PORTAL";
   tokenVersion: number;
   contactId?: string | null;
@@ -14,7 +15,7 @@ type JwtPayload = {
 export const authenticateToken = async (
   req: Request,
   _res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const authHeader = req.headers.authorization;
   if (!authHeader?.startsWith("Bearer ")) {
@@ -24,9 +25,20 @@ export const authenticateToken = async (
   const token = authHeader.replace("Bearer ", "");
   try {
     const payload = jwt.verify(token, env.JWT_SECRET) as JwtPayload;
+    const userId = payload.sub ?? payload.userId;
+    if (!userId) {
+      return next(new ApiError(401, "Invalid token payload"));
+    }
+
     const user = await prisma.user.findUnique({
-      where: { id: payload.sub },
-      select: { id: true, role: true, tokenVersion: true, isActive: true, contactId: true },
+      where: { id: userId },
+      select: {
+        id: true,
+        role: true,
+        tokenVersion: true,
+        isActive: true,
+        contactId: true,
+      },
     });
 
     if (!user || !user.isActive) {

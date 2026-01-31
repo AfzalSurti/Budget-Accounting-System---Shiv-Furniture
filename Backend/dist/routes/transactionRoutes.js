@@ -13,7 +13,7 @@ import { createPurchaseOrderSchema, updatePurchaseOrderSchema, listPurchaseOrder
 import { createVendorBillSchema, updateVendorBillSchema, listVendorBillSchema, convertVendorBillSchema, } from "../validators/vendorBillValidators.js";
 import { createSalesOrderSchema, updateSalesOrderSchema, listSalesOrderSchema, } from "../validators/salesOrderValidators.js";
 import { createInvoiceSchema, updateInvoiceSchema, listInvoiceSchema, convertInvoiceSchema, } from "../validators/invoiceValidators.js";
-import { createPaymentSchema, listPaymentSchema } from "../validators/paymentValidators.js";
+import { createPaymentSchema, listPaymentSchema, } from "../validators/paymentValidators.js";
 export const transactionRoutes = Router();
 transactionRoutes.use(authenticateToken, authorizeRole(["ADMIN"]));
 // Purchase Orders
@@ -22,8 +22,11 @@ transactionRoutes.post("/purchase-orders", validateRequest(createPurchaseOrderSc
     res.status(201).json({ success: true, data: po });
 }));
 transactionRoutes.get("/purchase-orders", validateRequest(listPurchaseOrderSchema), asyncHandler(async (req, res) => {
-    const pos = await purchaseController.listPurchaseOrders(req.query.companyId);
-    res.json({ success: true, data: pos });
+    const view = req.query.view ?? "raw";
+    const data = view === "table"
+        ? await purchaseController.listPurchaseOrdersTable(req.query.companyId)
+        : await purchaseController.listPurchaseOrders(req.query.companyId);
+    res.json({ success: true, data });
 }));
 transactionRoutes.get("/purchase-orders/:id", asyncHandler(async (req, res) => {
     const po = await purchaseController.getPurchaseOrder(req.params.id);
@@ -47,8 +50,11 @@ transactionRoutes.post("/vendor-bills/from-po/:poId", validateRequest(convertVen
     res.status(201).json({ success: true, data: bill });
 }));
 transactionRoutes.get("/vendor-bills", validateRequest(listVendorBillSchema), asyncHandler(async (req, res) => {
-    const bills = await vendorBillController.listVendorBills(req.query.companyId);
-    res.json({ success: true, data: bills });
+    const view = req.query.view ?? "raw";
+    const data = view === "table"
+        ? await vendorBillController.listVendorBillsTable(req.query.companyId)
+        : await vendorBillController.listVendorBills(req.query.companyId);
+    res.json({ success: true, data });
 }));
 transactionRoutes.get("/vendor-bills/:id", asyncHandler(async (req, res) => {
     const bill = await vendorBillController.getVendorBill(req.params.id);
@@ -64,8 +70,11 @@ transactionRoutes.post("/sales-orders", validateRequest(createSalesOrderSchema),
     res.status(201).json({ success: true, data: so });
 }));
 transactionRoutes.get("/sales-orders", validateRequest(listSalesOrderSchema), asyncHandler(async (req, res) => {
-    const sos = await salesController.listSalesOrders(req.query.companyId);
-    res.json({ success: true, data: sos });
+    const view = req.query.view ?? "raw";
+    const data = view === "table"
+        ? await salesController.listSalesOrdersTable(req.query.companyId)
+        : await salesController.listSalesOrders(req.query.companyId);
+    res.json({ success: true, data });
 }));
 transactionRoutes.get("/sales-orders/:id", asyncHandler(async (req, res) => {
     const so = await salesController.getSalesOrder(req.params.id);
@@ -89,16 +98,22 @@ transactionRoutes.post("/invoices/from-so/:soId", validateRequest(convertInvoice
     res.status(201).json({ success: true, data: invoice });
 }));
 transactionRoutes.get("/invoices", validateRequest(listInvoiceSchema), asyncHandler(async (req, res) => {
-    const invoices = await invoiceController.listInvoices(req.query.companyId);
-    res.json({ success: true, data: invoices });
+    const view = req.query.view ?? "raw";
+    const data = view === "table"
+        ? await invoiceController.listInvoicesTable(req.query.companyId)
+        : await invoiceController.listInvoices(req.query.companyId);
+    res.json({ success: true, data });
 }));
 transactionRoutes.get("/invoices/:id", asyncHandler(async (req, res) => {
     const invoice = await invoiceController.getInvoice(req.params.id);
     res.json({ success: true, data: invoice });
 }));
 transactionRoutes.put("/invoices/:id", validateRequest(updateInvoiceSchema), asyncHandler(async (req, res) => {
-    const invoice = await invoiceController.updateInvoice(req.params.id, req.body);
-    res.json({ success: true, data: invoice });
+    const view = req.query.view ?? "raw";
+    const data = view === "table"
+        ? await vendorBillController.listVendorBillsTable(req.query.companyId)
+        : await vendorBillController.listVendorBills(req.query.companyId);
+    res.json({ success: true, data });
 }));
 // Payments
 transactionRoutes.post("/payments", validateRequest(createPaymentSchema), asyncHandler(async (req, res) => {
@@ -106,8 +121,11 @@ transactionRoutes.post("/payments", validateRequest(createPaymentSchema), asyncH
     res.status(201).json({ success: true, data: payment });
 }));
 transactionRoutes.get("/payments", validateRequest(listPaymentSchema), asyncHandler(async (req, res) => {
-    const payments = await paymentController.listPayments(req.query.companyId);
-    res.json({ success: true, data: payments });
+    const view = req.query.view ?? "raw";
+    const data = view === "table"
+        ? await paymentController.listPaymentsTable(req.query.companyId)
+        : await paymentController.listPayments(req.query.companyId);
+    res.json({ success: true, data });
 }));
 transactionRoutes.get("/payments/:id", asyncHandler(async (req, res) => {
     const payment = await paymentController.getPayment(req.params.id);
@@ -129,7 +147,9 @@ transactionRoutes.get("/transactions/:id", asyncHandler(async (req, res) => {
     const companyId = req.query.companyId;
     const transaction = await transactionController.getTransactionById(req.params.id, companyId);
     if (!transaction) {
-        res.status(404).json({ success: false, message: "Transaction not found" });
+        res
+            .status(404)
+            .json({ success: false, message: "Transaction not found" });
     }
     else {
         res.json({ success: true, data: transaction });

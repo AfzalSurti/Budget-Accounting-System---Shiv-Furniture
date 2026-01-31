@@ -12,7 +12,10 @@ const poBody = Joi.object({
     vendorId: Joi.string().uuid().required(),
     poNo: Joi.string().required(),
     orderDate: Joi.date().required(),
-    status: Joi.string().valid("draft", "confirmed", "cancelled", "done").required(),
+    deliveryDate: Joi.date().allow(null),
+    status: Joi.string()
+        .valid("draft", "confirmed", "cancelled", "done")
+        .required(),
     currency: Joi.string().default("INR"),
     notes: Joi.string().allow(null, ""),
     lines: Joi.array().items(lineSchema).min(1).required(),
@@ -23,13 +26,24 @@ export const createPurchaseOrderSchema = Joi.object({
     query: Joi.object({}),
 });
 export const updatePurchaseOrderSchema = Joi.object({
-    body: poBody.fork(["companyId", "vendorId", "poNo", "orderDate", "status", "lines"], (schema) => schema.optional()),
+    body: poBody.fork([
+        "companyId",
+        "vendorId",
+        "poNo",
+        "orderDate",
+        "deliveryDate",
+        "status",
+        "lines",
+    ], (schema) => schema.optional()),
     params: Joi.object({ id: Joi.string().uuid().required() }),
     query: Joi.object({}),
 });
 export const listPurchaseOrderSchema = Joi.object({
     body: Joi.object({}),
     params: Joi.object({}),
-    query: Joi.object({ companyId: Joi.string().uuid().required() }),
+    query: Joi.object({
+        companyId: Joi.string().uuid().required(),
+        view: Joi.string().valid("table", "raw").optional(),
+    }),
 });
 //# sourceMappingURL=purchaseOrderValidators.js.map

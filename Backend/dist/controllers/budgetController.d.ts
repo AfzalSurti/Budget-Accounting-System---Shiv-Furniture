@@ -20,6 +20,9 @@ export declare const createBudget: (data: {
         periodStart: Date;
         periodEnd: Date;
         status: import("../generated/prisma/index.js").$Enums.BudgetStatus;
+        totalBudgeted: Prisma.Decimal;
+        totalActual: Prisma.Decimal;
+        totalRemaining: Prisma.Decimal;
         createdBy: string | null;
         approvedAt: Date | null;
     };
@@ -57,6 +60,9 @@ export declare const listBudgets: (companyId: string) => Promise<({
     periodStart: Date;
     periodEnd: Date;
     status: import("../generated/prisma/index.js").$Enums.BudgetStatus;
+    totalBudgeted: Prisma.Decimal;
+    totalActual: Prisma.Decimal;
+    totalRemaining: Prisma.Decimal;
     createdBy: string | null;
     approvedAt: Date | null;
 })[]>;
@@ -85,6 +91,9 @@ export declare const getBudget: (id: string) => Promise<{
     periodStart: Date;
     periodEnd: Date;
     status: import("../generated/prisma/index.js").$Enums.BudgetStatus;
+    totalBudgeted: Prisma.Decimal;
+    totalActual: Prisma.Decimal;
+    totalRemaining: Prisma.Decimal;
     createdBy: string | null;
     approvedAt: Date | null;
 }>;
@@ -109,6 +118,9 @@ export declare const updateBudget: (id: string, data: {
         periodStart: Date;
         periodEnd: Date;
         status: import("../generated/prisma/index.js").$Enums.BudgetStatus;
+        totalBudgeted: Prisma.Decimal;
+        totalActual: Prisma.Decimal;
+        totalRemaining: Prisma.Decimal;
         createdBy: string | null;
         approvedAt: Date | null;
     };
@@ -129,6 +141,9 @@ export declare const archiveBudget: (id: string) => Promise<{
     periodStart: Date;
     periodEnd: Date;
     status: import("../generated/prisma/index.js").$Enums.BudgetStatus;
+    totalBudgeted: Prisma.Decimal;
+    totalActual: Prisma.Decimal;
+    totalRemaining: Prisma.Decimal;
     createdBy: string | null;
     approvedAt: Date | null;
 }>;

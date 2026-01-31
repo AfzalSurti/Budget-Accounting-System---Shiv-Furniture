@@ -2,6 +2,11 @@ import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/apiError.js";
 import { resolveAnalyticAccountId } from "../services/autoAnalyticService.js";
 import { calculatePaymentStatus } from "../services/paymentService.js";
+import {
+  formatCurrency,
+  formatDate,
+  mapDocStatusToBadge,
+} from "../utils/formatters.js";
 
 export const createInvoice = async (data: {
   companyId: string;
@@ -41,7 +46,9 @@ export const createInvoice = async (data: {
     for (const line of data.lines) {
       let categoryId: string | null = null;
       if (line.productId) {
-        const product = await tx.product.findUnique({ where: { id: line.productId } });
+        const product = await tx.product.findUnique({
+          where: { id: line.productId },
+        });
         categoryId = product?.categoryId ?? null;
       }
 
@@ -84,7 +91,11 @@ export const createInvoice = async (data: {
   });
 };
 
-export const createInvoiceFromSO = async (soId: string, invoiceNo: string, invoiceDate: string) => {
+export const createInvoiceFromSO = async (
+  soId: string,
+  invoiceNo: string,
+  invoiceDate: string,
+) => {
   return prisma.$transaction(async (tx) => {
     const so = await tx.salesOrder.findUnique({
       where: { id: soId },
@@ -142,6 +153,34 @@ export const listInvoices = async (companyId: string) => {
   });
 };
 
+export const listInvoicesTable = async (companyId: string) => {
+  const invoices = await prisma.customerInvoice.findMany({
+    where: { companyId },
+    select: {
+      id: true,
+      invoiceNo: true,
+      invoiceDate: true,
+      dueDate: true,
+      totalAmount: true,
+      currency: true,
+      status: true,
+      paymentState: true,
+      customer: { select: { displayName: true } },
+    },
+    orderBy: { createdAt: "desc" },
+  });
+
+  return invoices.map((invoice) => ({
+    id: invoice.invoiceNo,
+    recordId: invoice.id,
+    customer: invoice.customer.displayName,
+    amount: formatCurrency(Number(invoice.totalAmount), invoice.currency),
+    dueDate: formatDate(invoice.dueDate),
+    issueDate: formatDate(invoice.invoiceDate),
+    status: mapDocStatusToBadge(invoice.status, invoice.paymentState),
+  }));
+};
+
 export const getInvoice = async (id: string) => {
   const invoice = await prisma.customerInvoice.findUnique({
     where: { id },
@@ -153,7 +192,10 @@ export const getInvoice = async (id: string) => {
   return invoice;
 };
 
-export const updateInvoice = async (id: string, data: Partial<Record<string, unknown>>) => {
+export const updateInvoice = async (
+  id: string,
+  data: Partial<Record<string, unknown>>,
+) => {
   try {
     return await prisma.customerInvoice.update({ where: { id }, data });
   } catch (error) {

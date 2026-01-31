@@ -2,6 +2,11 @@ import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/apiError.js";
 import { resolveAnalyticAccountId } from "../services/autoAnalyticService.js";
 import { calculatePaymentStatus } from "../services/paymentService.js";
+import {
+  formatCurrency,
+  formatDate,
+  mapDocStatusToBadge,
+} from "../utils/formatters.js";
 
 export const createVendorBill = async (data: {
   companyId: string;
@@ -41,7 +46,9 @@ export const createVendorBill = async (data: {
     for (const line of data.lines) {
       let categoryId: string | null = null;
       if (line.productId) {
-        const product = await tx.product.findUnique({ where: { id: line.productId } });
+        const product = await tx.product.findUnique({
+          where: { id: line.productId },
+        });
         categoryId = product?.categoryId ?? null;
       }
 
@@ -84,7 +91,11 @@ export const createVendorBill = async (data: {
   });
 };
 
-export const createVendorBillFromPO = async (poId: string, billNo: string, billDate: string) => {
+export const createVendorBillFromPO = async (
+  poId: string,
+  billNo: string,
+  billDate: string,
+) => {
   return prisma.$transaction(async (tx) => {
     const po = await tx.purchaseOrder.findUnique({
       where: { id: poId },
@@ -142,6 +153,34 @@ export const listVendorBills = async (companyId: string) => {
   });
 };
 
+export const listVendorBillsTable = async (companyId: string) => {
+  const bills = await prisma.vendorBill.findMany({
+    where: { companyId },
+    select: {
+      id: true,
+      billNo: true,
+      billDate: true,
+      dueDate: true,
+      totalAmount: true,
+      currency: true,
+      status: true,
+      paymentState: true,
+      vendor: { select: { displayName: true } },
+    },
+    orderBy: { createdAt: "desc" },
+  });
+
+  return bills.map((bill) => ({
+    id: bill.billNo,
+    recordId: bill.id,
+    vendor: bill.vendor.displayName,
+    amount: formatCurrency(Number(bill.totalAmount), bill.currency),
+    dueDate: formatDate(bill.dueDate),
+    date: formatDate(bill.billDate),
+    status: mapDocStatusToBadge(bill.status, bill.paymentState),
+  }));
+};
+
 export const getVendorBill = async (id: string) => {
   const bill = await prisma.vendorBill.findUnique({
     where: { id },
@@ -153,7 +192,10 @@ export const getVendorBill = async (id: string) => {
   return bill;
 };
 
-export const updateVendorBill = async (id: string, data: Partial<Record<string, unknown>>) => {
+export const updateVendorBill = async (
+  id: string,
+  data: Partial<Record<string, unknown>>,
+) => {
   try {
     return await prisma.vendorBill.update({ where: { id }, data });
   } catch (error) {

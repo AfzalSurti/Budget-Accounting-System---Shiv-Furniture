@@ -29,7 +29,10 @@ export const createVendorBillSchema = Joi.object({
 });
 
 export const updateVendorBillSchema = Joi.object({
-  body: billBody.fork(["companyId", "vendorId", "billNo", "billDate", "status", "lines"], (schema) => schema.optional()),
+  body: billBody.fork(
+    ["companyId", "vendorId", "billNo", "billDate", "status", "lines"],
+    (schema) => schema.optional(),
+  ),
   params: Joi.object({ id: Joi.string().uuid().required() }),
   query: Joi.object({}),
 });
@@ -37,7 +40,10 @@ export const updateVendorBillSchema = Joi.object({
 export const listVendorBillSchema = Joi.object({
   body: Joi.object({}),
   params: Joi.object({}),
-  query: Joi.object({ companyId: Joi.string().uuid().required() }),
+  query: Joi.object({
+    companyId: Joi.string().uuid().required(),
+    view: Joi.string().valid("table", "raw").optional(),
+  }),
 });
 
 export const convertVendorBillSchema = Joi.object({
