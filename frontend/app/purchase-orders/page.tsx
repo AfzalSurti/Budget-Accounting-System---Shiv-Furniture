@@ -33,6 +33,7 @@ interface BackendContact {
   id: string;
   displayName: string;
   contactType: "customer" | "vendor" | "both" | "internal";
+  isPortalUser?: boolean;
 }
 
 interface BackendProduct {
@@ -113,26 +114,21 @@ export default function PurchaseOrdersPage() {
   }, [loadOrders, loadLookups]);
 
   const handleExportPDF = () => {
-    const columnMapping = {
-      date: "Date",
-      id: "PO #",
-      vendor: "Vendor",
-      amount: "Amount",
-      deliveryDate: "Delivery Date",
-      status: "Status",
-    };
+    const columns = [
+      { header: "Date", key: "date" },
+      { header: "PO #", key: "id" },
+      { header: "Vendor", key: "vendor" },
+      { header: "Amount", key: "amount" },
+      { header: "Delivery Date", key: "deliveryDate" },
+      { header: "Status", key: "status" },
+    ];
 
     const processedData = poData.map((row) => ({
       ...row,
       status: row.statusLabel ?? row.status,
     }));
 
-    exportTableToPDF(
-      processedData,
-      columnMapping,
-      "Purchase Orders",
-      "purchase-orders",
-    );
+    exportTableToPDF("Purchase Orders", columns, processedData, "purchase-orders.pdf");
   };
 
   const handleCreatePurchaseOrder = async (draft: PurchaseOrderDraft) => {
@@ -447,7 +443,7 @@ function PurchaseOrderDialog({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-sm">
-      <div className="w-full max-w-5xl rounded-[36px] border border-brand-primary/30 bg-white p-8 text-brand-dark shadow-[0_25px_120px_rgba(15,23,42,0.18)] dark:border-brand-primary/40 dark:bg-slate-900 dark:text-brand-light">
+      <div className="w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-[36px] border border-brand-primary/30 bg-white p-8 text-brand-dark shadow-[0_25px_120px_rgba(15,23,42,0.18)] dark:border-brand-primary/40 dark:bg-slate-900 dark:text-brand-light">
         <div className="flex items-center justify-between border-b border-brand-primary/20 pb-4">
           <h2 className="text-2xl font-semibold">Create Purchase Order</h2>
           <button onClick={onClose} className="rounded-full border border-brand-primary/40 p-2 hover:bg-brand-primary/10">
@@ -465,7 +461,7 @@ function PurchaseOrderDialog({
               >
                 {vendors.map((v) => (
                   <option key={v.id} value={v.id}>
-                    {v.displayName}
+                    {v.displayName}{v.isPortalUser ? " (Portal)" : ""}
                   </option>
                 ))}
               </select>

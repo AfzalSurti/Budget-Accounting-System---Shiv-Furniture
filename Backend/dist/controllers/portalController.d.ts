@@ -33,6 +33,9 @@ export declare const listPortalInvoices: (contactId: string) => Promise<({
 export declare const listPortalInvoicesTable: (contactId: string) => Promise<{
     id: string;
     recordId: string;
+    totalAmount: number;
+    paidAmount: number;
+    paymentState: string;
     amount: string;
     dueDate: string;
     issueDate: string;
@@ -74,6 +77,9 @@ export declare const listPortalBillsTable: (contactId: string) => Promise<{
     id: string;
     recordId: string;
     vendor: string;
+    totalAmount: number;
+    paidAmount: number;
+    paymentState: string;
     amount: string;
     dueDate: string;
     issueDate: string;

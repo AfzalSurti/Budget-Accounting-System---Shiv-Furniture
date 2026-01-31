@@ -1,1 +1,0 @@
-{"version":3,"file":"authenticateToken.d.ts","sourceRoot":"","sources":["../../src/middlewares/authenticateToken.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,QAAQ,EAAE,YAAY,EAAE,MAAM,SAAS,CAAC;AAc/D,eAAO,MAAM,iBAAiB,GAC5B,KAAK,OAAO,EACZ,MAAM,QAAQ,EACd,MAAM,YAAY,kBAuCnB,CAAC"}

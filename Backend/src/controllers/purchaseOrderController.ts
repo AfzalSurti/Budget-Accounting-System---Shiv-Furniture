@@ -28,62 +28,74 @@ export const createPurchaseOrder = async (data: {
     taxRate?: number;
   }>;
 }) => {
-  return prisma.$transaction(async (tx) => {
-    const contactTagIds = await getContactTagIds(data.vendorId);
-    const purchaseOrder = await tx.purchaseOrder.create({
-      data: {
-        companyId: data.companyId,
-        vendorId: data.vendorId,
-        poNo: data.poNo,
-        orderDate: new Date(data.orderDate),
-        deliveryDate: data.deliveryDate ? new Date(data.deliveryDate) : null,
-        status: data.status,
-        currency: data.currency ?? "INR",
-        notes: data.notes ?? null,
-      },
-    });
-
-    for (const line of data.lines) {
-      const product = await tx.product.findUnique({
-        where: { id: line.productId },
-      });
-      if (!product) {
-        throw new ApiError(400, "Invalid product");
-      }
-
-      const resolvedAnalytic = line.analyticAccountId
-        ? null
-        : await resolveAnalyticAccountId({
-            companyId: data.companyId,
-            docType: "purchase_order",
-            productId: line.productId,
-            categoryId: product.categoryId ?? null,
-            contactId: data.vendorId,
-            contactTagIds,
-          });
-
-      const taxRate = line.taxRate ?? 0;
-      const lineTotal = line.qty * line.unitPrice * (1 + taxRate / 100);
-
-      await tx.purchaseOrderLine.create({
+  return prisma.$transaction(
+    async (tx) => {
+      const contactTagIds = await getContactTagIds(data.vendorId);
+      const purchaseOrder = await tx.purchaseOrder.create({
         data: {
-          purchaseOrderId: purchaseOrder.id,
-          productId: line.productId,
-          analyticAccountId: line.analyticAccountId ?? resolvedAnalytic?.analyticAccountId ?? null,
-          autoAnalyticModelId: resolvedAnalytic?.modelId ?? null,
-          autoAnalyticRuleId: resolvedAnalytic?.ruleId ?? null,
-          matchedFieldsCount: resolvedAnalytic?.matchedFieldsCount ?? null,
-          description: line.description ?? null,
-          qty: line.qty,
-          unitPrice: line.unitPrice,
-          taxRate,
-          lineTotal,
+          companyId: data.companyId,
+          vendorId: data.vendorId,
+          poNo: data.poNo,
+          orderDate: new Date(data.orderDate),
+          deliveryDate: data.deliveryDate ? new Date(data.deliveryDate) : null,
+          status: data.status,
+          currency: data.currency ?? "INR",
+          notes: data.notes ?? null,
         },
       });
-    }
 
-    return purchaseOrder;
-  });
+      const productIds = Array.from(new Set(data.lines.map((line) => line.productId)));
+      const products = await tx.product.findMany({
+        where: { id: { in: productIds } },
+        select: { id: true, categoryId: true },
+      });
+      if (products.length !== productIds.length) {
+        throw new ApiError(400, "Invalid product");
+      }
+      const productMap = new Map(products.map((product) => [product.id, product]));
+
+      const linePayloads = await Promise.all(
+        data.lines.map(async (line) => {
+          const product = productMap.get(line.productId);
+          if (!product) {
+            throw new ApiError(400, "Invalid product");
+          }
+          const resolvedAnalytic = line.analyticAccountId
+            ? null
+            : await resolveAnalyticAccountId({
+                companyId: data.companyId,
+                docType: "purchase_order",
+                productId: line.productId,
+                categoryId: product.categoryId ?? null,
+                contactId: data.vendorId,
+                contactTagIds,
+              });
+
+          const taxRate = line.taxRate ?? 0;
+          const lineTotal = line.qty * line.unitPrice * (1 + taxRate / 100);
+
+          return {
+            purchaseOrderId: purchaseOrder.id,
+            productId: line.productId,
+            analyticAccountId: line.analyticAccountId ?? resolvedAnalytic?.analyticAccountId ?? null,
+            autoAnalyticModelId: resolvedAnalytic?.modelId ?? null,
+            autoAnalyticRuleId: resolvedAnalytic?.ruleId ?? null,
+            matchedFieldsCount: resolvedAnalytic?.matchedFieldsCount ?? null,
+            description: line.description ?? null,
+            qty: line.qty,
+            unitPrice: line.unitPrice,
+            taxRate,
+            lineTotal,
+          };
+        }),
+      );
+
+      await tx.purchaseOrderLine.createMany({ data: linePayloads });
+
+      return purchaseOrder;
+    },
+    { timeout: 15000 },
+  );
 };
 
 export const listPurchaseOrders = async (companyId: string) => {

@@ -136,6 +136,7 @@ model Contact {
   displayName          String      @map("display_name")
   email                String?
   phone                String?
+  imgUrl               String?     @map("img_url")
   gstin                String?
   billingAddress       Json?       @map("billing_address")
   shippingAddress      Json?       @map("shipping_address")

@@ -22,6 +22,8 @@ interface InvoiceRow {
   recordId?: string;
   rawStatus?: "draft" | "posted" | "cancelled";
   paymentState?: string;
+  totalAmount?: number;
+  paidAmount?: number;
   customer: string;
   amount: string;
   dueDate: string;
@@ -34,6 +36,7 @@ interface BackendContact {
   id: string;
   displayName: string;
   contactType: "customer" | "vendor" | "both" | "internal";
+  isPortalUser?: boolean;
 }
 
 interface BackendProduct {
@@ -112,22 +115,21 @@ export default function CustomerInvoicesPage() {
   }, [loadInvoices, loadLookups]);
 
   const handleExportPDF = () => {
-    exportTableToPDF(
-      "Customer Invoices",
-      [
-        { header: "Date", key: "issueDate" },
-        { header: "Invoice #", key: "id" },
-        { header: "Customer", key: "customer" },
-        { header: "Amount", key: "amount" },
-        { header: "Due Date", key: "dueDate" },
-        { header: "Status", key: "statusLabel" },
-      ],
-      invoicesData.map(row => ({
-        ...row,
-        statusLabel: row.statusLabel || row.status
-      })),
-      "Customer_Invoices.pdf"
-    );
+    const columns = [
+      { header: "Date", key: "issueDate" },
+      { header: "Invoice #", key: "id" },
+      { header: "Customer", key: "customer" },
+      { header: "Amount", key: "amount" },
+      { header: "Due Date", key: "dueDate" },
+      { header: "Status", key: "status" },
+    ];
+
+    const processedData = invoicesData.map((row) => ({
+      ...row,
+      status: row.statusLabel || row.status,
+    }));
+
+    exportTableToPDF("Customer Invoices", columns, processedData, "Customer_Invoices.pdf");
   };
 
   const handlePostInvoice = async (row: InvoiceRow) => {
@@ -205,6 +207,26 @@ export default function CustomerInvoicesPage() {
       key: "amount" as const,
       label: "Amount",
       className: "font-mono font-bold",
+    },
+    {
+      key: "recordId" as const,
+      label: "Paid %",
+      render: (_value: string | undefined, row: InvoiceRow) => {
+        const total = row.totalAmount ?? 0;
+        const paid = row.paidAmount ?? 0;
+        const pct = total > 0 ? Math.min(100, (paid / total) * 100) : 0;
+        return <span className="text-xs font-semibold">{pct.toFixed(1)}%</span>;
+      },
+    },
+    {
+      key: "recordId" as const,
+      label: "Remaining",
+      render: (_value: string | undefined, row: InvoiceRow) => {
+        const total = row.totalAmount ?? 0;
+        const paid = row.paidAmount ?? 0;
+        const remaining = Math.max(0, total - paid);
+        return <span className="text-xs font-semibold">INR {remaining.toFixed(2)}</span>;
+      },
     },
     {
       key: "dueDate" as const,
@@ -420,7 +442,7 @@ function InvoiceDialog({
               >
                 {customers.map((c) => (
                   <option key={c.id} value={c.id}>
-                    {c.displayName}
+                    {c.displayName}{c.isPortalUser ? " (Portal)" : ""}
                   </option>
                 ))}
               </select>
