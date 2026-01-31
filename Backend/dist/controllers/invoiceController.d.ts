@@ -53,12 +53,12 @@ export declare const listInvoices: (companyId: string) => Promise<({
         id: string;
         analyticAccountId: string | null;
         glAccountId: string | null;
+        productId: string | null;
         description: string | null;
         qty: import("@prisma/client-runtime-utils").Decimal;
         unitPrice: import("@prisma/client-runtime-utils").Decimal;
         taxRate: import("@prisma/client-runtime-utils").Decimal;
         lineTotal: import("@prisma/client-runtime-utils").Decimal;
-        productId: string | null;
         customerInvoiceId: string;
     }[];
 } & {
@@ -77,17 +77,26 @@ export declare const listInvoices: (companyId: string) => Promise<({
     soId: string | null;
     portalVisible: boolean;
 })[]>;
+export declare const listInvoicesTable: (companyId: string) => Promise<{
+    id: string;
+    recordId: string;
+    customer: string;
+    amount: string;
+    dueDate: string | null;
+    issueDate: string | null;
+    status: "failed" | "completed" | "pending";
+}[]>;
 export declare const getInvoice: (id: string) => Promise<{
     lines: {
         id: string;
         analyticAccountId: string | null;
         glAccountId: string | null;
+        productId: string | null;
         description: string | null;
         qty: import("@prisma/client-runtime-utils").Decimal;
         unitPrice: import("@prisma/client-runtime-utils").Decimal;
         taxRate: import("@prisma/client-runtime-utils").Decimal;
         lineTotal: import("@prisma/client-runtime-utils").Decimal;
-        productId: string | null;
         customerInvoiceId: string;
     }[];
 } & {

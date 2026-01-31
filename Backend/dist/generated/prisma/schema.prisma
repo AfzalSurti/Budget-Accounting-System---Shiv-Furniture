@@ -299,15 +299,18 @@ model JournalLine {
 }
 
 model Budget {
-  id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  companyId   String       @map("company_id") @db.Uuid
-  name        String
-  periodStart DateTime     @map("period_start") @db.Date
-  periodEnd   DateTime     @map("period_end") @db.Date
-  status      BudgetStatus
-  createdBy   String?      @map("created_by") @db.Uuid
-  createdAt   DateTime     @default(now()) @map("created_at")
-  approvedAt  DateTime?    @map("approved_at")
+  id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId      String       @map("company_id") @db.Uuid
+  name           String
+  periodStart    DateTime     @map("period_start") @db.Date
+  periodEnd      DateTime     @map("period_end") @db.Date
+  status         BudgetStatus
+  totalBudgeted  Decimal      @default(0) @map("total_budgeted") @db.Decimal(18, 2)
+  totalActual    Decimal      @default(0) @map("total_actual") @db.Decimal(18, 2)
+  totalRemaining Decimal      @default(0) @map("total_remaining") @db.Decimal(18, 2)
+  createdBy      String?      @map("created_by") @db.Uuid
+  createdAt      DateTime     @default(now()) @map("created_at")
+  approvedAt     DateTime?    @map("approved_at")
 
   company   Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
   revisions BudgetRevision[]
@@ -385,15 +388,16 @@ model AutoAnalyticRule {
 }
 
 model PurchaseOrder {
-  id        String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  companyId String      @map("company_id") @db.Uuid
-  poNo      String      @map("po_no")
-  vendorId  String      @map("vendor_id") @db.Uuid
-  orderDate DateTime    @map("order_date") @db.Date
-  status    OrderStatus
-  currency  String      @default("INR")
-  notes     String?
-  createdAt DateTime    @default(now()) @map("created_at")
+  id           String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId    String      @map("company_id") @db.Uuid
+  poNo         String      @map("po_no")
+  vendorId     String      @map("vendor_id") @db.Uuid
+  orderDate    DateTime    @map("order_date") @db.Date
+  deliveryDate DateTime?   @map("delivery_date") @db.Date
+  status       OrderStatus
+  currency     String      @default("INR")
+  notes        String?
+  createdAt    DateTime    @default(now()) @map("created_at")
 
   company Company             @relation(fields: [companyId], references: [id], onDelete: Cascade)
   vendor  Contact             @relation("po_vendor", fields: [vendorId], references: [id])
@@ -425,15 +429,16 @@ model PurchaseOrderLine {
 }
 
 model SalesOrder {
-  id         String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  companyId  String      @map("company_id") @db.Uuid
-  soNo       String      @map("so_no")
-  customerId String      @map("customer_id") @db.Uuid
-  orderDate  DateTime    @map("order_date") @db.Date
-  status     OrderStatus
-  currency   String      @default("INR")
-  notes      String?
-  createdAt  DateTime    @default(now()) @map("created_at")
+  id           String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId    String      @map("company_id") @db.Uuid
+  soNo         String      @map("so_no")
+  customerId   String      @map("customer_id") @db.Uuid
+  orderDate    DateTime    @map("order_date") @db.Date
+  deliveryDate DateTime?   @map("delivery_date") @db.Date
+  status       OrderStatus
+  currency     String      @default("INR")
+  notes        String?
+  createdAt    DateTime    @default(now()) @map("created_at")
 
   company  Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
   customer Contact           @relation("so_customer", fields: [customerId], references: [id])

@@ -4,7 +4,7 @@ import { authorizeRole } from "../middlewares/authorizeRole.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { validateRequest } from "../middlewares/validateRequest.js";
 import * as portalController from "../controllers/portalController.js";
-import { portalListSchema, portalPaymentSchema } from "../validators/portalValidators.js";
+import { portalListSchema, portalPaymentSchema, } from "../validators/portalValidators.js";
 import { ApiError } from "../utils/apiError.js";
 export const portalRoutes = Router();
 portalRoutes.use(authenticateToken, authorizeRole(["PORTAL", "ADMIN"]));
@@ -12,35 +12,50 @@ portalRoutes.get("/invoices", validateRequest(portalListSchema), asyncHandler(as
     if (!req.user?.contactId) {
         throw new ApiError(403, "Portal user not linked to a contact");
     }
-    const data = await portalController.listPortalInvoices(req.user.contactId);
+    const view = req.query.view ?? "raw";
+    const data = view === "table"
+        ? await portalController.listPortalInvoicesTable(req.user.contactId)
+        : await portalController.listPortalInvoices(req.user.contactId);
     res.json({ success: true, data });
 }));
 portalRoutes.get("/bills", validateRequest(portalListSchema), asyncHandler(async (req, res) => {
     if (!req.user?.contactId) {
         throw new ApiError(403, "Portal user not linked to a contact");
     }
-    const data = await portalController.listPortalBills(req.user.contactId);
+    const view = req.query.view ?? "raw";
+    const data = view === "table"
+        ? await portalController.listPortalBillsTable(req.user.contactId)
+        : await portalController.listPortalBills(req.user.contactId);
     res.json({ success: true, data });
 }));
 portalRoutes.get("/sales-orders", validateRequest(portalListSchema), asyncHandler(async (req, res) => {
     if (!req.user?.contactId) {
         throw new ApiError(403, "Portal user not linked to a contact");
     }
-    const data = await portalController.listPortalSalesOrders(req.user.contactId);
+    const view = req.query.view ?? "raw";
+    const data = view === "table"
+        ? await portalController.listPortalSalesOrdersTable(req.user.contactId)
+        : await portalController.listPortalSalesOrders(req.user.contactId);
     res.json({ success: true, data });
 }));
 portalRoutes.get("/purchase-orders", validateRequest(portalListSchema), asyncHandler(async (req, res) => {
     if (!req.user?.contactId) {
         throw new ApiError(403, "Portal user not linked to a contact");
     }
-    const data = await portalController.listPortalPurchaseOrders(req.user.contactId);
+    const view = req.query.view ?? "raw";
+    const data = view === "table"
+        ? await portalController.listPortalPurchaseOrdersTable(req.user.contactId)
+        : await portalController.listPortalPurchaseOrders(req.user.contactId);
     res.json({ success: true, data });
 }));
 portalRoutes.get("/payments", validateRequest(portalListSchema), asyncHandler(async (req, res) => {
     if (!req.user?.contactId) {
         throw new ApiError(403, "Portal user not linked to a contact");
     }
-    const data = await portalController.listPortalPayments(req.user.contactId);
+    const view = req.query.view ?? "raw";
+    const data = view === "table"
+        ? await portalController.listPortalPaymentsTable(req.user.contactId)
+        : await portalController.listPortalPayments(req.user.contactId);
     res.json({ success: true, data });
 }));
 portalRoutes.get("/invoices/:id/pdf", asyncHandler(async (req, res) => {

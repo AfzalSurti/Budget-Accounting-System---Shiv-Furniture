@@ -44,6 +44,15 @@ export declare const listPayments: (companyId: string) => Promise<({
     method: import("../generated/prisma/index.js").$Enums.PaymentMethod;
     reference: string | null;
 })[]>;
+export declare const listPaymentsTable: (companyId: string) => Promise<{
+    id: string;
+    recordId: string;
+    description: string;
+    amount: string;
+    date: string | null;
+    method: string;
+    status: "failed" | "completed" | "pending";
+}[]>;
 export declare const getPayment: (id: string) => Promise<{
     allocations: {
         id: string;

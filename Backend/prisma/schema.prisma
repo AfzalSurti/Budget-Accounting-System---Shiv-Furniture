@@ -2,8 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  provider   = "prisma-client-js"
+  output     = "../src/generated/prisma"
   engineType = "client"
 }
 
@@ -14,14 +14,14 @@ datasource db {
 //
 // Enums (keep statuses strict + production safe)
 //
-enum ContactType {   // for contatc details used in purchase order / sales order / vendor bill / customer invoice
+enum ContactType {
   customer
   vendor
   both
   internal
 }
 
-enum DocStatus { 
+enum DocStatus {
   draft
   posted
   cancelled
@@ -105,55 +105,54 @@ enum UserRole {
   PORTAL
 }
 
-
-model Company {  // all details of a company using the system
+model Company {
   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name      String
   createdAt DateTime @default(now()) @map("created_at")
 
-  contacts          Contact[]
-  productCategories ProductCategory[]
-  products          Product[]
-  analyticAccounts  AnalyticAccount[]
-  glAccounts        GLAccount[]
-  journalEntries    JournalEntry[]
-  budgets           Budget[]
+  contacts           Contact[]
+  productCategories  ProductCategory[]
+  products           Product[]
+  analyticAccounts   AnalyticAccount[]
+  glAccounts         GLAccount[]
+  journalEntries     JournalEntry[]
+  budgets            Budget[]
   autoAnalyticModels AutoAnalyticModel[]
-  purchaseOrders    PurchaseOrder[]
-  salesOrders       SalesOrder[]
-  vendorBills       VendorBill[]
-  customerInvoices  CustomerInvoice[]
-  payments          Payment[]
-  documentFiles     DocumentFile[]
+  purchaseOrders     PurchaseOrder[]
+  salesOrders        SalesOrder[]
+  vendorBills        VendorBill[]
+  customerInvoices   CustomerInvoice[]
+  payments           Payment[]
+  documentFiles      DocumentFile[]
 
   @@map("companies")
 }
 
-model Contact {  // contact details of customers and vendors
-  id                  String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  companyId           String      @db.Uuid @map("company_id") 
-  contactType         ContactType @map("contact_type")
-  displayName         String      @map("display_name")
-  email               String?          
-  phone               String?
-  gstin               String?
-  billingAddress      Json?       @map("billing_address")
-  shippingAddress     Json?       @map("shipping_address")
-  isPortalUser        Boolean     @default(false) @map("is_portal_user")
-  portalUserExternalId String?    @map("portal_user_external_id")
-  isActive            Boolean     @default(true) @map("is_active")
-  createdAt           DateTime    @default(now()) @map("created_at")
-  updatedAt           DateTime    @default(now()) @map("updated_at")
+model Contact {
+  id                   String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId            String      @map("company_id") @db.Uuid
+  contactType          ContactType @map("contact_type")
+  displayName          String      @map("display_name")
+  email                String?
+  phone                String?
+  gstin                String?
+  billingAddress       Json?       @map("billing_address")
+  shippingAddress      Json?       @map("shipping_address")
+  isPortalUser         Boolean     @default(false) @map("is_portal_user")
+  portalUserExternalId String?     @map("portal_user_external_id")
+  isActive             Boolean     @default(true) @map("is_active")
+  createdAt            DateTime    @default(now()) @map("created_at")
+  updatedAt            DateTime    @default(now()) @map("updated_at")
 
   company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
-  vendorPurchaseOrders  PurchaseOrder[]  @relation("po_vendor")
-  customerSalesOrders   SalesOrder[]     @relation("so_customer")
-  vendorBills           VendorBill[]     @relation("bill_vendor")
-  customerInvoices      CustomerInvoice[] @relation("inv_customer")
-  payments              Payment[]
-  journalLines          JournalLine[]
-  autoAnalyticRules     AutoAnalyticRule[]
+  vendorPurchaseOrders PurchaseOrder[]    @relation("po_vendor")
+  customerSalesOrders  SalesOrder[]       @relation("so_customer")
+  vendorBills          VendorBill[]       @relation("bill_vendor")
+  customerInvoices     CustomerInvoice[]  @relation("inv_customer")
+  payments             Payment[]
+  journalLines         JournalLine[]
+  autoAnalyticRules    AutoAnalyticRule[]
   users                User[]
 
   @@unique([companyId, email])
@@ -162,18 +161,18 @@ model Contact {  // contact details of customers and vendors
   @@map("contacts")
 }
 
-model ProductCategory {  // hierarchical product categories
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  companyId String   @db.Uuid @map("company_id")
+model ProductCategory {
+  id        String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId String  @map("company_id") @db.Uuid
   name      String
-  parentId  String?  @db.Uuid @map("parent_id")
+  parentId  String? @map("parent_id") @db.Uuid
 
   company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
-  parent   ProductCategory? @relation("cat_parent", fields: [parentId], references: [id])
+  parent   ProductCategory?  @relation("cat_parent", fields: [parentId], references: [id])
   children ProductCategory[] @relation("cat_parent")
 
-  products Product[]
+  products          Product[]
   autoAnalyticRules AutoAnalyticRule[]
 
   @@unique([companyId, name])
@@ -181,27 +180,27 @@ model ProductCategory {  // hierarchical product categories
   @@map("product_categories")
 }
 
-model Product {  // products / services sold or purchased
+model Product {
   id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  companyId  String   @db.Uuid @map("company_id")
+  companyId  String   @map("company_id") @db.Uuid
   sku        String?
   name       String
-  categoryId String?  @db.Uuid @map("category_id")
+  categoryId String?  @map("category_id") @db.Uuid
   uom        String   @default("unit")
-  salePrice  Decimal  @default(0) @db.Decimal(18, 2) @map("sale_price")
-  costPrice  Decimal  @default(0) @db.Decimal(18, 2) @map("cost_price")
+  salePrice  Decimal  @default(0) @map("sale_price") @db.Decimal(18, 2)
+  costPrice  Decimal  @default(0) @map("cost_price") @db.Decimal(18, 2)
   isActive   Boolean  @default(true) @map("is_active")
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @default(now()) @map("updated_at")
 
-  company  Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  company  Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
   category ProductCategory? @relation(fields: [categoryId], references: [id])
 
-  poLines  PurchaseOrderLine[]
-  soLines  SalesOrderLine[]
-  billLines VendorBillLine[]
-  invLines  CustomerInvoiceLine[]
-  journalLines JournalLine[]
+  poLines           PurchaseOrderLine[]
+  soLines           SalesOrderLine[]
+  billLines         VendorBillLine[]
+  invLines          CustomerInvoiceLine[]
+  journalLines      JournalLine[]
   autoAnalyticRules AutoAnalyticRule[]
 
   @@unique([companyId, sku])
@@ -209,26 +208,26 @@ model Product {  // products / services sold or purchased
   @@map("products")
 }
 
-model AnalyticAccount {  // for tracking expenses/incomes across various dimensions
+model AnalyticAccount {
   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  companyId String   @db.Uuid @map("company_id")
+  companyId String   @map("company_id") @db.Uuid
   code      String?
   name      String
-  parentId  String?  @db.Uuid @map("parent_id")
+  parentId  String?  @map("parent_id") @db.Uuid
   isActive  Boolean  @default(true) @map("is_active")
   createdAt DateTime @default(now()) @map("created_at")
 
   company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
-  parent   AnalyticAccount? @relation("aa_parent", fields: [parentId], references: [id])
+  parent   AnalyticAccount?  @relation("aa_parent", fields: [parentId], references: [id])
   children AnalyticAccount[] @relation("aa_parent")
 
-  budgetLines BudgetLine[]
-  journalLines JournalLine[]
-  poLines  PurchaseOrderLine[]
-  soLines  SalesOrderLine[]
-  billLines VendorBillLine[]
-  invLines  CustomerInvoiceLine[]
+  budgetLines       BudgetLine[]
+  journalLines      JournalLine[]
+  poLines           PurchaseOrderLine[]
+  soLines           SalesOrderLine[]
+  billLines         VendorBillLine[]
+  invLines          CustomerInvoiceLine[]
   autoAnalyticRules AutoAnalyticRule[]
 
   @@unique([companyId, code])
@@ -237,13 +236,13 @@ model AnalyticAccount {  // for tracking expenses/incomes across various dimensi
   @@map("analytic_accounts")
 }
 
-model GLAccount {  // general ledger accounts for accounting
-  id         String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  companyId  String     @db.Uuid @map("company_id")
-  code       String
-  name       String
+model GLAccount {
+  id          String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId   String      @map("company_id") @db.Uuid
+  code        String
+  name        String
   accountType AccountType @map("account_type")
-  isActive   Boolean    @default(true) @map("is_active")
+  isActive    Boolean     @default(true) @map("is_active")
 
   company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
@@ -256,18 +255,18 @@ model GLAccount {  // general ledger accounts for accounting
   @@map("gl_accounts")
 }
 
-model JournalEntry {  // journal entries for recording financial transactions 
-  id         String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  companyId  String          @db.Uuid @map("company_id")
-  entryDate  DateTime        @db.Date @map("entry_date")
+model JournalEntry {
+  id         String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId  String            @map("company_id") @db.Uuid
+  entryDate  DateTime          @map("entry_date") @db.Date
   status     JournalStatus
   sourceType JournalSourceType @map("source_type")
-  sourceId   String?         @db.Uuid @map("source_id")
+  sourceId   String?           @map("source_id") @db.Uuid
   memo       String?
-  createdAt  DateTime        @default(now()) @map("created_at")
-  postedAt   DateTime?       @map("posted_at")
+  createdAt  DateTime          @default(now()) @map("created_at")
+  postedAt   DateTime?         @map("posted_at")
 
-  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  company Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
   lines   JournalLine[]
 
   @@index([companyId, entryDate])
@@ -276,22 +275,22 @@ model JournalEntry {  // journal entries for recording financial transactions
   @@map("journal_entries")
 }
 
-model JournalLine {  // individual lines within a journal entry
-  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  journalEntryId String   @db.Uuid @map("journal_entry_id")
-  glAccountId    String   @db.Uuid @map("gl_account_id")
-  analyticAccountId String? @db.Uuid @map("analytic_account_id")
-  contactId      String?  @db.Uuid @map("contact_id")
-  productId      String?  @db.Uuid @map("product_id")
-  description    String?
-  debit          Decimal  @default(0) @db.Decimal(18, 2)
-  credit         Decimal  @default(0) @db.Decimal(18, 2)
+model JournalLine {
+  id                String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  journalEntryId    String  @map("journal_entry_id") @db.Uuid
+  glAccountId       String  @map("gl_account_id") @db.Uuid
+  analyticAccountId String? @map("analytic_account_id") @db.Uuid
+  contactId         String? @map("contact_id") @db.Uuid
+  productId         String? @map("product_id") @db.Uuid
+  description       String?
+  debit             Decimal @default(0) @db.Decimal(18, 2)
+  credit            Decimal @default(0) @db.Decimal(18, 2)
 
-  entry   JournalEntry   @relation(fields: [journalEntryId], references: [id], onDelete: Cascade)
-  gl      GLAccount      @relation(fields: [glAccountId], references: [id])
+  entry    JournalEntry     @relation(fields: [journalEntryId], references: [id], onDelete: Cascade)
+  gl       GLAccount        @relation(fields: [glAccountId], references: [id])
   analytic AnalyticAccount? @relation(fields: [analyticAccountId], references: [id])
-  contact Contact?       @relation(fields: [contactId], references: [id])
-  product Product?       @relation(fields: [productId], references: [id])
+  contact  Contact?         @relation(fields: [contactId], references: [id])
+  product  Product?         @relation(fields: [productId], references: [id])
 
   @@index([journalEntryId])
   @@index([analyticAccountId])
@@ -299,18 +298,21 @@ model JournalLine {  // individual lines within a journal entry
   @@map("journal_lines")
 }
 
-model Budget {  // budgets for financial planning
-  id          String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  companyId   String      @db.Uuid @map("company_id")
-  name        String
-  periodStart DateTime    @db.Date @map("period_start")
-  periodEnd   DateTime    @db.Date @map("period_end")
-  status      BudgetStatus
-  createdBy   String?     @db.Uuid @map("created_by")
-  createdAt   DateTime    @default(now()) @map("created_at")
-  approvedAt  DateTime?   @map("approved_at")
+model Budget {
+  id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId      String       @map("company_id") @db.Uuid
+  name           String
+  periodStart    DateTime     @map("period_start") @db.Date
+  periodEnd      DateTime     @map("period_end") @db.Date
+  status         BudgetStatus
+  totalBudgeted  Decimal      @default(0) @map("total_budgeted") @db.Decimal(18, 2)
+  totalActual    Decimal      @default(0) @map("total_actual") @db.Decimal(18, 2)
+  totalRemaining Decimal      @default(0) @map("total_remaining") @db.Decimal(18, 2)
+  createdBy      String?      @map("created_by") @db.Uuid
+  createdAt      DateTime     @default(now()) @map("created_at")
+  approvedAt     DateTime?    @map("approved_at")
 
-  company   Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  company   Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
   revisions BudgetRevision[]
 
   @@index([companyId, periodStart, periodEnd])
@@ -318,31 +320,31 @@ model Budget {  // budgets for financial planning
   @@map("budgets")
 }
 
-model BudgetRevision {  // tracks changes to budget lines over time
+model BudgetRevision {
   id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  budgetId        String   @db.Uuid @map("budget_id")
-  revisionNo      Int      @map("revision_no")
-  revisionReason  String?  @map("revision_reason")
-  createdAt       DateTime @default(now()) @map("created_at")
-  createdBy       String?  @db.Uuid @map("created_by")
+  budgetId       String   @map("budget_id") @db.Uuid
+  revisionNo     Int      @map("revision_no")
+  revisionReason String?  @map("revision_reason")
+  createdAt      DateTime @default(now()) @map("created_at")
+  createdBy      String?  @map("created_by") @db.Uuid
 
-  budget Budget @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  budget Budget       @relation(fields: [budgetId], references: [id], onDelete: Cascade)
   lines  BudgetLine[]
 
   @@unique([budgetId, revisionNo])
   @@map("budget_revisions")
 }
 
-model BudgetLine {  // individual lines within a budget revision
-  id               String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  budgetRevisionId String  @db.Uuid @map("budget_revision_id")
-  analyticAccountId String @db.Uuid @map("analytic_account_id")
-  glAccountId      String? @db.Uuid @map("gl_account_id")
-  amount           Decimal @db.Decimal(18, 2)
+model BudgetLine {
+  id                String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  budgetRevisionId  String  @map("budget_revision_id") @db.Uuid
+  analyticAccountId String  @map("analytic_account_id") @db.Uuid
+  glAccountId       String? @map("gl_account_id") @db.Uuid
+  amount            Decimal @db.Decimal(18, 2)
 
-  revision BudgetRevision @relation(fields: [budgetRevisionId], references: [id], onDelete: Cascade)
+  revision BudgetRevision  @relation(fields: [budgetRevisionId], references: [id], onDelete: Cascade)
   analytic AnalyticAccount @relation(fields: [analyticAccountId], references: [id])
-  gl       GLAccount? @relation(fields: [glAccountId], references: [id])
+  gl       GLAccount?      @relation(fields: [glAccountId], references: [id])
 
   @@unique([budgetRevisionId, analyticAccountId, glAccountId])
   @@index([analyticAccountId])
@@ -350,54 +352,55 @@ model BudgetLine {  // individual lines within a budget revision
   @@map("budget_lines")
 }
 
-model AutoAnalyticModel {  // models for automatically assigning analytic accounts based on rules
+model AutoAnalyticModel {
   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  companyId String   @db.Uuid @map("company_id")
+  companyId String   @map("company_id") @db.Uuid
   name      String
   priority  Int      @default(100)
   isActive  Boolean  @default(true) @map("is_active")
   createdAt DateTime @default(now()) @map("created_at")
 
-  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  company Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
   rules   AutoAnalyticRule[]
 
   @@map("auto_analytic_models")
 }
 
-model AutoAnalyticRule {  // rules for automatically assigning analytic accounts based on conditions
-  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  modelId   String    @db.Uuid @map("model_id")
-  docType   AutoDocType @map("doc_type")
-  matchProductId  String? @db.Uuid @map("match_product_id")
-  matchCategoryId String? @db.Uuid @map("match_category_id")
-  matchContactId  String? @db.Uuid @map("match_contact_id")
-  assignAnalyticAccountId String @db.Uuid @map("assign_analytic_account_id")
-  rulePriority Int @default(100) @map("rule_priority")
-  isActive   Boolean @default(true) @map("is_active")
+model AutoAnalyticRule {
+  id                      String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  modelId                 String      @map("model_id") @db.Uuid
+  docType                 AutoDocType @map("doc_type")
+  matchProductId          String?     @map("match_product_id") @db.Uuid
+  matchCategoryId         String?     @map("match_category_id") @db.Uuid
+  matchContactId          String?     @map("match_contact_id") @db.Uuid
+  assignAnalyticAccountId String      @map("assign_analytic_account_id") @db.Uuid
+  rulePriority            Int         @default(100) @map("rule_priority")
+  isActive                Boolean     @default(true) @map("is_active")
 
-  model   AutoAnalyticModel @relation(fields: [modelId], references: [id], onDelete: Cascade)
-  product Product? @relation(fields: [matchProductId], references: [id])
-  category ProductCategory? @relation(fields: [matchCategoryId], references: [id])
-  contact Contact? @relation(fields: [matchContactId], references: [id])
-  assignAnalytic AnalyticAccount @relation(fields: [assignAnalyticAccountId], references: [id])
+  model          AutoAnalyticModel @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  product        Product?          @relation(fields: [matchProductId], references: [id])
+  category       ProductCategory?  @relation(fields: [matchCategoryId], references: [id])
+  contact        Contact?          @relation(fields: [matchContactId], references: [id])
+  assignAnalytic AnalyticAccount   @relation(fields: [assignAnalyticAccountId], references: [id])
 
   @@index([docType, isActive, rulePriority])
   @@map("auto_analytic_rules")
 }
 
-model PurchaseOrder {  // purchase orders from vendors
-  id        String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  companyId String     @db.Uuid @map("company_id")
-  poNo      String     @map("po_no")
-  vendorId  String     @db.Uuid @map("vendor_id")
-  orderDate DateTime   @db.Date @map("order_date")
-  status    OrderStatus
-  currency  String     @default("INR")
-  notes     String?
-  createdAt DateTime   @default(now()) @map("created_at")
+model PurchaseOrder {
+  id           String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId    String      @map("company_id") @db.Uuid
+  poNo         String      @map("po_no")
+  vendorId     String      @map("vendor_id") @db.Uuid
+  orderDate    DateTime    @map("order_date") @db.Date
+  deliveryDate DateTime?   @map("delivery_date") @db.Date
+  status       OrderStatus
+  currency     String      @default("INR")
+  notes        String?
+  createdAt    DateTime    @default(now()) @map("created_at")
 
-  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  vendor  Contact @relation("po_vendor", fields: [vendorId], references: [id])
+  company Company             @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  vendor  Contact             @relation("po_vendor", fields: [vendorId], references: [id])
   lines   PurchaseOrderLine[]
   bills   VendorBill[]
 
@@ -405,19 +408,19 @@ model PurchaseOrder {  // purchase orders from vendors
   @@map("purchase_orders")
 }
 
-model PurchaseOrderLine { // individual lines within a purchase order
-  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  purchaseOrderId String   @db.Uuid @map("purchase_order_id")
-  productId       String   @db.Uuid @map("product_id")
-  analyticAccountId String? @db.Uuid @map("analytic_account_id")
-  description     String?
-  qty             Decimal  @db.Decimal(18, 4)
-  unitPrice       Decimal  @db.Decimal(18, 2) @map("unit_price")
-  taxRate         Decimal  @default(0) @db.Decimal(6, 3) @map("tax_rate")
-  lineTotal       Decimal  @db.Decimal(18, 2) @map("line_total")
+model PurchaseOrderLine {
+  id                String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  purchaseOrderId   String  @map("purchase_order_id") @db.Uuid
+  productId         String  @map("product_id") @db.Uuid
+  analyticAccountId String? @map("analytic_account_id") @db.Uuid
+  description       String?
+  qty               Decimal @db.Decimal(18, 4)
+  unitPrice         Decimal @map("unit_price") @db.Decimal(18, 2)
+  taxRate           Decimal @default(0) @map("tax_rate") @db.Decimal(6, 3)
+  lineTotal         Decimal @map("line_total") @db.Decimal(18, 2)
 
-  purchaseOrder PurchaseOrder @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
-  product       Product       @relation(fields: [productId], references: [id])
+  purchaseOrder PurchaseOrder    @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
+  product       Product          @relation(fields: [productId], references: [id])
   analytic      AnalyticAccount? @relation(fields: [analyticAccountId], references: [id])
 
   @@index([purchaseOrderId])
@@ -425,19 +428,20 @@ model PurchaseOrderLine { // individual lines within a purchase order
   @@map("purchase_order_lines")
 }
 
-model SalesOrder {  // sales orders to customers
-  id        String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  companyId String     @db.Uuid @map("company_id")
-  soNo      String     @map("so_no")
-  customerId String    @db.Uuid @map("customer_id")
-  orderDate DateTime   @db.Date @map("order_date")
-  status    OrderStatus
-  currency  String     @default("INR")
-  notes     String?
-  createdAt DateTime   @default(now()) @map("created_at")
+model SalesOrder {
+  id           String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId    String      @map("company_id") @db.Uuid
+  soNo         String      @map("so_no")
+  customerId   String      @map("customer_id") @db.Uuid
+  orderDate    DateTime    @map("order_date") @db.Date
+  deliveryDate DateTime?   @map("delivery_date") @db.Date
+  status       OrderStatus
+  currency     String      @default("INR")
+  notes        String?
+  createdAt    DateTime    @default(now()) @map("created_at")
 
-  company  Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  customer Contact @relation("so_customer", fields: [customerId], references: [id])
+  company  Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  customer Contact           @relation("so_customer", fields: [customerId], references: [id])
   lines    SalesOrderLine[]
   invoices CustomerInvoice[]
 
@@ -445,19 +449,19 @@ model SalesOrder {  // sales orders to customers
   @@map("sales_orders")
 }
 
-model SalesOrderLine { // individual lines within a sales order
-  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  salesOrderId String  @db.Uuid @map("sales_order_id")
-  productId    String  @db.Uuid @map("product_id")
-  analyticAccountId String? @db.Uuid @map("analytic_account_id")
-  description  String?
-  qty          Decimal  @db.Decimal(18, 4)
-  unitPrice    Decimal  @db.Decimal(18, 2) @map("unit_price")
-  taxRate      Decimal  @default(0) @db.Decimal(6, 3) @map("tax_rate")
-  lineTotal    Decimal  @db.Decimal(18, 2) @map("line_total")
+model SalesOrderLine {
+  id                String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  salesOrderId      String  @map("sales_order_id") @db.Uuid
+  productId         String  @map("product_id") @db.Uuid
+  analyticAccountId String? @map("analytic_account_id") @db.Uuid
+  description       String?
+  qty               Decimal @db.Decimal(18, 4)
+  unitPrice         Decimal @map("unit_price") @db.Decimal(18, 2)
+  taxRate           Decimal @default(0) @map("tax_rate") @db.Decimal(6, 3)
+  lineTotal         Decimal @map("line_total") @db.Decimal(18, 2)
 
-  salesOrder SalesOrder @relation(fields: [salesOrderId], references: [id], onDelete: Cascade)
-  product    Product    @relation(fields: [productId], references: [id])
+  salesOrder SalesOrder       @relation(fields: [salesOrderId], references: [id], onDelete: Cascade)
+  product    Product          @relation(fields: [productId], references: [id])
   analytic   AnalyticAccount? @relation(fields: [analyticAccountId], references: [id])
 
   @@index([salesOrderId])
@@ -465,24 +469,24 @@ model SalesOrderLine { // individual lines within a sales order
   @@map("sales_order_lines")
 }
 
-model VendorBill { // vendor bills from suppliers
-  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  companyId    String   @db.Uuid @map("company_id")
-  billNo       String   @map("bill_no")
-  vendorId     String   @db.Uuid @map("vendor_id")
-  billDate     DateTime @db.Date @map("bill_date")
-  dueDate      DateTime? @db.Date @map("due_date")
+model VendorBill {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId    String    @map("company_id") @db.Uuid
+  billNo       String    @map("bill_no")
+  vendorId     String    @map("vendor_id") @db.Uuid
+  billDate     DateTime  @map("bill_date") @db.Date
+  dueDate      DateTime? @map("due_date") @db.Date
   status       DocStatus
-  currency     String   @default("INR")
-  poId         String?  @db.Uuid @map("po_id")
-  totalAmount  Decimal  @default(0) @db.Decimal(18, 2) @map("total_amount")
-  paidAmount   Decimal  @default(0) @db.Decimal(18, 2) @map("paid_amount")
-  paymentState String   @default("not_paid") @map("payment_status")
-  createdAt    DateTime @default(now()) @map("created_at")
+  currency     String    @default("INR")
+  poId         String?   @map("po_id") @db.Uuid
+  totalAmount  Decimal   @default(0) @map("total_amount") @db.Decimal(18, 2)
+  paidAmount   Decimal   @default(0) @map("paid_amount") @db.Decimal(18, 2)
+  paymentState String    @default("not_paid") @map("payment_status")
+  createdAt    DateTime  @default(now()) @map("created_at")
 
-  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  vendor  Contact @relation("bill_vendor", fields: [vendorId], references: [id])
-  po      PurchaseOrder? @relation(fields: [poId], references: [id])
+  company Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  vendor  Contact          @relation("bill_vendor", fields: [vendorId], references: [id])
+  po      PurchaseOrder?   @relation(fields: [poId], references: [id])
   lines   VendorBillLine[]
 
   @@unique([companyId, billNo])
@@ -491,47 +495,47 @@ model VendorBill { // vendor bills from suppliers
   @@map("vendor_bills")
 }
 
-model VendorBillLine {  // individual lines within a vendor bill
-  id            String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  vendorBillId  String  @db.Uuid @map("vendor_bill_id")
-  productId     String? @db.Uuid @map("product_id")
-  analyticAccountId String? @db.Uuid @map("analytic_account_id")
-  glAccountId   String? @db.Uuid @map("gl_account_id")
-  description   String?
-  qty           Decimal @default(1) @db.Decimal(18, 4)
-  unitPrice     Decimal @db.Decimal(18, 2) @map("unit_price")
-  taxRate       Decimal @default(0) @db.Decimal(6, 3) @map("tax_rate")
-  lineTotal     Decimal @db.Decimal(18, 2) @map("line_total")
+model VendorBillLine {
+  id                String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  vendorBillId      String  @map("vendor_bill_id") @db.Uuid
+  productId         String? @map("product_id") @db.Uuid
+  analyticAccountId String? @map("analytic_account_id") @db.Uuid
+  glAccountId       String? @map("gl_account_id") @db.Uuid
+  description       String?
+  qty               Decimal @default(1) @db.Decimal(18, 4)
+  unitPrice         Decimal @map("unit_price") @db.Decimal(18, 2)
+  taxRate           Decimal @default(0) @map("tax_rate") @db.Decimal(6, 3)
+  lineTotal         Decimal @map("line_total") @db.Decimal(18, 2)
 
-  bill     VendorBill @relation(fields: [vendorBillId], references: [id], onDelete: Cascade)
-  product  Product?   @relation(fields: [productId], references: [id])
+  bill     VendorBill       @relation(fields: [vendorBillId], references: [id], onDelete: Cascade)
+  product  Product?         @relation(fields: [productId], references: [id])
   analytic AnalyticAccount? @relation(fields: [analyticAccountId], references: [id])
-  gl       GLAccount? @relation(fields: [glAccountId], references: [id])
+  gl       GLAccount?       @relation(fields: [glAccountId], references: [id])
 
   @@index([vendorBillId])
   @@index([analyticAccountId])
   @@map("vendor_bill_lines")
 }
 
-model CustomerInvoice {  // customer invoices for billing
-  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  companyId     String   @db.Uuid @map("company_id")
-  invoiceNo     String   @map("invoice_no")
-  customerId    String   @db.Uuid @map("customer_id")
-  invoiceDate   DateTime @db.Date @map("invoice_date")
-  dueDate       DateTime? @db.Date @map("due_date")
+model CustomerInvoice {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId     String    @map("company_id") @db.Uuid
+  invoiceNo     String    @map("invoice_no")
+  customerId    String    @map("customer_id") @db.Uuid
+  invoiceDate   DateTime  @map("invoice_date") @db.Date
+  dueDate       DateTime? @map("due_date") @db.Date
   status        DocStatus
-  currency      String   @default("INR")
-  soId          String?  @db.Uuid @map("so_id")
-  totalAmount   Decimal  @default(0) @db.Decimal(18, 2) @map("total_amount")
-  paidAmount    Decimal  @default(0) @db.Decimal(18, 2) @map("paid_amount")
-  paymentState  String   @default("not_paid") @map("payment_status")
-  portalVisible Boolean  @default(true) @map("portal_visible")
-  createdAt     DateTime @default(now()) @map("created_at")
+  currency      String    @default("INR")
+  soId          String?   @map("so_id") @db.Uuid
+  totalAmount   Decimal   @default(0) @map("total_amount") @db.Decimal(18, 2)
+  paidAmount    Decimal   @default(0) @map("paid_amount") @db.Decimal(18, 2)
+  paymentState  String    @default("not_paid") @map("payment_status")
+  portalVisible Boolean   @default(true) @map("portal_visible")
+  createdAt     DateTime  @default(now()) @map("created_at")
 
-  company  Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  customer Contact    @relation("inv_customer", fields: [customerId], references: [id])
-  so       SalesOrder? @relation(fields: [soId], references: [id])
+  company  Company               @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  customer Contact               @relation("inv_customer", fields: [customerId], references: [id])
+  so       SalesOrder?           @relation(fields: [soId], references: [id])
   lines    CustomerInvoiceLine[]
 
   @@unique([companyId, invoiceNo])
@@ -540,42 +544,42 @@ model CustomerInvoice {  // customer invoices for billing
   @@map("customer_invoices")
 }
 
-model CustomerInvoiceLine { // individual lines within a customer invoice
-  id               String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  customerInvoiceId String @db.Uuid @map("customer_invoice_id")
-  productId         String? @db.Uuid @map("product_id")
-  analyticAccountId String? @db.Uuid @map("analytic_account_id")
-  glAccountId       String? @db.Uuid @map("gl_account_id")
+model CustomerInvoiceLine {
+  id                String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  customerInvoiceId String  @map("customer_invoice_id") @db.Uuid
+  productId         String? @map("product_id") @db.Uuid
+  analyticAccountId String? @map("analytic_account_id") @db.Uuid
+  glAccountId       String? @map("gl_account_id") @db.Uuid
   description       String?
   qty               Decimal @default(1) @db.Decimal(18, 4)
-  unitPrice         Decimal @db.Decimal(18, 2) @map("unit_price")
-  taxRate           Decimal @default(0) @db.Decimal(6, 3) @map("tax_rate")
-  lineTotal         Decimal @db.Decimal(18, 2) @map("line_total")
+  unitPrice         Decimal @map("unit_price") @db.Decimal(18, 2)
+  taxRate           Decimal @default(0) @map("tax_rate") @db.Decimal(6, 3)
+  lineTotal         Decimal @map("line_total") @db.Decimal(18, 2)
 
-  invoice  CustomerInvoice @relation(fields: [customerInvoiceId], references: [id], onDelete: Cascade)
-  product  Product? @relation(fields: [productId], references: [id])
+  invoice  CustomerInvoice  @relation(fields: [customerInvoiceId], references: [id], onDelete: Cascade)
+  product  Product?         @relation(fields: [productId], references: [id])
   analytic AnalyticAccount? @relation(fields: [analyticAccountId], references: [id])
-  gl       GLAccount? @relation(fields: [glAccountId], references: [id])
+  gl       GLAccount?       @relation(fields: [glAccountId], references: [id])
 
   @@index([customerInvoiceId])
   @@index([analyticAccountId])
   @@map("customer_invoice_lines")
 }
 
-model Payment { // payments made or received
-  id         String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  companyId  String          @db.Uuid @map("company_id")
-  direction  PaymentDirection
-  contactId  String          @db.Uuid @map("contact_id")
-  paymentDate DateTime       @db.Date @map("payment_date")
-  method     PaymentMethod
-  reference  String?
-  amount     Decimal         @db.Decimal(18, 2)
-  status     PaymentStatus
-  createdAt  DateTime        @default(now()) @map("created_at")
+model Payment {
+  id          String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId   String           @map("company_id") @db.Uuid
+  direction   PaymentDirection
+  contactId   String           @map("contact_id") @db.Uuid
+  paymentDate DateTime         @map("payment_date") @db.Date
+  method      PaymentMethod
+  reference   String?
+  amount      Decimal          @db.Decimal(18, 2)
+  status      PaymentStatus
+  createdAt   DateTime         @default(now()) @map("created_at")
 
-  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  contact Contact @relation(fields: [contactId], references: [id])
+  company     Company             @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  contact     Contact             @relation(fields: [contactId], references: [id])
   allocations PaymentAllocation[]
 
   @@index([companyId, paymentDate])
@@ -583,12 +587,12 @@ model Payment { // payments made or received
   @@map("payments")
 }
 
-model PaymentAllocation { // allocations of payments to invoices or bills
-  id        String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  paymentId String  @db.Uuid @map("payment_id")
+model PaymentAllocation {
+  id         String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  paymentId  String               @map("payment_id") @db.Uuid
   targetType AllocationTargetType @map("target_type")
-  targetId  String  @db.Uuid @map("target_id")
-  amount    Decimal @db.Decimal(18, 2)
+  targetId   String               @map("target_id") @db.Uuid
+  amount     Decimal              @db.Decimal(18, 2)
 
   payment Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
 
@@ -597,15 +601,15 @@ model PaymentAllocation { // allocations of payments to invoices or bills
   @@map("payment_allocations")
 }
 
-model DocumentFile {  // files attached to various documents
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  companyId String   @db.Uuid @map("company_id")
-  ownerType DocOwnerType @map("owner_type")
-  ownerId   String   @db.Uuid @map("owner_id")
-  fileName  String   @map("file_name")
-  mimeType  String   @map("mime_type")
-  storageUrl String  @map("storage_url")
-  createdAt DateTime @default(now()) @map("created_at")
+model DocumentFile {
+  id         String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId  String       @map("company_id") @db.Uuid
+  ownerType  DocOwnerType @map("owner_type")
+  ownerId    String       @map("owner_id") @db.Uuid
+  fileName   String       @map("file_name")
+  mimeType   String       @map("mime_type")
+  storageUrl String       @map("storage_url")
+  createdAt  DateTime     @default(now()) @map("created_at")
 
   company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
@@ -619,13 +623,13 @@ model User {
   loginId      String   @unique @map("login_id") @db.Char(6)
   passwordHash String   @map("password_hash")
   role         UserRole @default(ADMIN)
-  contactId    String?  @db.Uuid @map("contact_id")
+  contactId    String?  @map("contact_id") @db.Uuid
   isActive     Boolean  @default(true) @map("is_active")
   tokenVersion Int      @default(0) @map("token_version")
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
 
-  contact Contact? @relation(fields: [contactId], references: [id])
+  contact   Contact?   @relation(fields: [contactId], references: [id])
   auditLogs AuditLog[]
 
   @@map("users")
@@ -633,7 +637,7 @@ model User {
 
 model AuditLog {
   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId    String?  @db.Uuid @map("user_id")
+  userId    String?  @map("user_id") @db.Uuid
   action    String
   entity    String
   entityId  String?  @map("entity_id")

@@ -12,11 +12,27 @@ import { masterDataRoutes } from "./routes/masterDataRoutes.js";
 import { transactionRoutes } from "./routes/transactionRoutes.js";
 import { reportRoutes } from "./routes/reportRoutes.js";
 import { portalRoutes } from "./routes/portalRoutes.js";
+import { aiInsightsRoutes } from "./routes/aiInsightsRoutes.js";
 import { swaggerUi, swaggerSpec } from "./docs/swagger.js";
 export const app = express();
 app.use(helmet());
+const allowedOrigins = env.CORS_ORIGIN === "*"
+    ? true
+    : env.CORS_ORIGIN.split(",")
+        .map((origin) => origin.trim())
+        .filter(Boolean);
 app.use(cors({
-    origin: env.CORS_ORIGIN === "*" ? true : env.CORS_ORIGIN.split(","),
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins === true) {
+            callback(null, true);
+            return;
+        }
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+            return;
+        }
+        callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
 }));
 app.use(express.json({ limit: "1mb" }));
@@ -38,6 +54,7 @@ app.use("/api/v1", masterDataRoutes);
 app.use("/api/v1", transactionRoutes);
 app.use("/api/v1/reports", reportRoutes);
 app.use("/api/v1/portal", portalRoutes);
+app.use("/api/v1/ai-insights", aiInsightsRoutes);
 app.use(notFoundHandler);
 app.use(errorHandler);
 //# sourceMappingURL=app.js.map

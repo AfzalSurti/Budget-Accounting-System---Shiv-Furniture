@@ -1,12 +1,18 @@
 import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/apiError.js";
 import { resolveAnalyticAccountId } from "../services/autoAnalyticService.js";
+import {
+  formatCurrency,
+  formatDate,
+  mapOrderStatusToBadge,
+} from "../utils/formatters.js";
 
 export const createPurchaseOrder = async (data: {
   companyId: string;
   vendorId: string;
   poNo: string;
   orderDate: string;
+  deliveryDate?: string | null;
   status: "draft" | "confirmed" | "cancelled" | "done";
   currency?: string;
   notes?: string | null;
@@ -26,6 +32,7 @@ export const createPurchaseOrder = async (data: {
         vendorId: data.vendorId,
         poNo: data.poNo,
         orderDate: new Date(data.orderDate),
+        deliveryDate: data.deliveryDate ? new Date(data.deliveryDate) : null,
         status: data.status,
         currency: data.currency ?? "INR",
         notes: data.notes ?? null,
@@ -33,7 +40,9 @@ export const createPurchaseOrder = async (data: {
     });
 
     for (const line of data.lines) {
-      const product = await tx.product.findUnique({ where: { id: line.productId } });
+      const product = await tx.product.findUnique({
+        where: { id: line.productId },
+      });
       if (!product) {
         throw new ApiError(400, "Invalid product");
       }
@@ -77,6 +86,39 @@ export const listPurchaseOrders = async (companyId: string) => {
   });
 };
 
+export const listPurchaseOrdersTable = async (companyId: string) => {
+  const orders = await prisma.purchaseOrder.findMany({
+    where: { companyId },
+    select: {
+      id: true,
+      poNo: true,
+      orderDate: true,
+      deliveryDate: true,
+      currency: true,
+      status: true,
+      lines: { select: { lineTotal: true } },
+      vendor: { select: { displayName: true } },
+    },
+    orderBy: { createdAt: "desc" },
+  });
+
+  return orders.map((order) => {
+    const totalAmount = order.lines.reduce(
+      (sum, line) => sum + Number(line.lineTotal),
+      0,
+    );
+    return {
+      id: order.poNo,
+      recordId: order.id,
+      vendor: order.vendor.displayName,
+      amount: formatCurrency(totalAmount, order.currency),
+      date: formatDate(order.orderDate),
+      deliveryDate: formatDate(order.deliveryDate),
+      status: mapOrderStatusToBadge(order.status),
+    };
+  });
+};
+
 export const getPurchaseOrder = async (id: string) => {
   const po = await prisma.purchaseOrder.findUnique({
     where: { id },
@@ -88,7 +130,10 @@ export const getPurchaseOrder = async (id: string) => {
   return po;
 };
 
-export const updatePurchaseOrder = async (id: string, data: Partial<Record<string, unknown>>) => {
+export const updatePurchaseOrder = async (
+  id: string,
+  data: Partial<Record<string, unknown>>,
+) => {
   try {
     return await prisma.purchaseOrder.update({ where: { id }, data });
   } catch (error) {
