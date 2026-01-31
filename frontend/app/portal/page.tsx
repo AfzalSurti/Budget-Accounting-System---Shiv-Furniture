@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { TopNavigation } from "@/components/navigation/top-navigation";
 import { FileText, IndianRupee, Clock, CreditCard, ShoppingCart, Shield, ArrowRight, AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -77,10 +76,7 @@ export default function PortalDashboard() {
   ];
 
   return (
-    <div className="min-h-screen page-grid">
-      <TopNavigation />
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <div className="py-8 md:py-12">
         {/* Portal Header - Welcoming & Reassuring */}
         <div className="mb-10">
           <div className="flex items-start justify-between mb-4">
@@ -212,7 +208,6 @@ export default function PortalDashboard() {
             </a>
           </p>
         </motion.div>
-      </main>
-    </div>
+      </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { AppLayout } from "@/components/layout/app-layout";
+// Wrapped by PortalLayout; no AppLayout to avoid duplicate nav
 import { DataTable } from "@/components/ui/data-table";
 import { StatusBadge } from "@/components/ui/status-badge";
 
@@ -63,13 +63,13 @@ export default function PortalPaymentsPage() {
   ];
 
   return (
-    <AppLayout>
+    <div>
       <div className="mb-8">
         <h1 className="section-heading mb-2">Payment History</h1>
         <p className="text-slate-600 dark:text-slate-400">View all your payments</p>
       </div>
 
       <DataTable columns={columns} data={paymentsData} />
-    </AppLayout>
+    </div>
   );
 }

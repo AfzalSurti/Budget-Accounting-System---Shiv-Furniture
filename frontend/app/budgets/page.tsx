@@ -2,8 +2,9 @@
 
 import { AppLayout } from "@/components/layout/app-layout";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
-import { Plus, TrendingUp, ChevronRight, AlertCircle } from "lucide-react";
+import { Plus, AlertCircle, Pencil, X } from "lucide-react";
 import { motion } from "framer-motion";
+import { useMemo, useState } from "react";
 
 const budgetsData = [
   {
@@ -67,7 +68,31 @@ const budgetTrendData = [
   { month: "Jun", allocated: 415000, spent: 345000, forecast: 375000 },
 ];
 
+function parseINR(str: string): number {
+  const digits = str.replace(/[^0-9.-]/g, "");
+  const n = Number(digits);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function formatINR(n: number): string {
+  return `₹${n.toLocaleString("en-IN")}`;
+}
+
 export default function BudgetsPage() {
+  const [budgets, setBudgets] = useState(budgetsData);
+  const [reviseOf, setReviseOf] = useState<typeof budgetsData[number] | null>(null);
+  
+  const totals = useMemo(() => {
+    return budgets.reduce(
+      (acc, b) => {
+        acc.allocated += parseINR(b.allocated);
+        acc.spent += parseINR(b.spent);
+        return acc;
+      },
+      { allocated: 0, spent: 0 }
+    );
+  }, [budgets]);
+
   return (
     <AppLayout>
       {/* Page Header - Executive Level */}
@@ -197,10 +222,13 @@ export default function BudgetsPage() {
                 <th className="px-6 py-4 text-left">
                   <span className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">Status</span>
                 </th>
+                <th className="px-6 py-4 text-left">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">Actions</span>
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200/70 dark:divide-slate-700">
-              {budgetsData.map((budget, idx) => {
+              {budgets.map((budget, idx) => {
                 const utilization = parseFloat(budget.utilization);
                 const isHighUtilization = utilization > 85;
                 const isMediumUtilization = utilization >= 70 && utilization <= 85;
@@ -270,6 +298,14 @@ export default function BudgetsPage() {
                         {budget.status === "active" ? "Active" : "Warning"}
                       </span>
                     </td>
+                    <td className="px-6 py-5">
+                      <button
+                        onClick={() => setReviseOf(budget)}
+                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-300 text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300"
+                      >
+                        <Pencil className="w-3.5 h-3.5" /> Revise
+                      </button>
+                    </td>
                   </motion.tr>
                 );
               })}
@@ -277,6 +313,85 @@ export default function BudgetsPage() {
           </table>
         </div>
       </motion.div>
+
+      {reviseOf && (
+        <ReviseDialog
+          budget={reviseOf}
+          onClose={() => setReviseOf(null)}
+          onSubmit={(nextAllocated: number, reason: string) => {
+            setBudgets((prev) =>
+              prev.map((b) => {
+                if (b.id !== reviseOf.id) return b;
+                const spent = parseINR(b.spent);
+                const utilizationPct = nextAllocated === 0 ? 0 : (spent / nextAllocated) * 100;
+                return {
+                  ...b,
+                  allocated: formatINR(nextAllocated),
+                  remaining: formatINR(Math.max(nextAllocated - spent, 0)),
+                  utilization: `${utilizationPct.toFixed(1)}%`,
+                };
+              })
+            );
+            setReviseOf(null);
+          }}
+        />
+      )}
     </AppLayout>
+  );
+}
+
+function ReviseDialog({
+  budget,
+  onClose,
+  onSubmit,
+}: {
+  budget: typeof budgetsData[number];
+  onClose: () => void;
+  onSubmit: (nextAllocated: number, reason: string) => void;
+}) {
+  const [amount, setAmount] = useState<number>(parseINR(budget.allocated));
+  const [reason, setReason] = useState<string>("");
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-sm">
+      <div className="w-full max-w-lg rounded-[24px] border border-slate-300 bg-white p-6 text-slate-900 shadow-xl dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+        <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-700">
+          <h2 className="text-lg font-semibold">Revise Budget — {budget.name}</h2>
+          <button onClick={onClose} className="rounded-full border border-slate-300 p-2 dark:border-slate-700" aria-label="Close">
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+        <div className="mt-4 space-y-4">
+          <label className="block text-sm font-medium">New Allocated Amount</label>
+          <input
+            type="number"
+            min={0}
+            value={amount}
+            onChange={(e) => setAmount(Number(e.target.value) || 0)}
+            className="w-full rounded-md border border-slate-300 px-3 py-2 font-mono dark:border-slate-700 dark:bg-slate-800"
+          />
+          <label className="block text-sm font-medium">Revision Reason (optional)</label>
+          <textarea
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+            className="w-full rounded-md border border-slate-300 px-3 py-2 dark:border-slate-700 dark:bg-slate-800"
+            rows={3}
+            placeholder="E.g. Price fluctuations, scope change"
+          />
+        </div>
+        <div className="mt-6 flex gap-3">
+          <button
+            onClick={() => onSubmit(amount, reason)}
+            className="flex-1 rounded-md bg-brand-primary px-4 py-2 text-sm font-semibold text-white hover:bg-brand-primary/90"
+          >
+            Apply Revision
+          </button>
+          <button onClick={onClose} className="flex-1 rounded-md border border-slate-300 px-4 py-2 text-sm dark:border-slate-700">
+            Cancel
+          </button>
+        </div>
+        <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">This updates allocated and recalculates utilization for this budget.</p>
+      </div>
+    </div>
   );
 }

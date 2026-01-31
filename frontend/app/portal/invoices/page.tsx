@@ -1,6 +1,6 @@
 "use client";
 
-import { AppLayout } from "@/components/layout/app-layout";
+// Wrapped by PortalLayout; no AppLayout to avoid duplicate nav
 import { DataTable } from "@/components/ui/data-table";
 import { StatusBadge } from "@/components/ui/status-badge";
 
@@ -57,13 +57,13 @@ export default function PortalInvoicesPage() {
   ];
 
   return (
-    <AppLayout>
+    <div>
       <div className="mb-8">
         <h1 className="section-heading mb-2">My Invoices</h1>
         <p className="text-slate-600 dark:text-slate-400">Download and view your invoices</p>
       </div>
 
       <DataTable columns={columns} data={portalInvoicesData} />
-    </AppLayout>
+    </div>
   );
 }

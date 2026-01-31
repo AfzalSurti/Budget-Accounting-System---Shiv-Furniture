@@ -70,7 +70,7 @@ export function TopNavigation() {
             <ThemeToggle />
             
             {/* Profile Menu (placeholder) */}
-            <button className="hidden sm:inline-flex w-9 h-9 rounded-full bg-brand-lighter dark:bg-slate-700 text-brand-dark dark:text-white font-medium hover:bg-brand-accent transition-colors duration-200">
+            <button className="hidden sm:inline-flex justify-center items-center w-9 h-9 rounded-full bg-brand-lighter dark:bg-slate-700 text-brand-dark dark:text-white font-medium hover:bg-brand-accent transition-colors duration-200">
               U
             </button>
 
