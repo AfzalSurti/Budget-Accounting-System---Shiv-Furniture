@@ -1,6 +1,9 @@
 import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/apiError.js";
-import { getContactTagIds, resolveAnalyticAccountId } from "../services/autoAnalyticService.js";
+import {
+  getContactTagIds,
+  resolveAnalyticAccountId,
+} from "../services/autoAnalyticService.js";
 import { calculatePaymentStatus } from "../services/paymentService.js";
 import {
   formatBadgeLabel,
@@ -52,6 +55,7 @@ export const createVendorBill = async (data: {
       if (line.productId) {
         const product = await tx.product.findUnique({
           where: { id: line.productId },
+          select: { categoryId: true },
         });
         categoryId = product?.categoryId ?? null;
       }
@@ -67,6 +71,11 @@ export const createVendorBill = async (data: {
             contactTagIds,
           });
 
+      const analyticAccountId =
+        line.analyticAccountId ?? resolvedAnalytic?.analyticAccountId ?? null;
+      const autoAnalyticModelId = resolvedAnalytic?.modelId ?? null;
+      const autoAnalyticRuleId = resolvedAnalytic?.ruleId ?? null;
+
       const taxRate = line.taxRate ?? 0;
       const lineTotal = line.qty * line.unitPrice * (1 + taxRate / 100);
       totalAmount += lineTotal;
@@ -75,9 +84,9 @@ export const createVendorBill = async (data: {
         data: {
           vendorBillId: bill.id,
           productId: line.productId ?? null,
-          analyticAccountId: line.analyticAccountId ?? resolvedAnalytic?.analyticAccountId ?? null,
-          autoAnalyticModelId: resolvedAnalytic?.modelId ?? null,
-          autoAnalyticRuleId: resolvedAnalytic?.ruleId ?? null,
+          analyticAccountId,
+          autoAnalyticModelId,
+          autoAnalyticRuleId,
           matchedFieldsCount: resolvedAnalytic?.matchedFieldsCount ?? null,
           glAccountId: line.glAccountId ?? null,
           description: line.description ?? null,
@@ -217,7 +226,10 @@ export const updateVendorBill = async (
     if (data.status) {
       assertDocStatusTransition(current.status, data.status as any);
     }
-    const { totalAmount, paidAmount, paymentState, ...rest } = data as Record<string, unknown>;
+    const { totalAmount, paidAmount, paymentState, ...rest } = data as Record<
+      string,
+      unknown
+    >;
     return await prisma.vendorBill.update({ where: { id }, data: rest });
   } catch (error) {
     throw new ApiError(404, "Vendor bill not found", error);
@@ -250,7 +262,10 @@ export const getVendorBillPdf = async (id: string) => {
     };
   });
 
-  const subtotal = lines.reduce((sum, line) => sum + line.qty * line.unitPrice, 0);
+  const subtotal = lines.reduce(
+    (sum, line) => sum + line.qty * line.unitPrice,
+    0,
+  );
   const grandTotal = lines.reduce((sum, line) => sum + line.lineTotal, 0);
   const taxTotal = grandTotal - subtotal;
 
