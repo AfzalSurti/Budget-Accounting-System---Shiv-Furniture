@@ -4,7 +4,12 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { DEFAULT_COMPANY_ID } from "@/config";
 import { apiGet, apiPost } from "@/lib/api";
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+<<<<<<< HEAD
 import { Download, Mail, MapPin, Phone, Plus, UploadCloud, X } from "lucide-react";
+=======
+import { Mail, MapPin, Phone, Plus, UploadCloud, X, Download } from "lucide-react";
+import { exportTableToPDF } from "@/lib/pdf-utils";
+>>>>>>> 98d3ddf2623ddef548c6d997fbb6eeadba056635
 
 type ContactStatus = "new" | "confirm" | "archived";
 
@@ -153,6 +158,7 @@ export default function ContactsPage() {
   };
 
   const handleExportPDF = () => {
+<<<<<<< HEAD
     const rowsHtml = filteredContacts
       .map((contact) => {
         const location = [contact.address.city, contact.address.state, contact.address.country]
@@ -207,6 +213,26 @@ export default function ContactsPage() {
     printWindow.document.close();
     printWindow.focus();
     printWindow.print();
+=======
+    exportTableToPDF(
+      "Contacts",
+      [
+        { header: "Name", key: "name" },
+        { header: "Type", key: "type" },
+        { header: "Email", key: "email" },
+        { header: "Phone", key: "phone" },
+        { header: "Status", key: "status" },
+      ],
+      filteredContacts.map(row => ({
+        name: row.name,
+        type: row.tags.join(", "),
+        email: row.email,
+        phone: row.phone,
+        status: row.status,
+      })),
+      "Contacts.pdf"
+    );
+>>>>>>> 98d3ddf2623ddef548c6d997fbb6eeadba056635
   };
 
   return (
