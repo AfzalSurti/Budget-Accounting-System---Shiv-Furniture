@@ -5,6 +5,7 @@ import { DataTable } from "@/components/ui/data-table";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { apiDownload, apiGet } from "@/lib/api";
 import { useEffect, useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 type StatusType =
   | "active"
@@ -21,6 +22,9 @@ interface PortalBillRow {
   totalAmount?: number;
   paidAmount?: number;
   paymentState?: string;
+  paidPercent?: string;
+  remainingAmount?: string;
+  actions?: string;
   amount: string;
   dueDate: string;
   status: StatusType;
@@ -32,19 +36,31 @@ export default function PortalBillsPage() {
   const [vendorInvoicesData, setVendorInvoicesData] = useState<PortalBillRow[]>(
     [],
   );
+  const { user, isCustomer } = useAuth();
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!isCustomer()) {
+      setError("Portal access is available for signed-in customers only.");
+      return;
+    }
+    if (!user?.contactId) {
+      setError("Portal account is not linked to a contact.");
+      return;
+    }
+
     const load = async () => {
       try {
         const data = await apiGet<PortalBillRow[]>("/portal/bills?view=table");
         setVendorInvoicesData(data ?? []);
       } catch (error) {
         console.error("Failed to load portal bills:", error);
+        setError("Failed to load portal bills.");
       }
     };
 
     load();
-  }, []);
+  }, [user, isCustomer]);
 
   const remainingFor = (row: PortalBillRow) => {
     const total = row.totalAmount ?? 0;
@@ -83,7 +99,7 @@ export default function PortalBillsPage() {
       className: "font-mono font-bold",
     },
     {
-      key: "recordId" as const,
+      key: "paidPercent" as const,
       label: "Paid %",
       render: (_value: string | undefined, row: PortalBillRow) => {
         const total = row.totalAmount ?? 0;
@@ -93,7 +109,7 @@ export default function PortalBillsPage() {
       },
     },
     {
-      key: "recordId" as const,
+      key: "remainingAmount" as const,
       label: "Remaining",
       render: (_value: string | undefined, row: PortalBillRow) => {
         const remaining = remainingFor(row);
@@ -112,7 +128,7 @@ export default function PortalBillsPage() {
       ),
     },
     {
-      key: "recordId" as const,
+      key: "actions" as const,
       label: "Actions",
       render: (_value: string | undefined, row: PortalBillRow) => (
         <button
@@ -133,6 +149,12 @@ export default function PortalBillsPage() {
           Track and pay your vendor bills
         </p>
       </div>
+
+      {error && (
+        <div className="mb-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {error}
+        </div>
+      )}
 
       <DataTable columns={columns} data={vendorInvoicesData} />
     </div>

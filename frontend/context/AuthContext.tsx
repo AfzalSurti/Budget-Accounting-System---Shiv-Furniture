@@ -20,6 +20,8 @@ interface RegisterPayload {
   loginId: string;
   password: string;
   role: UserRole;
+  fullName?: string;
+  companyId?: string;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -107,13 +109,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const register = async ({ email, loginId, password, role }: RegisterPayload): Promise<User> => {
+  const register = async ({ email, loginId, password, role, fullName, companyId }: RegisterPayload): Promise<User> => {
     setIsLoading(true);
     try {
       const res = await fetch(`${API_V1}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, loginId, password, role }),
+        body: JSON.stringify({ email, loginId, password, role, fullName, companyId }),
       });
       if (!res.ok) {
         const error = await res.json().catch(() => ({}));

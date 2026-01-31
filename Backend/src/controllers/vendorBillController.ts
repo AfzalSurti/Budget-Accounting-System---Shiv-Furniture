@@ -51,7 +51,6 @@ export const createVendorBill = async (data: {
         },
       });
 
-<<<<<<< HEAD
       const productIds = Array.from(
         new Set(data.lines.map((line) => line.productId).filter(Boolean))
       ) as string[];
@@ -62,17 +61,10 @@ export const createVendorBill = async (data: {
           })
         : [];
       const productMap = new Map(products.map((product) => [product.id, product]));
-=======
       for (const line of data.lines) {
-        let categoryId: string | null = null;
-        if (line.productId) {
-          const product = await tx.product.findUnique({
-            where: { id: line.productId },
-            select: { categoryId: true },
-          });
-          categoryId = product?.categoryId ?? null;
-        }
->>>>>>> a05b3948bf4b0174a6968aff7b7547e9de3c3bd5
+        const categoryId = line.productId
+          ? productMap.get(line.productId)?.categoryId ?? null
+          : null;
 
         const resolvedAnalytic = line.analyticAccountId
           ? null
