@@ -11,11 +11,12 @@ import { cn } from "@/lib/cn";
 
 const primaryNavItems = [
   { label: "Dashboard", href: "/dashboard" },
-  { label: "Transactions", href: "/transactions", submenu: true },
-  { label: "Budgets", href: "/budgets", submenu: true },
+  { label: "Transactions", href: "/transactions" },
+  { label: "Budgets", href: "/budgets" },
   { label: "AI Insights", href: "/ai-insights" },
   { label: "Reports", href: "/reports" },
-  { label: "Portal", href: "/portal" },
+  { label: "Contacts", href: "/contacts" },
+  { label: "Products", href: "/products" },
 ];
 
 export function TopNavigation() {
