@@ -10,6 +10,7 @@
     "dev": "prisma generate && tsc -b && node ./scripts/copy-prisma-generated.mjs && node ./dist/server.js",
     "start": "node ./dist/server.js",
     "seed": "npm run build && node ./scripts/seed.mjs",
+    "reset-admin": "npm run build && node ./scripts/reset-admin-password.mjs",
     "lint": "echo \"no lint configured\"",
     "test": "vitest run"
   },

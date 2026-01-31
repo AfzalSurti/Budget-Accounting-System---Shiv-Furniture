@@ -5,18 +5,44 @@ import Image from "next/image";
 import { Lock, Shield, ArrowRight, Building, User } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 export default function SignupPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [userType, setUserType] = useState<"admin" | "customer">("admin");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+  const { register } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate account creation then redirect to role selection
-    setTimeout(() => {
-      window.location.href = "/auth/select-role";
-    }, 1500);
+    setError(null);
+
+    try {
+      if (userType === "admin") {
+        throw new Error("Admin signup is restricted. Please contact your administrator.");
+      }
+      if (password !== confirmPassword) {
+        throw new Error("Passwords do not match.");
+      }
+
+      const user = await register(email, password, "PORTAL");
+      if (user.role === "ADMIN") {
+        router.push("/admin/dashboard");
+      } else {
+        router.push("/portal/overview");
+      }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Signup failed";
+      setError(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -169,6 +195,8 @@ export default function SignupPage() {
                 <input
                   type="email"
                   required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-primary/40 focus:border-brand-primary transition-all duration-200"
                   placeholder="name@company.com"
                 />
@@ -195,6 +223,8 @@ export default function SignupPage() {
                 <input
                   type="password"
                   required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-primary/40 focus:border-brand-primary transition-all duration-200"
                   placeholder="Create a strong password"
                 />
@@ -210,10 +240,18 @@ export default function SignupPage() {
                 <input
                   type="password"
                   required
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                   className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-primary/40 focus:border-brand-primary transition-all duration-200"
                   placeholder="Confirm your password"
                 />
               </div>
+
+              {error && (
+                <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-2">
+                  {error}
+                </div>
+              )}
 
               <div className="flex items-start">
                 <input

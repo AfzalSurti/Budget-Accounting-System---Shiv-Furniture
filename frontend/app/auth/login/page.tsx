@@ -20,10 +20,8 @@ export default function LoginPage() {
     setIsSubmitting(true);
     
     try {
-      await login(email, password);
-      
-      // Redirect based on role (determined in AuthContext)
-      if (email.includes('admin')) {
+      const user = await login(email, password);
+      if (user.role === 'ADMIN') {
         router.push('/admin/dashboard');
       } else {
         router.push('/portal/overview');

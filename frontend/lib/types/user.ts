@@ -1,11 +1,10 @@
-export type UserRole = 'ADMIN' | 'CUSTOMER';
+export type UserRole = 'ADMIN' | 'PORTAL';
 
 export interface User {
   id: string;
   email: string;
-  name: string;
   role: UserRole;
-  companyName?: string;
+  contactId?: string | null;
 }
 
 export interface AuthState {

@@ -10,7 +10,7 @@ import { useAuth } from "@/context/AuthContext";
 
 const roles = [
   {
-    id: "admin",
+    id: "ADMIN",
     title: "Administrator",
     description: "Full system access and management",
     icon: ShieldCheck,
@@ -18,8 +18,8 @@ const roles = [
     color: "from-purple-500 to-purple-600"
   },
   {
-    id: "customer",
-    title: "Customer",
+    id: "PORTAL",
+    title: "Portal User",
     description: "Customer portal access",
     icon: User,
     permissions: ["View invoices", "Make payments", "Track orders", "View transaction history"],
@@ -42,13 +42,13 @@ export default function SelectRolePage() {
     // Update user role
     const updatedUser = {
       ...user,
-      role: selectedRole as 'ADMIN' | 'CUSTOMER'
+      role: selectedRole as 'ADMIN' | 'PORTAL'
     };
     setUser(updatedUser);
     
     // Redirect based on role
     setTimeout(() => {
-      if (selectedRole === 'admin') {
+      if (selectedRole === 'ADMIN') {
         router.push('/admin/dashboard');
       } else {
         router.push('/portal/overview');

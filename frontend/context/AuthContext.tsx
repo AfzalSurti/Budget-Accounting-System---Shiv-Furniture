@@ -2,9 +2,11 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User, AuthState, UserRole } from '@/lib/types/user';
+import { API_V1, getStoredToken, setStoredToken } from '@/config';
 
 interface AuthContextType extends AuthState {
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<User>;
+  register: (email: string, password: string, role: UserRole) => Promise<User>;
   logout: () => void;
   setUser: (user: User) => void;
   hasRole: (role: UserRole) => boolean;
@@ -22,10 +24,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Check for existing session on mount
     const checkAuth = async () => {
       try {
-        // TODO: Replace with actual API call
         const storedUser = localStorage.getItem('user');
+        const token = getStoredToken();
         if (storedUser) {
           setUser(JSON.parse(storedUser));
+        }
+        if (token) {
+          const res = await fetch(`${API_V1}/auth/me`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          if (res.ok) {
+            const payload = await res.json();
+            if (payload?.data) {
+              setUser(payload.data);
+              localStorage.setItem('user', JSON.stringify(payload.data));
+            }
+          }
         }
       } catch (error) {
         console.error('Auth check failed:', error);
@@ -37,25 +51,54 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     checkAuth();
   }, []);
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string): Promise<User> => {
     setIsLoading(true);
     try {
-      // TODO: Replace with actual API call
-      // For demo purposes, determine role based on email
-      const role: UserRole = email.includes('admin') ? 'ADMIN' : 'CUSTOMER';
-      
-      const mockUser: User = {
-        id: '1',
-        email,
-        name: email.split('@')[0],
-        role,
-        companyName: role === 'ADMIN' ? 'Shiv Furniture' : undefined
-      };
-
-      setUser(mockUser);
-      localStorage.setItem('user', JSON.stringify(mockUser));
+      const res = await fetch(`${API_V1}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      if (!res.ok) {
+        const error = await res.json().catch(() => ({}));
+        throw new Error(error?.message || 'Login failed');
+      }
+      const payload = await res.json();
+      const user = payload?.data?.user as User;
+      const token = payload?.data?.token as string;
+      if (token) setStoredToken(token);
+      setUser(user);
+      localStorage.setItem('user', JSON.stringify(user));
+      return user;
     } catch (error) {
       console.error('Login failed:', error);
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const register = async (email: string, password: string, role: UserRole): Promise<User> => {
+    setIsLoading(true);
+    try {
+      const res = await fetch(`${API_V1}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, role }),
+      });
+      if (!res.ok) {
+        const error = await res.json().catch(() => ({}));
+        throw new Error(error?.message || 'Signup failed');
+      }
+      const payload = await res.json();
+      const user = payload?.data?.user as User;
+      const token = payload?.data?.token as string;
+      if (token) setStoredToken(token);
+      setUser(user);
+      localStorage.setItem('user', JSON.stringify(user));
+      return user;
+    } catch (error) {
+      console.error('Signup failed:', error);
       throw error;
     } finally {
       setIsLoading(false);
@@ -65,6 +108,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
+    setStoredToken(null);
     window.location.href = '/auth/login';
   };
 
@@ -73,7 +117,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const isAdmin = (): boolean => hasRole('ADMIN');
-  const isCustomer = (): boolean => hasRole('CUSTOMER');
+  const isCustomer = (): boolean => hasRole('PORTAL');
 
   return (
     <AuthContext.Provider
@@ -82,6 +126,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isAuthenticated: !!user,
         isLoading,
         login,
+        register,
         logout,
         setUser,
         hasRole,
