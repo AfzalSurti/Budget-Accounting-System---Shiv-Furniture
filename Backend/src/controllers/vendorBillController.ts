@@ -9,6 +9,7 @@ import {
   mapDocStatusToBadge,
 } from "../utils/formatters.js";
 import { assertDocStatusTransition } from "../utils/workflow.js";
+import { renderDocumentPdf } from "../utils/pdf.js";
 
 export const createVendorBill = async (data: {
   companyId: string;
@@ -180,6 +181,8 @@ export const listVendorBillsTable = async (companyId: string) => {
   return bills.map((bill) => ({
     id: bill.billNo,
     recordId: bill.id,
+    rawStatus: bill.status,
+    paymentState: bill.paymentState,
     vendor: bill.vendor.displayName,
     amount: formatCurrency(Number(bill.totalAmount), bill.currency),
     dueDate: formatDate(bill.dueDate) ?? "",
@@ -219,4 +222,60 @@ export const updateVendorBill = async (
   } catch (error) {
     throw new ApiError(404, "Vendor bill not found", error);
   }
+};
+
+export const getVendorBillPdf = async (id: string) => {
+  const bill = await prisma.vendorBill.findUnique({
+    where: { id },
+    include: {
+      company: true,
+      vendor: true,
+      lines: { include: { product: true } },
+    },
+  });
+  if (!bill) {
+    throw new ApiError(404, "Vendor bill not found");
+  }
+
+  const lines = bill.lines.map((line) => {
+    const qty = Number(line.qty);
+    const unit = Number(line.unitPrice);
+    const taxRate = Number(line.taxRate);
+    return {
+      description: line.description ?? line.product?.name ?? "Item",
+      qty,
+      unitPrice: unit,
+      taxRate,
+      lineTotal: Number(line.lineTotal),
+    };
+  });
+
+  const subtotal = lines.reduce((sum, line) => sum + line.qty * line.unitPrice, 0);
+  const grandTotal = lines.reduce((sum, line) => sum + line.lineTotal, 0);
+  const taxTotal = grandTotal - subtotal;
+
+  const statusLabel = formatBadgeLabel(
+    mapDocStatusToBadge(bill.status, bill.paymentState),
+  );
+
+  const buffer = await renderDocumentPdf(
+    {
+      title: "Vendor Bill",
+      companyName: bill.company.name,
+      docNo: bill.billNo,
+      docDate: formatDate(bill.billDate) ?? "",
+      contactLabel: "Vendor",
+      contactName: bill.vendor.displayName,
+      statusLabel,
+      currency: bill.currency,
+      paymentStatus: bill.paymentState,
+    },
+    lines,
+    { subtotal, taxTotal, grandTotal },
+  );
+
+  return {
+    buffer,
+    filename: `${bill.billNo}.pdf`,
+  };
 };

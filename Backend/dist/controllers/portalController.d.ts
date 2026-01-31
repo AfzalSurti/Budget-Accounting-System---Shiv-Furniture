@@ -185,12 +185,12 @@ export declare const listPortalPaymentsTable: (contactId: string) => Promise<{
     statusLabel: string;
 }[]>;
 export declare const downloadInvoicePdf: (invoiceId: string, contactId: string) => Promise<{
-    invoiceId: string;
-    downloadUrl: string;
+    buffer: Buffer<ArrayBufferLike>;
+    filename: string;
 }>;
 export declare const downloadBillPdf: (billId: string, contactId: string) => Promise<{
-    billId: string;
-    downloadUrl: string;
+    buffer: Buffer<ArrayBufferLike>;
+    filename: string;
 }>;
 export declare const makePortalPayment: (payload: {
     companyId: string;

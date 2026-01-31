@@ -4,6 +4,7 @@ import { getContactTagIds, resolveAnalyticAccountId } from "../services/autoAnal
 import { calculatePaymentStatus } from "../services/paymentService.js";
 import { formatBadgeLabel, formatCurrency, formatDate, mapDocStatusToBadge, } from "../utils/formatters.js";
 import { assertDocStatusTransition } from "../utils/workflow.js";
+import { renderDocumentPdf } from "../utils/pdf.js";
 export const createInvoice = async (data) => {
     return prisma.$transaction(async (tx) => {
         let totalAmount = 0;
@@ -140,6 +141,8 @@ export const listInvoicesTable = async (companyId) => {
     return invoices.map((invoice) => ({
         id: invoice.invoiceNo,
         recordId: invoice.id,
+        rawStatus: invoice.status,
+        paymentState: invoice.paymentState,
         customer: invoice.customer.displayName,
         amount: formatCurrency(Number(invoice.totalAmount), invoice.currency),
         dueDate: formatDate(invoice.dueDate) ?? "",
@@ -173,5 +176,49 @@ export const updateInvoice = async (id, data) => {
     catch (error) {
         throw new ApiError(404, "Invoice not found", error);
     }
+};
+export const getInvoicePdf = async (id) => {
+    const invoice = await prisma.customerInvoice.findUnique({
+        where: { id },
+        include: {
+            company: true,
+            customer: true,
+            lines: { include: { product: true } },
+        },
+    });
+    if (!invoice) {
+        throw new ApiError(404, "Invoice not found");
+    }
+    const lines = invoice.lines.map((line) => {
+        const qty = Number(line.qty);
+        const unit = Number(line.unitPrice);
+        const taxRate = Number(line.taxRate);
+        return {
+            description: line.description ?? line.product?.name ?? "Item",
+            qty,
+            unitPrice: unit,
+            taxRate,
+            lineTotal: Number(line.lineTotal),
+        };
+    });
+    const subtotal = lines.reduce((sum, line) => sum + line.qty * line.unitPrice, 0);
+    const grandTotal = lines.reduce((sum, line) => sum + line.lineTotal, 0);
+    const taxTotal = grandTotal - subtotal;
+    const statusLabel = formatBadgeLabel(mapDocStatusToBadge(invoice.status, invoice.paymentState));
+    const buffer = await renderDocumentPdf({
+        title: "Customer Invoice",
+        companyName: invoice.company.name,
+        docNo: invoice.invoiceNo,
+        docDate: formatDate(invoice.invoiceDate) ?? "",
+        contactLabel: "Customer",
+        contactName: invoice.customer.displayName,
+        statusLabel,
+        currency: invoice.currency,
+        paymentStatus: invoice.paymentState,
+    }, lines, { subtotal, taxTotal, grandTotal });
+    return {
+        buffer,
+        filename: `${invoice.invoiceNo}.pdf`,
+    };
 };
 //# sourceMappingURL=invoiceController.js.map

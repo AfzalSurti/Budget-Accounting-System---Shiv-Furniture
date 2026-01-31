@@ -3,6 +3,7 @@ import { ApiError } from "../utils/apiError.js";
 import { getContactTagIds, resolveAnalyticAccountId } from "../services/autoAnalyticService.js";
 import { formatBadgeLabel, formatCurrency, formatDate, mapOrderStatusToBadge, } from "../utils/formatters.js";
 import { assertOrderStatusTransition } from "../utils/workflow.js";
+import { renderDocumentPdf } from "../utils/pdf.js";
 export const createPurchaseOrder = async (data) => {
     return prisma.$transaction(async (tx) => {
         const contactTagIds = await getContactTagIds(data.vendorId);
@@ -83,6 +84,7 @@ export const listPurchaseOrdersTable = async (companyId) => {
         return {
             id: order.poNo,
             recordId: order.id,
+            rawStatus: order.status,
             vendor: order.vendor.displayName,
             amount: formatCurrency(totalAmount, order.currency),
             date: formatDate(order.orderDate) ?? "",
@@ -124,5 +126,47 @@ export const deletePurchaseOrder = async (id) => {
     catch (error) {
         throw new ApiError(404, "Purchase order not found", error);
     }
+};
+export const getPurchaseOrderPdf = async (id) => {
+    const po = await prisma.purchaseOrder.findUnique({
+        where: { id },
+        include: {
+            company: true,
+            vendor: true,
+            lines: { include: { product: true } },
+        },
+    });
+    if (!po) {
+        throw new ApiError(404, "Purchase order not found");
+    }
+    const lines = po.lines.map((line) => {
+        const qty = Number(line.qty);
+        const unit = Number(line.unitPrice);
+        const taxRate = Number(line.taxRate);
+        return {
+            description: line.description ?? line.product?.name ?? "Item",
+            qty,
+            unitPrice: unit,
+            taxRate,
+            lineTotal: Number(line.lineTotal),
+        };
+    });
+    const subtotal = lines.reduce((sum, line) => sum + line.qty * line.unitPrice, 0);
+    const grandTotal = lines.reduce((sum, line) => sum + line.lineTotal, 0);
+    const taxTotal = grandTotal - subtotal;
+    const buffer = await renderDocumentPdf({
+        title: "Purchase Order",
+        companyName: po.company.name,
+        docNo: po.poNo,
+        docDate: formatDate(po.orderDate) ?? "",
+        contactLabel: "Vendor",
+        contactName: po.vendor.displayName,
+        statusLabel: formatBadgeLabel(mapOrderStatusToBadge(po.status)),
+        currency: po.currency,
+    }, lines, { subtotal, taxTotal, grandTotal });
+    return {
+        buffer,
+        filename: `${po.poNo}.pdf`,
+    };
 };
 //# sourceMappingURL=purchaseOrderController.js.map

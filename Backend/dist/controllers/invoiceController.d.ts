@@ -83,6 +83,8 @@ export declare const listInvoices: (companyId: string) => Promise<({
 export declare const listInvoicesTable: (companyId: string) => Promise<{
     id: string;
     recordId: string;
+    rawStatus: import("../generated/prisma/index.js").$Enums.DocStatus;
+    paymentState: string;
     customer: string;
     amount: string;
     dueDate: string;
@@ -137,5 +139,9 @@ export declare const updateInvoice: (id: string, data: Partial<Record<string, un
     invoiceDate: Date;
     soId: string | null;
     portalVisible: boolean;
+}>;
+export declare const getInvoicePdf: (id: string) => Promise<{
+    buffer: Buffer<ArrayBufferLike>;
+    filename: string;
 }>;
 //# sourceMappingURL=invoiceController.d.ts.map

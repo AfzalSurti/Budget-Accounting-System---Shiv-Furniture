@@ -5,16 +5,17 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
-import { 
-  Home, 
-  FileText, 
-  Receipt, 
-  Package, 
+import {
+  Home,
+  FileText,
+  Receipt,
+  Package,
   CreditCard,
-  Menu, 
-  X, 
+  ShoppingCart,
+  Menu,
+  X,
   LogOut,
-  User
+  User,
 } from "lucide-react";
 import { ThemeToggle } from "../theme-toggle";
 import { cn } from "@/lib/cn";
@@ -25,6 +26,7 @@ const iconMap: Record<string, any> = {
   '/portal/overview': Home,
   '/portal/invoices': FileText,
   '/portal/bills': Receipt,
+  '/portal/sales-orders': ShoppingCart,
   '/portal/purchase-orders': Package,
   '/portal/payments': CreditCard,
 };

@@ -8,6 +8,7 @@ import {
   mapOrderStatusToBadge,
 } from "../utils/formatters.js";
 import { assertOrderStatusTransition } from "../utils/workflow.js";
+import { renderDocumentPdf } from "../utils/pdf.js";
 
 export const createSalesOrder = async (data: {
   companyId: string;
@@ -117,6 +118,7 @@ export const listSalesOrdersTable = async (companyId: string) => {
     return {
       id: order.soNo,
       recordId: order.id,
+      rawStatus: order.status,
       customer: order.customer.displayName,
       amount: formatCurrency(totalAmount, order.currency),
       date: formatDate(order.orderDate) ?? "",
@@ -162,4 +164,55 @@ export const deleteSalesOrder = async (id: string) => {
   } catch (error) {
     throw new ApiError(404, "Sales order not found", error);
   }
+};
+
+export const getSalesOrderPdf = async (id: string) => {
+  const so = await prisma.salesOrder.findUnique({
+    where: { id },
+    include: {
+      company: true,
+      customer: true,
+      lines: { include: { product: true } },
+    },
+  });
+  if (!so) {
+    throw new ApiError(404, "Sales order not found");
+  }
+
+  const lines = so.lines.map((line) => {
+    const qty = Number(line.qty);
+    const unit = Number(line.unitPrice);
+    const taxRate = Number(line.taxRate);
+    return {
+      description: line.description ?? line.product?.name ?? "Item",
+      qty,
+      unitPrice: unit,
+      taxRate,
+      lineTotal: Number(line.lineTotal),
+    };
+  });
+
+  const subtotal = lines.reduce((sum, line) => sum + line.qty * line.unitPrice, 0);
+  const grandTotal = lines.reduce((sum, line) => sum + line.lineTotal, 0);
+  const taxTotal = grandTotal - subtotal;
+
+  const buffer = await renderDocumentPdf(
+    {
+      title: "Sales Order",
+      companyName: so.company.name,
+      docNo: so.soNo,
+      docDate: formatDate(so.orderDate) ?? "",
+      contactLabel: "Customer",
+      contactName: so.customer.displayName,
+      statusLabel: formatBadgeLabel(mapOrderStatusToBadge(so.status)),
+      currency: so.currency,
+    },
+    lines,
+    { subtotal, taxTotal, grandTotal },
+  );
+
+  return {
+    buffer,
+    filename: `${so.soNo}.pdf`,
+  };
 };

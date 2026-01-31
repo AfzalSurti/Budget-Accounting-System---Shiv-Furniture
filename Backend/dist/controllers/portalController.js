@@ -1,6 +1,7 @@
 import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/apiError.js";
 import { createPayment } from "./paymentController.js";
+import { renderDocumentPdf } from "../utils/pdf.js";
 import { formatBadgeLabel, formatCurrency, formatDate, formatPaymentMethod, mapDocStatusToBadge, mapOrderStatusToBadge, mapPaymentStatusToBadge, } from "../utils/formatters.js";
 export const listPortalInvoices = async (contactId) => {
     return prisma.customerInvoice.findMany({
@@ -183,23 +184,82 @@ export const listPortalPaymentsTable = async (contactId) => {
 export const downloadInvoicePdf = async (invoiceId, contactId) => {
     const invoice = await prisma.customerInvoice.findFirst({
         where: { id: invoiceId, customerId: contactId },
+        include: {
+            company: true,
+            customer: true,
+            lines: { include: { product: true } },
+        },
     });
     if (!invoice) {
         throw new ApiError(404, "Invoice not found");
     }
-    return {
-        invoiceId,
-        downloadUrl: `https://example.com/invoices/${invoiceId}.pdf`,
-    };
+    const lines = invoice.lines.map((line) => {
+        const qty = Number(line.qty);
+        const unit = Number(line.unitPrice);
+        const taxRate = Number(line.taxRate);
+        return {
+            description: line.description ?? line.product?.name ?? "Item",
+            qty,
+            unitPrice: unit,
+            taxRate,
+            lineTotal: Number(line.lineTotal),
+        };
+    });
+    const subtotal = lines.reduce((sum, line) => sum + line.qty * line.unitPrice, 0);
+    const grandTotal = lines.reduce((sum, line) => sum + line.lineTotal, 0);
+    const taxTotal = grandTotal - subtotal;
+    const buffer = await renderDocumentPdf({
+        title: "Customer Invoice",
+        companyName: invoice.company.name,
+        docNo: invoice.invoiceNo,
+        docDate: formatDate(invoice.invoiceDate) ?? "",
+        contactLabel: "Customer",
+        contactName: invoice.customer.displayName,
+        statusLabel: formatBadgeLabel(mapDocStatusToBadge(invoice.status, invoice.paymentState)),
+        currency: invoice.currency,
+        paymentStatus: invoice.paymentState,
+    }, lines, { subtotal, taxTotal, grandTotal });
+    return { buffer, filename: `${invoice.invoiceNo}.pdf` };
 };
 export const downloadBillPdf = async (billId, contactId) => {
     const bill = await prisma.vendorBill.findFirst({
         where: { id: billId, vendorId: contactId },
+        include: {
+            company: true,
+            vendor: true,
+            lines: { include: { product: true } },
+        },
     });
     if (!bill) {
         throw new ApiError(404, "Bill not found");
     }
-    return { billId, downloadUrl: `https://example.com/bills/${billId}.pdf` };
+    const lines = bill.lines.map((line) => {
+        const qty = Number(line.qty);
+        const unit = Number(line.unitPrice);
+        const taxRate = Number(line.taxRate);
+        return {
+            description: line.description ?? line.product?.name ?? "Item",
+            qty,
+            unitPrice: unit,
+            taxRate,
+            lineTotal: Number(line.lineTotal),
+        };
+    });
+    const subtotal = lines.reduce((sum, line) => sum + line.qty * line.unitPrice, 0);
+    const grandTotal = lines.reduce((sum, line) => sum + line.lineTotal, 0);
+    const taxTotal = grandTotal - subtotal;
+    const buffer = await renderDocumentPdf({
+        title: "Vendor Bill",
+        companyName: bill.company.name,
+        docNo: bill.billNo,
+        docDate: formatDate(bill.billDate) ?? "",
+        contactLabel: "Vendor",
+        contactName: bill.vendor.displayName,
+        statusLabel: formatBadgeLabel(mapDocStatusToBadge(bill.status, bill.paymentState)),
+        currency: bill.currency,
+        paymentStatus: bill.paymentState,
+    }, lines, { subtotal, taxTotal, grandTotal });
+    return { buffer, filename: `${bill.billNo}.pdf` };
 };
 export const makePortalPayment = async (payload) => {
     for (const allocation of payload.allocations) {

@@ -80,6 +80,8 @@ export declare const listVendorBills: (companyId: string) => Promise<({
 export declare const listVendorBillsTable: (companyId: string) => Promise<{
     id: string;
     recordId: string;
+    rawStatus: import("../generated/prisma/index.js").$Enums.DocStatus;
+    paymentState: string;
     vendor: string;
     amount: string;
     dueDate: string;
@@ -132,5 +134,9 @@ export declare const updateVendorBill: (id: string, data: Partial<Record<string,
     totalAmount: import("@prisma/client-runtime-utils").Decimal;
     paidAmount: import("@prisma/client-runtime-utils").Decimal;
     paymentState: string;
+}>;
+export declare const getVendorBillPdf: (id: string) => Promise<{
+    buffer: Buffer<ArrayBufferLike>;
+    filename: string;
 }>;
 //# sourceMappingURL=vendorBillController.d.ts.map

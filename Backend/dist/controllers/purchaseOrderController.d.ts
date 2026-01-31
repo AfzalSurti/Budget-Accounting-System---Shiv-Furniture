@@ -57,6 +57,7 @@ export declare const listPurchaseOrders: (companyId: string) => Promise<({
 export declare const listPurchaseOrdersTable: (companyId: string) => Promise<{
     id: string;
     recordId: string;
+    rawStatus: import("../generated/prisma/index.js").$Enums.OrderStatus;
     vendor: string;
     amount: string;
     date: string;
@@ -114,5 +115,9 @@ export declare const deletePurchaseOrder: (id: string) => Promise<{
     deliveryDate: Date | null;
     notes: string | null;
     vendorId: string;
+}>;
+export declare const getPurchaseOrderPdf: (id: string) => Promise<{
+    buffer: Buffer<ArrayBufferLike>;
+    filename: string;
 }>;
 //# sourceMappingURL=purchaseOrderController.d.ts.map

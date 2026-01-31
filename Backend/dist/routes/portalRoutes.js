@@ -63,14 +63,18 @@ portalRoutes.get("/invoices/:id/pdf", asyncHandler(async (req, res) => {
         throw new ApiError(403, "Portal user not linked to a contact");
     }
     const data = await portalController.downloadInvoicePdf(req.params.id, req.user.contactId);
-    res.json({ success: true, data });
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", `attachment; filename="${data.filename}"`);
+    res.send(data.buffer);
 }));
 portalRoutes.get("/bills/:id/pdf", asyncHandler(async (req, res) => {
     if (!req.user?.contactId) {
         throw new ApiError(403, "Portal user not linked to a contact");
     }
     const data = await portalController.downloadBillPdf(req.params.id, req.user.contactId);
-    res.json({ success: true, data });
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", `attachment; filename="${data.filename}"`);
+    res.send(data.buffer);
 }));
 portalRoutes.post("/payments", validateRequest(portalPaymentSchema), asyncHandler(async (req, res) => {
     if (!req.user?.contactId) {
