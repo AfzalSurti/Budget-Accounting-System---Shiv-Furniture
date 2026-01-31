@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { ChevronUp, ChevronDown, MoreHorizontal } from "lucide-react";
 import { cn } from "@/lib/cn";
 

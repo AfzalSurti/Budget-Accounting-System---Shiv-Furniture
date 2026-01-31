@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { TopNavigation } from "@/components/navigation/top-navigation";
-import { Card, FileText, DollarSign, Clock } from "lucide-react";
+import { FileText, DollarSign, Clock, CreditCard } from "lucide-react";
 
 export default function PortalDashboard() {
   return (
@@ -24,7 +24,7 @@ export default function PortalDashboard() {
             { label: "Outstanding Invoices", value: "3", icon: FileText, color: "text-brand-primary" },
             { label: "Total Outstanding", value: "$38,450", icon: DollarSign, color: "text-brand-accent" },
             { label: "Due Soon", value: "2", icon: Clock, color: "text-warning" },
-            { label: "Recent Payments", value: "12", icon: Card, color: "text-success" },
+            { label: "Recent Payments", value: "12", icon: CreditCard, color: "text-success" },
           ].map((stat, idx) => {
             const Icon = stat.icon;
             return (

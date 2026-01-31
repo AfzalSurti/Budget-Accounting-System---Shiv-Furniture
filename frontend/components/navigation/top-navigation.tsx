@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useTheme } from "next-themes";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 import { cn } from "@/lib/cn";
@@ -18,23 +20,29 @@ const primaryNavItems = [
 
 export function TopNavigation() {
   const pathname = usePathname();
+  const { theme, resolvedTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
 
   const isActive = (href: string) => pathname?.startsWith(href);
+
+  // Use resolvedTheme to handle 'system' preference correctly
+  const currentTheme = resolvedTheme || theme;
 
   return (
     <nav className="sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-primary to-brand-accent flex items-center justify-center">
-              <span className="text-white font-serif font-bold text-lg">S</span>
-            </div>
-            <span className="hidden sm:inline font-serif font-bold text-brand-dark dark:text-white text-lg">
-              Shiv ERP
-            </span>
+          <Link href="/" className="flex items-center gap-3 flex-shrink-0">
+            <Image
+              src={currentTheme === "dark" ? "/logo_light.png" : "/logo_dark.png"}
+              alt="Shiv Furniture ERP"
+              width={180}
+              height={60}
+              className="h-16 w-auto"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}
