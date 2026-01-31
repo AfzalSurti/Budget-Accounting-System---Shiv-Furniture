@@ -7,6 +7,8 @@ export const registerSchema = Joi.object({
     password: Joi.string().min(8).required(),
     role: Joi.string().valid("ADMIN", "PORTAL").optional(),
     contactId: Joi.string().uuid().allow(null).optional(),
+    companyId: Joi.string().uuid().allow(null).optional(),
+    fullName: Joi.string().allow("", null).optional(),
   }),
   params: Joi.object({}),
   query: Joi.object({}),

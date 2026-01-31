@@ -14,13 +14,21 @@ authRoutes.post(
   "/register",
   validateRequest(registerSchema),
   asyncHandler(async (req, res) => {
-    const { email, loginId, password, role, contactId } = req.body;
+    const { email, loginId, password, role, contactId, companyId, fullName } = req.body;
 
     if (role === "ADMIN") {
       throw new ApiError(403, "Admin registration is restricted");
     }
 
-    const result = await authController.register({ email, loginId, password, role, contactId });
+    const result = await authController.register({
+      email,
+      loginId,
+      password,
+      role,
+      contactId,
+      companyId,
+      fullName,
+    });
     res.status(201).json({ success: true, data: result });
   })
 );
@@ -68,8 +76,16 @@ authRoutes.post(
   authorizeRole(["ADMIN"]),
   validateRequest(registerSchema),
   asyncHandler(async (req, res) => {
-    const { email, loginId, password, role, contactId } = req.body;
-    const result = await authController.register({ email, loginId, password, role, contactId });
+    const { email, loginId, password, role, contactId, companyId, fullName } = req.body;
+    const result = await authController.register({
+      email,
+      loginId,
+      password,
+      role,
+      contactId,
+      companyId,
+      fullName,
+    });
     res.status(201).json({ success: true, data: result });
   })
 );

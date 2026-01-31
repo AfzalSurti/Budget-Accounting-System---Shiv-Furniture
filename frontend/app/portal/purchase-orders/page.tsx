@@ -5,6 +5,7 @@ import { DataTable } from "@/components/ui/data-table";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { apiGet } from "@/lib/api";
 import { useEffect, useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 type StatusType =
   | "active"
@@ -27,8 +28,18 @@ interface PortalPurchaseOrderRow {
 
 export default function PortalPurchaseOrdersPage() {
   const [poData, setPoData] = useState<PortalPurchaseOrderRow[]>([]);
+  const { user, isCustomer } = useAuth();
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!isCustomer()) {
+      setError("Portal access is available for signed-in customers only.");
+      return;
+    }
+    if (!user?.contactId) {
+      setError("Portal account is not linked to a contact.");
+      return;
+    }
     const load = async () => {
       try {
         const data = await apiGet<PortalPurchaseOrderRow[]>(
@@ -37,11 +48,12 @@ export default function PortalPurchaseOrdersPage() {
         setPoData(data ?? []);
       } catch (error) {
         console.error("Failed to load portal purchase orders:", error);
+        setError("Failed to load portal purchase orders.");
       }
     };
 
     load();
-  }, []);
+  }, [user, isCustomer]);
 
   const columns = [
     {
@@ -84,6 +96,12 @@ export default function PortalPurchaseOrdersPage() {
           Track your purchase orders
         </p>
       </div>
+
+      {error && (
+        <div className="mb-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {error}
+        </div>
+      )}
 
       <DataTable columns={columns} data={poData} />
     </div>

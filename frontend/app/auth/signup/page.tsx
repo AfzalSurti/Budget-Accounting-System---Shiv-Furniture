@@ -8,10 +8,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import type { UserRole } from "@/lib/types/user";
+import { DEFAULT_COMPANY_ID } from "@/config";
 
 export default function SignupPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const selectedRole: UserRole = "PORTAL";
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +35,14 @@ export default function SignupPage() {
         throw new Error("Passwords do not match.");
       }
 
-      const user = await register({ email, loginId, password, role: selectedRole });
+      const user = await register({
+        email,
+        loginId,
+        password,
+        role: selectedRole,
+        fullName,
+        companyId: DEFAULT_COMPANY_ID,
+      });
       if (user.role === "ADMIN") {
         router.push("/admin/dashboard");
       } else {
@@ -158,6 +167,8 @@ export default function SignupPage() {
                 <input
                   type="text"
                   required
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
                   className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-primary/40 focus:border-brand-primary transition-all duration-200"
                   placeholder="Enter your full name"
                 />

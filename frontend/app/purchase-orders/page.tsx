@@ -565,13 +565,12 @@ function PurchaseOrderDialog({
                 required
                 value={form.vendorId}
                 onChange={(e) => handleChange("vendorId", e.target.value)}
-                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none"
+                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 text-brand-dark placeholder:text-brand-dark/40 focus:border-brand-primary focus:outline-none dark:text-brand-light dark:placeholder:text-brand-light/40"
               >
                 <option value="">-- Select Vendor --</option>
                 {vendors.map((v) => (
                   <option key={v.id} value={v.id}>
-                    {v.displayName}
-                    {v.isPortalUser ? " (Portal)" : ""}
+                    {v.displayName}{v.isPortalUser ? " (Portal)" : ""}
                   </option>
                 ))}
               </select>
@@ -581,7 +580,7 @@ function PurchaseOrderDialog({
                 required
                 value={form.poNo}
                 onChange={(e) => handleChange("poNo", e.target.value)}
-                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none"
+                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 text-brand-dark placeholder:text-brand-dark/40 focus:border-brand-primary focus:outline-none dark:text-brand-light dark:placeholder:text-brand-light/40"
               />
             </FormField>
             <FormField label="Order Date">
@@ -590,7 +589,7 @@ function PurchaseOrderDialog({
                 type="date"
                 value={form.orderDate}
                 onChange={(e) => handleChange("orderDate", e.target.value)}
-                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none"
+                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 text-brand-dark focus:border-brand-primary focus:outline-none dark:text-brand-light"
               />
             </FormField>
             <FormField label="Delivery Date">
@@ -598,31 +597,26 @@ function PurchaseOrderDialog({
                 type="date"
                 value={form.deliveryDate}
                 onChange={(e) => handleChange("deliveryDate", e.target.value)}
-                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none"
+                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 text-brand-dark focus:border-brand-primary focus:outline-none dark:text-brand-light"
               />
             </FormField>
             <FormField label="Status">
               <select
                 value={form.status}
-                onChange={(e) =>
-                  handleChange(
-                    "status",
-                    e.target.value as PurchaseOrderDraft["status"],
-                  )
-                }
+                onChange={(e) => handleChange("status", e.target.value as PurchaseOrderDraft["status"])}
                 className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none"
               >
-                <option value="draft">Draft</option>
-                <option value="confirmed">Confirmed</option>
-                <option value="done">Done</option>
-                <option value="cancelled">Cancelled</option>
+                <option value="draft" className="bg-white text-brand-dark dark:bg-slate-900 dark:text-brand-light">Draft</option>
+                <option value="confirmed" className="bg-white text-brand-dark dark:bg-slate-900 dark:text-brand-light">Confirmed</option>
+                <option value="done" className="bg-white text-brand-dark dark:bg-slate-900 dark:text-brand-light">Done</option>
+                <option value="cancelled" className="bg-white text-brand-dark dark:bg-slate-900 dark:text-brand-light">Cancelled</option>
               </select>
             </FormField>
             <FormField label="Currency">
               <input
                 value={form.currency}
                 onChange={(e) => handleChange("currency", e.target.value)}
-                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none"
+                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 text-brand-dark placeholder:text-brand-dark/40 focus:border-brand-primary focus:outline-none dark:text-brand-light dark:placeholder:text-brand-light/40"
               />
             </FormField>
           </div>
@@ -631,14 +625,14 @@ function PurchaseOrderDialog({
             <textarea
               value={form.notes}
               onChange={(e) => handleChange("notes", e.target.value)}
-              className="w-full rounded-2xl border border-brand-primary/30 bg-transparent px-3 py-2 text-sm focus:border-brand-primary focus:outline-none"
+              className="w-full rounded-2xl border border-brand-primary/30 bg-transparent px-3 py-2 text-sm text-brand-dark placeholder:text-brand-dark/40 focus:border-brand-primary focus:outline-none dark:text-brand-light dark:placeholder:text-brand-light/40"
               rows={2}
             />
           </FormField>
 
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold uppercase tracking-widest text-brand-dark/70">
+              <h3 className="text-sm font-semibold uppercase tracking-widest text-brand-dark/70 dark:text-brand-light/70">
                 Lines
               </h3>
               <button type="button" onClick={addLine} className="btn-secondary">
@@ -656,88 +650,60 @@ function PurchaseOrderDialog({
                 className="grid gap-3 rounded-2xl border border-brand-primary/20 p-4 md:grid-cols-6"
               >
                 <div className="md:col-span-2">
-                  <label className="text-xs uppercase tracking-widest text-brand-dark/60">
-                    Product
-                  </label>
+                  <label className="text-xs uppercase tracking-widest text-brand-dark/60">Product</label>
                   <select
                     required
                     value={line.productId}
-                    onChange={(e) =>
-                      handleLineChange(index, "productId", e.target.value)
-                    }
+                    onChange={(e) => handleLineChange(index, "productId", e.target.value)}
                     className="mt-1 w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none"
                   >
                     {products.map((p) => (
-                      <option key={p.id} value={p.id}>
+                      <option key={p.id} value={p.id} className="bg-white text-brand-dark dark:bg-slate-900 dark:text-brand-light">
                         {p.name}
                       </option>
                     ))}
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs uppercase tracking-widest text-brand-dark/60">
-                    Qty
-                  </label>
+                  <label className="text-xs uppercase tracking-widest text-brand-dark/60">Qty</label>
                   <input
                     type="number"
                     min={1}
                     value={line.qty}
-                    onChange={(e) =>
-                      handleLineChange(index, "qty", Number(e.target.value))
-                    }
+                    onChange={(e) => handleLineChange(index, "qty", Number(e.target.value))}
                     className="mt-1 w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="text-xs uppercase tracking-widest text-brand-dark/60">
-                    Unit Price
-                  </label>
+                  <label className="text-xs uppercase tracking-widest text-brand-dark/60">Unit Price</label>
                   <input
                     type="number"
                     min={0}
                     value={line.unitPrice}
-                    onChange={(e) =>
-                      handleLineChange(
-                        index,
-                        "unitPrice",
-                        Number(e.target.value),
-                      )
-                    }
+                    onChange={(e) => handleLineChange(index, "unitPrice", Number(e.target.value))}
                     className="mt-1 w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="text-xs uppercase tracking-widest text-brand-dark/60">
-                    Tax %
-                  </label>
+                  <label className="text-xs uppercase tracking-widest text-brand-dark/60">Tax %</label>
                   <input
                     type="number"
                     min={0}
                     value={line.taxRate}
-                    onChange={(e) =>
-                      handleLineChange(index, "taxRate", Number(e.target.value))
-                    }
+                    onChange={(e) => handleLineChange(index, "taxRate", Number(e.target.value))}
                     className="mt-1 w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="text-xs uppercase tracking-widest text-brand-dark/60">
-                    Cost Center
-                  </label>
+                  <label className="text-xs uppercase tracking-widest text-brand-dark/60">Cost Center</label>
                   <select
                     value={line.analyticAccountId}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      const mode = value === "" ? "auto" : "manual";
-                      console.log(`Cost center selected: ${mode}`);
-                      handleLineChange(index, "analyticAccountId", value);
-                      handleLineChange(index, "analyticAccountMode", mode);
-                    }}
+                    onChange={(e) => handleLineChange(index, "analyticAccountId", e.target.value)}
                     className="mt-1 w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none"
                   >
-                    <option value="">Auto</option>
+                    <option value="" className="bg-white text-brand-dark dark:bg-slate-900 dark:text-brand-light">Auto</option>
                     {costCenters.map((c) => (
-                      <option key={c.id} value={c.id}>
+                      <option key={c.id} value={c.id} className="bg-white text-brand-dark dark:bg-slate-900 dark:text-brand-light">
                         {c.name}
                       </option>
                     ))}
@@ -749,20 +715,15 @@ function PurchaseOrderDialog({
                   )}
                 </div>
                 <div className="md:col-span-6">
-                  <label className="text-xs uppercase tracking-widest text-brand-dark/60">
-                    Description
-                  </label>
+                  <label className="text-xs uppercase tracking-widest text-brand-dark/60">Description</label>
                   <input
                     value={line.description}
-                    onChange={(e) =>
-                      handleLineChange(index, "description", e.target.value)
-                    }
+                    onChange={(e) => handleLineChange(index, "description", e.target.value)}
                     className="mt-1 w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none"
                   />
                 </div>
                 <div className="md:col-span-6 text-right text-xs uppercase tracking-widest text-brand-dark/60">
-                  Line total: {lineTotals[index].toFixed(2)}{" "}
-                  {form.currency || "INR"}
+                  Line total: {lineTotals[index].toFixed(2)} {form.currency || "INR"}
                 </div>
                 {form.lines.length > 1 && (
                   <div className="md:col-span-6 text-right">
@@ -798,7 +759,7 @@ function PurchaseOrderDialog({
               type="button"
               onClick={onClose}
               disabled={isSaving}
-              className="flex-1 rounded-full border border-brand-primary/40 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-brand-dark/70 disabled:cursor-not-allowed disabled:opacity-60"
+              className="flex-1 rounded-full border border-brand-primary/40 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-brand-dark/70 disabled:cursor-not-allowed disabled:opacity-60 dark:text-brand-light/70"
             >
               Cancel
             </button>
@@ -817,7 +778,7 @@ function FormField({
   children: ReactNode;
 }) {
   return (
-    <label className="block text-xs font-semibold uppercase tracking-[0.4em] text-brand-dark/70">
+    <label className="block text-xs font-semibold uppercase tracking-[0.4em] text-brand-dark/70 dark:text-brand-light/70">
       {label}
       <div className="mt-1">{children}</div>
     </label>

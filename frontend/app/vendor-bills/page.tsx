@@ -24,6 +24,9 @@ interface VendorBillRow {
   paymentState?: string;
   totalAmount?: number;
   paidAmount?: number;
+  paidPercent?: string;
+  remainingAmount?: string;
+  actions?: string;
   vendor: string;
   date: string;
   amount: string;
@@ -208,7 +211,7 @@ export default function VendorBillsPage() {
       className: "font-mono font-bold",
     },
     {
-      key: "recordId" as const,
+      key: "paidPercent" as const,
       label: "Paid %",
       render: (_value: string | undefined, row: VendorBillRow) => {
         const total = row.totalAmount ?? 0;
@@ -218,7 +221,7 @@ export default function VendorBillsPage() {
       },
     },
     {
-      key: "recordId" as const,
+      key: "remainingAmount" as const,
       label: "Remaining",
       render: (_value: string | undefined, row: VendorBillRow) => {
         const total = row.totalAmount ?? 0;
@@ -239,7 +242,7 @@ export default function VendorBillsPage() {
       ),
     },
     {
-      key: "recordId" as const,
+      key: "actions" as const,
       label: "Actions",
       render: (_value: string | undefined, row: VendorBillRow) => (
         <div className="flex flex-wrap gap-2">

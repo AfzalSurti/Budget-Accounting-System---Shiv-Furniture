@@ -24,6 +24,9 @@ interface InvoiceRow {
   paymentState?: string;
   totalAmount?: number;
   paidAmount?: number;
+  paidPercent?: string;
+  remainingAmount?: string;
+  actions?: string;
   customer: string;
   amount: string;
   dueDate: string;
@@ -209,7 +212,7 @@ export default function CustomerInvoicesPage() {
       className: "font-mono font-bold",
     },
     {
-      key: "recordId" as const,
+      key: "paidPercent" as const,
       label: "Paid %",
       render: (_value: string | undefined, row: InvoiceRow) => {
         const total = row.totalAmount ?? 0;
@@ -219,7 +222,7 @@ export default function CustomerInvoicesPage() {
       },
     },
     {
-      key: "recordId" as const,
+      key: "remainingAmount" as const,
       label: "Remaining",
       render: (_value: string | undefined, row: InvoiceRow) => {
         const total = row.totalAmount ?? 0;
@@ -240,7 +243,7 @@ export default function CustomerInvoicesPage() {
       ),
     },
     {
-      key: "recordId" as const,
+      key: "actions" as const,
       label: "Actions",
       render: (_value: string | undefined, row: InvoiceRow) => (
         <div className="flex flex-wrap gap-2">

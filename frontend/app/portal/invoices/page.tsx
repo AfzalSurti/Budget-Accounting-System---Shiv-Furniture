@@ -8,6 +8,7 @@ import { apiDownload, apiGet, apiPost } from "@/lib/api";
 import { useEffect, useState } from "react";
 import { exportTableToPDF } from "@/lib/pdf-utils";
 import { Download } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 type StatusType =
   | "active"
@@ -23,6 +24,9 @@ interface PortalInvoiceRow {
   totalAmount?: number;
   paidAmount?: number;
   paymentState?: string;
+  paidPercent?: string;
+  remainingAmount?: string;
+  actions?: string;
   amount: string;
   dueDate: string;
   status: StatusType;
@@ -34,6 +38,7 @@ export default function PortalInvoicesPage() {
   const [portalInvoicesData, setPortalInvoicesData] = useState<
     PortalInvoiceRow[]
   >([]);
+  const { user, isCustomer } = useAuth();
   const [payTarget, setPayTarget] = useState<PortalInvoiceRow | null>(null);
   const [payAmount, setPayAmount] = useState("0");
   const [payMethod, setPayMethod] = useState("bank");
@@ -42,6 +47,15 @@ export default function PortalInvoicesPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!isCustomer()) {
+      setError("Portal access is available for signed-in customers only.");
+      return;
+    }
+    if (!user?.contactId) {
+      setError("Portal account is not linked to a contact.");
+      return;
+    }
+
     const load = async () => {
       try {
         const data = await apiGet<PortalInvoiceRow[]>(
@@ -50,11 +64,12 @@ export default function PortalInvoicesPage() {
         setPortalInvoicesData(data ?? []);
       } catch (error) {
         console.error("Failed to load portal invoices:", error);
+        setError("Failed to load portal invoices.");
       }
     };
 
     load();
-  }, []);
+  }, [user, isCustomer]);
 
   const remainingFor = (row: PortalInvoiceRow) => {
     const total = row.totalAmount ?? 0;
@@ -153,7 +168,7 @@ export default function PortalInvoicesPage() {
       className: "font-mono font-bold",
     },
     {
-      key: "recordId" as const,
+      key: "paidPercent" as const,
       label: "Paid %",
       render: (_value: string | undefined, row: PortalInvoiceRow) => {
         const total = row.totalAmount ?? 0;
@@ -163,7 +178,7 @@ export default function PortalInvoicesPage() {
       },
     },
     {
-      key: "recordId" as const,
+      key: "remainingAmount" as const,
       label: "Remaining",
       render: (_value: string | undefined, row: PortalInvoiceRow) => {
         const remaining = remainingFor(row);
@@ -182,7 +197,7 @@ export default function PortalInvoicesPage() {
       ),
     },
     {
-      key: "recordId" as const,
+      key: "actions" as const,
       label: "Actions",
       render: (_value: string | undefined, row: PortalInvoiceRow) => (
         <div className="flex flex-wrap gap-2">

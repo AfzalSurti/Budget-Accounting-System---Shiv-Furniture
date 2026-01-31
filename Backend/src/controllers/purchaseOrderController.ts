@@ -60,7 +60,12 @@ export const createPurchaseOrder = async (data: {
           if (!product) {
             throw new ApiError(400, "Invalid product");
           }
-          const resolvedAnalytic = line.analyticAccountId
+          const providedAnalytic =
+            typeof line.analyticAccountId === "string" && line.analyticAccountId.trim().length > 0
+              ? line.analyticAccountId
+              : null;
+
+          const resolvedAnalytic = providedAnalytic
             ? null
             : await resolveAnalyticAccountId({
                 companyId: data.companyId,
@@ -77,7 +82,7 @@ export const createPurchaseOrder = async (data: {
           return {
             purchaseOrderId: purchaseOrder.id,
             productId: line.productId,
-            analyticAccountId: line.analyticAccountId ?? resolvedAnalytic?.analyticAccountId ?? null,
+            analyticAccountId: providedAnalytic ?? resolvedAnalytic?.analyticAccountId ?? null,
             autoAnalyticModelId: resolvedAnalytic?.modelId ?? null,
             autoAnalyticRuleId: resolvedAnalytic?.ruleId ?? null,
             matchedFieldsCount: resolvedAnalytic?.matchedFieldsCount ?? null,

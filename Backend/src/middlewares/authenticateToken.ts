@@ -30,7 +30,7 @@ export const authenticateToken = async (
       return next(new ApiError(401, "Invalid token payload"));
     }
 
-    const user = await prisma.user.findUnique({
+    let user = await prisma.user.findUnique({
       where: { id: userId },
       select: {
         id: true,
@@ -38,6 +38,7 @@ export const authenticateToken = async (
         tokenVersion: true,
         isActive: true,
         contactId: true,
+        email: true,
       },
     });
 
@@ -47,6 +48,50 @@ export const authenticateToken = async (
 
     if (user.tokenVersion !== payload.tokenVersion) {
       return next(new ApiError(401, "Token has been revoked"));
+    }
+
+    if (user.role === "PORTAL" && !user.contactId) {
+      const defaultCompanyId =
+        process.env.DEFAULT_COMPANY_ID ?? "00000000-0000-0000-0000-000000000001";
+
+      const company = await prisma.company.upsert({
+        where: { id: defaultCompanyId },
+        update: {},
+        create: { id: defaultCompanyId, name: "Shiv Furniture" },
+      });
+
+      const normalizedEmail = user.email.toLowerCase();
+      const existingContact = await prisma.contact.findFirst({
+        where: { companyId: company.id, email: normalizedEmail },
+      });
+
+      const contact = existingContact
+        ? await prisma.contact.update({
+            where: { id: existingContact.id },
+            data: { isPortalUser: true },
+          })
+        : await prisma.contact.create({
+            data: {
+              companyId: company.id,
+              contactType: "customer",
+              displayName: normalizedEmail.split("@")[0] || "Portal Customer",
+              email: normalizedEmail,
+              isPortalUser: true,
+            },
+          });
+
+      user = await prisma.user.update({
+        where: { id: user.id },
+        data: { contactId: contact.id },
+        select: {
+          id: true,
+          role: true,
+          tokenVersion: true,
+          isActive: true,
+          contactId: true,
+          email: true,
+        },
+      });
     }
 
     req.user = { id: user.id, role: user.role, contactId: user.contactId };

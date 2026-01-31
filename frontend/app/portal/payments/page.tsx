@@ -5,6 +5,7 @@ import { DataTable } from "@/components/ui/data-table";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { apiGet } from "@/lib/api";
 import { useEffect, useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 type StatusType =
   | "active"
@@ -27,8 +28,18 @@ interface PortalPaymentRow {
 
 export default function PortalPaymentsPage() {
   const [paymentsData, setPaymentsData] = useState<PortalPaymentRow[]>([]);
+  const { user, isCustomer } = useAuth();
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!isCustomer()) {
+      setError("Portal access is available for signed-in customers only.");
+      return;
+    }
+    if (!user?.contactId) {
+      setError("Portal account is not linked to a contact.");
+      return;
+    }
     const load = async () => {
       try {
         const data = await apiGet<PortalPaymentRow[]>(
@@ -37,11 +48,12 @@ export default function PortalPaymentsPage() {
         setPaymentsData(data ?? []);
       } catch (error) {
         console.error("Failed to load portal payments:", error);
+        setError("Failed to load portal payments.");
       }
     };
 
     load();
-  }, []);
+  }, [user, isCustomer]);
 
   const columns = [
     {
@@ -83,6 +95,12 @@ export default function PortalPaymentsPage() {
           View all your payments
         </p>
       </div>
+
+      {error && (
+        <div className="mb-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {error}
+        </div>
+      )}
 
       <DataTable columns={columns} data={paymentsData} />
     </div>
