@@ -8,7 +8,7 @@ import { useState } from "react";
 
 export default function SignupPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [userType, setUserType] = useState<"business" | "vendor">("business");
+  const [userType, setUserType] = useState<"admin" | "customer">("admin");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,7 +64,7 @@ export default function SignupPage() {
               finances securely
             </h1>
             <p className="text-lg text-white/90 leading-relaxed">
-              Join businesses using Shiv ERP for budget control, financial intelligence, and secure transaction management.
+              Join businesses using Shiv Furniture for budget control, financial intelligence, and secure transaction management.
             </p>
           </div>
         </motion.div>
@@ -125,27 +125,27 @@ export default function SignupPage() {
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     type="button"
-                    onClick={() => setUserType("business")}
+                    onClick={() => setUserType("admin")}
                     className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
-                      userType === "business"
+                      userType === "admin"
                         ? "border-brand-primary bg-brand-primary/5 text-brand-primary"
                         : "border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-600"
                     }`}
                   >
                     <Building className="w-5 h-5" />
-                    <span className="font-medium">Business</span>
+                    <span className="font-medium">Admin</span>
                   </button>
                   <button
                     type="button"
-                    onClick={() => setUserType("vendor")}
+                    onClick={() => setUserType("customer")}
                     className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
-                      userType === "vendor"
+                      userType === "customer"
                         ? "border-brand-primary bg-brand-primary/5 text-brand-primary"
                         : "border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-600"
                     }`}
                   >
                     <User className="w-5 h-5" />
-                    <span className="font-medium">Vendor</span>
+                    <span className="font-medium">Customer</span>
                   </button>
                 </div>
               </div>
@@ -174,7 +174,7 @@ export default function SignupPage() {
                 />
               </div>
 
-              {userType === "business" && (
+              {userType === "admin" && (
                 <div>
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                     Company Name

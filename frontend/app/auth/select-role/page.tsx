@@ -5,6 +5,8 @@ import Image from "next/image";
 import { User, ShieldCheck, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 const roles = [
   {
@@ -28,17 +30,30 @@ const roles = [
 export default function SelectRolePage() {
   const [selectedRole, setSelectedRole] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+  const { setUser, user } = useAuth();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedRole) return;
+    if (!selectedRole || !user) return;
     
     setIsSubmitting(true);
-    // Simulate API call
+    
+    // Update user role
+    const updatedUser = {
+      ...user,
+      role: selectedRole as 'ADMIN' | 'CUSTOMER'
+    };
+    setUser(updatedUser);
+    
+    // Redirect based on role
     setTimeout(() => {
-      // Redirect to dashboard after role selection
-      window.location.href = "/dashboard";
-    }, 1500);
+      if (selectedRole === 'admin') {
+        router.push('/admin/dashboard');
+      } else {
+        router.push('/portal/overview');
+      }
+    }, 1000);
   };
 
   return (
