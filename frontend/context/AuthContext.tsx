@@ -68,7 +68,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
       if (!res.ok) {
         const error = await res.json().catch(() => ({}));
-        throw new Error(error?.message || 'Login failed');
+        const details = Array.isArray(error?.details)
+          ? error.details.map((d: { message?: string }) => d.message).filter(Boolean).join(", ")
+          : "";
+        throw new Error(details || error?.message || "Login failed");
       }
       const payload = await res.json();
       const user = payload?.data?.user as User;
@@ -95,7 +98,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
       if (!res.ok) {
         const error = await res.json().catch(() => ({}));
-        throw new Error(error?.message || 'Signup failed');
+        const details = Array.isArray(error?.details)
+          ? error.details.map((d: { message?: string }) => d.message).filter(Boolean).join(", ")
+          : "";
+        throw new Error(details || error?.message || "Signup failed");
       }
       const payload = await res.json();
       const user = payload?.data?.user as User;
