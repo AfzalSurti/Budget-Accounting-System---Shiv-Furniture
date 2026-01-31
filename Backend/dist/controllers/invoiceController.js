@@ -1,11 +1,13 @@
 import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/apiError.js";
-import { resolveAnalyticAccountId } from "../services/autoAnalyticService.js";
+import { getContactTagIds, resolveAnalyticAccountId } from "../services/autoAnalyticService.js";
 import { calculatePaymentStatus } from "../services/paymentService.js";
 import { formatBadgeLabel, formatCurrency, formatDate, mapDocStatusToBadge, } from "../utils/formatters.js";
+import { assertDocStatusTransition } from "../utils/workflow.js";
 export const createInvoice = async (data) => {
     return prisma.$transaction(async (tx) => {
         let totalAmount = 0;
+        const contactTagIds = await getContactTagIds(data.customerId);
         const invoice = await tx.customerInvoice.create({
             data: {
                 companyId: data.companyId,
@@ -16,7 +18,7 @@ export const createInvoice = async (data) => {
                 status: data.status,
                 currency: data.currency ?? "INR",
                 soId: data.soId ?? null,
-                paymentState: "Not Paid",
+                paymentState: "not_paid",
             },
         });
         for (const line of data.lines) {
@@ -27,14 +29,16 @@ export const createInvoice = async (data) => {
                 });
                 categoryId = product?.categoryId ?? null;
             }
-            const resolvedAnalytic = line.analyticAccountId ??
-                (await resolveAnalyticAccountId({
+            const resolvedAnalytic = line.analyticAccountId
+                ? null
+                : await resolveAnalyticAccountId({
                     companyId: data.companyId,
                     docType: "customer_invoice",
                     productId: line.productId ?? null,
                     categoryId,
                     contactId: data.customerId,
-                }));
+                    contactTagIds,
+                });
             const taxRate = line.taxRate ?? 0;
             const lineTotal = line.qty * line.unitPrice * (1 + taxRate / 100);
             totalAmount += lineTotal;
@@ -42,7 +46,10 @@ export const createInvoice = async (data) => {
                 data: {
                     customerInvoiceId: invoice.id,
                     productId: line.productId ?? null,
-                    analyticAccountId: resolvedAnalytic ?? null,
+                    analyticAccountId: line.analyticAccountId ?? resolvedAnalytic?.analyticAccountId ?? null,
+                    autoAnalyticModelId: resolvedAnalytic?.modelId ?? null,
+                    autoAnalyticRuleId: resolvedAnalytic?.ruleId ?? null,
+                    matchedFieldsCount: resolvedAnalytic?.matchedFieldsCount ?? null,
                     glAccountId: line.glAccountId ?? null,
                     description: line.description ?? null,
                     qty: line.qty,
@@ -79,7 +86,7 @@ export const createInvoiceFromSO = async (soId, invoiceNo, invoiceDate) => {
                 status: "draft",
                 currency: so.currency,
                 soId: so.id,
-                paymentState: "Not Paid",
+                paymentState: "not_paid",
             },
         });
         let totalAmount = 0;
@@ -153,7 +160,15 @@ export const getInvoice = async (id) => {
 };
 export const updateInvoice = async (id, data) => {
     try {
-        return await prisma.customerInvoice.update({ where: { id }, data });
+        const current = await prisma.customerInvoice.findUnique({ where: { id } });
+        if (!current) {
+            throw new ApiError(404, "Invoice not found");
+        }
+        if (data.status) {
+            assertDocStatusTransition(current.status, data.status);
+        }
+        const { totalAmount, paidAmount, paymentState, ...rest } = data;
+        return await prisma.customerInvoice.update({ where: { id }, data: rest });
     }
     catch (error) {
         throw new ApiError(404, "Invoice not found", error);

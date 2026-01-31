@@ -8,6 +8,7 @@ const contactBody = Joi.object({
     gstin: Joi.string().allow(null, ""),
     billingAddress: Joi.any().optional(),
     shippingAddress: Joi.any().optional(),
+    tags: Joi.array().items(Joi.string().trim().min(1)).optional(),
 });
 export const createContactSchema = Joi.object({
     body: contactBody,
@@ -23,5 +24,18 @@ export const listContactSchema = Joi.object({
     body: Joi.object({}),
     params: Joi.object({}),
     query: Joi.object({ companyId: Joi.string().uuid().required() }),
+});
+export const listContactTagSchema = Joi.object({
+    body: Joi.object({}),
+    params: Joi.object({}),
+    query: Joi.object({ companyId: Joi.string().uuid().required() }),
+});
+export const createContactTagSchema = Joi.object({
+    body: Joi.object({
+        companyId: Joi.string().uuid().required(),
+        name: Joi.string().required(),
+    }),
+    params: Joi.object({}),
+    query: Joi.object({}),
 });
 //# sourceMappingURL=contactValidators.js.map

@@ -1,9 +1,11 @@
 import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/apiError.js";
-import { resolveAnalyticAccountId } from "../services/autoAnalyticService.js";
+import { getContactTagIds, resolveAnalyticAccountId } from "../services/autoAnalyticService.js";
 import { formatBadgeLabel, formatCurrency, formatDate, mapOrderStatusToBadge, } from "../utils/formatters.js";
+import { assertOrderStatusTransition } from "../utils/workflow.js";
 export const createPurchaseOrder = async (data) => {
     return prisma.$transaction(async (tx) => {
+        const contactTagIds = await getContactTagIds(data.vendorId);
         const purchaseOrder = await tx.purchaseOrder.create({
             data: {
                 companyId: data.companyId,
@@ -23,21 +25,26 @@ export const createPurchaseOrder = async (data) => {
             if (!product) {
                 throw new ApiError(400, "Invalid product");
             }
-            const resolvedAnalytic = line.analyticAccountId ??
-                (await resolveAnalyticAccountId({
+            const resolvedAnalytic = line.analyticAccountId
+                ? null
+                : await resolveAnalyticAccountId({
                     companyId: data.companyId,
                     docType: "purchase_order",
                     productId: line.productId,
                     categoryId: product.categoryId ?? null,
                     contactId: data.vendorId,
-                }));
+                    contactTagIds,
+                });
             const taxRate = line.taxRate ?? 0;
             const lineTotal = line.qty * line.unitPrice * (1 + taxRate / 100);
             await tx.purchaseOrderLine.create({
                 data: {
                     purchaseOrderId: purchaseOrder.id,
                     productId: line.productId,
-                    analyticAccountId: resolvedAnalytic ?? null,
+                    analyticAccountId: line.analyticAccountId ?? resolvedAnalytic?.analyticAccountId ?? null,
+                    autoAnalyticModelId: resolvedAnalytic?.modelId ?? null,
+                    autoAnalyticRuleId: resolvedAnalytic?.ruleId ?? null,
+                    matchedFieldsCount: resolvedAnalytic?.matchedFieldsCount ?? null,
                     description: line.description ?? null,
                     qty: line.qty,
                     unitPrice: line.unitPrice,
@@ -97,6 +104,13 @@ export const getPurchaseOrder = async (id) => {
 };
 export const updatePurchaseOrder = async (id, data) => {
     try {
+        const current = await prisma.purchaseOrder.findUnique({ where: { id } });
+        if (!current) {
+            throw new ApiError(404, "Purchase order not found");
+        }
+        if (data.status) {
+            assertOrderStatusTransition(current.status, data.status);
+        }
         return await prisma.purchaseOrder.update({ where: { id }, data });
     }
     catch (error) {

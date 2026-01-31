@@ -2,13 +2,33 @@ import { prisma } from "../config/prisma.js";
 
 type DocType = "vendor_bill" | "customer_invoice" | "purchase_order" | "sales_order";
 
+export const getContactTagIds = async (contactId?: string | null) => {
+  if (!contactId) return [] as string[];
+  const tags = await prisma.contactTagAssignment.findMany({
+    where: { contactId },
+    select: { tagId: true },
+  });
+  return tags.map((tag) => tag.tagId);
+};
+
+type AutoAnalyticMatch = {
+  analyticAccountId: string;
+  modelId: string;
+  ruleId: string;
+  matchedFieldsCount: number;
+};
+
 export const resolveAnalyticAccountId = async (input: {
   companyId: string;
   docType: DocType;
   productId?: string | null;
   categoryId?: string | null;
   contactId?: string | null;
-}) => {
+  contactTagIds?: string[];
+}): Promise<AutoAnalyticMatch | null> => {
+  const contactTagIds =
+    input.contactTagIds ?? (await getContactTagIds(input.contactId));
+
   const models = await prisma.autoAnalyticModel.findMany({
     where: { companyId: input.companyId, isActive: true },
     include: {
@@ -20,17 +40,61 @@ export const resolveAnalyticAccountId = async (input: {
     orderBy: { priority: "asc" },
   });
 
+  const candidates: Array<AutoAnalyticMatch & { modelPriority: number; rulePriority: number }> = [];
+
   for (const model of models) {
     for (const rule of model.rules) {
-      const matchProduct = rule.matchProductId ? rule.matchProductId === input.productId : true;
-      const matchCategory = rule.matchCategoryId ? rule.matchCategoryId === input.categoryId : true;
-      const matchContact = rule.matchContactId ? rule.matchContactId === input.contactId : true;
+      let matchedCount = 0;
+      let hasAnyField = false;
 
-      if (matchProduct && matchCategory && matchContact) {
-        return rule.assignAnalyticAccountId;
+      if (rule.matchProductId) {
+        hasAnyField = true;
+        if (rule.matchProductId === input.productId) matchedCount += 1;
       }
+      if (rule.matchCategoryId) {
+        hasAnyField = true;
+        if (rule.matchCategoryId === input.categoryId) matchedCount += 1;
+      }
+      if (rule.matchContactId) {
+        hasAnyField = true;
+        if (rule.matchContactId === input.contactId) matchedCount += 1;
+      }
+      if (rule.matchContactTagId) {
+        hasAnyField = true;
+        if (contactTagIds.includes(rule.matchContactTagId)) matchedCount += 1;
+      }
+
+      if (!hasAnyField || matchedCount === 0) {
+        continue;
+      }
+
+      candidates.push({
+        analyticAccountId: rule.assignAnalyticAccountId,
+        modelId: model.id,
+        ruleId: rule.id,
+        matchedFieldsCount: matchedCount,
+        modelPriority: model.priority,
+        rulePriority: rule.rulePriority,
+      });
     }
   }
 
-  return null;
+  candidates.sort((a, b) => {
+    if (b.matchedFieldsCount !== a.matchedFieldsCount) {
+      return b.matchedFieldsCount - a.matchedFieldsCount;
+    }
+    if (a.modelPriority !== b.modelPriority) {
+      return a.modelPriority - b.modelPriority;
+    }
+    return a.rulePriority - b.rulePriority;
+  });
+
+  const best = candidates[0];
+  if (!best) return null;
+  return {
+    analyticAccountId: best.analyticAccountId,
+    modelId: best.modelId,
+    ruleId: best.ruleId,
+    matchedFieldsCount: best.matchedFieldsCount,
+  };
 };

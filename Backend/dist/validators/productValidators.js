@@ -25,4 +25,9 @@ export const listProductSchema = Joi.object({
     params: Joi.object({}),
     query: Joi.object({ companyId: Joi.string().uuid().required() }),
 });
+export const listProductCategorySchema = Joi.object({
+    body: Joi.object({}),
+    params: Joi.object({}),
+    query: Joi.object({ companyId: Joi.string().uuid().required() }),
+});
 //# sourceMappingURL=productValidators.js.map

@@ -4,9 +4,10 @@ const ruleSchema = Joi.object({
     matchProductId: Joi.string().uuid().allow(null),
     matchCategoryId: Joi.string().uuid().allow(null),
     matchContactId: Joi.string().uuid().allow(null),
+    matchContactTagId: Joi.string().uuid().allow(null),
     assignAnalyticAccountId: Joi.string().uuid().required(),
     rulePriority: Joi.number().default(100),
-});
+}).or("matchProductId", "matchCategoryId", "matchContactId", "matchContactTagId");
 const modelBody = Joi.object({
     companyId: Joi.string().uuid().required(),
     name: Joi.string().required(),

@@ -45,6 +45,12 @@ export const listProducts = async (companyId) => {
         orderBy: { createdAt: "desc" },
     });
 };
+export const listProductCategories = async (companyId) => {
+    return prisma.productCategory.findMany({
+        where: { companyId },
+        orderBy: { name: "asc" },
+    });
+};
 export const getProduct = async (id) => {
     const product = await prisma.product.findUnique({ where: { id } });
     if (!product) {

@@ -39,6 +39,12 @@ export declare const listProducts: (companyId: string) => Promise<({
     costPrice: Prisma.Decimal;
     categoryId: string | null;
 })[]>;
+export declare const listProductCategories: (companyId: string) => Promise<{
+    id: string;
+    name: string;
+    companyId: string;
+    parentId: string | null;
+}[]>;
 export declare const getProduct: (id: string) => Promise<{
     id: string;
     createdAt: Date;

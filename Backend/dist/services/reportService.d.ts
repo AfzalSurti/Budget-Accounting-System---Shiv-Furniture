@@ -23,5 +23,7 @@ export declare const budgetTopOverUnder: (companyId: string, start: Date, end: D
 export declare const budgetTrend: (companyId: string, start: Date, end: Date) => Promise<{
     period: string;
     actualAmount: number;
+    budgetedAmount: number;
+    forecastAmount: number;
 }[]>;
 //# sourceMappingURL=reportService.d.ts.map

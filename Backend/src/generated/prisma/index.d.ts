@@ -24,6 +24,16 @@ export type Company = $Result.DefaultSelection<Prisma.$CompanyPayload>
  */
 export type Contact = $Result.DefaultSelection<Prisma.$ContactPayload>
 /**
+ * Model ContactTag
+ * 
+ */
+export type ContactTag = $Result.DefaultSelection<Prisma.$ContactTagPayload>
+/**
+ * Model ContactTagAssignment
+ * 
+ */
+export type ContactTagAssignment = $Result.DefaultSelection<Prisma.$ContactTagAssignmentPayload>
+/**
  * Model ProductCategory
  * 
  */
@@ -128,6 +138,16 @@ export type Payment = $Result.DefaultSelection<Prisma.$PaymentPayload>
  * 
  */
 export type PaymentAllocation = $Result.DefaultSelection<Prisma.$PaymentAllocationPayload>
+/**
+ * Model CustomerInvoicePayment
+ * 
+ */
+export type CustomerInvoicePayment = $Result.DefaultSelection<Prisma.$CustomerInvoicePaymentPayload>
+/**
+ * Model VendorBillPayment
+ * 
+ */
+export type VendorBillPayment = $Result.DefaultSelection<Prisma.$VendorBillPaymentPayload>
 /**
  * Model DocumentFile
  * 
@@ -476,6 +496,26 @@ export class PrismaClient<
   get contact(): Prisma.ContactDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.contactTag`: Exposes CRUD operations for the **ContactTag** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ContactTags
+    * const contactTags = await prisma.contactTag.findMany()
+    * ```
+    */
+  get contactTag(): Prisma.ContactTagDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.contactTagAssignment`: Exposes CRUD operations for the **ContactTagAssignment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ContactTagAssignments
+    * const contactTagAssignments = await prisma.contactTagAssignment.findMany()
+    * ```
+    */
+  get contactTagAssignment(): Prisma.ContactTagAssignmentDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.productCategory`: Exposes CRUD operations for the **ProductCategory** model.
     * Example usage:
     * ```ts
@@ -684,6 +724,26 @@ export class PrismaClient<
     * ```
     */
   get paymentAllocation(): Prisma.PaymentAllocationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.customerInvoicePayment`: Exposes CRUD operations for the **CustomerInvoicePayment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CustomerInvoicePayments
+    * const customerInvoicePayments = await prisma.customerInvoicePayment.findMany()
+    * ```
+    */
+  get customerInvoicePayment(): Prisma.CustomerInvoicePaymentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.vendorBillPayment`: Exposes CRUD operations for the **VendorBillPayment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VendorBillPayments
+    * const vendorBillPayments = await prisma.vendorBillPayment.findMany()
+    * ```
+    */
+  get vendorBillPayment(): Prisma.VendorBillPaymentDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.documentFile`: Exposes CRUD operations for the **DocumentFile** model.
@@ -1150,6 +1210,8 @@ export namespace Prisma {
   export const ModelName: {
     Company: 'Company',
     Contact: 'Contact',
+    ContactTag: 'ContactTag',
+    ContactTagAssignment: 'ContactTagAssignment',
     ProductCategory: 'ProductCategory',
     Product: 'Product',
     AnalyticAccount: 'AnalyticAccount',
@@ -1171,6 +1233,8 @@ export namespace Prisma {
     CustomerInvoiceLine: 'CustomerInvoiceLine',
     Payment: 'Payment',
     PaymentAllocation: 'PaymentAllocation',
+    CustomerInvoicePayment: 'CustomerInvoicePayment',
+    VendorBillPayment: 'VendorBillPayment',
     DocumentFile: 'DocumentFile',
     User: 'User',
     AuditLog: 'AuditLog'
@@ -1189,7 +1253,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "company" | "contact" | "productCategory" | "product" | "analyticAccount" | "gLAccount" | "journalEntry" | "journalLine" | "budget" | "budgetRevision" | "budgetLine" | "autoAnalyticModel" | "autoAnalyticRule" | "purchaseOrder" | "purchaseOrderLine" | "salesOrder" | "salesOrderLine" | "vendorBill" | "vendorBillLine" | "customerInvoice" | "customerInvoiceLine" | "payment" | "paymentAllocation" | "documentFile" | "user" | "auditLog"
+      modelProps: "company" | "contact" | "contactTag" | "contactTagAssignment" | "productCategory" | "product" | "analyticAccount" | "gLAccount" | "journalEntry" | "journalLine" | "budget" | "budgetRevision" | "budgetLine" | "autoAnalyticModel" | "autoAnalyticRule" | "purchaseOrder" | "purchaseOrderLine" | "salesOrder" | "salesOrderLine" | "vendorBill" | "vendorBillLine" | "customerInvoice" | "customerInvoiceLine" | "payment" | "paymentAllocation" | "customerInvoicePayment" | "vendorBillPayment" | "documentFile" | "user" | "auditLog"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1338,6 +1402,154 @@ export namespace Prisma {
           count: {
             args: Prisma.ContactCountArgs<ExtArgs>
             result: $Utils.Optional<ContactCountAggregateOutputType> | number
+          }
+        }
+      }
+      ContactTag: {
+        payload: Prisma.$ContactTagPayload<ExtArgs>
+        fields: Prisma.ContactTagFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ContactTagFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ContactTagFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagPayload>
+          }
+          findFirst: {
+            args: Prisma.ContactTagFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ContactTagFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagPayload>
+          }
+          findMany: {
+            args: Prisma.ContactTagFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagPayload>[]
+          }
+          create: {
+            args: Prisma.ContactTagCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagPayload>
+          }
+          createMany: {
+            args: Prisma.ContactTagCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ContactTagCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagPayload>[]
+          }
+          delete: {
+            args: Prisma.ContactTagDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagPayload>
+          }
+          update: {
+            args: Prisma.ContactTagUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagPayload>
+          }
+          deleteMany: {
+            args: Prisma.ContactTagDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ContactTagUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ContactTagUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagPayload>[]
+          }
+          upsert: {
+            args: Prisma.ContactTagUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagPayload>
+          }
+          aggregate: {
+            args: Prisma.ContactTagAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateContactTag>
+          }
+          groupBy: {
+            args: Prisma.ContactTagGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ContactTagGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ContactTagCountArgs<ExtArgs>
+            result: $Utils.Optional<ContactTagCountAggregateOutputType> | number
+          }
+        }
+      }
+      ContactTagAssignment: {
+        payload: Prisma.$ContactTagAssignmentPayload<ExtArgs>
+        fields: Prisma.ContactTagAssignmentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ContactTagAssignmentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagAssignmentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ContactTagAssignmentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagAssignmentPayload>
+          }
+          findFirst: {
+            args: Prisma.ContactTagAssignmentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagAssignmentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ContactTagAssignmentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagAssignmentPayload>
+          }
+          findMany: {
+            args: Prisma.ContactTagAssignmentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagAssignmentPayload>[]
+          }
+          create: {
+            args: Prisma.ContactTagAssignmentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagAssignmentPayload>
+          }
+          createMany: {
+            args: Prisma.ContactTagAssignmentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ContactTagAssignmentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagAssignmentPayload>[]
+          }
+          delete: {
+            args: Prisma.ContactTagAssignmentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagAssignmentPayload>
+          }
+          update: {
+            args: Prisma.ContactTagAssignmentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagAssignmentPayload>
+          }
+          deleteMany: {
+            args: Prisma.ContactTagAssignmentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ContactTagAssignmentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ContactTagAssignmentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagAssignmentPayload>[]
+          }
+          upsert: {
+            args: Prisma.ContactTagAssignmentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactTagAssignmentPayload>
+          }
+          aggregate: {
+            args: Prisma.ContactTagAssignmentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateContactTagAssignment>
+          }
+          groupBy: {
+            args: Prisma.ContactTagAssignmentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ContactTagAssignmentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ContactTagAssignmentCountArgs<ExtArgs>
+            result: $Utils.Optional<ContactTagAssignmentCountAggregateOutputType> | number
           }
         }
       }
@@ -2895,6 +3107,154 @@ export namespace Prisma {
           }
         }
       }
+      CustomerInvoicePayment: {
+        payload: Prisma.$CustomerInvoicePaymentPayload<ExtArgs>
+        fields: Prisma.CustomerInvoicePaymentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CustomerInvoicePaymentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerInvoicePaymentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CustomerInvoicePaymentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerInvoicePaymentPayload>
+          }
+          findFirst: {
+            args: Prisma.CustomerInvoicePaymentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerInvoicePaymentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CustomerInvoicePaymentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerInvoicePaymentPayload>
+          }
+          findMany: {
+            args: Prisma.CustomerInvoicePaymentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerInvoicePaymentPayload>[]
+          }
+          create: {
+            args: Prisma.CustomerInvoicePaymentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerInvoicePaymentPayload>
+          }
+          createMany: {
+            args: Prisma.CustomerInvoicePaymentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CustomerInvoicePaymentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerInvoicePaymentPayload>[]
+          }
+          delete: {
+            args: Prisma.CustomerInvoicePaymentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerInvoicePaymentPayload>
+          }
+          update: {
+            args: Prisma.CustomerInvoicePaymentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerInvoicePaymentPayload>
+          }
+          deleteMany: {
+            args: Prisma.CustomerInvoicePaymentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CustomerInvoicePaymentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CustomerInvoicePaymentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerInvoicePaymentPayload>[]
+          }
+          upsert: {
+            args: Prisma.CustomerInvoicePaymentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerInvoicePaymentPayload>
+          }
+          aggregate: {
+            args: Prisma.CustomerInvoicePaymentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCustomerInvoicePayment>
+          }
+          groupBy: {
+            args: Prisma.CustomerInvoicePaymentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CustomerInvoicePaymentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CustomerInvoicePaymentCountArgs<ExtArgs>
+            result: $Utils.Optional<CustomerInvoicePaymentCountAggregateOutputType> | number
+          }
+        }
+      }
+      VendorBillPayment: {
+        payload: Prisma.$VendorBillPaymentPayload<ExtArgs>
+        fields: Prisma.VendorBillPaymentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VendorBillPaymentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorBillPaymentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VendorBillPaymentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorBillPaymentPayload>
+          }
+          findFirst: {
+            args: Prisma.VendorBillPaymentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorBillPaymentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VendorBillPaymentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorBillPaymentPayload>
+          }
+          findMany: {
+            args: Prisma.VendorBillPaymentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorBillPaymentPayload>[]
+          }
+          create: {
+            args: Prisma.VendorBillPaymentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorBillPaymentPayload>
+          }
+          createMany: {
+            args: Prisma.VendorBillPaymentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VendorBillPaymentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorBillPaymentPayload>[]
+          }
+          delete: {
+            args: Prisma.VendorBillPaymentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorBillPaymentPayload>
+          }
+          update: {
+            args: Prisma.VendorBillPaymentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorBillPaymentPayload>
+          }
+          deleteMany: {
+            args: Prisma.VendorBillPaymentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VendorBillPaymentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.VendorBillPaymentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorBillPaymentPayload>[]
+          }
+          upsert: {
+            args: Prisma.VendorBillPaymentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorBillPaymentPayload>
+          }
+          aggregate: {
+            args: Prisma.VendorBillPaymentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVendorBillPayment>
+          }
+          groupBy: {
+            args: Prisma.VendorBillPaymentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VendorBillPaymentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VendorBillPaymentCountArgs<ExtArgs>
+            result: $Utils.Optional<VendorBillPaymentCountAggregateOutputType> | number
+          }
+        }
+      }
       DocumentFile: {
         payload: Prisma.$DocumentFilePayload<ExtArgs>
         fields: Prisma.DocumentFileFieldRefs
@@ -3227,6 +3587,8 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     company?: CompanyOmit
     contact?: ContactOmit
+    contactTag?: ContactTagOmit
+    contactTagAssignment?: ContactTagAssignmentOmit
     productCategory?: ProductCategoryOmit
     product?: ProductOmit
     analyticAccount?: AnalyticAccountOmit
@@ -3248,6 +3610,8 @@ export namespace Prisma {
     customerInvoiceLine?: CustomerInvoiceLineOmit
     payment?: PaymentOmit
     paymentAllocation?: PaymentAllocationOmit
+    customerInvoicePayment?: CustomerInvoicePaymentOmit
+    vendorBillPayment?: VendorBillPaymentOmit
     documentFile?: DocumentFileOmit
     user?: UserOmit
     auditLog?: AuditLogOmit
@@ -3332,6 +3696,7 @@ export namespace Prisma {
 
   export type CompanyCountOutputType = {
     contacts: number
+    contactTags: number
     productCategories: number
     products: number
     analyticAccounts: number
@@ -3349,6 +3714,7 @@ export namespace Prisma {
 
   export type CompanyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     contacts?: boolean | CompanyCountOutputTypeCountContactsArgs
+    contactTags?: boolean | CompanyCountOutputTypeCountContactTagsArgs
     productCategories?: boolean | CompanyCountOutputTypeCountProductCategoriesArgs
     products?: boolean | CompanyCountOutputTypeCountProductsArgs
     analyticAccounts?: boolean | CompanyCountOutputTypeCountAnalyticAccountsArgs
@@ -3380,6 +3746,13 @@ export namespace Prisma {
    */
   export type CompanyCountOutputTypeCountContactsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ContactWhereInput
+  }
+
+  /**
+   * CompanyCountOutputType without action
+   */
+  export type CompanyCountOutputTypeCountContactTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ContactTagWhereInput
   }
 
   /**
@@ -3486,6 +3859,7 @@ export namespace Prisma {
     payments: number
     journalLines: number
     autoAnalyticRules: number
+    contactTags: number
     users: number
   }
 
@@ -3497,6 +3871,7 @@ export namespace Prisma {
     payments?: boolean | ContactCountOutputTypeCountPaymentsArgs
     journalLines?: boolean | ContactCountOutputTypeCountJournalLinesArgs
     autoAnalyticRules?: boolean | ContactCountOutputTypeCountAutoAnalyticRulesArgs
+    contactTags?: boolean | ContactCountOutputTypeCountContactTagsArgs
     users?: boolean | ContactCountOutputTypeCountUsersArgs
   }
 
@@ -3563,8 +3938,55 @@ export namespace Prisma {
   /**
    * ContactCountOutputType without action
    */
+  export type ContactCountOutputTypeCountContactTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ContactTagAssignmentWhereInput
+  }
+
+  /**
+   * ContactCountOutputType without action
+   */
   export type ContactCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserWhereInput
+  }
+
+
+  /**
+   * Count Type ContactTagCountOutputType
+   */
+
+  export type ContactTagCountOutputType = {
+    contacts: number
+    autoAnalyticRules: number
+  }
+
+  export type ContactTagCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    contacts?: boolean | ContactTagCountOutputTypeCountContactsArgs
+    autoAnalyticRules?: boolean | ContactTagCountOutputTypeCountAutoAnalyticRulesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ContactTagCountOutputType without action
+   */
+  export type ContactTagCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTagCountOutputType
+     */
+    select?: ContactTagCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ContactTagCountOutputType without action
+   */
+  export type ContactTagCountOutputTypeCountContactsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ContactTagAssignmentWhereInput
+  }
+
+  /**
+   * ContactTagCountOutputType without action
+   */
+  export type ContactTagCountOutputTypeCountAutoAnalyticRulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutoAnalyticRuleWhereInput
   }
 
 
@@ -3944,10 +4366,18 @@ export namespace Prisma {
 
   export type AutoAnalyticModelCountOutputType = {
     rules: number
+    purchaseOrderLines: number
+    salesOrderLines: number
+    vendorBillLines: number
+    customerInvoiceLines: number
   }
 
   export type AutoAnalyticModelCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     rules?: boolean | AutoAnalyticModelCountOutputTypeCountRulesArgs
+    purchaseOrderLines?: boolean | AutoAnalyticModelCountOutputTypeCountPurchaseOrderLinesArgs
+    salesOrderLines?: boolean | AutoAnalyticModelCountOutputTypeCountSalesOrderLinesArgs
+    vendorBillLines?: boolean | AutoAnalyticModelCountOutputTypeCountVendorBillLinesArgs
+    customerInvoiceLines?: boolean | AutoAnalyticModelCountOutputTypeCountCustomerInvoiceLinesArgs
   }
 
   // Custom InputTypes
@@ -3966,6 +4396,92 @@ export namespace Prisma {
    */
   export type AutoAnalyticModelCountOutputTypeCountRulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AutoAnalyticRuleWhereInput
+  }
+
+  /**
+   * AutoAnalyticModelCountOutputType without action
+   */
+  export type AutoAnalyticModelCountOutputTypeCountPurchaseOrderLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PurchaseOrderLineWhereInput
+  }
+
+  /**
+   * AutoAnalyticModelCountOutputType without action
+   */
+  export type AutoAnalyticModelCountOutputTypeCountSalesOrderLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SalesOrderLineWhereInput
+  }
+
+  /**
+   * AutoAnalyticModelCountOutputType without action
+   */
+  export type AutoAnalyticModelCountOutputTypeCountVendorBillLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VendorBillLineWhereInput
+  }
+
+  /**
+   * AutoAnalyticModelCountOutputType without action
+   */
+  export type AutoAnalyticModelCountOutputTypeCountCustomerInvoiceLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CustomerInvoiceLineWhereInput
+  }
+
+
+  /**
+   * Count Type AutoAnalyticRuleCountOutputType
+   */
+
+  export type AutoAnalyticRuleCountOutputType = {
+    purchaseOrderLines: number
+    salesOrderLines: number
+    vendorBillLines: number
+    customerInvoiceLines: number
+  }
+
+  export type AutoAnalyticRuleCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    purchaseOrderLines?: boolean | AutoAnalyticRuleCountOutputTypeCountPurchaseOrderLinesArgs
+    salesOrderLines?: boolean | AutoAnalyticRuleCountOutputTypeCountSalesOrderLinesArgs
+    vendorBillLines?: boolean | AutoAnalyticRuleCountOutputTypeCountVendorBillLinesArgs
+    customerInvoiceLines?: boolean | AutoAnalyticRuleCountOutputTypeCountCustomerInvoiceLinesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AutoAnalyticRuleCountOutputType without action
+   */
+  export type AutoAnalyticRuleCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutoAnalyticRuleCountOutputType
+     */
+    select?: AutoAnalyticRuleCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AutoAnalyticRuleCountOutputType without action
+   */
+  export type AutoAnalyticRuleCountOutputTypeCountPurchaseOrderLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PurchaseOrderLineWhereInput
+  }
+
+  /**
+   * AutoAnalyticRuleCountOutputType without action
+   */
+  export type AutoAnalyticRuleCountOutputTypeCountSalesOrderLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SalesOrderLineWhereInput
+  }
+
+  /**
+   * AutoAnalyticRuleCountOutputType without action
+   */
+  export type AutoAnalyticRuleCountOutputTypeCountVendorBillLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VendorBillLineWhereInput
+  }
+
+  /**
+   * AutoAnalyticRuleCountOutputType without action
+   */
+  export type AutoAnalyticRuleCountOutputTypeCountCustomerInvoiceLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CustomerInvoiceLineWhereInput
   }
 
 
@@ -4055,10 +4571,12 @@ export namespace Prisma {
 
   export type VendorBillCountOutputType = {
     lines: number
+    payments: number
   }
 
   export type VendorBillCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lines?: boolean | VendorBillCountOutputTypeCountLinesArgs
+    payments?: boolean | VendorBillCountOutputTypeCountPaymentsArgs
   }
 
   // Custom InputTypes
@@ -4079,6 +4597,13 @@ export namespace Prisma {
     where?: VendorBillLineWhereInput
   }
 
+  /**
+   * VendorBillCountOutputType without action
+   */
+  export type VendorBillCountOutputTypeCountPaymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VendorBillPaymentWhereInput
+  }
+
 
   /**
    * Count Type CustomerInvoiceCountOutputType
@@ -4086,10 +4611,12 @@ export namespace Prisma {
 
   export type CustomerInvoiceCountOutputType = {
     lines: number
+    payments: number
   }
 
   export type CustomerInvoiceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lines?: boolean | CustomerInvoiceCountOutputTypeCountLinesArgs
+    payments?: boolean | CustomerInvoiceCountOutputTypeCountPaymentsArgs
   }
 
   // Custom InputTypes
@@ -4110,6 +4637,13 @@ export namespace Prisma {
     where?: CustomerInvoiceLineWhereInput
   }
 
+  /**
+   * CustomerInvoiceCountOutputType without action
+   */
+  export type CustomerInvoiceCountOutputTypeCountPaymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CustomerInvoicePaymentWhereInput
+  }
+
 
   /**
    * Count Type PaymentCountOutputType
@@ -4117,10 +4651,14 @@ export namespace Prisma {
 
   export type PaymentCountOutputType = {
     allocations: number
+    invoicePayments: number
+    billPayments: number
   }
 
   export type PaymentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     allocations?: boolean | PaymentCountOutputTypeCountAllocationsArgs
+    invoicePayments?: boolean | PaymentCountOutputTypeCountInvoicePaymentsArgs
+    billPayments?: boolean | PaymentCountOutputTypeCountBillPaymentsArgs
   }
 
   // Custom InputTypes
@@ -4139,6 +4677,20 @@ export namespace Prisma {
    */
   export type PaymentCountOutputTypeCountAllocationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PaymentAllocationWhereInput
+  }
+
+  /**
+   * PaymentCountOutputType without action
+   */
+  export type PaymentCountOutputTypeCountInvoicePaymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CustomerInvoicePaymentWhereInput
+  }
+
+  /**
+   * PaymentCountOutputType without action
+   */
+  export type PaymentCountOutputTypeCountBillPaymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VendorBillPaymentWhereInput
   }
 
 
@@ -4326,6 +4878,7 @@ export namespace Prisma {
     name?: boolean
     createdAt?: boolean
     contacts?: boolean | Company$contactsArgs<ExtArgs>
+    contactTags?: boolean | Company$contactTagsArgs<ExtArgs>
     productCategories?: boolean | Company$productCategoriesArgs<ExtArgs>
     products?: boolean | Company$productsArgs<ExtArgs>
     analyticAccounts?: boolean | Company$analyticAccountsArgs<ExtArgs>
@@ -4363,6 +4916,7 @@ export namespace Prisma {
   export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "createdAt", ExtArgs["result"]["company"]>
   export type CompanyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     contacts?: boolean | Company$contactsArgs<ExtArgs>
+    contactTags?: boolean | Company$contactTagsArgs<ExtArgs>
     productCategories?: boolean | Company$productCategoriesArgs<ExtArgs>
     products?: boolean | Company$productsArgs<ExtArgs>
     analyticAccounts?: boolean | Company$analyticAccountsArgs<ExtArgs>
@@ -4385,6 +4939,7 @@ export namespace Prisma {
     name: "Company"
     objects: {
       contacts: Prisma.$ContactPayload<ExtArgs>[]
+      contactTags: Prisma.$ContactTagPayload<ExtArgs>[]
       productCategories: Prisma.$ProductCategoryPayload<ExtArgs>[]
       products: Prisma.$ProductPayload<ExtArgs>[]
       analyticAccounts: Prisma.$AnalyticAccountPayload<ExtArgs>[]
@@ -4798,6 +5353,7 @@ export namespace Prisma {
   export interface Prisma__CompanyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     contacts<T extends Company$contactsArgs<ExtArgs> = {}>(args?: Subset<T, Company$contactsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    contactTags<T extends Company$contactTagsArgs<ExtArgs> = {}>(args?: Subset<T, Company$contactTagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     productCategories<T extends Company$productCategoriesArgs<ExtArgs> = {}>(args?: Subset<T, Company$productCategoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     products<T extends Company$productsArgs<ExtArgs> = {}>(args?: Subset<T, Company$productsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     analyticAccounts<T extends Company$analyticAccountsArgs<ExtArgs> = {}>(args?: Subset<T, Company$analyticAccountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnalyticAccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5252,6 +5808,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ContactScalarFieldEnum | ContactScalarFieldEnum[]
+  }
+
+  /**
+   * Company.contactTags
+   */
+  export type Company$contactTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTag
+     */
+    select?: ContactTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTag
+     */
+    omit?: ContactTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagInclude<ExtArgs> | null
+    where?: ContactTagWhereInput
+    orderBy?: ContactTagOrderByWithRelationInput | ContactTagOrderByWithRelationInput[]
+    cursor?: ContactTagWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ContactTagScalarFieldEnum | ContactTagScalarFieldEnum[]
   }
 
   /**
@@ -5821,6 +6401,7 @@ export namespace Prisma {
     payments?: boolean | Contact$paymentsArgs<ExtArgs>
     journalLines?: boolean | Contact$journalLinesArgs<ExtArgs>
     autoAnalyticRules?: boolean | Contact$autoAnalyticRulesArgs<ExtArgs>
+    contactTags?: boolean | Contact$contactTagsArgs<ExtArgs>
     users?: boolean | Contact$usersArgs<ExtArgs>
     _count?: boolean | ContactCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["contact"]>
@@ -5888,6 +6469,7 @@ export namespace Prisma {
     payments?: boolean | Contact$paymentsArgs<ExtArgs>
     journalLines?: boolean | Contact$journalLinesArgs<ExtArgs>
     autoAnalyticRules?: boolean | Contact$autoAnalyticRulesArgs<ExtArgs>
+    contactTags?: boolean | Contact$contactTagsArgs<ExtArgs>
     users?: boolean | Contact$usersArgs<ExtArgs>
     _count?: boolean | ContactCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -5909,6 +6491,7 @@ export namespace Prisma {
       payments: Prisma.$PaymentPayload<ExtArgs>[]
       journalLines: Prisma.$JournalLinePayload<ExtArgs>[]
       autoAnalyticRules: Prisma.$AutoAnalyticRulePayload<ExtArgs>[]
+      contactTags: Prisma.$ContactTagAssignmentPayload<ExtArgs>[]
       users: Prisma.$UserPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -6328,6 +6911,7 @@ export namespace Prisma {
     payments<T extends Contact$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, Contact$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     journalLines<T extends Contact$journalLinesArgs<ExtArgs> = {}>(args?: Subset<T, Contact$journalLinesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JournalLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     autoAnalyticRules<T extends Contact$autoAnalyticRulesArgs<ExtArgs> = {}>(args?: Subset<T, Contact$autoAnalyticRulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutoAnalyticRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    contactTags<T extends Contact$contactTagsArgs<ExtArgs> = {}>(args?: Subset<T, Contact$contactTagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactTagAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     users<T extends Contact$usersArgs<ExtArgs> = {}>(args?: Subset<T, Contact$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -6936,6 +7520,30 @@ export namespace Prisma {
   }
 
   /**
+   * Contact.contactTags
+   */
+  export type Contact$contactTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTagAssignment
+     */
+    select?: ContactTagAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTagAssignment
+     */
+    omit?: ContactTagAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagAssignmentInclude<ExtArgs> | null
+    where?: ContactTagAssignmentWhereInput
+    orderBy?: ContactTagAssignmentOrderByWithRelationInput | ContactTagAssignmentOrderByWithRelationInput[]
+    cursor?: ContactTagAssignmentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ContactTagAssignmentScalarFieldEnum | ContactTagAssignmentScalarFieldEnum[]
+  }
+
+  /**
    * Contact.users
    */
   export type Contact$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6975,6 +7583,2162 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ContactInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ContactTag
+   */
+
+  export type AggregateContactTag = {
+    _count: ContactTagCountAggregateOutputType | null
+    _min: ContactTagMinAggregateOutputType | null
+    _max: ContactTagMaxAggregateOutputType | null
+  }
+
+  export type ContactTagMinAggregateOutputType = {
+    id: string | null
+    companyId: string | null
+    name: string | null
+    createdAt: Date | null
+  }
+
+  export type ContactTagMaxAggregateOutputType = {
+    id: string | null
+    companyId: string | null
+    name: string | null
+    createdAt: Date | null
+  }
+
+  export type ContactTagCountAggregateOutputType = {
+    id: number
+    companyId: number
+    name: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ContactTagMinAggregateInputType = {
+    id?: true
+    companyId?: true
+    name?: true
+    createdAt?: true
+  }
+
+  export type ContactTagMaxAggregateInputType = {
+    id?: true
+    companyId?: true
+    name?: true
+    createdAt?: true
+  }
+
+  export type ContactTagCountAggregateInputType = {
+    id?: true
+    companyId?: true
+    name?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ContactTagAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ContactTag to aggregate.
+     */
+    where?: ContactTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContactTags to fetch.
+     */
+    orderBy?: ContactTagOrderByWithRelationInput | ContactTagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ContactTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContactTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContactTags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ContactTags
+    **/
+    _count?: true | ContactTagCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ContactTagMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ContactTagMaxAggregateInputType
+  }
+
+  export type GetContactTagAggregateType<T extends ContactTagAggregateArgs> = {
+        [P in keyof T & keyof AggregateContactTag]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateContactTag[P]>
+      : GetScalarType<T[P], AggregateContactTag[P]>
+  }
+
+
+
+
+  export type ContactTagGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ContactTagWhereInput
+    orderBy?: ContactTagOrderByWithAggregationInput | ContactTagOrderByWithAggregationInput[]
+    by: ContactTagScalarFieldEnum[] | ContactTagScalarFieldEnum
+    having?: ContactTagScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ContactTagCountAggregateInputType | true
+    _min?: ContactTagMinAggregateInputType
+    _max?: ContactTagMaxAggregateInputType
+  }
+
+  export type ContactTagGroupByOutputType = {
+    id: string
+    companyId: string
+    name: string
+    createdAt: Date
+    _count: ContactTagCountAggregateOutputType | null
+    _min: ContactTagMinAggregateOutputType | null
+    _max: ContactTagMaxAggregateOutputType | null
+  }
+
+  type GetContactTagGroupByPayload<T extends ContactTagGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ContactTagGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ContactTagGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ContactTagGroupByOutputType[P]>
+            : GetScalarType<T[P], ContactTagGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ContactTagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    companyId?: boolean
+    name?: boolean
+    createdAt?: boolean
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+    contacts?: boolean | ContactTag$contactsArgs<ExtArgs>
+    autoAnalyticRules?: boolean | ContactTag$autoAnalyticRulesArgs<ExtArgs>
+    _count?: boolean | ContactTagCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["contactTag"]>
+
+  export type ContactTagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    companyId?: boolean
+    name?: boolean
+    createdAt?: boolean
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["contactTag"]>
+
+  export type ContactTagSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    companyId?: boolean
+    name?: boolean
+    createdAt?: boolean
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["contactTag"]>
+
+  export type ContactTagSelectScalar = {
+    id?: boolean
+    companyId?: boolean
+    name?: boolean
+    createdAt?: boolean
+  }
+
+  export type ContactTagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "companyId" | "name" | "createdAt", ExtArgs["result"]["contactTag"]>
+  export type ContactTagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+    contacts?: boolean | ContactTag$contactsArgs<ExtArgs>
+    autoAnalyticRules?: boolean | ContactTag$autoAnalyticRulesArgs<ExtArgs>
+    _count?: boolean | ContactTagCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ContactTagIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+  }
+  export type ContactTagIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+  }
+
+  export type $ContactTagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ContactTag"
+    objects: {
+      company: Prisma.$CompanyPayload<ExtArgs>
+      contacts: Prisma.$ContactTagAssignmentPayload<ExtArgs>[]
+      autoAnalyticRules: Prisma.$AutoAnalyticRulePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      companyId: string
+      name: string
+      createdAt: Date
+    }, ExtArgs["result"]["contactTag"]>
+    composites: {}
+  }
+
+  type ContactTagGetPayload<S extends boolean | null | undefined | ContactTagDefaultArgs> = $Result.GetResult<Prisma.$ContactTagPayload, S>
+
+  type ContactTagCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ContactTagFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ContactTagCountAggregateInputType | true
+    }
+
+  export interface ContactTagDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ContactTag'], meta: { name: 'ContactTag' } }
+    /**
+     * Find zero or one ContactTag that matches the filter.
+     * @param {ContactTagFindUniqueArgs} args - Arguments to find a ContactTag
+     * @example
+     * // Get one ContactTag
+     * const contactTag = await prisma.contactTag.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ContactTagFindUniqueArgs>(args: SelectSubset<T, ContactTagFindUniqueArgs<ExtArgs>>): Prisma__ContactTagClient<$Result.GetResult<Prisma.$ContactTagPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ContactTag that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ContactTagFindUniqueOrThrowArgs} args - Arguments to find a ContactTag
+     * @example
+     * // Get one ContactTag
+     * const contactTag = await prisma.contactTag.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ContactTagFindUniqueOrThrowArgs>(args: SelectSubset<T, ContactTagFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ContactTagClient<$Result.GetResult<Prisma.$ContactTagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ContactTag that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactTagFindFirstArgs} args - Arguments to find a ContactTag
+     * @example
+     * // Get one ContactTag
+     * const contactTag = await prisma.contactTag.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ContactTagFindFirstArgs>(args?: SelectSubset<T, ContactTagFindFirstArgs<ExtArgs>>): Prisma__ContactTagClient<$Result.GetResult<Prisma.$ContactTagPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ContactTag that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactTagFindFirstOrThrowArgs} args - Arguments to find a ContactTag
+     * @example
+     * // Get one ContactTag
+     * const contactTag = await prisma.contactTag.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ContactTagFindFirstOrThrowArgs>(args?: SelectSubset<T, ContactTagFindFirstOrThrowArgs<ExtArgs>>): Prisma__ContactTagClient<$Result.GetResult<Prisma.$ContactTagPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ContactTags that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactTagFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ContactTags
+     * const contactTags = await prisma.contactTag.findMany()
+     * 
+     * // Get first 10 ContactTags
+     * const contactTags = await prisma.contactTag.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const contactTagWithIdOnly = await prisma.contactTag.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ContactTagFindManyArgs>(args?: SelectSubset<T, ContactTagFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ContactTag.
+     * @param {ContactTagCreateArgs} args - Arguments to create a ContactTag.
+     * @example
+     * // Create one ContactTag
+     * const ContactTag = await prisma.contactTag.create({
+     *   data: {
+     *     // ... data to create a ContactTag
+     *   }
+     * })
+     * 
+     */
+    create<T extends ContactTagCreateArgs>(args: SelectSubset<T, ContactTagCreateArgs<ExtArgs>>): Prisma__ContactTagClient<$Result.GetResult<Prisma.$ContactTagPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ContactTags.
+     * @param {ContactTagCreateManyArgs} args - Arguments to create many ContactTags.
+     * @example
+     * // Create many ContactTags
+     * const contactTag = await prisma.contactTag.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ContactTagCreateManyArgs>(args?: SelectSubset<T, ContactTagCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ContactTags and returns the data saved in the database.
+     * @param {ContactTagCreateManyAndReturnArgs} args - Arguments to create many ContactTags.
+     * @example
+     * // Create many ContactTags
+     * const contactTag = await prisma.contactTag.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ContactTags and only return the `id`
+     * const contactTagWithIdOnly = await prisma.contactTag.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ContactTagCreateManyAndReturnArgs>(args?: SelectSubset<T, ContactTagCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactTagPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ContactTag.
+     * @param {ContactTagDeleteArgs} args - Arguments to delete one ContactTag.
+     * @example
+     * // Delete one ContactTag
+     * const ContactTag = await prisma.contactTag.delete({
+     *   where: {
+     *     // ... filter to delete one ContactTag
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ContactTagDeleteArgs>(args: SelectSubset<T, ContactTagDeleteArgs<ExtArgs>>): Prisma__ContactTagClient<$Result.GetResult<Prisma.$ContactTagPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ContactTag.
+     * @param {ContactTagUpdateArgs} args - Arguments to update one ContactTag.
+     * @example
+     * // Update one ContactTag
+     * const contactTag = await prisma.contactTag.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ContactTagUpdateArgs>(args: SelectSubset<T, ContactTagUpdateArgs<ExtArgs>>): Prisma__ContactTagClient<$Result.GetResult<Prisma.$ContactTagPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ContactTags.
+     * @param {ContactTagDeleteManyArgs} args - Arguments to filter ContactTags to delete.
+     * @example
+     * // Delete a few ContactTags
+     * const { count } = await prisma.contactTag.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ContactTagDeleteManyArgs>(args?: SelectSubset<T, ContactTagDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ContactTags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactTagUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ContactTags
+     * const contactTag = await prisma.contactTag.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ContactTagUpdateManyArgs>(args: SelectSubset<T, ContactTagUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ContactTags and returns the data updated in the database.
+     * @param {ContactTagUpdateManyAndReturnArgs} args - Arguments to update many ContactTags.
+     * @example
+     * // Update many ContactTags
+     * const contactTag = await prisma.contactTag.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ContactTags and only return the `id`
+     * const contactTagWithIdOnly = await prisma.contactTag.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ContactTagUpdateManyAndReturnArgs>(args: SelectSubset<T, ContactTagUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactTagPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ContactTag.
+     * @param {ContactTagUpsertArgs} args - Arguments to update or create a ContactTag.
+     * @example
+     * // Update or create a ContactTag
+     * const contactTag = await prisma.contactTag.upsert({
+     *   create: {
+     *     // ... data to create a ContactTag
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ContactTag we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ContactTagUpsertArgs>(args: SelectSubset<T, ContactTagUpsertArgs<ExtArgs>>): Prisma__ContactTagClient<$Result.GetResult<Prisma.$ContactTagPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ContactTags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactTagCountArgs} args - Arguments to filter ContactTags to count.
+     * @example
+     * // Count the number of ContactTags
+     * const count = await prisma.contactTag.count({
+     *   where: {
+     *     // ... the filter for the ContactTags we want to count
+     *   }
+     * })
+    **/
+    count<T extends ContactTagCountArgs>(
+      args?: Subset<T, ContactTagCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ContactTagCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ContactTag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactTagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ContactTagAggregateArgs>(args: Subset<T, ContactTagAggregateArgs>): Prisma.PrismaPromise<GetContactTagAggregateType<T>>
+
+    /**
+     * Group by ContactTag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactTagGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ContactTagGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ContactTagGroupByArgs['orderBy'] }
+        : { orderBy?: ContactTagGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ContactTagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetContactTagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ContactTag model
+   */
+  readonly fields: ContactTagFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ContactTag.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ContactTagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    company<T extends CompanyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CompanyDefaultArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    contacts<T extends ContactTag$contactsArgs<ExtArgs> = {}>(args?: Subset<T, ContactTag$contactsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactTagAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    autoAnalyticRules<T extends ContactTag$autoAnalyticRulesArgs<ExtArgs> = {}>(args?: Subset<T, ContactTag$autoAnalyticRulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutoAnalyticRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ContactTag model
+   */
+  interface ContactTagFieldRefs {
+    readonly id: FieldRef<"ContactTag", 'String'>
+    readonly companyId: FieldRef<"ContactTag", 'String'>
+    readonly name: FieldRef<"ContactTag", 'String'>
+    readonly createdAt: FieldRef<"ContactTag", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ContactTag findUnique
+   */
+  export type ContactTagFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTag
+     */
+    select?: ContactTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTag
+     */
+    omit?: ContactTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagInclude<ExtArgs> | null
+    /**
+     * Filter, which ContactTag to fetch.
+     */
+    where: ContactTagWhereUniqueInput
+  }
+
+  /**
+   * ContactTag findUniqueOrThrow
+   */
+  export type ContactTagFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTag
+     */
+    select?: ContactTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTag
+     */
+    omit?: ContactTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagInclude<ExtArgs> | null
+    /**
+     * Filter, which ContactTag to fetch.
+     */
+    where: ContactTagWhereUniqueInput
+  }
+
+  /**
+   * ContactTag findFirst
+   */
+  export type ContactTagFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTag
+     */
+    select?: ContactTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTag
+     */
+    omit?: ContactTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagInclude<ExtArgs> | null
+    /**
+     * Filter, which ContactTag to fetch.
+     */
+    where?: ContactTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContactTags to fetch.
+     */
+    orderBy?: ContactTagOrderByWithRelationInput | ContactTagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ContactTags.
+     */
+    cursor?: ContactTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContactTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContactTags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ContactTags.
+     */
+    distinct?: ContactTagScalarFieldEnum | ContactTagScalarFieldEnum[]
+  }
+
+  /**
+   * ContactTag findFirstOrThrow
+   */
+  export type ContactTagFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTag
+     */
+    select?: ContactTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTag
+     */
+    omit?: ContactTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagInclude<ExtArgs> | null
+    /**
+     * Filter, which ContactTag to fetch.
+     */
+    where?: ContactTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContactTags to fetch.
+     */
+    orderBy?: ContactTagOrderByWithRelationInput | ContactTagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ContactTags.
+     */
+    cursor?: ContactTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContactTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContactTags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ContactTags.
+     */
+    distinct?: ContactTagScalarFieldEnum | ContactTagScalarFieldEnum[]
+  }
+
+  /**
+   * ContactTag findMany
+   */
+  export type ContactTagFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTag
+     */
+    select?: ContactTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTag
+     */
+    omit?: ContactTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagInclude<ExtArgs> | null
+    /**
+     * Filter, which ContactTags to fetch.
+     */
+    where?: ContactTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContactTags to fetch.
+     */
+    orderBy?: ContactTagOrderByWithRelationInput | ContactTagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ContactTags.
+     */
+    cursor?: ContactTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContactTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContactTags.
+     */
+    skip?: number
+    distinct?: ContactTagScalarFieldEnum | ContactTagScalarFieldEnum[]
+  }
+
+  /**
+   * ContactTag create
+   */
+  export type ContactTagCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTag
+     */
+    select?: ContactTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTag
+     */
+    omit?: ContactTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ContactTag.
+     */
+    data: XOR<ContactTagCreateInput, ContactTagUncheckedCreateInput>
+  }
+
+  /**
+   * ContactTag createMany
+   */
+  export type ContactTagCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ContactTags.
+     */
+    data: ContactTagCreateManyInput | ContactTagCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ContactTag createManyAndReturn
+   */
+  export type ContactTagCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTag
+     */
+    select?: ContactTagSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTag
+     */
+    omit?: ContactTagOmit<ExtArgs> | null
+    /**
+     * The data used to create many ContactTags.
+     */
+    data: ContactTagCreateManyInput | ContactTagCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ContactTag update
+   */
+  export type ContactTagUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTag
+     */
+    select?: ContactTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTag
+     */
+    omit?: ContactTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ContactTag.
+     */
+    data: XOR<ContactTagUpdateInput, ContactTagUncheckedUpdateInput>
+    /**
+     * Choose, which ContactTag to update.
+     */
+    where: ContactTagWhereUniqueInput
+  }
+
+  /**
+   * ContactTag updateMany
+   */
+  export type ContactTagUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ContactTags.
+     */
+    data: XOR<ContactTagUpdateManyMutationInput, ContactTagUncheckedUpdateManyInput>
+    /**
+     * Filter which ContactTags to update
+     */
+    where?: ContactTagWhereInput
+    /**
+     * Limit how many ContactTags to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ContactTag updateManyAndReturn
+   */
+  export type ContactTagUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTag
+     */
+    select?: ContactTagSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTag
+     */
+    omit?: ContactTagOmit<ExtArgs> | null
+    /**
+     * The data used to update ContactTags.
+     */
+    data: XOR<ContactTagUpdateManyMutationInput, ContactTagUncheckedUpdateManyInput>
+    /**
+     * Filter which ContactTags to update
+     */
+    where?: ContactTagWhereInput
+    /**
+     * Limit how many ContactTags to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ContactTag upsert
+   */
+  export type ContactTagUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTag
+     */
+    select?: ContactTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTag
+     */
+    omit?: ContactTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ContactTag to update in case it exists.
+     */
+    where: ContactTagWhereUniqueInput
+    /**
+     * In case the ContactTag found by the `where` argument doesn't exist, create a new ContactTag with this data.
+     */
+    create: XOR<ContactTagCreateInput, ContactTagUncheckedCreateInput>
+    /**
+     * In case the ContactTag was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ContactTagUpdateInput, ContactTagUncheckedUpdateInput>
+  }
+
+  /**
+   * ContactTag delete
+   */
+  export type ContactTagDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTag
+     */
+    select?: ContactTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTag
+     */
+    omit?: ContactTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagInclude<ExtArgs> | null
+    /**
+     * Filter which ContactTag to delete.
+     */
+    where: ContactTagWhereUniqueInput
+  }
+
+  /**
+   * ContactTag deleteMany
+   */
+  export type ContactTagDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ContactTags to delete
+     */
+    where?: ContactTagWhereInput
+    /**
+     * Limit how many ContactTags to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ContactTag.contacts
+   */
+  export type ContactTag$contactsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTagAssignment
+     */
+    select?: ContactTagAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTagAssignment
+     */
+    omit?: ContactTagAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagAssignmentInclude<ExtArgs> | null
+    where?: ContactTagAssignmentWhereInput
+    orderBy?: ContactTagAssignmentOrderByWithRelationInput | ContactTagAssignmentOrderByWithRelationInput[]
+    cursor?: ContactTagAssignmentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ContactTagAssignmentScalarFieldEnum | ContactTagAssignmentScalarFieldEnum[]
+  }
+
+  /**
+   * ContactTag.autoAnalyticRules
+   */
+  export type ContactTag$autoAnalyticRulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutoAnalyticRule
+     */
+    select?: AutoAnalyticRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutoAnalyticRule
+     */
+    omit?: AutoAnalyticRuleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutoAnalyticRuleInclude<ExtArgs> | null
+    where?: AutoAnalyticRuleWhereInput
+    orderBy?: AutoAnalyticRuleOrderByWithRelationInput | AutoAnalyticRuleOrderByWithRelationInput[]
+    cursor?: AutoAnalyticRuleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AutoAnalyticRuleScalarFieldEnum | AutoAnalyticRuleScalarFieldEnum[]
+  }
+
+  /**
+   * ContactTag without action
+   */
+  export type ContactTagDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTag
+     */
+    select?: ContactTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTag
+     */
+    omit?: ContactTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ContactTagAssignment
+   */
+
+  export type AggregateContactTagAssignment = {
+    _count: ContactTagAssignmentCountAggregateOutputType | null
+    _min: ContactTagAssignmentMinAggregateOutputType | null
+    _max: ContactTagAssignmentMaxAggregateOutputType | null
+  }
+
+  export type ContactTagAssignmentMinAggregateOutputType = {
+    id: string | null
+    contactId: string | null
+    tagId: string | null
+    createdAt: Date | null
+  }
+
+  export type ContactTagAssignmentMaxAggregateOutputType = {
+    id: string | null
+    contactId: string | null
+    tagId: string | null
+    createdAt: Date | null
+  }
+
+  export type ContactTagAssignmentCountAggregateOutputType = {
+    id: number
+    contactId: number
+    tagId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ContactTagAssignmentMinAggregateInputType = {
+    id?: true
+    contactId?: true
+    tagId?: true
+    createdAt?: true
+  }
+
+  export type ContactTagAssignmentMaxAggregateInputType = {
+    id?: true
+    contactId?: true
+    tagId?: true
+    createdAt?: true
+  }
+
+  export type ContactTagAssignmentCountAggregateInputType = {
+    id?: true
+    contactId?: true
+    tagId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ContactTagAssignmentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ContactTagAssignment to aggregate.
+     */
+    where?: ContactTagAssignmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContactTagAssignments to fetch.
+     */
+    orderBy?: ContactTagAssignmentOrderByWithRelationInput | ContactTagAssignmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ContactTagAssignmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContactTagAssignments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContactTagAssignments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ContactTagAssignments
+    **/
+    _count?: true | ContactTagAssignmentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ContactTagAssignmentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ContactTagAssignmentMaxAggregateInputType
+  }
+
+  export type GetContactTagAssignmentAggregateType<T extends ContactTagAssignmentAggregateArgs> = {
+        [P in keyof T & keyof AggregateContactTagAssignment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateContactTagAssignment[P]>
+      : GetScalarType<T[P], AggregateContactTagAssignment[P]>
+  }
+
+
+
+
+  export type ContactTagAssignmentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ContactTagAssignmentWhereInput
+    orderBy?: ContactTagAssignmentOrderByWithAggregationInput | ContactTagAssignmentOrderByWithAggregationInput[]
+    by: ContactTagAssignmentScalarFieldEnum[] | ContactTagAssignmentScalarFieldEnum
+    having?: ContactTagAssignmentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ContactTagAssignmentCountAggregateInputType | true
+    _min?: ContactTagAssignmentMinAggregateInputType
+    _max?: ContactTagAssignmentMaxAggregateInputType
+  }
+
+  export type ContactTagAssignmentGroupByOutputType = {
+    id: string
+    contactId: string
+    tagId: string
+    createdAt: Date
+    _count: ContactTagAssignmentCountAggregateOutputType | null
+    _min: ContactTagAssignmentMinAggregateOutputType | null
+    _max: ContactTagAssignmentMaxAggregateOutputType | null
+  }
+
+  type GetContactTagAssignmentGroupByPayload<T extends ContactTagAssignmentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ContactTagAssignmentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ContactTagAssignmentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ContactTagAssignmentGroupByOutputType[P]>
+            : GetScalarType<T[P], ContactTagAssignmentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ContactTagAssignmentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    contactId?: boolean
+    tagId?: boolean
+    createdAt?: boolean
+    contact?: boolean | ContactDefaultArgs<ExtArgs>
+    tag?: boolean | ContactTagDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["contactTagAssignment"]>
+
+  export type ContactTagAssignmentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    contactId?: boolean
+    tagId?: boolean
+    createdAt?: boolean
+    contact?: boolean | ContactDefaultArgs<ExtArgs>
+    tag?: boolean | ContactTagDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["contactTagAssignment"]>
+
+  export type ContactTagAssignmentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    contactId?: boolean
+    tagId?: boolean
+    createdAt?: boolean
+    contact?: boolean | ContactDefaultArgs<ExtArgs>
+    tag?: boolean | ContactTagDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["contactTagAssignment"]>
+
+  export type ContactTagAssignmentSelectScalar = {
+    id?: boolean
+    contactId?: boolean
+    tagId?: boolean
+    createdAt?: boolean
+  }
+
+  export type ContactTagAssignmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "contactId" | "tagId" | "createdAt", ExtArgs["result"]["contactTagAssignment"]>
+  export type ContactTagAssignmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    contact?: boolean | ContactDefaultArgs<ExtArgs>
+    tag?: boolean | ContactTagDefaultArgs<ExtArgs>
+  }
+  export type ContactTagAssignmentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    contact?: boolean | ContactDefaultArgs<ExtArgs>
+    tag?: boolean | ContactTagDefaultArgs<ExtArgs>
+  }
+  export type ContactTagAssignmentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    contact?: boolean | ContactDefaultArgs<ExtArgs>
+    tag?: boolean | ContactTagDefaultArgs<ExtArgs>
+  }
+
+  export type $ContactTagAssignmentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ContactTagAssignment"
+    objects: {
+      contact: Prisma.$ContactPayload<ExtArgs>
+      tag: Prisma.$ContactTagPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      contactId: string
+      tagId: string
+      createdAt: Date
+    }, ExtArgs["result"]["contactTagAssignment"]>
+    composites: {}
+  }
+
+  type ContactTagAssignmentGetPayload<S extends boolean | null | undefined | ContactTagAssignmentDefaultArgs> = $Result.GetResult<Prisma.$ContactTagAssignmentPayload, S>
+
+  type ContactTagAssignmentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ContactTagAssignmentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ContactTagAssignmentCountAggregateInputType | true
+    }
+
+  export interface ContactTagAssignmentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ContactTagAssignment'], meta: { name: 'ContactTagAssignment' } }
+    /**
+     * Find zero or one ContactTagAssignment that matches the filter.
+     * @param {ContactTagAssignmentFindUniqueArgs} args - Arguments to find a ContactTagAssignment
+     * @example
+     * // Get one ContactTagAssignment
+     * const contactTagAssignment = await prisma.contactTagAssignment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ContactTagAssignmentFindUniqueArgs>(args: SelectSubset<T, ContactTagAssignmentFindUniqueArgs<ExtArgs>>): Prisma__ContactTagAssignmentClient<$Result.GetResult<Prisma.$ContactTagAssignmentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ContactTagAssignment that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ContactTagAssignmentFindUniqueOrThrowArgs} args - Arguments to find a ContactTagAssignment
+     * @example
+     * // Get one ContactTagAssignment
+     * const contactTagAssignment = await prisma.contactTagAssignment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ContactTagAssignmentFindUniqueOrThrowArgs>(args: SelectSubset<T, ContactTagAssignmentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ContactTagAssignmentClient<$Result.GetResult<Prisma.$ContactTagAssignmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ContactTagAssignment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactTagAssignmentFindFirstArgs} args - Arguments to find a ContactTagAssignment
+     * @example
+     * // Get one ContactTagAssignment
+     * const contactTagAssignment = await prisma.contactTagAssignment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ContactTagAssignmentFindFirstArgs>(args?: SelectSubset<T, ContactTagAssignmentFindFirstArgs<ExtArgs>>): Prisma__ContactTagAssignmentClient<$Result.GetResult<Prisma.$ContactTagAssignmentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ContactTagAssignment that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactTagAssignmentFindFirstOrThrowArgs} args - Arguments to find a ContactTagAssignment
+     * @example
+     * // Get one ContactTagAssignment
+     * const contactTagAssignment = await prisma.contactTagAssignment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ContactTagAssignmentFindFirstOrThrowArgs>(args?: SelectSubset<T, ContactTagAssignmentFindFirstOrThrowArgs<ExtArgs>>): Prisma__ContactTagAssignmentClient<$Result.GetResult<Prisma.$ContactTagAssignmentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ContactTagAssignments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactTagAssignmentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ContactTagAssignments
+     * const contactTagAssignments = await prisma.contactTagAssignment.findMany()
+     * 
+     * // Get first 10 ContactTagAssignments
+     * const contactTagAssignments = await prisma.contactTagAssignment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const contactTagAssignmentWithIdOnly = await prisma.contactTagAssignment.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ContactTagAssignmentFindManyArgs>(args?: SelectSubset<T, ContactTagAssignmentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactTagAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ContactTagAssignment.
+     * @param {ContactTagAssignmentCreateArgs} args - Arguments to create a ContactTagAssignment.
+     * @example
+     * // Create one ContactTagAssignment
+     * const ContactTagAssignment = await prisma.contactTagAssignment.create({
+     *   data: {
+     *     // ... data to create a ContactTagAssignment
+     *   }
+     * })
+     * 
+     */
+    create<T extends ContactTagAssignmentCreateArgs>(args: SelectSubset<T, ContactTagAssignmentCreateArgs<ExtArgs>>): Prisma__ContactTagAssignmentClient<$Result.GetResult<Prisma.$ContactTagAssignmentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ContactTagAssignments.
+     * @param {ContactTagAssignmentCreateManyArgs} args - Arguments to create many ContactTagAssignments.
+     * @example
+     * // Create many ContactTagAssignments
+     * const contactTagAssignment = await prisma.contactTagAssignment.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ContactTagAssignmentCreateManyArgs>(args?: SelectSubset<T, ContactTagAssignmentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ContactTagAssignments and returns the data saved in the database.
+     * @param {ContactTagAssignmentCreateManyAndReturnArgs} args - Arguments to create many ContactTagAssignments.
+     * @example
+     * // Create many ContactTagAssignments
+     * const contactTagAssignment = await prisma.contactTagAssignment.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ContactTagAssignments and only return the `id`
+     * const contactTagAssignmentWithIdOnly = await prisma.contactTagAssignment.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ContactTagAssignmentCreateManyAndReturnArgs>(args?: SelectSubset<T, ContactTagAssignmentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactTagAssignmentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ContactTagAssignment.
+     * @param {ContactTagAssignmentDeleteArgs} args - Arguments to delete one ContactTagAssignment.
+     * @example
+     * // Delete one ContactTagAssignment
+     * const ContactTagAssignment = await prisma.contactTagAssignment.delete({
+     *   where: {
+     *     // ... filter to delete one ContactTagAssignment
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ContactTagAssignmentDeleteArgs>(args: SelectSubset<T, ContactTagAssignmentDeleteArgs<ExtArgs>>): Prisma__ContactTagAssignmentClient<$Result.GetResult<Prisma.$ContactTagAssignmentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ContactTagAssignment.
+     * @param {ContactTagAssignmentUpdateArgs} args - Arguments to update one ContactTagAssignment.
+     * @example
+     * // Update one ContactTagAssignment
+     * const contactTagAssignment = await prisma.contactTagAssignment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ContactTagAssignmentUpdateArgs>(args: SelectSubset<T, ContactTagAssignmentUpdateArgs<ExtArgs>>): Prisma__ContactTagAssignmentClient<$Result.GetResult<Prisma.$ContactTagAssignmentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ContactTagAssignments.
+     * @param {ContactTagAssignmentDeleteManyArgs} args - Arguments to filter ContactTagAssignments to delete.
+     * @example
+     * // Delete a few ContactTagAssignments
+     * const { count } = await prisma.contactTagAssignment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ContactTagAssignmentDeleteManyArgs>(args?: SelectSubset<T, ContactTagAssignmentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ContactTagAssignments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactTagAssignmentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ContactTagAssignments
+     * const contactTagAssignment = await prisma.contactTagAssignment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ContactTagAssignmentUpdateManyArgs>(args: SelectSubset<T, ContactTagAssignmentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ContactTagAssignments and returns the data updated in the database.
+     * @param {ContactTagAssignmentUpdateManyAndReturnArgs} args - Arguments to update many ContactTagAssignments.
+     * @example
+     * // Update many ContactTagAssignments
+     * const contactTagAssignment = await prisma.contactTagAssignment.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ContactTagAssignments and only return the `id`
+     * const contactTagAssignmentWithIdOnly = await prisma.contactTagAssignment.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ContactTagAssignmentUpdateManyAndReturnArgs>(args: SelectSubset<T, ContactTagAssignmentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactTagAssignmentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ContactTagAssignment.
+     * @param {ContactTagAssignmentUpsertArgs} args - Arguments to update or create a ContactTagAssignment.
+     * @example
+     * // Update or create a ContactTagAssignment
+     * const contactTagAssignment = await prisma.contactTagAssignment.upsert({
+     *   create: {
+     *     // ... data to create a ContactTagAssignment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ContactTagAssignment we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ContactTagAssignmentUpsertArgs>(args: SelectSubset<T, ContactTagAssignmentUpsertArgs<ExtArgs>>): Prisma__ContactTagAssignmentClient<$Result.GetResult<Prisma.$ContactTagAssignmentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ContactTagAssignments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactTagAssignmentCountArgs} args - Arguments to filter ContactTagAssignments to count.
+     * @example
+     * // Count the number of ContactTagAssignments
+     * const count = await prisma.contactTagAssignment.count({
+     *   where: {
+     *     // ... the filter for the ContactTagAssignments we want to count
+     *   }
+     * })
+    **/
+    count<T extends ContactTagAssignmentCountArgs>(
+      args?: Subset<T, ContactTagAssignmentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ContactTagAssignmentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ContactTagAssignment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactTagAssignmentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ContactTagAssignmentAggregateArgs>(args: Subset<T, ContactTagAssignmentAggregateArgs>): Prisma.PrismaPromise<GetContactTagAssignmentAggregateType<T>>
+
+    /**
+     * Group by ContactTagAssignment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactTagAssignmentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ContactTagAssignmentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ContactTagAssignmentGroupByArgs['orderBy'] }
+        : { orderBy?: ContactTagAssignmentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ContactTagAssignmentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetContactTagAssignmentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ContactTagAssignment model
+   */
+  readonly fields: ContactTagAssignmentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ContactTagAssignment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ContactTagAssignmentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    contact<T extends ContactDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ContactDefaultArgs<ExtArgs>>): Prisma__ContactClient<$Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    tag<T extends ContactTagDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ContactTagDefaultArgs<ExtArgs>>): Prisma__ContactTagClient<$Result.GetResult<Prisma.$ContactTagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ContactTagAssignment model
+   */
+  interface ContactTagAssignmentFieldRefs {
+    readonly id: FieldRef<"ContactTagAssignment", 'String'>
+    readonly contactId: FieldRef<"ContactTagAssignment", 'String'>
+    readonly tagId: FieldRef<"ContactTagAssignment", 'String'>
+    readonly createdAt: FieldRef<"ContactTagAssignment", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ContactTagAssignment findUnique
+   */
+  export type ContactTagAssignmentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTagAssignment
+     */
+    select?: ContactTagAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTagAssignment
+     */
+    omit?: ContactTagAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagAssignmentInclude<ExtArgs> | null
+    /**
+     * Filter, which ContactTagAssignment to fetch.
+     */
+    where: ContactTagAssignmentWhereUniqueInput
+  }
+
+  /**
+   * ContactTagAssignment findUniqueOrThrow
+   */
+  export type ContactTagAssignmentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTagAssignment
+     */
+    select?: ContactTagAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTagAssignment
+     */
+    omit?: ContactTagAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagAssignmentInclude<ExtArgs> | null
+    /**
+     * Filter, which ContactTagAssignment to fetch.
+     */
+    where: ContactTagAssignmentWhereUniqueInput
+  }
+
+  /**
+   * ContactTagAssignment findFirst
+   */
+  export type ContactTagAssignmentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTagAssignment
+     */
+    select?: ContactTagAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTagAssignment
+     */
+    omit?: ContactTagAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagAssignmentInclude<ExtArgs> | null
+    /**
+     * Filter, which ContactTagAssignment to fetch.
+     */
+    where?: ContactTagAssignmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContactTagAssignments to fetch.
+     */
+    orderBy?: ContactTagAssignmentOrderByWithRelationInput | ContactTagAssignmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ContactTagAssignments.
+     */
+    cursor?: ContactTagAssignmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContactTagAssignments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContactTagAssignments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ContactTagAssignments.
+     */
+    distinct?: ContactTagAssignmentScalarFieldEnum | ContactTagAssignmentScalarFieldEnum[]
+  }
+
+  /**
+   * ContactTagAssignment findFirstOrThrow
+   */
+  export type ContactTagAssignmentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTagAssignment
+     */
+    select?: ContactTagAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTagAssignment
+     */
+    omit?: ContactTagAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagAssignmentInclude<ExtArgs> | null
+    /**
+     * Filter, which ContactTagAssignment to fetch.
+     */
+    where?: ContactTagAssignmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContactTagAssignments to fetch.
+     */
+    orderBy?: ContactTagAssignmentOrderByWithRelationInput | ContactTagAssignmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ContactTagAssignments.
+     */
+    cursor?: ContactTagAssignmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContactTagAssignments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContactTagAssignments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ContactTagAssignments.
+     */
+    distinct?: ContactTagAssignmentScalarFieldEnum | ContactTagAssignmentScalarFieldEnum[]
+  }
+
+  /**
+   * ContactTagAssignment findMany
+   */
+  export type ContactTagAssignmentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTagAssignment
+     */
+    select?: ContactTagAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTagAssignment
+     */
+    omit?: ContactTagAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagAssignmentInclude<ExtArgs> | null
+    /**
+     * Filter, which ContactTagAssignments to fetch.
+     */
+    where?: ContactTagAssignmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContactTagAssignments to fetch.
+     */
+    orderBy?: ContactTagAssignmentOrderByWithRelationInput | ContactTagAssignmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ContactTagAssignments.
+     */
+    cursor?: ContactTagAssignmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContactTagAssignments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContactTagAssignments.
+     */
+    skip?: number
+    distinct?: ContactTagAssignmentScalarFieldEnum | ContactTagAssignmentScalarFieldEnum[]
+  }
+
+  /**
+   * ContactTagAssignment create
+   */
+  export type ContactTagAssignmentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTagAssignment
+     */
+    select?: ContactTagAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTagAssignment
+     */
+    omit?: ContactTagAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagAssignmentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ContactTagAssignment.
+     */
+    data: XOR<ContactTagAssignmentCreateInput, ContactTagAssignmentUncheckedCreateInput>
+  }
+
+  /**
+   * ContactTagAssignment createMany
+   */
+  export type ContactTagAssignmentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ContactTagAssignments.
+     */
+    data: ContactTagAssignmentCreateManyInput | ContactTagAssignmentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ContactTagAssignment createManyAndReturn
+   */
+  export type ContactTagAssignmentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTagAssignment
+     */
+    select?: ContactTagAssignmentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTagAssignment
+     */
+    omit?: ContactTagAssignmentOmit<ExtArgs> | null
+    /**
+     * The data used to create many ContactTagAssignments.
+     */
+    data: ContactTagAssignmentCreateManyInput | ContactTagAssignmentCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagAssignmentIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ContactTagAssignment update
+   */
+  export type ContactTagAssignmentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTagAssignment
+     */
+    select?: ContactTagAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTagAssignment
+     */
+    omit?: ContactTagAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagAssignmentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ContactTagAssignment.
+     */
+    data: XOR<ContactTagAssignmentUpdateInput, ContactTagAssignmentUncheckedUpdateInput>
+    /**
+     * Choose, which ContactTagAssignment to update.
+     */
+    where: ContactTagAssignmentWhereUniqueInput
+  }
+
+  /**
+   * ContactTagAssignment updateMany
+   */
+  export type ContactTagAssignmentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ContactTagAssignments.
+     */
+    data: XOR<ContactTagAssignmentUpdateManyMutationInput, ContactTagAssignmentUncheckedUpdateManyInput>
+    /**
+     * Filter which ContactTagAssignments to update
+     */
+    where?: ContactTagAssignmentWhereInput
+    /**
+     * Limit how many ContactTagAssignments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ContactTagAssignment updateManyAndReturn
+   */
+  export type ContactTagAssignmentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTagAssignment
+     */
+    select?: ContactTagAssignmentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTagAssignment
+     */
+    omit?: ContactTagAssignmentOmit<ExtArgs> | null
+    /**
+     * The data used to update ContactTagAssignments.
+     */
+    data: XOR<ContactTagAssignmentUpdateManyMutationInput, ContactTagAssignmentUncheckedUpdateManyInput>
+    /**
+     * Filter which ContactTagAssignments to update
+     */
+    where?: ContactTagAssignmentWhereInput
+    /**
+     * Limit how many ContactTagAssignments to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagAssignmentIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ContactTagAssignment upsert
+   */
+  export type ContactTagAssignmentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTagAssignment
+     */
+    select?: ContactTagAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTagAssignment
+     */
+    omit?: ContactTagAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagAssignmentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ContactTagAssignment to update in case it exists.
+     */
+    where: ContactTagAssignmentWhereUniqueInput
+    /**
+     * In case the ContactTagAssignment found by the `where` argument doesn't exist, create a new ContactTagAssignment with this data.
+     */
+    create: XOR<ContactTagAssignmentCreateInput, ContactTagAssignmentUncheckedCreateInput>
+    /**
+     * In case the ContactTagAssignment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ContactTagAssignmentUpdateInput, ContactTagAssignmentUncheckedUpdateInput>
+  }
+
+  /**
+   * ContactTagAssignment delete
+   */
+  export type ContactTagAssignmentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTagAssignment
+     */
+    select?: ContactTagAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTagAssignment
+     */
+    omit?: ContactTagAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagAssignmentInclude<ExtArgs> | null
+    /**
+     * Filter which ContactTagAssignment to delete.
+     */
+    where: ContactTagAssignmentWhereUniqueInput
+  }
+
+  /**
+   * ContactTagAssignment deleteMany
+   */
+  export type ContactTagAssignmentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ContactTagAssignments to delete
+     */
+    where?: ContactTagAssignmentWhereInput
+    /**
+     * Limit how many ContactTagAssignments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ContactTagAssignment without action
+   */
+  export type ContactTagAssignmentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTagAssignment
+     */
+    select?: ContactTagAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTagAssignment
+     */
+    omit?: ContactTagAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagAssignmentInclude<ExtArgs> | null
   }
 
 
@@ -18131,6 +20895,10 @@ export namespace Prisma {
     createdAt?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     rules?: boolean | AutoAnalyticModel$rulesArgs<ExtArgs>
+    purchaseOrderLines?: boolean | AutoAnalyticModel$purchaseOrderLinesArgs<ExtArgs>
+    salesOrderLines?: boolean | AutoAnalyticModel$salesOrderLinesArgs<ExtArgs>
+    vendorBillLines?: boolean | AutoAnalyticModel$vendorBillLinesArgs<ExtArgs>
+    customerInvoiceLines?: boolean | AutoAnalyticModel$customerInvoiceLinesArgs<ExtArgs>
     _count?: boolean | AutoAnalyticModelCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["autoAnalyticModel"]>
 
@@ -18167,6 +20935,10 @@ export namespace Prisma {
   export type AutoAnalyticModelInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     rules?: boolean | AutoAnalyticModel$rulesArgs<ExtArgs>
+    purchaseOrderLines?: boolean | AutoAnalyticModel$purchaseOrderLinesArgs<ExtArgs>
+    salesOrderLines?: boolean | AutoAnalyticModel$salesOrderLinesArgs<ExtArgs>
+    vendorBillLines?: boolean | AutoAnalyticModel$vendorBillLinesArgs<ExtArgs>
+    customerInvoiceLines?: boolean | AutoAnalyticModel$customerInvoiceLinesArgs<ExtArgs>
     _count?: boolean | AutoAnalyticModelCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AutoAnalyticModelIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -18181,6 +20953,10 @@ export namespace Prisma {
     objects: {
       company: Prisma.$CompanyPayload<ExtArgs>
       rules: Prisma.$AutoAnalyticRulePayload<ExtArgs>[]
+      purchaseOrderLines: Prisma.$PurchaseOrderLinePayload<ExtArgs>[]
+      salesOrderLines: Prisma.$SalesOrderLinePayload<ExtArgs>[]
+      vendorBillLines: Prisma.$VendorBillLinePayload<ExtArgs>[]
+      customerInvoiceLines: Prisma.$CustomerInvoiceLinePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -18585,6 +21361,10 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     company<T extends CompanyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CompanyDefaultArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     rules<T extends AutoAnalyticModel$rulesArgs<ExtArgs> = {}>(args?: Subset<T, AutoAnalyticModel$rulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutoAnalyticRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    purchaseOrderLines<T extends AutoAnalyticModel$purchaseOrderLinesArgs<ExtArgs> = {}>(args?: Subset<T, AutoAnalyticModel$purchaseOrderLinesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PurchaseOrderLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    salesOrderLines<T extends AutoAnalyticModel$salesOrderLinesArgs<ExtArgs> = {}>(args?: Subset<T, AutoAnalyticModel$salesOrderLinesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalesOrderLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    vendorBillLines<T extends AutoAnalyticModel$vendorBillLinesArgs<ExtArgs> = {}>(args?: Subset<T, AutoAnalyticModel$vendorBillLinesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VendorBillLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    customerInvoiceLines<T extends AutoAnalyticModel$customerInvoiceLinesArgs<ExtArgs> = {}>(args?: Subset<T, AutoAnalyticModel$customerInvoiceLinesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerInvoiceLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -19040,6 +21820,102 @@ export namespace Prisma {
   }
 
   /**
+   * AutoAnalyticModel.purchaseOrderLines
+   */
+  export type AutoAnalyticModel$purchaseOrderLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PurchaseOrderLine
+     */
+    select?: PurchaseOrderLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PurchaseOrderLine
+     */
+    omit?: PurchaseOrderLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PurchaseOrderLineInclude<ExtArgs> | null
+    where?: PurchaseOrderLineWhereInput
+    orderBy?: PurchaseOrderLineOrderByWithRelationInput | PurchaseOrderLineOrderByWithRelationInput[]
+    cursor?: PurchaseOrderLineWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PurchaseOrderLineScalarFieldEnum | PurchaseOrderLineScalarFieldEnum[]
+  }
+
+  /**
+   * AutoAnalyticModel.salesOrderLines
+   */
+  export type AutoAnalyticModel$salesOrderLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesOrderLine
+     */
+    select?: SalesOrderLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SalesOrderLine
+     */
+    omit?: SalesOrderLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesOrderLineInclude<ExtArgs> | null
+    where?: SalesOrderLineWhereInput
+    orderBy?: SalesOrderLineOrderByWithRelationInput | SalesOrderLineOrderByWithRelationInput[]
+    cursor?: SalesOrderLineWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SalesOrderLineScalarFieldEnum | SalesOrderLineScalarFieldEnum[]
+  }
+
+  /**
+   * AutoAnalyticModel.vendorBillLines
+   */
+  export type AutoAnalyticModel$vendorBillLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorBillLine
+     */
+    select?: VendorBillLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorBillLine
+     */
+    omit?: VendorBillLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorBillLineInclude<ExtArgs> | null
+    where?: VendorBillLineWhereInput
+    orderBy?: VendorBillLineOrderByWithRelationInput | VendorBillLineOrderByWithRelationInput[]
+    cursor?: VendorBillLineWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VendorBillLineScalarFieldEnum | VendorBillLineScalarFieldEnum[]
+  }
+
+  /**
+   * AutoAnalyticModel.customerInvoiceLines
+   */
+  export type AutoAnalyticModel$customerInvoiceLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerInvoiceLine
+     */
+    select?: CustomerInvoiceLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerInvoiceLine
+     */
+    omit?: CustomerInvoiceLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerInvoiceLineInclude<ExtArgs> | null
+    where?: CustomerInvoiceLineWhereInput
+    orderBy?: CustomerInvoiceLineOrderByWithRelationInput | CustomerInvoiceLineOrderByWithRelationInput[]
+    cursor?: CustomerInvoiceLineWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CustomerInvoiceLineScalarFieldEnum | CustomerInvoiceLineScalarFieldEnum[]
+  }
+
+  /**
    * AutoAnalyticModel without action
    */
   export type AutoAnalyticModelDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -19085,6 +21961,7 @@ export namespace Prisma {
     matchProductId: string | null
     matchCategoryId: string | null
     matchContactId: string | null
+    matchContactTagId: string | null
     assignAnalyticAccountId: string | null
     rulePriority: number | null
     isActive: boolean | null
@@ -19097,6 +21974,7 @@ export namespace Prisma {
     matchProductId: string | null
     matchCategoryId: string | null
     matchContactId: string | null
+    matchContactTagId: string | null
     assignAnalyticAccountId: string | null
     rulePriority: number | null
     isActive: boolean | null
@@ -19109,6 +21987,7 @@ export namespace Prisma {
     matchProductId: number
     matchCategoryId: number
     matchContactId: number
+    matchContactTagId: number
     assignAnalyticAccountId: number
     rulePriority: number
     isActive: number
@@ -19131,6 +22010,7 @@ export namespace Prisma {
     matchProductId?: true
     matchCategoryId?: true
     matchContactId?: true
+    matchContactTagId?: true
     assignAnalyticAccountId?: true
     rulePriority?: true
     isActive?: true
@@ -19143,6 +22023,7 @@ export namespace Prisma {
     matchProductId?: true
     matchCategoryId?: true
     matchContactId?: true
+    matchContactTagId?: true
     assignAnalyticAccountId?: true
     rulePriority?: true
     isActive?: true
@@ -19155,6 +22036,7 @@ export namespace Prisma {
     matchProductId?: true
     matchCategoryId?: true
     matchContactId?: true
+    matchContactTagId?: true
     assignAnalyticAccountId?: true
     rulePriority?: true
     isActive?: true
@@ -19254,6 +22136,7 @@ export namespace Prisma {
     matchProductId: string | null
     matchCategoryId: string | null
     matchContactId: string | null
+    matchContactTagId: string | null
     assignAnalyticAccountId: string
     rulePriority: number
     isActive: boolean
@@ -19285,6 +22168,7 @@ export namespace Prisma {
     matchProductId?: boolean
     matchCategoryId?: boolean
     matchContactId?: boolean
+    matchContactTagId?: boolean
     assignAnalyticAccountId?: boolean
     rulePriority?: boolean
     isActive?: boolean
@@ -19292,7 +22176,13 @@ export namespace Prisma {
     product?: boolean | AutoAnalyticRule$productArgs<ExtArgs>
     category?: boolean | AutoAnalyticRule$categoryArgs<ExtArgs>
     contact?: boolean | AutoAnalyticRule$contactArgs<ExtArgs>
+    contactTag?: boolean | AutoAnalyticRule$contactTagArgs<ExtArgs>
     assignAnalytic?: boolean | AnalyticAccountDefaultArgs<ExtArgs>
+    purchaseOrderLines?: boolean | AutoAnalyticRule$purchaseOrderLinesArgs<ExtArgs>
+    salesOrderLines?: boolean | AutoAnalyticRule$salesOrderLinesArgs<ExtArgs>
+    vendorBillLines?: boolean | AutoAnalyticRule$vendorBillLinesArgs<ExtArgs>
+    customerInvoiceLines?: boolean | AutoAnalyticRule$customerInvoiceLinesArgs<ExtArgs>
+    _count?: boolean | AutoAnalyticRuleCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["autoAnalyticRule"]>
 
   export type AutoAnalyticRuleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -19302,6 +22192,7 @@ export namespace Prisma {
     matchProductId?: boolean
     matchCategoryId?: boolean
     matchContactId?: boolean
+    matchContactTagId?: boolean
     assignAnalyticAccountId?: boolean
     rulePriority?: boolean
     isActive?: boolean
@@ -19309,6 +22200,7 @@ export namespace Prisma {
     product?: boolean | AutoAnalyticRule$productArgs<ExtArgs>
     category?: boolean | AutoAnalyticRule$categoryArgs<ExtArgs>
     contact?: boolean | AutoAnalyticRule$contactArgs<ExtArgs>
+    contactTag?: boolean | AutoAnalyticRule$contactTagArgs<ExtArgs>
     assignAnalytic?: boolean | AnalyticAccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["autoAnalyticRule"]>
 
@@ -19319,6 +22211,7 @@ export namespace Prisma {
     matchProductId?: boolean
     matchCategoryId?: boolean
     matchContactId?: boolean
+    matchContactTagId?: boolean
     assignAnalyticAccountId?: boolean
     rulePriority?: boolean
     isActive?: boolean
@@ -19326,6 +22219,7 @@ export namespace Prisma {
     product?: boolean | AutoAnalyticRule$productArgs<ExtArgs>
     category?: boolean | AutoAnalyticRule$categoryArgs<ExtArgs>
     contact?: boolean | AutoAnalyticRule$contactArgs<ExtArgs>
+    contactTag?: boolean | AutoAnalyticRule$contactTagArgs<ExtArgs>
     assignAnalytic?: boolean | AnalyticAccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["autoAnalyticRule"]>
 
@@ -19336,24 +22230,32 @@ export namespace Prisma {
     matchProductId?: boolean
     matchCategoryId?: boolean
     matchContactId?: boolean
+    matchContactTagId?: boolean
     assignAnalyticAccountId?: boolean
     rulePriority?: boolean
     isActive?: boolean
   }
 
-  export type AutoAnalyticRuleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "modelId" | "docType" | "matchProductId" | "matchCategoryId" | "matchContactId" | "assignAnalyticAccountId" | "rulePriority" | "isActive", ExtArgs["result"]["autoAnalyticRule"]>
+  export type AutoAnalyticRuleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "modelId" | "docType" | "matchProductId" | "matchCategoryId" | "matchContactId" | "matchContactTagId" | "assignAnalyticAccountId" | "rulePriority" | "isActive", ExtArgs["result"]["autoAnalyticRule"]>
   export type AutoAnalyticRuleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     model?: boolean | AutoAnalyticModelDefaultArgs<ExtArgs>
     product?: boolean | AutoAnalyticRule$productArgs<ExtArgs>
     category?: boolean | AutoAnalyticRule$categoryArgs<ExtArgs>
     contact?: boolean | AutoAnalyticRule$contactArgs<ExtArgs>
+    contactTag?: boolean | AutoAnalyticRule$contactTagArgs<ExtArgs>
     assignAnalytic?: boolean | AnalyticAccountDefaultArgs<ExtArgs>
+    purchaseOrderLines?: boolean | AutoAnalyticRule$purchaseOrderLinesArgs<ExtArgs>
+    salesOrderLines?: boolean | AutoAnalyticRule$salesOrderLinesArgs<ExtArgs>
+    vendorBillLines?: boolean | AutoAnalyticRule$vendorBillLinesArgs<ExtArgs>
+    customerInvoiceLines?: boolean | AutoAnalyticRule$customerInvoiceLinesArgs<ExtArgs>
+    _count?: boolean | AutoAnalyticRuleCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AutoAnalyticRuleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     model?: boolean | AutoAnalyticModelDefaultArgs<ExtArgs>
     product?: boolean | AutoAnalyticRule$productArgs<ExtArgs>
     category?: boolean | AutoAnalyticRule$categoryArgs<ExtArgs>
     contact?: boolean | AutoAnalyticRule$contactArgs<ExtArgs>
+    contactTag?: boolean | AutoAnalyticRule$contactTagArgs<ExtArgs>
     assignAnalytic?: boolean | AnalyticAccountDefaultArgs<ExtArgs>
   }
   export type AutoAnalyticRuleIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -19361,6 +22263,7 @@ export namespace Prisma {
     product?: boolean | AutoAnalyticRule$productArgs<ExtArgs>
     category?: boolean | AutoAnalyticRule$categoryArgs<ExtArgs>
     contact?: boolean | AutoAnalyticRule$contactArgs<ExtArgs>
+    contactTag?: boolean | AutoAnalyticRule$contactTagArgs<ExtArgs>
     assignAnalytic?: boolean | AnalyticAccountDefaultArgs<ExtArgs>
   }
 
@@ -19371,7 +22274,12 @@ export namespace Prisma {
       product: Prisma.$ProductPayload<ExtArgs> | null
       category: Prisma.$ProductCategoryPayload<ExtArgs> | null
       contact: Prisma.$ContactPayload<ExtArgs> | null
+      contactTag: Prisma.$ContactTagPayload<ExtArgs> | null
       assignAnalytic: Prisma.$AnalyticAccountPayload<ExtArgs>
+      purchaseOrderLines: Prisma.$PurchaseOrderLinePayload<ExtArgs>[]
+      salesOrderLines: Prisma.$SalesOrderLinePayload<ExtArgs>[]
+      vendorBillLines: Prisma.$VendorBillLinePayload<ExtArgs>[]
+      customerInvoiceLines: Prisma.$CustomerInvoiceLinePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -19380,6 +22288,7 @@ export namespace Prisma {
       matchProductId: string | null
       matchCategoryId: string | null
       matchContactId: string | null
+      matchContactTagId: string | null
       assignAnalyticAccountId: string
       rulePriority: number
       isActive: boolean
@@ -19781,7 +22690,12 @@ export namespace Prisma {
     product<T extends AutoAnalyticRule$productArgs<ExtArgs> = {}>(args?: Subset<T, AutoAnalyticRule$productArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     category<T extends AutoAnalyticRule$categoryArgs<ExtArgs> = {}>(args?: Subset<T, AutoAnalyticRule$categoryArgs<ExtArgs>>): Prisma__ProductCategoryClient<$Result.GetResult<Prisma.$ProductCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     contact<T extends AutoAnalyticRule$contactArgs<ExtArgs> = {}>(args?: Subset<T, AutoAnalyticRule$contactArgs<ExtArgs>>): Prisma__ContactClient<$Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    contactTag<T extends AutoAnalyticRule$contactTagArgs<ExtArgs> = {}>(args?: Subset<T, AutoAnalyticRule$contactTagArgs<ExtArgs>>): Prisma__ContactTagClient<$Result.GetResult<Prisma.$ContactTagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     assignAnalytic<T extends AnalyticAccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AnalyticAccountDefaultArgs<ExtArgs>>): Prisma__AnalyticAccountClient<$Result.GetResult<Prisma.$AnalyticAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    purchaseOrderLines<T extends AutoAnalyticRule$purchaseOrderLinesArgs<ExtArgs> = {}>(args?: Subset<T, AutoAnalyticRule$purchaseOrderLinesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PurchaseOrderLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    salesOrderLines<T extends AutoAnalyticRule$salesOrderLinesArgs<ExtArgs> = {}>(args?: Subset<T, AutoAnalyticRule$salesOrderLinesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalesOrderLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    vendorBillLines<T extends AutoAnalyticRule$vendorBillLinesArgs<ExtArgs> = {}>(args?: Subset<T, AutoAnalyticRule$vendorBillLinesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VendorBillLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    customerInvoiceLines<T extends AutoAnalyticRule$customerInvoiceLinesArgs<ExtArgs> = {}>(args?: Subset<T, AutoAnalyticRule$customerInvoiceLinesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerInvoiceLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -19817,6 +22731,7 @@ export namespace Prisma {
     readonly matchProductId: FieldRef<"AutoAnalyticRule", 'String'>
     readonly matchCategoryId: FieldRef<"AutoAnalyticRule", 'String'>
     readonly matchContactId: FieldRef<"AutoAnalyticRule", 'String'>
+    readonly matchContactTagId: FieldRef<"AutoAnalyticRule", 'String'>
     readonly assignAnalyticAccountId: FieldRef<"AutoAnalyticRule", 'String'>
     readonly rulePriority: FieldRef<"AutoAnalyticRule", 'Int'>
     readonly isActive: FieldRef<"AutoAnalyticRule", 'Boolean'>
@@ -20270,6 +23185,121 @@ export namespace Prisma {
      */
     include?: ContactInclude<ExtArgs> | null
     where?: ContactWhereInput
+  }
+
+  /**
+   * AutoAnalyticRule.contactTag
+   */
+  export type AutoAnalyticRule$contactTagArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactTag
+     */
+    select?: ContactTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactTag
+     */
+    omit?: ContactTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactTagInclude<ExtArgs> | null
+    where?: ContactTagWhereInput
+  }
+
+  /**
+   * AutoAnalyticRule.purchaseOrderLines
+   */
+  export type AutoAnalyticRule$purchaseOrderLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PurchaseOrderLine
+     */
+    select?: PurchaseOrderLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PurchaseOrderLine
+     */
+    omit?: PurchaseOrderLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PurchaseOrderLineInclude<ExtArgs> | null
+    where?: PurchaseOrderLineWhereInput
+    orderBy?: PurchaseOrderLineOrderByWithRelationInput | PurchaseOrderLineOrderByWithRelationInput[]
+    cursor?: PurchaseOrderLineWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PurchaseOrderLineScalarFieldEnum | PurchaseOrderLineScalarFieldEnum[]
+  }
+
+  /**
+   * AutoAnalyticRule.salesOrderLines
+   */
+  export type AutoAnalyticRule$salesOrderLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesOrderLine
+     */
+    select?: SalesOrderLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SalesOrderLine
+     */
+    omit?: SalesOrderLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesOrderLineInclude<ExtArgs> | null
+    where?: SalesOrderLineWhereInput
+    orderBy?: SalesOrderLineOrderByWithRelationInput | SalesOrderLineOrderByWithRelationInput[]
+    cursor?: SalesOrderLineWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SalesOrderLineScalarFieldEnum | SalesOrderLineScalarFieldEnum[]
+  }
+
+  /**
+   * AutoAnalyticRule.vendorBillLines
+   */
+  export type AutoAnalyticRule$vendorBillLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorBillLine
+     */
+    select?: VendorBillLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorBillLine
+     */
+    omit?: VendorBillLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorBillLineInclude<ExtArgs> | null
+    where?: VendorBillLineWhereInput
+    orderBy?: VendorBillLineOrderByWithRelationInput | VendorBillLineOrderByWithRelationInput[]
+    cursor?: VendorBillLineWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VendorBillLineScalarFieldEnum | VendorBillLineScalarFieldEnum[]
+  }
+
+  /**
+   * AutoAnalyticRule.customerInvoiceLines
+   */
+  export type AutoAnalyticRule$customerInvoiceLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerInvoiceLine
+     */
+    select?: CustomerInvoiceLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerInvoiceLine
+     */
+    omit?: CustomerInvoiceLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerInvoiceLineInclude<ExtArgs> | null
+    where?: CustomerInvoiceLineWhereInput
+    orderBy?: CustomerInvoiceLineOrderByWithRelationInput | CustomerInvoiceLineOrderByWithRelationInput[]
+    cursor?: CustomerInvoiceLineWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CustomerInvoiceLineScalarFieldEnum | CustomerInvoiceLineScalarFieldEnum[]
   }
 
   /**
@@ -21493,6 +24523,7 @@ export namespace Prisma {
   }
 
   export type PurchaseOrderLineAvgAggregateOutputType = {
+    matchedFieldsCount: number | null
     qty: Decimal | null
     unitPrice: Decimal | null
     taxRate: Decimal | null
@@ -21500,6 +24531,7 @@ export namespace Prisma {
   }
 
   export type PurchaseOrderLineSumAggregateOutputType = {
+    matchedFieldsCount: number | null
     qty: Decimal | null
     unitPrice: Decimal | null
     taxRate: Decimal | null
@@ -21511,6 +24543,9 @@ export namespace Prisma {
     purchaseOrderId: string | null
     productId: string | null
     analyticAccountId: string | null
+    autoAnalyticModelId: string | null
+    autoAnalyticRuleId: string | null
+    matchedFieldsCount: number | null
     description: string | null
     qty: Decimal | null
     unitPrice: Decimal | null
@@ -21523,6 +24558,9 @@ export namespace Prisma {
     purchaseOrderId: string | null
     productId: string | null
     analyticAccountId: string | null
+    autoAnalyticModelId: string | null
+    autoAnalyticRuleId: string | null
+    matchedFieldsCount: number | null
     description: string | null
     qty: Decimal | null
     unitPrice: Decimal | null
@@ -21535,6 +24573,9 @@ export namespace Prisma {
     purchaseOrderId: number
     productId: number
     analyticAccountId: number
+    autoAnalyticModelId: number
+    autoAnalyticRuleId: number
+    matchedFieldsCount: number
     description: number
     qty: number
     unitPrice: number
@@ -21545,6 +24586,7 @@ export namespace Prisma {
 
 
   export type PurchaseOrderLineAvgAggregateInputType = {
+    matchedFieldsCount?: true
     qty?: true
     unitPrice?: true
     taxRate?: true
@@ -21552,6 +24594,7 @@ export namespace Prisma {
   }
 
   export type PurchaseOrderLineSumAggregateInputType = {
+    matchedFieldsCount?: true
     qty?: true
     unitPrice?: true
     taxRate?: true
@@ -21563,6 +24606,9 @@ export namespace Prisma {
     purchaseOrderId?: true
     productId?: true
     analyticAccountId?: true
+    autoAnalyticModelId?: true
+    autoAnalyticRuleId?: true
+    matchedFieldsCount?: true
     description?: true
     qty?: true
     unitPrice?: true
@@ -21575,6 +24621,9 @@ export namespace Prisma {
     purchaseOrderId?: true
     productId?: true
     analyticAccountId?: true
+    autoAnalyticModelId?: true
+    autoAnalyticRuleId?: true
+    matchedFieldsCount?: true
     description?: true
     qty?: true
     unitPrice?: true
@@ -21587,6 +24636,9 @@ export namespace Prisma {
     purchaseOrderId?: true
     productId?: true
     analyticAccountId?: true
+    autoAnalyticModelId?: true
+    autoAnalyticRuleId?: true
+    matchedFieldsCount?: true
     description?: true
     qty?: true
     unitPrice?: true
@@ -21686,6 +24738,9 @@ export namespace Prisma {
     purchaseOrderId: string
     productId: string
     analyticAccountId: string | null
+    autoAnalyticModelId: string | null
+    autoAnalyticRuleId: string | null
+    matchedFieldsCount: number | null
     description: string | null
     qty: Decimal
     unitPrice: Decimal
@@ -21717,6 +24772,9 @@ export namespace Prisma {
     purchaseOrderId?: boolean
     productId?: boolean
     analyticAccountId?: boolean
+    autoAnalyticModelId?: boolean
+    autoAnalyticRuleId?: boolean
+    matchedFieldsCount?: boolean
     description?: boolean
     qty?: boolean
     unitPrice?: boolean
@@ -21725,6 +24783,8 @@ export namespace Prisma {
     purchaseOrder?: boolean | PurchaseOrderDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
     analytic?: boolean | PurchaseOrderLine$analyticArgs<ExtArgs>
+    autoModel?: boolean | PurchaseOrderLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | PurchaseOrderLine$autoRuleArgs<ExtArgs>
   }, ExtArgs["result"]["purchaseOrderLine"]>
 
   export type PurchaseOrderLineSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -21732,6 +24792,9 @@ export namespace Prisma {
     purchaseOrderId?: boolean
     productId?: boolean
     analyticAccountId?: boolean
+    autoAnalyticModelId?: boolean
+    autoAnalyticRuleId?: boolean
+    matchedFieldsCount?: boolean
     description?: boolean
     qty?: boolean
     unitPrice?: boolean
@@ -21740,6 +24803,8 @@ export namespace Prisma {
     purchaseOrder?: boolean | PurchaseOrderDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
     analytic?: boolean | PurchaseOrderLine$analyticArgs<ExtArgs>
+    autoModel?: boolean | PurchaseOrderLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | PurchaseOrderLine$autoRuleArgs<ExtArgs>
   }, ExtArgs["result"]["purchaseOrderLine"]>
 
   export type PurchaseOrderLineSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -21747,6 +24812,9 @@ export namespace Prisma {
     purchaseOrderId?: boolean
     productId?: boolean
     analyticAccountId?: boolean
+    autoAnalyticModelId?: boolean
+    autoAnalyticRuleId?: boolean
+    matchedFieldsCount?: boolean
     description?: boolean
     qty?: boolean
     unitPrice?: boolean
@@ -21755,6 +24823,8 @@ export namespace Prisma {
     purchaseOrder?: boolean | PurchaseOrderDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
     analytic?: boolean | PurchaseOrderLine$analyticArgs<ExtArgs>
+    autoModel?: boolean | PurchaseOrderLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | PurchaseOrderLine$autoRuleArgs<ExtArgs>
   }, ExtArgs["result"]["purchaseOrderLine"]>
 
   export type PurchaseOrderLineSelectScalar = {
@@ -21762,6 +24832,9 @@ export namespace Prisma {
     purchaseOrderId?: boolean
     productId?: boolean
     analyticAccountId?: boolean
+    autoAnalyticModelId?: boolean
+    autoAnalyticRuleId?: boolean
+    matchedFieldsCount?: boolean
     description?: boolean
     qty?: boolean
     unitPrice?: boolean
@@ -21769,21 +24842,27 @@ export namespace Prisma {
     lineTotal?: boolean
   }
 
-  export type PurchaseOrderLineOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "purchaseOrderId" | "productId" | "analyticAccountId" | "description" | "qty" | "unitPrice" | "taxRate" | "lineTotal", ExtArgs["result"]["purchaseOrderLine"]>
+  export type PurchaseOrderLineOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "purchaseOrderId" | "productId" | "analyticAccountId" | "autoAnalyticModelId" | "autoAnalyticRuleId" | "matchedFieldsCount" | "description" | "qty" | "unitPrice" | "taxRate" | "lineTotal", ExtArgs["result"]["purchaseOrderLine"]>
   export type PurchaseOrderLineInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     purchaseOrder?: boolean | PurchaseOrderDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
     analytic?: boolean | PurchaseOrderLine$analyticArgs<ExtArgs>
+    autoModel?: boolean | PurchaseOrderLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | PurchaseOrderLine$autoRuleArgs<ExtArgs>
   }
   export type PurchaseOrderLineIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     purchaseOrder?: boolean | PurchaseOrderDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
     analytic?: boolean | PurchaseOrderLine$analyticArgs<ExtArgs>
+    autoModel?: boolean | PurchaseOrderLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | PurchaseOrderLine$autoRuleArgs<ExtArgs>
   }
   export type PurchaseOrderLineIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     purchaseOrder?: boolean | PurchaseOrderDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
     analytic?: boolean | PurchaseOrderLine$analyticArgs<ExtArgs>
+    autoModel?: boolean | PurchaseOrderLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | PurchaseOrderLine$autoRuleArgs<ExtArgs>
   }
 
   export type $PurchaseOrderLinePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -21792,12 +24871,17 @@ export namespace Prisma {
       purchaseOrder: Prisma.$PurchaseOrderPayload<ExtArgs>
       product: Prisma.$ProductPayload<ExtArgs>
       analytic: Prisma.$AnalyticAccountPayload<ExtArgs> | null
+      autoModel: Prisma.$AutoAnalyticModelPayload<ExtArgs> | null
+      autoRule: Prisma.$AutoAnalyticRulePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       purchaseOrderId: string
       productId: string
       analyticAccountId: string | null
+      autoAnalyticModelId: string | null
+      autoAnalyticRuleId: string | null
+      matchedFieldsCount: number | null
       description: string | null
       qty: Prisma.Decimal
       unitPrice: Prisma.Decimal
@@ -22200,6 +25284,8 @@ export namespace Prisma {
     purchaseOrder<T extends PurchaseOrderDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PurchaseOrderDefaultArgs<ExtArgs>>): Prisma__PurchaseOrderClient<$Result.GetResult<Prisma.$PurchaseOrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     product<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     analytic<T extends PurchaseOrderLine$analyticArgs<ExtArgs> = {}>(args?: Subset<T, PurchaseOrderLine$analyticArgs<ExtArgs>>): Prisma__AnalyticAccountClient<$Result.GetResult<Prisma.$AnalyticAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    autoModel<T extends PurchaseOrderLine$autoModelArgs<ExtArgs> = {}>(args?: Subset<T, PurchaseOrderLine$autoModelArgs<ExtArgs>>): Prisma__AutoAnalyticModelClient<$Result.GetResult<Prisma.$AutoAnalyticModelPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    autoRule<T extends PurchaseOrderLine$autoRuleArgs<ExtArgs> = {}>(args?: Subset<T, PurchaseOrderLine$autoRuleArgs<ExtArgs>>): Prisma__AutoAnalyticRuleClient<$Result.GetResult<Prisma.$AutoAnalyticRulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -22233,6 +25319,9 @@ export namespace Prisma {
     readonly purchaseOrderId: FieldRef<"PurchaseOrderLine", 'String'>
     readonly productId: FieldRef<"PurchaseOrderLine", 'String'>
     readonly analyticAccountId: FieldRef<"PurchaseOrderLine", 'String'>
+    readonly autoAnalyticModelId: FieldRef<"PurchaseOrderLine", 'String'>
+    readonly autoAnalyticRuleId: FieldRef<"PurchaseOrderLine", 'String'>
+    readonly matchedFieldsCount: FieldRef<"PurchaseOrderLine", 'Int'>
     readonly description: FieldRef<"PurchaseOrderLine", 'String'>
     readonly qty: FieldRef<"PurchaseOrderLine", 'Decimal'>
     readonly unitPrice: FieldRef<"PurchaseOrderLine", 'Decimal'>
@@ -22650,6 +25739,44 @@ export namespace Prisma {
      */
     include?: AnalyticAccountInclude<ExtArgs> | null
     where?: AnalyticAccountWhereInput
+  }
+
+  /**
+   * PurchaseOrderLine.autoModel
+   */
+  export type PurchaseOrderLine$autoModelArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutoAnalyticModel
+     */
+    select?: AutoAnalyticModelSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutoAnalyticModel
+     */
+    omit?: AutoAnalyticModelOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutoAnalyticModelInclude<ExtArgs> | null
+    where?: AutoAnalyticModelWhereInput
+  }
+
+  /**
+   * PurchaseOrderLine.autoRule
+   */
+  export type PurchaseOrderLine$autoRuleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutoAnalyticRule
+     */
+    select?: AutoAnalyticRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutoAnalyticRule
+     */
+    omit?: AutoAnalyticRuleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutoAnalyticRuleInclude<ExtArgs> | null
+    where?: AutoAnalyticRuleWhereInput
   }
 
   /**
@@ -23873,6 +27000,7 @@ export namespace Prisma {
   }
 
   export type SalesOrderLineAvgAggregateOutputType = {
+    matchedFieldsCount: number | null
     qty: Decimal | null
     unitPrice: Decimal | null
     taxRate: Decimal | null
@@ -23880,6 +27008,7 @@ export namespace Prisma {
   }
 
   export type SalesOrderLineSumAggregateOutputType = {
+    matchedFieldsCount: number | null
     qty: Decimal | null
     unitPrice: Decimal | null
     taxRate: Decimal | null
@@ -23891,6 +27020,9 @@ export namespace Prisma {
     salesOrderId: string | null
     productId: string | null
     analyticAccountId: string | null
+    autoAnalyticModelId: string | null
+    autoAnalyticRuleId: string | null
+    matchedFieldsCount: number | null
     description: string | null
     qty: Decimal | null
     unitPrice: Decimal | null
@@ -23903,6 +27035,9 @@ export namespace Prisma {
     salesOrderId: string | null
     productId: string | null
     analyticAccountId: string | null
+    autoAnalyticModelId: string | null
+    autoAnalyticRuleId: string | null
+    matchedFieldsCount: number | null
     description: string | null
     qty: Decimal | null
     unitPrice: Decimal | null
@@ -23915,6 +27050,9 @@ export namespace Prisma {
     salesOrderId: number
     productId: number
     analyticAccountId: number
+    autoAnalyticModelId: number
+    autoAnalyticRuleId: number
+    matchedFieldsCount: number
     description: number
     qty: number
     unitPrice: number
@@ -23925,6 +27063,7 @@ export namespace Prisma {
 
 
   export type SalesOrderLineAvgAggregateInputType = {
+    matchedFieldsCount?: true
     qty?: true
     unitPrice?: true
     taxRate?: true
@@ -23932,6 +27071,7 @@ export namespace Prisma {
   }
 
   export type SalesOrderLineSumAggregateInputType = {
+    matchedFieldsCount?: true
     qty?: true
     unitPrice?: true
     taxRate?: true
@@ -23943,6 +27083,9 @@ export namespace Prisma {
     salesOrderId?: true
     productId?: true
     analyticAccountId?: true
+    autoAnalyticModelId?: true
+    autoAnalyticRuleId?: true
+    matchedFieldsCount?: true
     description?: true
     qty?: true
     unitPrice?: true
@@ -23955,6 +27098,9 @@ export namespace Prisma {
     salesOrderId?: true
     productId?: true
     analyticAccountId?: true
+    autoAnalyticModelId?: true
+    autoAnalyticRuleId?: true
+    matchedFieldsCount?: true
     description?: true
     qty?: true
     unitPrice?: true
@@ -23967,6 +27113,9 @@ export namespace Prisma {
     salesOrderId?: true
     productId?: true
     analyticAccountId?: true
+    autoAnalyticModelId?: true
+    autoAnalyticRuleId?: true
+    matchedFieldsCount?: true
     description?: true
     qty?: true
     unitPrice?: true
@@ -24066,6 +27215,9 @@ export namespace Prisma {
     salesOrderId: string
     productId: string
     analyticAccountId: string | null
+    autoAnalyticModelId: string | null
+    autoAnalyticRuleId: string | null
+    matchedFieldsCount: number | null
     description: string | null
     qty: Decimal
     unitPrice: Decimal
@@ -24097,6 +27249,9 @@ export namespace Prisma {
     salesOrderId?: boolean
     productId?: boolean
     analyticAccountId?: boolean
+    autoAnalyticModelId?: boolean
+    autoAnalyticRuleId?: boolean
+    matchedFieldsCount?: boolean
     description?: boolean
     qty?: boolean
     unitPrice?: boolean
@@ -24105,6 +27260,8 @@ export namespace Prisma {
     salesOrder?: boolean | SalesOrderDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
     analytic?: boolean | SalesOrderLine$analyticArgs<ExtArgs>
+    autoModel?: boolean | SalesOrderLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | SalesOrderLine$autoRuleArgs<ExtArgs>
   }, ExtArgs["result"]["salesOrderLine"]>
 
   export type SalesOrderLineSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -24112,6 +27269,9 @@ export namespace Prisma {
     salesOrderId?: boolean
     productId?: boolean
     analyticAccountId?: boolean
+    autoAnalyticModelId?: boolean
+    autoAnalyticRuleId?: boolean
+    matchedFieldsCount?: boolean
     description?: boolean
     qty?: boolean
     unitPrice?: boolean
@@ -24120,6 +27280,8 @@ export namespace Prisma {
     salesOrder?: boolean | SalesOrderDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
     analytic?: boolean | SalesOrderLine$analyticArgs<ExtArgs>
+    autoModel?: boolean | SalesOrderLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | SalesOrderLine$autoRuleArgs<ExtArgs>
   }, ExtArgs["result"]["salesOrderLine"]>
 
   export type SalesOrderLineSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -24127,6 +27289,9 @@ export namespace Prisma {
     salesOrderId?: boolean
     productId?: boolean
     analyticAccountId?: boolean
+    autoAnalyticModelId?: boolean
+    autoAnalyticRuleId?: boolean
+    matchedFieldsCount?: boolean
     description?: boolean
     qty?: boolean
     unitPrice?: boolean
@@ -24135,6 +27300,8 @@ export namespace Prisma {
     salesOrder?: boolean | SalesOrderDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
     analytic?: boolean | SalesOrderLine$analyticArgs<ExtArgs>
+    autoModel?: boolean | SalesOrderLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | SalesOrderLine$autoRuleArgs<ExtArgs>
   }, ExtArgs["result"]["salesOrderLine"]>
 
   export type SalesOrderLineSelectScalar = {
@@ -24142,6 +27309,9 @@ export namespace Prisma {
     salesOrderId?: boolean
     productId?: boolean
     analyticAccountId?: boolean
+    autoAnalyticModelId?: boolean
+    autoAnalyticRuleId?: boolean
+    matchedFieldsCount?: boolean
     description?: boolean
     qty?: boolean
     unitPrice?: boolean
@@ -24149,21 +27319,27 @@ export namespace Prisma {
     lineTotal?: boolean
   }
 
-  export type SalesOrderLineOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "salesOrderId" | "productId" | "analyticAccountId" | "description" | "qty" | "unitPrice" | "taxRate" | "lineTotal", ExtArgs["result"]["salesOrderLine"]>
+  export type SalesOrderLineOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "salesOrderId" | "productId" | "analyticAccountId" | "autoAnalyticModelId" | "autoAnalyticRuleId" | "matchedFieldsCount" | "description" | "qty" | "unitPrice" | "taxRate" | "lineTotal", ExtArgs["result"]["salesOrderLine"]>
   export type SalesOrderLineInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     salesOrder?: boolean | SalesOrderDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
     analytic?: boolean | SalesOrderLine$analyticArgs<ExtArgs>
+    autoModel?: boolean | SalesOrderLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | SalesOrderLine$autoRuleArgs<ExtArgs>
   }
   export type SalesOrderLineIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     salesOrder?: boolean | SalesOrderDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
     analytic?: boolean | SalesOrderLine$analyticArgs<ExtArgs>
+    autoModel?: boolean | SalesOrderLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | SalesOrderLine$autoRuleArgs<ExtArgs>
   }
   export type SalesOrderLineIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     salesOrder?: boolean | SalesOrderDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
     analytic?: boolean | SalesOrderLine$analyticArgs<ExtArgs>
+    autoModel?: boolean | SalesOrderLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | SalesOrderLine$autoRuleArgs<ExtArgs>
   }
 
   export type $SalesOrderLinePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -24172,12 +27348,17 @@ export namespace Prisma {
       salesOrder: Prisma.$SalesOrderPayload<ExtArgs>
       product: Prisma.$ProductPayload<ExtArgs>
       analytic: Prisma.$AnalyticAccountPayload<ExtArgs> | null
+      autoModel: Prisma.$AutoAnalyticModelPayload<ExtArgs> | null
+      autoRule: Prisma.$AutoAnalyticRulePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       salesOrderId: string
       productId: string
       analyticAccountId: string | null
+      autoAnalyticModelId: string | null
+      autoAnalyticRuleId: string | null
+      matchedFieldsCount: number | null
       description: string | null
       qty: Prisma.Decimal
       unitPrice: Prisma.Decimal
@@ -24580,6 +27761,8 @@ export namespace Prisma {
     salesOrder<T extends SalesOrderDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SalesOrderDefaultArgs<ExtArgs>>): Prisma__SalesOrderClient<$Result.GetResult<Prisma.$SalesOrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     product<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     analytic<T extends SalesOrderLine$analyticArgs<ExtArgs> = {}>(args?: Subset<T, SalesOrderLine$analyticArgs<ExtArgs>>): Prisma__AnalyticAccountClient<$Result.GetResult<Prisma.$AnalyticAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    autoModel<T extends SalesOrderLine$autoModelArgs<ExtArgs> = {}>(args?: Subset<T, SalesOrderLine$autoModelArgs<ExtArgs>>): Prisma__AutoAnalyticModelClient<$Result.GetResult<Prisma.$AutoAnalyticModelPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    autoRule<T extends SalesOrderLine$autoRuleArgs<ExtArgs> = {}>(args?: Subset<T, SalesOrderLine$autoRuleArgs<ExtArgs>>): Prisma__AutoAnalyticRuleClient<$Result.GetResult<Prisma.$AutoAnalyticRulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -24613,6 +27796,9 @@ export namespace Prisma {
     readonly salesOrderId: FieldRef<"SalesOrderLine", 'String'>
     readonly productId: FieldRef<"SalesOrderLine", 'String'>
     readonly analyticAccountId: FieldRef<"SalesOrderLine", 'String'>
+    readonly autoAnalyticModelId: FieldRef<"SalesOrderLine", 'String'>
+    readonly autoAnalyticRuleId: FieldRef<"SalesOrderLine", 'String'>
+    readonly matchedFieldsCount: FieldRef<"SalesOrderLine", 'Int'>
     readonly description: FieldRef<"SalesOrderLine", 'String'>
     readonly qty: FieldRef<"SalesOrderLine", 'Decimal'>
     readonly unitPrice: FieldRef<"SalesOrderLine", 'Decimal'>
@@ -25033,6 +28219,44 @@ export namespace Prisma {
   }
 
   /**
+   * SalesOrderLine.autoModel
+   */
+  export type SalesOrderLine$autoModelArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutoAnalyticModel
+     */
+    select?: AutoAnalyticModelSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutoAnalyticModel
+     */
+    omit?: AutoAnalyticModelOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutoAnalyticModelInclude<ExtArgs> | null
+    where?: AutoAnalyticModelWhereInput
+  }
+
+  /**
+   * SalesOrderLine.autoRule
+   */
+  export type SalesOrderLine$autoRuleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutoAnalyticRule
+     */
+    select?: AutoAnalyticRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutoAnalyticRule
+     */
+    omit?: AutoAnalyticRuleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutoAnalyticRuleInclude<ExtArgs> | null
+    where?: AutoAnalyticRuleWhereInput
+  }
+
+  /**
    * SalesOrderLine without action
    */
   export type SalesOrderLineDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -25321,6 +28545,7 @@ export namespace Prisma {
     vendor?: boolean | ContactDefaultArgs<ExtArgs>
     po?: boolean | VendorBill$poArgs<ExtArgs>
     lines?: boolean | VendorBill$linesArgs<ExtArgs>
+    payments?: boolean | VendorBill$paymentsArgs<ExtArgs>
     _count?: boolean | VendorBillCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["vendorBill"]>
 
@@ -25384,6 +28609,7 @@ export namespace Prisma {
     vendor?: boolean | ContactDefaultArgs<ExtArgs>
     po?: boolean | VendorBill$poArgs<ExtArgs>
     lines?: boolean | VendorBill$linesArgs<ExtArgs>
+    payments?: boolean | VendorBill$paymentsArgs<ExtArgs>
     _count?: boolean | VendorBillCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type VendorBillIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -25404,6 +28630,7 @@ export namespace Prisma {
       vendor: Prisma.$ContactPayload<ExtArgs>
       po: Prisma.$PurchaseOrderPayload<ExtArgs> | null
       lines: Prisma.$VendorBillLinePayload<ExtArgs>[]
+      payments: Prisma.$VendorBillPaymentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -25817,6 +29044,7 @@ export namespace Prisma {
     vendor<T extends ContactDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ContactDefaultArgs<ExtArgs>>): Prisma__ContactClient<$Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     po<T extends VendorBill$poArgs<ExtArgs> = {}>(args?: Subset<T, VendorBill$poArgs<ExtArgs>>): Prisma__PurchaseOrderClient<$Result.GetResult<Prisma.$PurchaseOrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     lines<T extends VendorBill$linesArgs<ExtArgs> = {}>(args?: Subset<T, VendorBill$linesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VendorBillLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    payments<T extends VendorBill$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, VendorBill$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VendorBillPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -26298,6 +29526,30 @@ export namespace Prisma {
   }
 
   /**
+   * VendorBill.payments
+   */
+  export type VendorBill$paymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorBillPayment
+     */
+    select?: VendorBillPaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorBillPayment
+     */
+    omit?: VendorBillPaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorBillPaymentInclude<ExtArgs> | null
+    where?: VendorBillPaymentWhereInput
+    orderBy?: VendorBillPaymentOrderByWithRelationInput | VendorBillPaymentOrderByWithRelationInput[]
+    cursor?: VendorBillPaymentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VendorBillPaymentScalarFieldEnum | VendorBillPaymentScalarFieldEnum[]
+  }
+
+  /**
    * VendorBill without action
    */
   export type VendorBillDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -26329,6 +29581,7 @@ export namespace Prisma {
   }
 
   export type VendorBillLineAvgAggregateOutputType = {
+    matchedFieldsCount: number | null
     qty: Decimal | null
     unitPrice: Decimal | null
     taxRate: Decimal | null
@@ -26336,6 +29589,7 @@ export namespace Prisma {
   }
 
   export type VendorBillLineSumAggregateOutputType = {
+    matchedFieldsCount: number | null
     qty: Decimal | null
     unitPrice: Decimal | null
     taxRate: Decimal | null
@@ -26347,6 +29601,9 @@ export namespace Prisma {
     vendorBillId: string | null
     productId: string | null
     analyticAccountId: string | null
+    autoAnalyticModelId: string | null
+    autoAnalyticRuleId: string | null
+    matchedFieldsCount: number | null
     glAccountId: string | null
     description: string | null
     qty: Decimal | null
@@ -26360,6 +29617,9 @@ export namespace Prisma {
     vendorBillId: string | null
     productId: string | null
     analyticAccountId: string | null
+    autoAnalyticModelId: string | null
+    autoAnalyticRuleId: string | null
+    matchedFieldsCount: number | null
     glAccountId: string | null
     description: string | null
     qty: Decimal | null
@@ -26373,6 +29633,9 @@ export namespace Prisma {
     vendorBillId: number
     productId: number
     analyticAccountId: number
+    autoAnalyticModelId: number
+    autoAnalyticRuleId: number
+    matchedFieldsCount: number
     glAccountId: number
     description: number
     qty: number
@@ -26384,6 +29647,7 @@ export namespace Prisma {
 
 
   export type VendorBillLineAvgAggregateInputType = {
+    matchedFieldsCount?: true
     qty?: true
     unitPrice?: true
     taxRate?: true
@@ -26391,6 +29655,7 @@ export namespace Prisma {
   }
 
   export type VendorBillLineSumAggregateInputType = {
+    matchedFieldsCount?: true
     qty?: true
     unitPrice?: true
     taxRate?: true
@@ -26402,6 +29667,9 @@ export namespace Prisma {
     vendorBillId?: true
     productId?: true
     analyticAccountId?: true
+    autoAnalyticModelId?: true
+    autoAnalyticRuleId?: true
+    matchedFieldsCount?: true
     glAccountId?: true
     description?: true
     qty?: true
@@ -26415,6 +29683,9 @@ export namespace Prisma {
     vendorBillId?: true
     productId?: true
     analyticAccountId?: true
+    autoAnalyticModelId?: true
+    autoAnalyticRuleId?: true
+    matchedFieldsCount?: true
     glAccountId?: true
     description?: true
     qty?: true
@@ -26428,6 +29699,9 @@ export namespace Prisma {
     vendorBillId?: true
     productId?: true
     analyticAccountId?: true
+    autoAnalyticModelId?: true
+    autoAnalyticRuleId?: true
+    matchedFieldsCount?: true
     glAccountId?: true
     description?: true
     qty?: true
@@ -26528,6 +29802,9 @@ export namespace Prisma {
     vendorBillId: string
     productId: string | null
     analyticAccountId: string | null
+    autoAnalyticModelId: string | null
+    autoAnalyticRuleId: string | null
+    matchedFieldsCount: number | null
     glAccountId: string | null
     description: string | null
     qty: Decimal
@@ -26560,6 +29837,9 @@ export namespace Prisma {
     vendorBillId?: boolean
     productId?: boolean
     analyticAccountId?: boolean
+    autoAnalyticModelId?: boolean
+    autoAnalyticRuleId?: boolean
+    matchedFieldsCount?: boolean
     glAccountId?: boolean
     description?: boolean
     qty?: boolean
@@ -26570,6 +29850,8 @@ export namespace Prisma {
     product?: boolean | VendorBillLine$productArgs<ExtArgs>
     analytic?: boolean | VendorBillLine$analyticArgs<ExtArgs>
     gl?: boolean | VendorBillLine$glArgs<ExtArgs>
+    autoModel?: boolean | VendorBillLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | VendorBillLine$autoRuleArgs<ExtArgs>
   }, ExtArgs["result"]["vendorBillLine"]>
 
   export type VendorBillLineSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -26577,6 +29859,9 @@ export namespace Prisma {
     vendorBillId?: boolean
     productId?: boolean
     analyticAccountId?: boolean
+    autoAnalyticModelId?: boolean
+    autoAnalyticRuleId?: boolean
+    matchedFieldsCount?: boolean
     glAccountId?: boolean
     description?: boolean
     qty?: boolean
@@ -26587,6 +29872,8 @@ export namespace Prisma {
     product?: boolean | VendorBillLine$productArgs<ExtArgs>
     analytic?: boolean | VendorBillLine$analyticArgs<ExtArgs>
     gl?: boolean | VendorBillLine$glArgs<ExtArgs>
+    autoModel?: boolean | VendorBillLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | VendorBillLine$autoRuleArgs<ExtArgs>
   }, ExtArgs["result"]["vendorBillLine"]>
 
   export type VendorBillLineSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -26594,6 +29881,9 @@ export namespace Prisma {
     vendorBillId?: boolean
     productId?: boolean
     analyticAccountId?: boolean
+    autoAnalyticModelId?: boolean
+    autoAnalyticRuleId?: boolean
+    matchedFieldsCount?: boolean
     glAccountId?: boolean
     description?: boolean
     qty?: boolean
@@ -26604,6 +29894,8 @@ export namespace Prisma {
     product?: boolean | VendorBillLine$productArgs<ExtArgs>
     analytic?: boolean | VendorBillLine$analyticArgs<ExtArgs>
     gl?: boolean | VendorBillLine$glArgs<ExtArgs>
+    autoModel?: boolean | VendorBillLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | VendorBillLine$autoRuleArgs<ExtArgs>
   }, ExtArgs["result"]["vendorBillLine"]>
 
   export type VendorBillLineSelectScalar = {
@@ -26611,6 +29903,9 @@ export namespace Prisma {
     vendorBillId?: boolean
     productId?: boolean
     analyticAccountId?: boolean
+    autoAnalyticModelId?: boolean
+    autoAnalyticRuleId?: boolean
+    matchedFieldsCount?: boolean
     glAccountId?: boolean
     description?: boolean
     qty?: boolean
@@ -26619,24 +29914,30 @@ export namespace Prisma {
     lineTotal?: boolean
   }
 
-  export type VendorBillLineOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "vendorBillId" | "productId" | "analyticAccountId" | "glAccountId" | "description" | "qty" | "unitPrice" | "taxRate" | "lineTotal", ExtArgs["result"]["vendorBillLine"]>
+  export type VendorBillLineOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "vendorBillId" | "productId" | "analyticAccountId" | "autoAnalyticModelId" | "autoAnalyticRuleId" | "matchedFieldsCount" | "glAccountId" | "description" | "qty" | "unitPrice" | "taxRate" | "lineTotal", ExtArgs["result"]["vendorBillLine"]>
   export type VendorBillLineInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bill?: boolean | VendorBillDefaultArgs<ExtArgs>
     product?: boolean | VendorBillLine$productArgs<ExtArgs>
     analytic?: boolean | VendorBillLine$analyticArgs<ExtArgs>
     gl?: boolean | VendorBillLine$glArgs<ExtArgs>
+    autoModel?: boolean | VendorBillLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | VendorBillLine$autoRuleArgs<ExtArgs>
   }
   export type VendorBillLineIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bill?: boolean | VendorBillDefaultArgs<ExtArgs>
     product?: boolean | VendorBillLine$productArgs<ExtArgs>
     analytic?: boolean | VendorBillLine$analyticArgs<ExtArgs>
     gl?: boolean | VendorBillLine$glArgs<ExtArgs>
+    autoModel?: boolean | VendorBillLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | VendorBillLine$autoRuleArgs<ExtArgs>
   }
   export type VendorBillLineIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bill?: boolean | VendorBillDefaultArgs<ExtArgs>
     product?: boolean | VendorBillLine$productArgs<ExtArgs>
     analytic?: boolean | VendorBillLine$analyticArgs<ExtArgs>
     gl?: boolean | VendorBillLine$glArgs<ExtArgs>
+    autoModel?: boolean | VendorBillLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | VendorBillLine$autoRuleArgs<ExtArgs>
   }
 
   export type $VendorBillLinePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -26646,12 +29947,17 @@ export namespace Prisma {
       product: Prisma.$ProductPayload<ExtArgs> | null
       analytic: Prisma.$AnalyticAccountPayload<ExtArgs> | null
       gl: Prisma.$GLAccountPayload<ExtArgs> | null
+      autoModel: Prisma.$AutoAnalyticModelPayload<ExtArgs> | null
+      autoRule: Prisma.$AutoAnalyticRulePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       vendorBillId: string
       productId: string | null
       analyticAccountId: string | null
+      autoAnalyticModelId: string | null
+      autoAnalyticRuleId: string | null
+      matchedFieldsCount: number | null
       glAccountId: string | null
       description: string | null
       qty: Prisma.Decimal
@@ -27056,6 +30362,8 @@ export namespace Prisma {
     product<T extends VendorBillLine$productArgs<ExtArgs> = {}>(args?: Subset<T, VendorBillLine$productArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     analytic<T extends VendorBillLine$analyticArgs<ExtArgs> = {}>(args?: Subset<T, VendorBillLine$analyticArgs<ExtArgs>>): Prisma__AnalyticAccountClient<$Result.GetResult<Prisma.$AnalyticAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     gl<T extends VendorBillLine$glArgs<ExtArgs> = {}>(args?: Subset<T, VendorBillLine$glArgs<ExtArgs>>): Prisma__GLAccountClient<$Result.GetResult<Prisma.$GLAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    autoModel<T extends VendorBillLine$autoModelArgs<ExtArgs> = {}>(args?: Subset<T, VendorBillLine$autoModelArgs<ExtArgs>>): Prisma__AutoAnalyticModelClient<$Result.GetResult<Prisma.$AutoAnalyticModelPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    autoRule<T extends VendorBillLine$autoRuleArgs<ExtArgs> = {}>(args?: Subset<T, VendorBillLine$autoRuleArgs<ExtArgs>>): Prisma__AutoAnalyticRuleClient<$Result.GetResult<Prisma.$AutoAnalyticRulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -27089,6 +30397,9 @@ export namespace Prisma {
     readonly vendorBillId: FieldRef<"VendorBillLine", 'String'>
     readonly productId: FieldRef<"VendorBillLine", 'String'>
     readonly analyticAccountId: FieldRef<"VendorBillLine", 'String'>
+    readonly autoAnalyticModelId: FieldRef<"VendorBillLine", 'String'>
+    readonly autoAnalyticRuleId: FieldRef<"VendorBillLine", 'String'>
+    readonly matchedFieldsCount: FieldRef<"VendorBillLine", 'Int'>
     readonly glAccountId: FieldRef<"VendorBillLine", 'String'>
     readonly description: FieldRef<"VendorBillLine", 'String'>
     readonly qty: FieldRef<"VendorBillLine", 'Decimal'>
@@ -27548,6 +30859,44 @@ export namespace Prisma {
   }
 
   /**
+   * VendorBillLine.autoModel
+   */
+  export type VendorBillLine$autoModelArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutoAnalyticModel
+     */
+    select?: AutoAnalyticModelSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutoAnalyticModel
+     */
+    omit?: AutoAnalyticModelOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutoAnalyticModelInclude<ExtArgs> | null
+    where?: AutoAnalyticModelWhereInput
+  }
+
+  /**
+   * VendorBillLine.autoRule
+   */
+  export type VendorBillLine$autoRuleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutoAnalyticRule
+     */
+    select?: AutoAnalyticRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutoAnalyticRule
+     */
+    omit?: AutoAnalyticRuleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutoAnalyticRuleInclude<ExtArgs> | null
+    where?: AutoAnalyticRuleWhereInput
+  }
+
+  /**
    * VendorBillLine without action
    */
   export type VendorBillLineDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -27844,6 +31193,7 @@ export namespace Prisma {
     customer?: boolean | ContactDefaultArgs<ExtArgs>
     so?: boolean | CustomerInvoice$soArgs<ExtArgs>
     lines?: boolean | CustomerInvoice$linesArgs<ExtArgs>
+    payments?: boolean | CustomerInvoice$paymentsArgs<ExtArgs>
     _count?: boolean | CustomerInvoiceCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["customerInvoice"]>
 
@@ -27910,6 +31260,7 @@ export namespace Prisma {
     customer?: boolean | ContactDefaultArgs<ExtArgs>
     so?: boolean | CustomerInvoice$soArgs<ExtArgs>
     lines?: boolean | CustomerInvoice$linesArgs<ExtArgs>
+    payments?: boolean | CustomerInvoice$paymentsArgs<ExtArgs>
     _count?: boolean | CustomerInvoiceCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CustomerInvoiceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -27930,6 +31281,7 @@ export namespace Prisma {
       customer: Prisma.$ContactPayload<ExtArgs>
       so: Prisma.$SalesOrderPayload<ExtArgs> | null
       lines: Prisma.$CustomerInvoiceLinePayload<ExtArgs>[]
+      payments: Prisma.$CustomerInvoicePaymentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -28344,6 +31696,7 @@ export namespace Prisma {
     customer<T extends ContactDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ContactDefaultArgs<ExtArgs>>): Prisma__ContactClient<$Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     so<T extends CustomerInvoice$soArgs<ExtArgs> = {}>(args?: Subset<T, CustomerInvoice$soArgs<ExtArgs>>): Prisma__SalesOrderClient<$Result.GetResult<Prisma.$SalesOrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     lines<T extends CustomerInvoice$linesArgs<ExtArgs> = {}>(args?: Subset<T, CustomerInvoice$linesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerInvoiceLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    payments<T extends CustomerInvoice$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, CustomerInvoice$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerInvoicePaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -28826,6 +32179,30 @@ export namespace Prisma {
   }
 
   /**
+   * CustomerInvoice.payments
+   */
+  export type CustomerInvoice$paymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerInvoicePayment
+     */
+    select?: CustomerInvoicePaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerInvoicePayment
+     */
+    omit?: CustomerInvoicePaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerInvoicePaymentInclude<ExtArgs> | null
+    where?: CustomerInvoicePaymentWhereInput
+    orderBy?: CustomerInvoicePaymentOrderByWithRelationInput | CustomerInvoicePaymentOrderByWithRelationInput[]
+    cursor?: CustomerInvoicePaymentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CustomerInvoicePaymentScalarFieldEnum | CustomerInvoicePaymentScalarFieldEnum[]
+  }
+
+  /**
    * CustomerInvoice without action
    */
   export type CustomerInvoiceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -28857,6 +32234,7 @@ export namespace Prisma {
   }
 
   export type CustomerInvoiceLineAvgAggregateOutputType = {
+    matchedFieldsCount: number | null
     qty: Decimal | null
     unitPrice: Decimal | null
     taxRate: Decimal | null
@@ -28864,6 +32242,7 @@ export namespace Prisma {
   }
 
   export type CustomerInvoiceLineSumAggregateOutputType = {
+    matchedFieldsCount: number | null
     qty: Decimal | null
     unitPrice: Decimal | null
     taxRate: Decimal | null
@@ -28875,6 +32254,9 @@ export namespace Prisma {
     customerInvoiceId: string | null
     productId: string | null
     analyticAccountId: string | null
+    autoAnalyticModelId: string | null
+    autoAnalyticRuleId: string | null
+    matchedFieldsCount: number | null
     glAccountId: string | null
     description: string | null
     qty: Decimal | null
@@ -28888,6 +32270,9 @@ export namespace Prisma {
     customerInvoiceId: string | null
     productId: string | null
     analyticAccountId: string | null
+    autoAnalyticModelId: string | null
+    autoAnalyticRuleId: string | null
+    matchedFieldsCount: number | null
     glAccountId: string | null
     description: string | null
     qty: Decimal | null
@@ -28901,6 +32286,9 @@ export namespace Prisma {
     customerInvoiceId: number
     productId: number
     analyticAccountId: number
+    autoAnalyticModelId: number
+    autoAnalyticRuleId: number
+    matchedFieldsCount: number
     glAccountId: number
     description: number
     qty: number
@@ -28912,6 +32300,7 @@ export namespace Prisma {
 
 
   export type CustomerInvoiceLineAvgAggregateInputType = {
+    matchedFieldsCount?: true
     qty?: true
     unitPrice?: true
     taxRate?: true
@@ -28919,6 +32308,7 @@ export namespace Prisma {
   }
 
   export type CustomerInvoiceLineSumAggregateInputType = {
+    matchedFieldsCount?: true
     qty?: true
     unitPrice?: true
     taxRate?: true
@@ -28930,6 +32320,9 @@ export namespace Prisma {
     customerInvoiceId?: true
     productId?: true
     analyticAccountId?: true
+    autoAnalyticModelId?: true
+    autoAnalyticRuleId?: true
+    matchedFieldsCount?: true
     glAccountId?: true
     description?: true
     qty?: true
@@ -28943,6 +32336,9 @@ export namespace Prisma {
     customerInvoiceId?: true
     productId?: true
     analyticAccountId?: true
+    autoAnalyticModelId?: true
+    autoAnalyticRuleId?: true
+    matchedFieldsCount?: true
     glAccountId?: true
     description?: true
     qty?: true
@@ -28956,6 +32352,9 @@ export namespace Prisma {
     customerInvoiceId?: true
     productId?: true
     analyticAccountId?: true
+    autoAnalyticModelId?: true
+    autoAnalyticRuleId?: true
+    matchedFieldsCount?: true
     glAccountId?: true
     description?: true
     qty?: true
@@ -29056,6 +32455,9 @@ export namespace Prisma {
     customerInvoiceId: string
     productId: string | null
     analyticAccountId: string | null
+    autoAnalyticModelId: string | null
+    autoAnalyticRuleId: string | null
+    matchedFieldsCount: number | null
     glAccountId: string | null
     description: string | null
     qty: Decimal
@@ -29088,6 +32490,9 @@ export namespace Prisma {
     customerInvoiceId?: boolean
     productId?: boolean
     analyticAccountId?: boolean
+    autoAnalyticModelId?: boolean
+    autoAnalyticRuleId?: boolean
+    matchedFieldsCount?: boolean
     glAccountId?: boolean
     description?: boolean
     qty?: boolean
@@ -29098,6 +32503,8 @@ export namespace Prisma {
     product?: boolean | CustomerInvoiceLine$productArgs<ExtArgs>
     analytic?: boolean | CustomerInvoiceLine$analyticArgs<ExtArgs>
     gl?: boolean | CustomerInvoiceLine$glArgs<ExtArgs>
+    autoModel?: boolean | CustomerInvoiceLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | CustomerInvoiceLine$autoRuleArgs<ExtArgs>
   }, ExtArgs["result"]["customerInvoiceLine"]>
 
   export type CustomerInvoiceLineSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -29105,6 +32512,9 @@ export namespace Prisma {
     customerInvoiceId?: boolean
     productId?: boolean
     analyticAccountId?: boolean
+    autoAnalyticModelId?: boolean
+    autoAnalyticRuleId?: boolean
+    matchedFieldsCount?: boolean
     glAccountId?: boolean
     description?: boolean
     qty?: boolean
@@ -29115,6 +32525,8 @@ export namespace Prisma {
     product?: boolean | CustomerInvoiceLine$productArgs<ExtArgs>
     analytic?: boolean | CustomerInvoiceLine$analyticArgs<ExtArgs>
     gl?: boolean | CustomerInvoiceLine$glArgs<ExtArgs>
+    autoModel?: boolean | CustomerInvoiceLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | CustomerInvoiceLine$autoRuleArgs<ExtArgs>
   }, ExtArgs["result"]["customerInvoiceLine"]>
 
   export type CustomerInvoiceLineSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -29122,6 +32534,9 @@ export namespace Prisma {
     customerInvoiceId?: boolean
     productId?: boolean
     analyticAccountId?: boolean
+    autoAnalyticModelId?: boolean
+    autoAnalyticRuleId?: boolean
+    matchedFieldsCount?: boolean
     glAccountId?: boolean
     description?: boolean
     qty?: boolean
@@ -29132,6 +32547,8 @@ export namespace Prisma {
     product?: boolean | CustomerInvoiceLine$productArgs<ExtArgs>
     analytic?: boolean | CustomerInvoiceLine$analyticArgs<ExtArgs>
     gl?: boolean | CustomerInvoiceLine$glArgs<ExtArgs>
+    autoModel?: boolean | CustomerInvoiceLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | CustomerInvoiceLine$autoRuleArgs<ExtArgs>
   }, ExtArgs["result"]["customerInvoiceLine"]>
 
   export type CustomerInvoiceLineSelectScalar = {
@@ -29139,6 +32556,9 @@ export namespace Prisma {
     customerInvoiceId?: boolean
     productId?: boolean
     analyticAccountId?: boolean
+    autoAnalyticModelId?: boolean
+    autoAnalyticRuleId?: boolean
+    matchedFieldsCount?: boolean
     glAccountId?: boolean
     description?: boolean
     qty?: boolean
@@ -29147,24 +32567,30 @@ export namespace Prisma {
     lineTotal?: boolean
   }
 
-  export type CustomerInvoiceLineOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "customerInvoiceId" | "productId" | "analyticAccountId" | "glAccountId" | "description" | "qty" | "unitPrice" | "taxRate" | "lineTotal", ExtArgs["result"]["customerInvoiceLine"]>
+  export type CustomerInvoiceLineOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "customerInvoiceId" | "productId" | "analyticAccountId" | "autoAnalyticModelId" | "autoAnalyticRuleId" | "matchedFieldsCount" | "glAccountId" | "description" | "qty" | "unitPrice" | "taxRate" | "lineTotal", ExtArgs["result"]["customerInvoiceLine"]>
   export type CustomerInvoiceLineInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     invoice?: boolean | CustomerInvoiceDefaultArgs<ExtArgs>
     product?: boolean | CustomerInvoiceLine$productArgs<ExtArgs>
     analytic?: boolean | CustomerInvoiceLine$analyticArgs<ExtArgs>
     gl?: boolean | CustomerInvoiceLine$glArgs<ExtArgs>
+    autoModel?: boolean | CustomerInvoiceLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | CustomerInvoiceLine$autoRuleArgs<ExtArgs>
   }
   export type CustomerInvoiceLineIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     invoice?: boolean | CustomerInvoiceDefaultArgs<ExtArgs>
     product?: boolean | CustomerInvoiceLine$productArgs<ExtArgs>
     analytic?: boolean | CustomerInvoiceLine$analyticArgs<ExtArgs>
     gl?: boolean | CustomerInvoiceLine$glArgs<ExtArgs>
+    autoModel?: boolean | CustomerInvoiceLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | CustomerInvoiceLine$autoRuleArgs<ExtArgs>
   }
   export type CustomerInvoiceLineIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     invoice?: boolean | CustomerInvoiceDefaultArgs<ExtArgs>
     product?: boolean | CustomerInvoiceLine$productArgs<ExtArgs>
     analytic?: boolean | CustomerInvoiceLine$analyticArgs<ExtArgs>
     gl?: boolean | CustomerInvoiceLine$glArgs<ExtArgs>
+    autoModel?: boolean | CustomerInvoiceLine$autoModelArgs<ExtArgs>
+    autoRule?: boolean | CustomerInvoiceLine$autoRuleArgs<ExtArgs>
   }
 
   export type $CustomerInvoiceLinePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -29174,12 +32600,17 @@ export namespace Prisma {
       product: Prisma.$ProductPayload<ExtArgs> | null
       analytic: Prisma.$AnalyticAccountPayload<ExtArgs> | null
       gl: Prisma.$GLAccountPayload<ExtArgs> | null
+      autoModel: Prisma.$AutoAnalyticModelPayload<ExtArgs> | null
+      autoRule: Prisma.$AutoAnalyticRulePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       customerInvoiceId: string
       productId: string | null
       analyticAccountId: string | null
+      autoAnalyticModelId: string | null
+      autoAnalyticRuleId: string | null
+      matchedFieldsCount: number | null
       glAccountId: string | null
       description: string | null
       qty: Prisma.Decimal
@@ -29584,6 +33015,8 @@ export namespace Prisma {
     product<T extends CustomerInvoiceLine$productArgs<ExtArgs> = {}>(args?: Subset<T, CustomerInvoiceLine$productArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     analytic<T extends CustomerInvoiceLine$analyticArgs<ExtArgs> = {}>(args?: Subset<T, CustomerInvoiceLine$analyticArgs<ExtArgs>>): Prisma__AnalyticAccountClient<$Result.GetResult<Prisma.$AnalyticAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     gl<T extends CustomerInvoiceLine$glArgs<ExtArgs> = {}>(args?: Subset<T, CustomerInvoiceLine$glArgs<ExtArgs>>): Prisma__GLAccountClient<$Result.GetResult<Prisma.$GLAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    autoModel<T extends CustomerInvoiceLine$autoModelArgs<ExtArgs> = {}>(args?: Subset<T, CustomerInvoiceLine$autoModelArgs<ExtArgs>>): Prisma__AutoAnalyticModelClient<$Result.GetResult<Prisma.$AutoAnalyticModelPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    autoRule<T extends CustomerInvoiceLine$autoRuleArgs<ExtArgs> = {}>(args?: Subset<T, CustomerInvoiceLine$autoRuleArgs<ExtArgs>>): Prisma__AutoAnalyticRuleClient<$Result.GetResult<Prisma.$AutoAnalyticRulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -29617,6 +33050,9 @@ export namespace Prisma {
     readonly customerInvoiceId: FieldRef<"CustomerInvoiceLine", 'String'>
     readonly productId: FieldRef<"CustomerInvoiceLine", 'String'>
     readonly analyticAccountId: FieldRef<"CustomerInvoiceLine", 'String'>
+    readonly autoAnalyticModelId: FieldRef<"CustomerInvoiceLine", 'String'>
+    readonly autoAnalyticRuleId: FieldRef<"CustomerInvoiceLine", 'String'>
+    readonly matchedFieldsCount: FieldRef<"CustomerInvoiceLine", 'Int'>
     readonly glAccountId: FieldRef<"CustomerInvoiceLine", 'String'>
     readonly description: FieldRef<"CustomerInvoiceLine", 'String'>
     readonly qty: FieldRef<"CustomerInvoiceLine", 'Decimal'>
@@ -30076,6 +33512,44 @@ export namespace Prisma {
   }
 
   /**
+   * CustomerInvoiceLine.autoModel
+   */
+  export type CustomerInvoiceLine$autoModelArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutoAnalyticModel
+     */
+    select?: AutoAnalyticModelSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutoAnalyticModel
+     */
+    omit?: AutoAnalyticModelOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutoAnalyticModelInclude<ExtArgs> | null
+    where?: AutoAnalyticModelWhereInput
+  }
+
+  /**
+   * CustomerInvoiceLine.autoRule
+   */
+  export type CustomerInvoiceLine$autoRuleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutoAnalyticRule
+     */
+    select?: AutoAnalyticRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutoAnalyticRule
+     */
+    omit?: AutoAnalyticRuleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutoAnalyticRuleInclude<ExtArgs> | null
+    where?: AutoAnalyticRuleWhereInput
+  }
+
+  /**
    * CustomerInvoiceLine without action
    */
   export type CustomerInvoiceLineDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -30335,6 +33809,8 @@ export namespace Prisma {
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     contact?: boolean | ContactDefaultArgs<ExtArgs>
     allocations?: boolean | Payment$allocationsArgs<ExtArgs>
+    invoicePayments?: boolean | Payment$invoicePaymentsArgs<ExtArgs>
+    billPayments?: boolean | Payment$billPaymentsArgs<ExtArgs>
     _count?: boolean | PaymentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["payment"]>
 
@@ -30386,6 +33862,8 @@ export namespace Prisma {
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     contact?: boolean | ContactDefaultArgs<ExtArgs>
     allocations?: boolean | Payment$allocationsArgs<ExtArgs>
+    invoicePayments?: boolean | Payment$invoicePaymentsArgs<ExtArgs>
+    billPayments?: boolean | Payment$billPaymentsArgs<ExtArgs>
     _count?: boolean | PaymentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PaymentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -30403,6 +33881,8 @@ export namespace Prisma {
       company: Prisma.$CompanyPayload<ExtArgs>
       contact: Prisma.$ContactPayload<ExtArgs>
       allocations: Prisma.$PaymentAllocationPayload<ExtArgs>[]
+      invoicePayments: Prisma.$CustomerInvoicePaymentPayload<ExtArgs>[]
+      billPayments: Prisma.$VendorBillPaymentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -30812,6 +34292,8 @@ export namespace Prisma {
     company<T extends CompanyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CompanyDefaultArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     contact<T extends ContactDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ContactDefaultArgs<ExtArgs>>): Prisma__ContactClient<$Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     allocations<T extends Payment$allocationsArgs<ExtArgs> = {}>(args?: Subset<T, Payment$allocationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentAllocationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    invoicePayments<T extends Payment$invoicePaymentsArgs<ExtArgs> = {}>(args?: Subset<T, Payment$invoicePaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerInvoicePaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    billPayments<T extends Payment$billPaymentsArgs<ExtArgs> = {}>(args?: Subset<T, Payment$billPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VendorBillPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -31268,6 +34750,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PaymentAllocationScalarFieldEnum | PaymentAllocationScalarFieldEnum[]
+  }
+
+  /**
+   * Payment.invoicePayments
+   */
+  export type Payment$invoicePaymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerInvoicePayment
+     */
+    select?: CustomerInvoicePaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerInvoicePayment
+     */
+    omit?: CustomerInvoicePaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerInvoicePaymentInclude<ExtArgs> | null
+    where?: CustomerInvoicePaymentWhereInput
+    orderBy?: CustomerInvoicePaymentOrderByWithRelationInput | CustomerInvoicePaymentOrderByWithRelationInput[]
+    cursor?: CustomerInvoicePaymentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CustomerInvoicePaymentScalarFieldEnum | CustomerInvoicePaymentScalarFieldEnum[]
+  }
+
+  /**
+   * Payment.billPayments
+   */
+  export type Payment$billPaymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorBillPayment
+     */
+    select?: VendorBillPaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorBillPayment
+     */
+    omit?: VendorBillPaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorBillPaymentInclude<ExtArgs> | null
+    where?: VendorBillPaymentWhereInput
+    orderBy?: VendorBillPaymentOrderByWithRelationInput | VendorBillPaymentOrderByWithRelationInput[]
+    cursor?: VendorBillPaymentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VendorBillPaymentScalarFieldEnum | VendorBillPaymentScalarFieldEnum[]
   }
 
   /**
@@ -32378,6 +35908,2206 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: PaymentAllocationInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CustomerInvoicePayment
+   */
+
+  export type AggregateCustomerInvoicePayment = {
+    _count: CustomerInvoicePaymentCountAggregateOutputType | null
+    _avg: CustomerInvoicePaymentAvgAggregateOutputType | null
+    _sum: CustomerInvoicePaymentSumAggregateOutputType | null
+    _min: CustomerInvoicePaymentMinAggregateOutputType | null
+    _max: CustomerInvoicePaymentMaxAggregateOutputType | null
+  }
+
+  export type CustomerInvoicePaymentAvgAggregateOutputType = {
+    amount: Decimal | null
+  }
+
+  export type CustomerInvoicePaymentSumAggregateOutputType = {
+    amount: Decimal | null
+  }
+
+  export type CustomerInvoicePaymentMinAggregateOutputType = {
+    id: string | null
+    invoiceId: string | null
+    paymentId: string | null
+    amount: Decimal | null
+    createdAt: Date | null
+  }
+
+  export type CustomerInvoicePaymentMaxAggregateOutputType = {
+    id: string | null
+    invoiceId: string | null
+    paymentId: string | null
+    amount: Decimal | null
+    createdAt: Date | null
+  }
+
+  export type CustomerInvoicePaymentCountAggregateOutputType = {
+    id: number
+    invoiceId: number
+    paymentId: number
+    amount: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type CustomerInvoicePaymentAvgAggregateInputType = {
+    amount?: true
+  }
+
+  export type CustomerInvoicePaymentSumAggregateInputType = {
+    amount?: true
+  }
+
+  export type CustomerInvoicePaymentMinAggregateInputType = {
+    id?: true
+    invoiceId?: true
+    paymentId?: true
+    amount?: true
+    createdAt?: true
+  }
+
+  export type CustomerInvoicePaymentMaxAggregateInputType = {
+    id?: true
+    invoiceId?: true
+    paymentId?: true
+    amount?: true
+    createdAt?: true
+  }
+
+  export type CustomerInvoicePaymentCountAggregateInputType = {
+    id?: true
+    invoiceId?: true
+    paymentId?: true
+    amount?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type CustomerInvoicePaymentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CustomerInvoicePayment to aggregate.
+     */
+    where?: CustomerInvoicePaymentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CustomerInvoicePayments to fetch.
+     */
+    orderBy?: CustomerInvoicePaymentOrderByWithRelationInput | CustomerInvoicePaymentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CustomerInvoicePaymentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CustomerInvoicePayments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CustomerInvoicePayments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CustomerInvoicePayments
+    **/
+    _count?: true | CustomerInvoicePaymentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CustomerInvoicePaymentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CustomerInvoicePaymentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CustomerInvoicePaymentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CustomerInvoicePaymentMaxAggregateInputType
+  }
+
+  export type GetCustomerInvoicePaymentAggregateType<T extends CustomerInvoicePaymentAggregateArgs> = {
+        [P in keyof T & keyof AggregateCustomerInvoicePayment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCustomerInvoicePayment[P]>
+      : GetScalarType<T[P], AggregateCustomerInvoicePayment[P]>
+  }
+
+
+
+
+  export type CustomerInvoicePaymentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CustomerInvoicePaymentWhereInput
+    orderBy?: CustomerInvoicePaymentOrderByWithAggregationInput | CustomerInvoicePaymentOrderByWithAggregationInput[]
+    by: CustomerInvoicePaymentScalarFieldEnum[] | CustomerInvoicePaymentScalarFieldEnum
+    having?: CustomerInvoicePaymentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CustomerInvoicePaymentCountAggregateInputType | true
+    _avg?: CustomerInvoicePaymentAvgAggregateInputType
+    _sum?: CustomerInvoicePaymentSumAggregateInputType
+    _min?: CustomerInvoicePaymentMinAggregateInputType
+    _max?: CustomerInvoicePaymentMaxAggregateInputType
+  }
+
+  export type CustomerInvoicePaymentGroupByOutputType = {
+    id: string
+    invoiceId: string
+    paymentId: string
+    amount: Decimal
+    createdAt: Date
+    _count: CustomerInvoicePaymentCountAggregateOutputType | null
+    _avg: CustomerInvoicePaymentAvgAggregateOutputType | null
+    _sum: CustomerInvoicePaymentSumAggregateOutputType | null
+    _min: CustomerInvoicePaymentMinAggregateOutputType | null
+    _max: CustomerInvoicePaymentMaxAggregateOutputType | null
+  }
+
+  type GetCustomerInvoicePaymentGroupByPayload<T extends CustomerInvoicePaymentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CustomerInvoicePaymentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CustomerInvoicePaymentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CustomerInvoicePaymentGroupByOutputType[P]>
+            : GetScalarType<T[P], CustomerInvoicePaymentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CustomerInvoicePaymentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    invoiceId?: boolean
+    paymentId?: boolean
+    amount?: boolean
+    createdAt?: boolean
+    invoice?: boolean | CustomerInvoiceDefaultArgs<ExtArgs>
+    payment?: boolean | PaymentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["customerInvoicePayment"]>
+
+  export type CustomerInvoicePaymentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    invoiceId?: boolean
+    paymentId?: boolean
+    amount?: boolean
+    createdAt?: boolean
+    invoice?: boolean | CustomerInvoiceDefaultArgs<ExtArgs>
+    payment?: boolean | PaymentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["customerInvoicePayment"]>
+
+  export type CustomerInvoicePaymentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    invoiceId?: boolean
+    paymentId?: boolean
+    amount?: boolean
+    createdAt?: boolean
+    invoice?: boolean | CustomerInvoiceDefaultArgs<ExtArgs>
+    payment?: boolean | PaymentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["customerInvoicePayment"]>
+
+  export type CustomerInvoicePaymentSelectScalar = {
+    id?: boolean
+    invoiceId?: boolean
+    paymentId?: boolean
+    amount?: boolean
+    createdAt?: boolean
+  }
+
+  export type CustomerInvoicePaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "invoiceId" | "paymentId" | "amount" | "createdAt", ExtArgs["result"]["customerInvoicePayment"]>
+  export type CustomerInvoicePaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    invoice?: boolean | CustomerInvoiceDefaultArgs<ExtArgs>
+    payment?: boolean | PaymentDefaultArgs<ExtArgs>
+  }
+  export type CustomerInvoicePaymentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    invoice?: boolean | CustomerInvoiceDefaultArgs<ExtArgs>
+    payment?: boolean | PaymentDefaultArgs<ExtArgs>
+  }
+  export type CustomerInvoicePaymentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    invoice?: boolean | CustomerInvoiceDefaultArgs<ExtArgs>
+    payment?: boolean | PaymentDefaultArgs<ExtArgs>
+  }
+
+  export type $CustomerInvoicePaymentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CustomerInvoicePayment"
+    objects: {
+      invoice: Prisma.$CustomerInvoicePayload<ExtArgs>
+      payment: Prisma.$PaymentPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      invoiceId: string
+      paymentId: string
+      amount: Prisma.Decimal
+      createdAt: Date
+    }, ExtArgs["result"]["customerInvoicePayment"]>
+    composites: {}
+  }
+
+  type CustomerInvoicePaymentGetPayload<S extends boolean | null | undefined | CustomerInvoicePaymentDefaultArgs> = $Result.GetResult<Prisma.$CustomerInvoicePaymentPayload, S>
+
+  type CustomerInvoicePaymentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CustomerInvoicePaymentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CustomerInvoicePaymentCountAggregateInputType | true
+    }
+
+  export interface CustomerInvoicePaymentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CustomerInvoicePayment'], meta: { name: 'CustomerInvoicePayment' } }
+    /**
+     * Find zero or one CustomerInvoicePayment that matches the filter.
+     * @param {CustomerInvoicePaymentFindUniqueArgs} args - Arguments to find a CustomerInvoicePayment
+     * @example
+     * // Get one CustomerInvoicePayment
+     * const customerInvoicePayment = await prisma.customerInvoicePayment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CustomerInvoicePaymentFindUniqueArgs>(args: SelectSubset<T, CustomerInvoicePaymentFindUniqueArgs<ExtArgs>>): Prisma__CustomerInvoicePaymentClient<$Result.GetResult<Prisma.$CustomerInvoicePaymentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CustomerInvoicePayment that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CustomerInvoicePaymentFindUniqueOrThrowArgs} args - Arguments to find a CustomerInvoicePayment
+     * @example
+     * // Get one CustomerInvoicePayment
+     * const customerInvoicePayment = await prisma.customerInvoicePayment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CustomerInvoicePaymentFindUniqueOrThrowArgs>(args: SelectSubset<T, CustomerInvoicePaymentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CustomerInvoicePaymentClient<$Result.GetResult<Prisma.$CustomerInvoicePaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CustomerInvoicePayment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CustomerInvoicePaymentFindFirstArgs} args - Arguments to find a CustomerInvoicePayment
+     * @example
+     * // Get one CustomerInvoicePayment
+     * const customerInvoicePayment = await prisma.customerInvoicePayment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CustomerInvoicePaymentFindFirstArgs>(args?: SelectSubset<T, CustomerInvoicePaymentFindFirstArgs<ExtArgs>>): Prisma__CustomerInvoicePaymentClient<$Result.GetResult<Prisma.$CustomerInvoicePaymentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CustomerInvoicePayment that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CustomerInvoicePaymentFindFirstOrThrowArgs} args - Arguments to find a CustomerInvoicePayment
+     * @example
+     * // Get one CustomerInvoicePayment
+     * const customerInvoicePayment = await prisma.customerInvoicePayment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CustomerInvoicePaymentFindFirstOrThrowArgs>(args?: SelectSubset<T, CustomerInvoicePaymentFindFirstOrThrowArgs<ExtArgs>>): Prisma__CustomerInvoicePaymentClient<$Result.GetResult<Prisma.$CustomerInvoicePaymentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CustomerInvoicePayments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CustomerInvoicePaymentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CustomerInvoicePayments
+     * const customerInvoicePayments = await prisma.customerInvoicePayment.findMany()
+     * 
+     * // Get first 10 CustomerInvoicePayments
+     * const customerInvoicePayments = await prisma.customerInvoicePayment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const customerInvoicePaymentWithIdOnly = await prisma.customerInvoicePayment.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CustomerInvoicePaymentFindManyArgs>(args?: SelectSubset<T, CustomerInvoicePaymentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerInvoicePaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CustomerInvoicePayment.
+     * @param {CustomerInvoicePaymentCreateArgs} args - Arguments to create a CustomerInvoicePayment.
+     * @example
+     * // Create one CustomerInvoicePayment
+     * const CustomerInvoicePayment = await prisma.customerInvoicePayment.create({
+     *   data: {
+     *     // ... data to create a CustomerInvoicePayment
+     *   }
+     * })
+     * 
+     */
+    create<T extends CustomerInvoicePaymentCreateArgs>(args: SelectSubset<T, CustomerInvoicePaymentCreateArgs<ExtArgs>>): Prisma__CustomerInvoicePaymentClient<$Result.GetResult<Prisma.$CustomerInvoicePaymentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CustomerInvoicePayments.
+     * @param {CustomerInvoicePaymentCreateManyArgs} args - Arguments to create many CustomerInvoicePayments.
+     * @example
+     * // Create many CustomerInvoicePayments
+     * const customerInvoicePayment = await prisma.customerInvoicePayment.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CustomerInvoicePaymentCreateManyArgs>(args?: SelectSubset<T, CustomerInvoicePaymentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CustomerInvoicePayments and returns the data saved in the database.
+     * @param {CustomerInvoicePaymentCreateManyAndReturnArgs} args - Arguments to create many CustomerInvoicePayments.
+     * @example
+     * // Create many CustomerInvoicePayments
+     * const customerInvoicePayment = await prisma.customerInvoicePayment.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CustomerInvoicePayments and only return the `id`
+     * const customerInvoicePaymentWithIdOnly = await prisma.customerInvoicePayment.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CustomerInvoicePaymentCreateManyAndReturnArgs>(args?: SelectSubset<T, CustomerInvoicePaymentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerInvoicePaymentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CustomerInvoicePayment.
+     * @param {CustomerInvoicePaymentDeleteArgs} args - Arguments to delete one CustomerInvoicePayment.
+     * @example
+     * // Delete one CustomerInvoicePayment
+     * const CustomerInvoicePayment = await prisma.customerInvoicePayment.delete({
+     *   where: {
+     *     // ... filter to delete one CustomerInvoicePayment
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CustomerInvoicePaymentDeleteArgs>(args: SelectSubset<T, CustomerInvoicePaymentDeleteArgs<ExtArgs>>): Prisma__CustomerInvoicePaymentClient<$Result.GetResult<Prisma.$CustomerInvoicePaymentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CustomerInvoicePayment.
+     * @param {CustomerInvoicePaymentUpdateArgs} args - Arguments to update one CustomerInvoicePayment.
+     * @example
+     * // Update one CustomerInvoicePayment
+     * const customerInvoicePayment = await prisma.customerInvoicePayment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CustomerInvoicePaymentUpdateArgs>(args: SelectSubset<T, CustomerInvoicePaymentUpdateArgs<ExtArgs>>): Prisma__CustomerInvoicePaymentClient<$Result.GetResult<Prisma.$CustomerInvoicePaymentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CustomerInvoicePayments.
+     * @param {CustomerInvoicePaymentDeleteManyArgs} args - Arguments to filter CustomerInvoicePayments to delete.
+     * @example
+     * // Delete a few CustomerInvoicePayments
+     * const { count } = await prisma.customerInvoicePayment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CustomerInvoicePaymentDeleteManyArgs>(args?: SelectSubset<T, CustomerInvoicePaymentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CustomerInvoicePayments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CustomerInvoicePaymentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CustomerInvoicePayments
+     * const customerInvoicePayment = await prisma.customerInvoicePayment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CustomerInvoicePaymentUpdateManyArgs>(args: SelectSubset<T, CustomerInvoicePaymentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CustomerInvoicePayments and returns the data updated in the database.
+     * @param {CustomerInvoicePaymentUpdateManyAndReturnArgs} args - Arguments to update many CustomerInvoicePayments.
+     * @example
+     * // Update many CustomerInvoicePayments
+     * const customerInvoicePayment = await prisma.customerInvoicePayment.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CustomerInvoicePayments and only return the `id`
+     * const customerInvoicePaymentWithIdOnly = await prisma.customerInvoicePayment.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CustomerInvoicePaymentUpdateManyAndReturnArgs>(args: SelectSubset<T, CustomerInvoicePaymentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerInvoicePaymentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CustomerInvoicePayment.
+     * @param {CustomerInvoicePaymentUpsertArgs} args - Arguments to update or create a CustomerInvoicePayment.
+     * @example
+     * // Update or create a CustomerInvoicePayment
+     * const customerInvoicePayment = await prisma.customerInvoicePayment.upsert({
+     *   create: {
+     *     // ... data to create a CustomerInvoicePayment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CustomerInvoicePayment we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CustomerInvoicePaymentUpsertArgs>(args: SelectSubset<T, CustomerInvoicePaymentUpsertArgs<ExtArgs>>): Prisma__CustomerInvoicePaymentClient<$Result.GetResult<Prisma.$CustomerInvoicePaymentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CustomerInvoicePayments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CustomerInvoicePaymentCountArgs} args - Arguments to filter CustomerInvoicePayments to count.
+     * @example
+     * // Count the number of CustomerInvoicePayments
+     * const count = await prisma.customerInvoicePayment.count({
+     *   where: {
+     *     // ... the filter for the CustomerInvoicePayments we want to count
+     *   }
+     * })
+    **/
+    count<T extends CustomerInvoicePaymentCountArgs>(
+      args?: Subset<T, CustomerInvoicePaymentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CustomerInvoicePaymentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CustomerInvoicePayment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CustomerInvoicePaymentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CustomerInvoicePaymentAggregateArgs>(args: Subset<T, CustomerInvoicePaymentAggregateArgs>): Prisma.PrismaPromise<GetCustomerInvoicePaymentAggregateType<T>>
+
+    /**
+     * Group by CustomerInvoicePayment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CustomerInvoicePaymentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CustomerInvoicePaymentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CustomerInvoicePaymentGroupByArgs['orderBy'] }
+        : { orderBy?: CustomerInvoicePaymentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CustomerInvoicePaymentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCustomerInvoicePaymentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CustomerInvoicePayment model
+   */
+  readonly fields: CustomerInvoicePaymentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CustomerInvoicePayment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CustomerInvoicePaymentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    invoice<T extends CustomerInvoiceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CustomerInvoiceDefaultArgs<ExtArgs>>): Prisma__CustomerInvoiceClient<$Result.GetResult<Prisma.$CustomerInvoicePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    payment<T extends PaymentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PaymentDefaultArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CustomerInvoicePayment model
+   */
+  interface CustomerInvoicePaymentFieldRefs {
+    readonly id: FieldRef<"CustomerInvoicePayment", 'String'>
+    readonly invoiceId: FieldRef<"CustomerInvoicePayment", 'String'>
+    readonly paymentId: FieldRef<"CustomerInvoicePayment", 'String'>
+    readonly amount: FieldRef<"CustomerInvoicePayment", 'Decimal'>
+    readonly createdAt: FieldRef<"CustomerInvoicePayment", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CustomerInvoicePayment findUnique
+   */
+  export type CustomerInvoicePaymentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerInvoicePayment
+     */
+    select?: CustomerInvoicePaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerInvoicePayment
+     */
+    omit?: CustomerInvoicePaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerInvoicePaymentInclude<ExtArgs> | null
+    /**
+     * Filter, which CustomerInvoicePayment to fetch.
+     */
+    where: CustomerInvoicePaymentWhereUniqueInput
+  }
+
+  /**
+   * CustomerInvoicePayment findUniqueOrThrow
+   */
+  export type CustomerInvoicePaymentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerInvoicePayment
+     */
+    select?: CustomerInvoicePaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerInvoicePayment
+     */
+    omit?: CustomerInvoicePaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerInvoicePaymentInclude<ExtArgs> | null
+    /**
+     * Filter, which CustomerInvoicePayment to fetch.
+     */
+    where: CustomerInvoicePaymentWhereUniqueInput
+  }
+
+  /**
+   * CustomerInvoicePayment findFirst
+   */
+  export type CustomerInvoicePaymentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerInvoicePayment
+     */
+    select?: CustomerInvoicePaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerInvoicePayment
+     */
+    omit?: CustomerInvoicePaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerInvoicePaymentInclude<ExtArgs> | null
+    /**
+     * Filter, which CustomerInvoicePayment to fetch.
+     */
+    where?: CustomerInvoicePaymentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CustomerInvoicePayments to fetch.
+     */
+    orderBy?: CustomerInvoicePaymentOrderByWithRelationInput | CustomerInvoicePaymentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CustomerInvoicePayments.
+     */
+    cursor?: CustomerInvoicePaymentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CustomerInvoicePayments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CustomerInvoicePayments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CustomerInvoicePayments.
+     */
+    distinct?: CustomerInvoicePaymentScalarFieldEnum | CustomerInvoicePaymentScalarFieldEnum[]
+  }
+
+  /**
+   * CustomerInvoicePayment findFirstOrThrow
+   */
+  export type CustomerInvoicePaymentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerInvoicePayment
+     */
+    select?: CustomerInvoicePaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerInvoicePayment
+     */
+    omit?: CustomerInvoicePaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerInvoicePaymentInclude<ExtArgs> | null
+    /**
+     * Filter, which CustomerInvoicePayment to fetch.
+     */
+    where?: CustomerInvoicePaymentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CustomerInvoicePayments to fetch.
+     */
+    orderBy?: CustomerInvoicePaymentOrderByWithRelationInput | CustomerInvoicePaymentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CustomerInvoicePayments.
+     */
+    cursor?: CustomerInvoicePaymentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CustomerInvoicePayments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CustomerInvoicePayments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CustomerInvoicePayments.
+     */
+    distinct?: CustomerInvoicePaymentScalarFieldEnum | CustomerInvoicePaymentScalarFieldEnum[]
+  }
+
+  /**
+   * CustomerInvoicePayment findMany
+   */
+  export type CustomerInvoicePaymentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerInvoicePayment
+     */
+    select?: CustomerInvoicePaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerInvoicePayment
+     */
+    omit?: CustomerInvoicePaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerInvoicePaymentInclude<ExtArgs> | null
+    /**
+     * Filter, which CustomerInvoicePayments to fetch.
+     */
+    where?: CustomerInvoicePaymentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CustomerInvoicePayments to fetch.
+     */
+    orderBy?: CustomerInvoicePaymentOrderByWithRelationInput | CustomerInvoicePaymentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CustomerInvoicePayments.
+     */
+    cursor?: CustomerInvoicePaymentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CustomerInvoicePayments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CustomerInvoicePayments.
+     */
+    skip?: number
+    distinct?: CustomerInvoicePaymentScalarFieldEnum | CustomerInvoicePaymentScalarFieldEnum[]
+  }
+
+  /**
+   * CustomerInvoicePayment create
+   */
+  export type CustomerInvoicePaymentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerInvoicePayment
+     */
+    select?: CustomerInvoicePaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerInvoicePayment
+     */
+    omit?: CustomerInvoicePaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerInvoicePaymentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CustomerInvoicePayment.
+     */
+    data: XOR<CustomerInvoicePaymentCreateInput, CustomerInvoicePaymentUncheckedCreateInput>
+  }
+
+  /**
+   * CustomerInvoicePayment createMany
+   */
+  export type CustomerInvoicePaymentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CustomerInvoicePayments.
+     */
+    data: CustomerInvoicePaymentCreateManyInput | CustomerInvoicePaymentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CustomerInvoicePayment createManyAndReturn
+   */
+  export type CustomerInvoicePaymentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerInvoicePayment
+     */
+    select?: CustomerInvoicePaymentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerInvoicePayment
+     */
+    omit?: CustomerInvoicePaymentOmit<ExtArgs> | null
+    /**
+     * The data used to create many CustomerInvoicePayments.
+     */
+    data: CustomerInvoicePaymentCreateManyInput | CustomerInvoicePaymentCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerInvoicePaymentIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CustomerInvoicePayment update
+   */
+  export type CustomerInvoicePaymentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerInvoicePayment
+     */
+    select?: CustomerInvoicePaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerInvoicePayment
+     */
+    omit?: CustomerInvoicePaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerInvoicePaymentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CustomerInvoicePayment.
+     */
+    data: XOR<CustomerInvoicePaymentUpdateInput, CustomerInvoicePaymentUncheckedUpdateInput>
+    /**
+     * Choose, which CustomerInvoicePayment to update.
+     */
+    where: CustomerInvoicePaymentWhereUniqueInput
+  }
+
+  /**
+   * CustomerInvoicePayment updateMany
+   */
+  export type CustomerInvoicePaymentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CustomerInvoicePayments.
+     */
+    data: XOR<CustomerInvoicePaymentUpdateManyMutationInput, CustomerInvoicePaymentUncheckedUpdateManyInput>
+    /**
+     * Filter which CustomerInvoicePayments to update
+     */
+    where?: CustomerInvoicePaymentWhereInput
+    /**
+     * Limit how many CustomerInvoicePayments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CustomerInvoicePayment updateManyAndReturn
+   */
+  export type CustomerInvoicePaymentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerInvoicePayment
+     */
+    select?: CustomerInvoicePaymentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerInvoicePayment
+     */
+    omit?: CustomerInvoicePaymentOmit<ExtArgs> | null
+    /**
+     * The data used to update CustomerInvoicePayments.
+     */
+    data: XOR<CustomerInvoicePaymentUpdateManyMutationInput, CustomerInvoicePaymentUncheckedUpdateManyInput>
+    /**
+     * Filter which CustomerInvoicePayments to update
+     */
+    where?: CustomerInvoicePaymentWhereInput
+    /**
+     * Limit how many CustomerInvoicePayments to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerInvoicePaymentIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CustomerInvoicePayment upsert
+   */
+  export type CustomerInvoicePaymentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerInvoicePayment
+     */
+    select?: CustomerInvoicePaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerInvoicePayment
+     */
+    omit?: CustomerInvoicePaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerInvoicePaymentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CustomerInvoicePayment to update in case it exists.
+     */
+    where: CustomerInvoicePaymentWhereUniqueInput
+    /**
+     * In case the CustomerInvoicePayment found by the `where` argument doesn't exist, create a new CustomerInvoicePayment with this data.
+     */
+    create: XOR<CustomerInvoicePaymentCreateInput, CustomerInvoicePaymentUncheckedCreateInput>
+    /**
+     * In case the CustomerInvoicePayment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CustomerInvoicePaymentUpdateInput, CustomerInvoicePaymentUncheckedUpdateInput>
+  }
+
+  /**
+   * CustomerInvoicePayment delete
+   */
+  export type CustomerInvoicePaymentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerInvoicePayment
+     */
+    select?: CustomerInvoicePaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerInvoicePayment
+     */
+    omit?: CustomerInvoicePaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerInvoicePaymentInclude<ExtArgs> | null
+    /**
+     * Filter which CustomerInvoicePayment to delete.
+     */
+    where: CustomerInvoicePaymentWhereUniqueInput
+  }
+
+  /**
+   * CustomerInvoicePayment deleteMany
+   */
+  export type CustomerInvoicePaymentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CustomerInvoicePayments to delete
+     */
+    where?: CustomerInvoicePaymentWhereInput
+    /**
+     * Limit how many CustomerInvoicePayments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CustomerInvoicePayment without action
+   */
+  export type CustomerInvoicePaymentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerInvoicePayment
+     */
+    select?: CustomerInvoicePaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerInvoicePayment
+     */
+    omit?: CustomerInvoicePaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerInvoicePaymentInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model VendorBillPayment
+   */
+
+  export type AggregateVendorBillPayment = {
+    _count: VendorBillPaymentCountAggregateOutputType | null
+    _avg: VendorBillPaymentAvgAggregateOutputType | null
+    _sum: VendorBillPaymentSumAggregateOutputType | null
+    _min: VendorBillPaymentMinAggregateOutputType | null
+    _max: VendorBillPaymentMaxAggregateOutputType | null
+  }
+
+  export type VendorBillPaymentAvgAggregateOutputType = {
+    amount: Decimal | null
+  }
+
+  export type VendorBillPaymentSumAggregateOutputType = {
+    amount: Decimal | null
+  }
+
+  export type VendorBillPaymentMinAggregateOutputType = {
+    id: string | null
+    billId: string | null
+    paymentId: string | null
+    amount: Decimal | null
+    createdAt: Date | null
+  }
+
+  export type VendorBillPaymentMaxAggregateOutputType = {
+    id: string | null
+    billId: string | null
+    paymentId: string | null
+    amount: Decimal | null
+    createdAt: Date | null
+  }
+
+  export type VendorBillPaymentCountAggregateOutputType = {
+    id: number
+    billId: number
+    paymentId: number
+    amount: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type VendorBillPaymentAvgAggregateInputType = {
+    amount?: true
+  }
+
+  export type VendorBillPaymentSumAggregateInputType = {
+    amount?: true
+  }
+
+  export type VendorBillPaymentMinAggregateInputType = {
+    id?: true
+    billId?: true
+    paymentId?: true
+    amount?: true
+    createdAt?: true
+  }
+
+  export type VendorBillPaymentMaxAggregateInputType = {
+    id?: true
+    billId?: true
+    paymentId?: true
+    amount?: true
+    createdAt?: true
+  }
+
+  export type VendorBillPaymentCountAggregateInputType = {
+    id?: true
+    billId?: true
+    paymentId?: true
+    amount?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type VendorBillPaymentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VendorBillPayment to aggregate.
+     */
+    where?: VendorBillPaymentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VendorBillPayments to fetch.
+     */
+    orderBy?: VendorBillPaymentOrderByWithRelationInput | VendorBillPaymentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VendorBillPaymentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VendorBillPayments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VendorBillPayments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned VendorBillPayments
+    **/
+    _count?: true | VendorBillPaymentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VendorBillPaymentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VendorBillPaymentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VendorBillPaymentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VendorBillPaymentMaxAggregateInputType
+  }
+
+  export type GetVendorBillPaymentAggregateType<T extends VendorBillPaymentAggregateArgs> = {
+        [P in keyof T & keyof AggregateVendorBillPayment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVendorBillPayment[P]>
+      : GetScalarType<T[P], AggregateVendorBillPayment[P]>
+  }
+
+
+
+
+  export type VendorBillPaymentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VendorBillPaymentWhereInput
+    orderBy?: VendorBillPaymentOrderByWithAggregationInput | VendorBillPaymentOrderByWithAggregationInput[]
+    by: VendorBillPaymentScalarFieldEnum[] | VendorBillPaymentScalarFieldEnum
+    having?: VendorBillPaymentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VendorBillPaymentCountAggregateInputType | true
+    _avg?: VendorBillPaymentAvgAggregateInputType
+    _sum?: VendorBillPaymentSumAggregateInputType
+    _min?: VendorBillPaymentMinAggregateInputType
+    _max?: VendorBillPaymentMaxAggregateInputType
+  }
+
+  export type VendorBillPaymentGroupByOutputType = {
+    id: string
+    billId: string
+    paymentId: string
+    amount: Decimal
+    createdAt: Date
+    _count: VendorBillPaymentCountAggregateOutputType | null
+    _avg: VendorBillPaymentAvgAggregateOutputType | null
+    _sum: VendorBillPaymentSumAggregateOutputType | null
+    _min: VendorBillPaymentMinAggregateOutputType | null
+    _max: VendorBillPaymentMaxAggregateOutputType | null
+  }
+
+  type GetVendorBillPaymentGroupByPayload<T extends VendorBillPaymentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VendorBillPaymentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VendorBillPaymentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VendorBillPaymentGroupByOutputType[P]>
+            : GetScalarType<T[P], VendorBillPaymentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VendorBillPaymentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    billId?: boolean
+    paymentId?: boolean
+    amount?: boolean
+    createdAt?: boolean
+    bill?: boolean | VendorBillDefaultArgs<ExtArgs>
+    payment?: boolean | PaymentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vendorBillPayment"]>
+
+  export type VendorBillPaymentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    billId?: boolean
+    paymentId?: boolean
+    amount?: boolean
+    createdAt?: boolean
+    bill?: boolean | VendorBillDefaultArgs<ExtArgs>
+    payment?: boolean | PaymentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vendorBillPayment"]>
+
+  export type VendorBillPaymentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    billId?: boolean
+    paymentId?: boolean
+    amount?: boolean
+    createdAt?: boolean
+    bill?: boolean | VendorBillDefaultArgs<ExtArgs>
+    payment?: boolean | PaymentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vendorBillPayment"]>
+
+  export type VendorBillPaymentSelectScalar = {
+    id?: boolean
+    billId?: boolean
+    paymentId?: boolean
+    amount?: boolean
+    createdAt?: boolean
+  }
+
+  export type VendorBillPaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "billId" | "paymentId" | "amount" | "createdAt", ExtArgs["result"]["vendorBillPayment"]>
+  export type VendorBillPaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    bill?: boolean | VendorBillDefaultArgs<ExtArgs>
+    payment?: boolean | PaymentDefaultArgs<ExtArgs>
+  }
+  export type VendorBillPaymentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    bill?: boolean | VendorBillDefaultArgs<ExtArgs>
+    payment?: boolean | PaymentDefaultArgs<ExtArgs>
+  }
+  export type VendorBillPaymentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    bill?: boolean | VendorBillDefaultArgs<ExtArgs>
+    payment?: boolean | PaymentDefaultArgs<ExtArgs>
+  }
+
+  export type $VendorBillPaymentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "VendorBillPayment"
+    objects: {
+      bill: Prisma.$VendorBillPayload<ExtArgs>
+      payment: Prisma.$PaymentPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      billId: string
+      paymentId: string
+      amount: Prisma.Decimal
+      createdAt: Date
+    }, ExtArgs["result"]["vendorBillPayment"]>
+    composites: {}
+  }
+
+  type VendorBillPaymentGetPayload<S extends boolean | null | undefined | VendorBillPaymentDefaultArgs> = $Result.GetResult<Prisma.$VendorBillPaymentPayload, S>
+
+  type VendorBillPaymentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<VendorBillPaymentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: VendorBillPaymentCountAggregateInputType | true
+    }
+
+  export interface VendorBillPaymentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['VendorBillPayment'], meta: { name: 'VendorBillPayment' } }
+    /**
+     * Find zero or one VendorBillPayment that matches the filter.
+     * @param {VendorBillPaymentFindUniqueArgs} args - Arguments to find a VendorBillPayment
+     * @example
+     * // Get one VendorBillPayment
+     * const vendorBillPayment = await prisma.vendorBillPayment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VendorBillPaymentFindUniqueArgs>(args: SelectSubset<T, VendorBillPaymentFindUniqueArgs<ExtArgs>>): Prisma__VendorBillPaymentClient<$Result.GetResult<Prisma.$VendorBillPaymentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one VendorBillPayment that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VendorBillPaymentFindUniqueOrThrowArgs} args - Arguments to find a VendorBillPayment
+     * @example
+     * // Get one VendorBillPayment
+     * const vendorBillPayment = await prisma.vendorBillPayment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VendorBillPaymentFindUniqueOrThrowArgs>(args: SelectSubset<T, VendorBillPaymentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VendorBillPaymentClient<$Result.GetResult<Prisma.$VendorBillPaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VendorBillPayment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorBillPaymentFindFirstArgs} args - Arguments to find a VendorBillPayment
+     * @example
+     * // Get one VendorBillPayment
+     * const vendorBillPayment = await prisma.vendorBillPayment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VendorBillPaymentFindFirstArgs>(args?: SelectSubset<T, VendorBillPaymentFindFirstArgs<ExtArgs>>): Prisma__VendorBillPaymentClient<$Result.GetResult<Prisma.$VendorBillPaymentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VendorBillPayment that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorBillPaymentFindFirstOrThrowArgs} args - Arguments to find a VendorBillPayment
+     * @example
+     * // Get one VendorBillPayment
+     * const vendorBillPayment = await prisma.vendorBillPayment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VendorBillPaymentFindFirstOrThrowArgs>(args?: SelectSubset<T, VendorBillPaymentFindFirstOrThrowArgs<ExtArgs>>): Prisma__VendorBillPaymentClient<$Result.GetResult<Prisma.$VendorBillPaymentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more VendorBillPayments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorBillPaymentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all VendorBillPayments
+     * const vendorBillPayments = await prisma.vendorBillPayment.findMany()
+     * 
+     * // Get first 10 VendorBillPayments
+     * const vendorBillPayments = await prisma.vendorBillPayment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const vendorBillPaymentWithIdOnly = await prisma.vendorBillPayment.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends VendorBillPaymentFindManyArgs>(args?: SelectSubset<T, VendorBillPaymentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VendorBillPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a VendorBillPayment.
+     * @param {VendorBillPaymentCreateArgs} args - Arguments to create a VendorBillPayment.
+     * @example
+     * // Create one VendorBillPayment
+     * const VendorBillPayment = await prisma.vendorBillPayment.create({
+     *   data: {
+     *     // ... data to create a VendorBillPayment
+     *   }
+     * })
+     * 
+     */
+    create<T extends VendorBillPaymentCreateArgs>(args: SelectSubset<T, VendorBillPaymentCreateArgs<ExtArgs>>): Prisma__VendorBillPaymentClient<$Result.GetResult<Prisma.$VendorBillPaymentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many VendorBillPayments.
+     * @param {VendorBillPaymentCreateManyArgs} args - Arguments to create many VendorBillPayments.
+     * @example
+     * // Create many VendorBillPayments
+     * const vendorBillPayment = await prisma.vendorBillPayment.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VendorBillPaymentCreateManyArgs>(args?: SelectSubset<T, VendorBillPaymentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many VendorBillPayments and returns the data saved in the database.
+     * @param {VendorBillPaymentCreateManyAndReturnArgs} args - Arguments to create many VendorBillPayments.
+     * @example
+     * // Create many VendorBillPayments
+     * const vendorBillPayment = await prisma.vendorBillPayment.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many VendorBillPayments and only return the `id`
+     * const vendorBillPaymentWithIdOnly = await prisma.vendorBillPayment.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VendorBillPaymentCreateManyAndReturnArgs>(args?: SelectSubset<T, VendorBillPaymentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VendorBillPaymentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a VendorBillPayment.
+     * @param {VendorBillPaymentDeleteArgs} args - Arguments to delete one VendorBillPayment.
+     * @example
+     * // Delete one VendorBillPayment
+     * const VendorBillPayment = await prisma.vendorBillPayment.delete({
+     *   where: {
+     *     // ... filter to delete one VendorBillPayment
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VendorBillPaymentDeleteArgs>(args: SelectSubset<T, VendorBillPaymentDeleteArgs<ExtArgs>>): Prisma__VendorBillPaymentClient<$Result.GetResult<Prisma.$VendorBillPaymentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one VendorBillPayment.
+     * @param {VendorBillPaymentUpdateArgs} args - Arguments to update one VendorBillPayment.
+     * @example
+     * // Update one VendorBillPayment
+     * const vendorBillPayment = await prisma.vendorBillPayment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VendorBillPaymentUpdateArgs>(args: SelectSubset<T, VendorBillPaymentUpdateArgs<ExtArgs>>): Prisma__VendorBillPaymentClient<$Result.GetResult<Prisma.$VendorBillPaymentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more VendorBillPayments.
+     * @param {VendorBillPaymentDeleteManyArgs} args - Arguments to filter VendorBillPayments to delete.
+     * @example
+     * // Delete a few VendorBillPayments
+     * const { count } = await prisma.vendorBillPayment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VendorBillPaymentDeleteManyArgs>(args?: SelectSubset<T, VendorBillPaymentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VendorBillPayments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorBillPaymentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many VendorBillPayments
+     * const vendorBillPayment = await prisma.vendorBillPayment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VendorBillPaymentUpdateManyArgs>(args: SelectSubset<T, VendorBillPaymentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VendorBillPayments and returns the data updated in the database.
+     * @param {VendorBillPaymentUpdateManyAndReturnArgs} args - Arguments to update many VendorBillPayments.
+     * @example
+     * // Update many VendorBillPayments
+     * const vendorBillPayment = await prisma.vendorBillPayment.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more VendorBillPayments and only return the `id`
+     * const vendorBillPaymentWithIdOnly = await prisma.vendorBillPayment.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends VendorBillPaymentUpdateManyAndReturnArgs>(args: SelectSubset<T, VendorBillPaymentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VendorBillPaymentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one VendorBillPayment.
+     * @param {VendorBillPaymentUpsertArgs} args - Arguments to update or create a VendorBillPayment.
+     * @example
+     * // Update or create a VendorBillPayment
+     * const vendorBillPayment = await prisma.vendorBillPayment.upsert({
+     *   create: {
+     *     // ... data to create a VendorBillPayment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the VendorBillPayment we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VendorBillPaymentUpsertArgs>(args: SelectSubset<T, VendorBillPaymentUpsertArgs<ExtArgs>>): Prisma__VendorBillPaymentClient<$Result.GetResult<Prisma.$VendorBillPaymentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of VendorBillPayments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorBillPaymentCountArgs} args - Arguments to filter VendorBillPayments to count.
+     * @example
+     * // Count the number of VendorBillPayments
+     * const count = await prisma.vendorBillPayment.count({
+     *   where: {
+     *     // ... the filter for the VendorBillPayments we want to count
+     *   }
+     * })
+    **/
+    count<T extends VendorBillPaymentCountArgs>(
+      args?: Subset<T, VendorBillPaymentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VendorBillPaymentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a VendorBillPayment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorBillPaymentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VendorBillPaymentAggregateArgs>(args: Subset<T, VendorBillPaymentAggregateArgs>): Prisma.PrismaPromise<GetVendorBillPaymentAggregateType<T>>
+
+    /**
+     * Group by VendorBillPayment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorBillPaymentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VendorBillPaymentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VendorBillPaymentGroupByArgs['orderBy'] }
+        : { orderBy?: VendorBillPaymentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VendorBillPaymentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVendorBillPaymentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the VendorBillPayment model
+   */
+  readonly fields: VendorBillPaymentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for VendorBillPayment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VendorBillPaymentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    bill<T extends VendorBillDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VendorBillDefaultArgs<ExtArgs>>): Prisma__VendorBillClient<$Result.GetResult<Prisma.$VendorBillPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    payment<T extends PaymentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PaymentDefaultArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the VendorBillPayment model
+   */
+  interface VendorBillPaymentFieldRefs {
+    readonly id: FieldRef<"VendorBillPayment", 'String'>
+    readonly billId: FieldRef<"VendorBillPayment", 'String'>
+    readonly paymentId: FieldRef<"VendorBillPayment", 'String'>
+    readonly amount: FieldRef<"VendorBillPayment", 'Decimal'>
+    readonly createdAt: FieldRef<"VendorBillPayment", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * VendorBillPayment findUnique
+   */
+  export type VendorBillPaymentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorBillPayment
+     */
+    select?: VendorBillPaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorBillPayment
+     */
+    omit?: VendorBillPaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorBillPaymentInclude<ExtArgs> | null
+    /**
+     * Filter, which VendorBillPayment to fetch.
+     */
+    where: VendorBillPaymentWhereUniqueInput
+  }
+
+  /**
+   * VendorBillPayment findUniqueOrThrow
+   */
+  export type VendorBillPaymentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorBillPayment
+     */
+    select?: VendorBillPaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorBillPayment
+     */
+    omit?: VendorBillPaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorBillPaymentInclude<ExtArgs> | null
+    /**
+     * Filter, which VendorBillPayment to fetch.
+     */
+    where: VendorBillPaymentWhereUniqueInput
+  }
+
+  /**
+   * VendorBillPayment findFirst
+   */
+  export type VendorBillPaymentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorBillPayment
+     */
+    select?: VendorBillPaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorBillPayment
+     */
+    omit?: VendorBillPaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorBillPaymentInclude<ExtArgs> | null
+    /**
+     * Filter, which VendorBillPayment to fetch.
+     */
+    where?: VendorBillPaymentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VendorBillPayments to fetch.
+     */
+    orderBy?: VendorBillPaymentOrderByWithRelationInput | VendorBillPaymentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VendorBillPayments.
+     */
+    cursor?: VendorBillPaymentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VendorBillPayments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VendorBillPayments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VendorBillPayments.
+     */
+    distinct?: VendorBillPaymentScalarFieldEnum | VendorBillPaymentScalarFieldEnum[]
+  }
+
+  /**
+   * VendorBillPayment findFirstOrThrow
+   */
+  export type VendorBillPaymentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorBillPayment
+     */
+    select?: VendorBillPaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorBillPayment
+     */
+    omit?: VendorBillPaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorBillPaymentInclude<ExtArgs> | null
+    /**
+     * Filter, which VendorBillPayment to fetch.
+     */
+    where?: VendorBillPaymentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VendorBillPayments to fetch.
+     */
+    orderBy?: VendorBillPaymentOrderByWithRelationInput | VendorBillPaymentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VendorBillPayments.
+     */
+    cursor?: VendorBillPaymentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VendorBillPayments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VendorBillPayments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VendorBillPayments.
+     */
+    distinct?: VendorBillPaymentScalarFieldEnum | VendorBillPaymentScalarFieldEnum[]
+  }
+
+  /**
+   * VendorBillPayment findMany
+   */
+  export type VendorBillPaymentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorBillPayment
+     */
+    select?: VendorBillPaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorBillPayment
+     */
+    omit?: VendorBillPaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorBillPaymentInclude<ExtArgs> | null
+    /**
+     * Filter, which VendorBillPayments to fetch.
+     */
+    where?: VendorBillPaymentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VendorBillPayments to fetch.
+     */
+    orderBy?: VendorBillPaymentOrderByWithRelationInput | VendorBillPaymentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing VendorBillPayments.
+     */
+    cursor?: VendorBillPaymentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VendorBillPayments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VendorBillPayments.
+     */
+    skip?: number
+    distinct?: VendorBillPaymentScalarFieldEnum | VendorBillPaymentScalarFieldEnum[]
+  }
+
+  /**
+   * VendorBillPayment create
+   */
+  export type VendorBillPaymentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorBillPayment
+     */
+    select?: VendorBillPaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorBillPayment
+     */
+    omit?: VendorBillPaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorBillPaymentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a VendorBillPayment.
+     */
+    data: XOR<VendorBillPaymentCreateInput, VendorBillPaymentUncheckedCreateInput>
+  }
+
+  /**
+   * VendorBillPayment createMany
+   */
+  export type VendorBillPaymentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many VendorBillPayments.
+     */
+    data: VendorBillPaymentCreateManyInput | VendorBillPaymentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * VendorBillPayment createManyAndReturn
+   */
+  export type VendorBillPaymentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorBillPayment
+     */
+    select?: VendorBillPaymentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorBillPayment
+     */
+    omit?: VendorBillPaymentOmit<ExtArgs> | null
+    /**
+     * The data used to create many VendorBillPayments.
+     */
+    data: VendorBillPaymentCreateManyInput | VendorBillPaymentCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorBillPaymentIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * VendorBillPayment update
+   */
+  export type VendorBillPaymentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorBillPayment
+     */
+    select?: VendorBillPaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorBillPayment
+     */
+    omit?: VendorBillPaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorBillPaymentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a VendorBillPayment.
+     */
+    data: XOR<VendorBillPaymentUpdateInput, VendorBillPaymentUncheckedUpdateInput>
+    /**
+     * Choose, which VendorBillPayment to update.
+     */
+    where: VendorBillPaymentWhereUniqueInput
+  }
+
+  /**
+   * VendorBillPayment updateMany
+   */
+  export type VendorBillPaymentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update VendorBillPayments.
+     */
+    data: XOR<VendorBillPaymentUpdateManyMutationInput, VendorBillPaymentUncheckedUpdateManyInput>
+    /**
+     * Filter which VendorBillPayments to update
+     */
+    where?: VendorBillPaymentWhereInput
+    /**
+     * Limit how many VendorBillPayments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * VendorBillPayment updateManyAndReturn
+   */
+  export type VendorBillPaymentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorBillPayment
+     */
+    select?: VendorBillPaymentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorBillPayment
+     */
+    omit?: VendorBillPaymentOmit<ExtArgs> | null
+    /**
+     * The data used to update VendorBillPayments.
+     */
+    data: XOR<VendorBillPaymentUpdateManyMutationInput, VendorBillPaymentUncheckedUpdateManyInput>
+    /**
+     * Filter which VendorBillPayments to update
+     */
+    where?: VendorBillPaymentWhereInput
+    /**
+     * Limit how many VendorBillPayments to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorBillPaymentIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * VendorBillPayment upsert
+   */
+  export type VendorBillPaymentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorBillPayment
+     */
+    select?: VendorBillPaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorBillPayment
+     */
+    omit?: VendorBillPaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorBillPaymentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the VendorBillPayment to update in case it exists.
+     */
+    where: VendorBillPaymentWhereUniqueInput
+    /**
+     * In case the VendorBillPayment found by the `where` argument doesn't exist, create a new VendorBillPayment with this data.
+     */
+    create: XOR<VendorBillPaymentCreateInput, VendorBillPaymentUncheckedCreateInput>
+    /**
+     * In case the VendorBillPayment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VendorBillPaymentUpdateInput, VendorBillPaymentUncheckedUpdateInput>
+  }
+
+  /**
+   * VendorBillPayment delete
+   */
+  export type VendorBillPaymentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorBillPayment
+     */
+    select?: VendorBillPaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorBillPayment
+     */
+    omit?: VendorBillPaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorBillPaymentInclude<ExtArgs> | null
+    /**
+     * Filter which VendorBillPayment to delete.
+     */
+    where: VendorBillPaymentWhereUniqueInput
+  }
+
+  /**
+   * VendorBillPayment deleteMany
+   */
+  export type VendorBillPaymentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VendorBillPayments to delete
+     */
+    where?: VendorBillPaymentWhereInput
+    /**
+     * Limit how many VendorBillPayments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * VendorBillPayment without action
+   */
+  export type VendorBillPaymentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorBillPayment
+     */
+    select?: VendorBillPaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorBillPayment
+     */
+    omit?: VendorBillPaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorBillPaymentInclude<ExtArgs> | null
   }
 
 
@@ -35826,6 +41556,26 @@ export namespace Prisma {
   export type ContactScalarFieldEnum = (typeof ContactScalarFieldEnum)[keyof typeof ContactScalarFieldEnum]
 
 
+  export const ContactTagScalarFieldEnum: {
+    id: 'id',
+    companyId: 'companyId',
+    name: 'name',
+    createdAt: 'createdAt'
+  };
+
+  export type ContactTagScalarFieldEnum = (typeof ContactTagScalarFieldEnum)[keyof typeof ContactTagScalarFieldEnum]
+
+
+  export const ContactTagAssignmentScalarFieldEnum: {
+    id: 'id',
+    contactId: 'contactId',
+    tagId: 'tagId',
+    createdAt: 'createdAt'
+  };
+
+  export type ContactTagAssignmentScalarFieldEnum = (typeof ContactTagAssignmentScalarFieldEnum)[keyof typeof ContactTagAssignmentScalarFieldEnum]
+
+
   export const ProductCategoryScalarFieldEnum: {
     id: 'id',
     companyId: 'companyId',
@@ -35970,6 +41720,7 @@ export namespace Prisma {
     matchProductId: 'matchProductId',
     matchCategoryId: 'matchCategoryId',
     matchContactId: 'matchContactId',
+    matchContactTagId: 'matchContactTagId',
     assignAnalyticAccountId: 'assignAnalyticAccountId',
     rulePriority: 'rulePriority',
     isActive: 'isActive'
@@ -35999,6 +41750,9 @@ export namespace Prisma {
     purchaseOrderId: 'purchaseOrderId',
     productId: 'productId',
     analyticAccountId: 'analyticAccountId',
+    autoAnalyticModelId: 'autoAnalyticModelId',
+    autoAnalyticRuleId: 'autoAnalyticRuleId',
+    matchedFieldsCount: 'matchedFieldsCount',
     description: 'description',
     qty: 'qty',
     unitPrice: 'unitPrice',
@@ -36030,6 +41784,9 @@ export namespace Prisma {
     salesOrderId: 'salesOrderId',
     productId: 'productId',
     analyticAccountId: 'analyticAccountId',
+    autoAnalyticModelId: 'autoAnalyticModelId',
+    autoAnalyticRuleId: 'autoAnalyticRuleId',
+    matchedFieldsCount: 'matchedFieldsCount',
     description: 'description',
     qty: 'qty',
     unitPrice: 'unitPrice',
@@ -36064,6 +41821,9 @@ export namespace Prisma {
     vendorBillId: 'vendorBillId',
     productId: 'productId',
     analyticAccountId: 'analyticAccountId',
+    autoAnalyticModelId: 'autoAnalyticModelId',
+    autoAnalyticRuleId: 'autoAnalyticRuleId',
+    matchedFieldsCount: 'matchedFieldsCount',
     glAccountId: 'glAccountId',
     description: 'description',
     qty: 'qty',
@@ -36100,6 +41860,9 @@ export namespace Prisma {
     customerInvoiceId: 'customerInvoiceId',
     productId: 'productId',
     analyticAccountId: 'analyticAccountId',
+    autoAnalyticModelId: 'autoAnalyticModelId',
+    autoAnalyticRuleId: 'autoAnalyticRuleId',
+    matchedFieldsCount: 'matchedFieldsCount',
     glAccountId: 'glAccountId',
     description: 'description',
     qty: 'qty',
@@ -36136,6 +41899,28 @@ export namespace Prisma {
   };
 
   export type PaymentAllocationScalarFieldEnum = (typeof PaymentAllocationScalarFieldEnum)[keyof typeof PaymentAllocationScalarFieldEnum]
+
+
+  export const CustomerInvoicePaymentScalarFieldEnum: {
+    id: 'id',
+    invoiceId: 'invoiceId',
+    paymentId: 'paymentId',
+    amount: 'amount',
+    createdAt: 'createdAt'
+  };
+
+  export type CustomerInvoicePaymentScalarFieldEnum = (typeof CustomerInvoicePaymentScalarFieldEnum)[keyof typeof CustomerInvoicePaymentScalarFieldEnum]
+
+
+  export const VendorBillPaymentScalarFieldEnum: {
+    id: 'id',
+    billId: 'billId',
+    paymentId: 'paymentId',
+    amount: 'amount',
+    createdAt: 'createdAt'
+  };
+
+  export type VendorBillPaymentScalarFieldEnum = (typeof VendorBillPaymentScalarFieldEnum)[keyof typeof VendorBillPaymentScalarFieldEnum]
 
 
   export const DocumentFileScalarFieldEnum: {
@@ -36525,6 +42310,7 @@ export namespace Prisma {
     name?: StringFilter<"Company"> | string
     createdAt?: DateTimeFilter<"Company"> | Date | string
     contacts?: ContactListRelationFilter
+    contactTags?: ContactTagListRelationFilter
     productCategories?: ProductCategoryListRelationFilter
     products?: ProductListRelationFilter
     analyticAccounts?: AnalyticAccountListRelationFilter
@@ -36545,6 +42331,7 @@ export namespace Prisma {
     name?: SortOrder
     createdAt?: SortOrder
     contacts?: ContactOrderByRelationAggregateInput
+    contactTags?: ContactTagOrderByRelationAggregateInput
     productCategories?: ProductCategoryOrderByRelationAggregateInput
     products?: ProductOrderByRelationAggregateInput
     analyticAccounts?: AnalyticAccountOrderByRelationAggregateInput
@@ -36568,6 +42355,7 @@ export namespace Prisma {
     name?: StringFilter<"Company"> | string
     createdAt?: DateTimeFilter<"Company"> | Date | string
     contacts?: ContactListRelationFilter
+    contactTags?: ContactTagListRelationFilter
     productCategories?: ProductCategoryListRelationFilter
     products?: ProductListRelationFilter
     analyticAccounts?: AnalyticAccountListRelationFilter
@@ -36627,6 +42415,7 @@ export namespace Prisma {
     payments?: PaymentListRelationFilter
     journalLines?: JournalLineListRelationFilter
     autoAnalyticRules?: AutoAnalyticRuleListRelationFilter
+    contactTags?: ContactTagAssignmentListRelationFilter
     users?: UserListRelationFilter
   }
 
@@ -36653,6 +42442,7 @@ export namespace Prisma {
     payments?: PaymentOrderByRelationAggregateInput
     journalLines?: JournalLineOrderByRelationAggregateInput
     autoAnalyticRules?: AutoAnalyticRuleOrderByRelationAggregateInput
+    contactTags?: ContactTagAssignmentOrderByRelationAggregateInput
     users?: UserOrderByRelationAggregateInput
   }
 
@@ -36683,6 +42473,7 @@ export namespace Prisma {
     payments?: PaymentListRelationFilter
     journalLines?: JournalLineListRelationFilter
     autoAnalyticRules?: AutoAnalyticRuleListRelationFilter
+    contactTags?: ContactTagAssignmentListRelationFilter
     users?: UserListRelationFilter
   }, "id" | "companyId_email">
 
@@ -36724,6 +42515,117 @@ export namespace Prisma {
     isActive?: BoolWithAggregatesFilter<"Contact"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Contact"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Contact"> | Date | string
+  }
+
+  export type ContactTagWhereInput = {
+    AND?: ContactTagWhereInput | ContactTagWhereInput[]
+    OR?: ContactTagWhereInput[]
+    NOT?: ContactTagWhereInput | ContactTagWhereInput[]
+    id?: UuidFilter<"ContactTag"> | string
+    companyId?: UuidFilter<"ContactTag"> | string
+    name?: StringFilter<"ContactTag"> | string
+    createdAt?: DateTimeFilter<"ContactTag"> | Date | string
+    company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
+    contacts?: ContactTagAssignmentListRelationFilter
+    autoAnalyticRules?: AutoAnalyticRuleListRelationFilter
+  }
+
+  export type ContactTagOrderByWithRelationInput = {
+    id?: SortOrder
+    companyId?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    company?: CompanyOrderByWithRelationInput
+    contacts?: ContactTagAssignmentOrderByRelationAggregateInput
+    autoAnalyticRules?: AutoAnalyticRuleOrderByRelationAggregateInput
+  }
+
+  export type ContactTagWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    companyId_name?: ContactTagCompanyIdNameCompoundUniqueInput
+    AND?: ContactTagWhereInput | ContactTagWhereInput[]
+    OR?: ContactTagWhereInput[]
+    NOT?: ContactTagWhereInput | ContactTagWhereInput[]
+    companyId?: UuidFilter<"ContactTag"> | string
+    name?: StringFilter<"ContactTag"> | string
+    createdAt?: DateTimeFilter<"ContactTag"> | Date | string
+    company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
+    contacts?: ContactTagAssignmentListRelationFilter
+    autoAnalyticRules?: AutoAnalyticRuleListRelationFilter
+  }, "id" | "companyId_name">
+
+  export type ContactTagOrderByWithAggregationInput = {
+    id?: SortOrder
+    companyId?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    _count?: ContactTagCountOrderByAggregateInput
+    _max?: ContactTagMaxOrderByAggregateInput
+    _min?: ContactTagMinOrderByAggregateInput
+  }
+
+  export type ContactTagScalarWhereWithAggregatesInput = {
+    AND?: ContactTagScalarWhereWithAggregatesInput | ContactTagScalarWhereWithAggregatesInput[]
+    OR?: ContactTagScalarWhereWithAggregatesInput[]
+    NOT?: ContactTagScalarWhereWithAggregatesInput | ContactTagScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"ContactTag"> | string
+    companyId?: UuidWithAggregatesFilter<"ContactTag"> | string
+    name?: StringWithAggregatesFilter<"ContactTag"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ContactTag"> | Date | string
+  }
+
+  export type ContactTagAssignmentWhereInput = {
+    AND?: ContactTagAssignmentWhereInput | ContactTagAssignmentWhereInput[]
+    OR?: ContactTagAssignmentWhereInput[]
+    NOT?: ContactTagAssignmentWhereInput | ContactTagAssignmentWhereInput[]
+    id?: UuidFilter<"ContactTagAssignment"> | string
+    contactId?: UuidFilter<"ContactTagAssignment"> | string
+    tagId?: UuidFilter<"ContactTagAssignment"> | string
+    createdAt?: DateTimeFilter<"ContactTagAssignment"> | Date | string
+    contact?: XOR<ContactScalarRelationFilter, ContactWhereInput>
+    tag?: XOR<ContactTagScalarRelationFilter, ContactTagWhereInput>
+  }
+
+  export type ContactTagAssignmentOrderByWithRelationInput = {
+    id?: SortOrder
+    contactId?: SortOrder
+    tagId?: SortOrder
+    createdAt?: SortOrder
+    contact?: ContactOrderByWithRelationInput
+    tag?: ContactTagOrderByWithRelationInput
+  }
+
+  export type ContactTagAssignmentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    contactId_tagId?: ContactTagAssignmentContactIdTagIdCompoundUniqueInput
+    AND?: ContactTagAssignmentWhereInput | ContactTagAssignmentWhereInput[]
+    OR?: ContactTagAssignmentWhereInput[]
+    NOT?: ContactTagAssignmentWhereInput | ContactTagAssignmentWhereInput[]
+    contactId?: UuidFilter<"ContactTagAssignment"> | string
+    tagId?: UuidFilter<"ContactTagAssignment"> | string
+    createdAt?: DateTimeFilter<"ContactTagAssignment"> | Date | string
+    contact?: XOR<ContactScalarRelationFilter, ContactWhereInput>
+    tag?: XOR<ContactTagScalarRelationFilter, ContactTagWhereInput>
+  }, "id" | "contactId_tagId">
+
+  export type ContactTagAssignmentOrderByWithAggregationInput = {
+    id?: SortOrder
+    contactId?: SortOrder
+    tagId?: SortOrder
+    createdAt?: SortOrder
+    _count?: ContactTagAssignmentCountOrderByAggregateInput
+    _max?: ContactTagAssignmentMaxOrderByAggregateInput
+    _min?: ContactTagAssignmentMinOrderByAggregateInput
+  }
+
+  export type ContactTagAssignmentScalarWhereWithAggregatesInput = {
+    AND?: ContactTagAssignmentScalarWhereWithAggregatesInput | ContactTagAssignmentScalarWhereWithAggregatesInput[]
+    OR?: ContactTagAssignmentScalarWhereWithAggregatesInput[]
+    NOT?: ContactTagAssignmentScalarWhereWithAggregatesInput | ContactTagAssignmentScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"ContactTagAssignment"> | string
+    contactId?: UuidWithAggregatesFilter<"ContactTagAssignment"> | string
+    tagId?: UuidWithAggregatesFilter<"ContactTagAssignment"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ContactTagAssignment"> | Date | string
   }
 
   export type ProductCategoryWhereInput = {
@@ -37479,6 +43381,10 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"AutoAnalyticModel"> | Date | string
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
     rules?: AutoAnalyticRuleListRelationFilter
+    purchaseOrderLines?: PurchaseOrderLineListRelationFilter
+    salesOrderLines?: SalesOrderLineListRelationFilter
+    vendorBillLines?: VendorBillLineListRelationFilter
+    customerInvoiceLines?: CustomerInvoiceLineListRelationFilter
   }
 
   export type AutoAnalyticModelOrderByWithRelationInput = {
@@ -37490,6 +43396,10 @@ export namespace Prisma {
     createdAt?: SortOrder
     company?: CompanyOrderByWithRelationInput
     rules?: AutoAnalyticRuleOrderByRelationAggregateInput
+    purchaseOrderLines?: PurchaseOrderLineOrderByRelationAggregateInput
+    salesOrderLines?: SalesOrderLineOrderByRelationAggregateInput
+    vendorBillLines?: VendorBillLineOrderByRelationAggregateInput
+    customerInvoiceLines?: CustomerInvoiceLineOrderByRelationAggregateInput
   }
 
   export type AutoAnalyticModelWhereUniqueInput = Prisma.AtLeast<{
@@ -37504,6 +43414,10 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"AutoAnalyticModel"> | Date | string
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
     rules?: AutoAnalyticRuleListRelationFilter
+    purchaseOrderLines?: PurchaseOrderLineListRelationFilter
+    salesOrderLines?: SalesOrderLineListRelationFilter
+    vendorBillLines?: VendorBillLineListRelationFilter
+    customerInvoiceLines?: CustomerInvoiceLineListRelationFilter
   }, "id">
 
   export type AutoAnalyticModelOrderByWithAggregationInput = {
@@ -37542,6 +43456,7 @@ export namespace Prisma {
     matchProductId?: UuidNullableFilter<"AutoAnalyticRule"> | string | null
     matchCategoryId?: UuidNullableFilter<"AutoAnalyticRule"> | string | null
     matchContactId?: UuidNullableFilter<"AutoAnalyticRule"> | string | null
+    matchContactTagId?: UuidNullableFilter<"AutoAnalyticRule"> | string | null
     assignAnalyticAccountId?: UuidFilter<"AutoAnalyticRule"> | string
     rulePriority?: IntFilter<"AutoAnalyticRule"> | number
     isActive?: BoolFilter<"AutoAnalyticRule"> | boolean
@@ -37549,7 +43464,12 @@ export namespace Prisma {
     product?: XOR<ProductNullableScalarRelationFilter, ProductWhereInput> | null
     category?: XOR<ProductCategoryNullableScalarRelationFilter, ProductCategoryWhereInput> | null
     contact?: XOR<ContactNullableScalarRelationFilter, ContactWhereInput> | null
+    contactTag?: XOR<ContactTagNullableScalarRelationFilter, ContactTagWhereInput> | null
     assignAnalytic?: XOR<AnalyticAccountScalarRelationFilter, AnalyticAccountWhereInput>
+    purchaseOrderLines?: PurchaseOrderLineListRelationFilter
+    salesOrderLines?: SalesOrderLineListRelationFilter
+    vendorBillLines?: VendorBillLineListRelationFilter
+    customerInvoiceLines?: CustomerInvoiceLineListRelationFilter
   }
 
   export type AutoAnalyticRuleOrderByWithRelationInput = {
@@ -37559,6 +43479,7 @@ export namespace Prisma {
     matchProductId?: SortOrderInput | SortOrder
     matchCategoryId?: SortOrderInput | SortOrder
     matchContactId?: SortOrderInput | SortOrder
+    matchContactTagId?: SortOrderInput | SortOrder
     assignAnalyticAccountId?: SortOrder
     rulePriority?: SortOrder
     isActive?: SortOrder
@@ -37566,7 +43487,12 @@ export namespace Prisma {
     product?: ProductOrderByWithRelationInput
     category?: ProductCategoryOrderByWithRelationInput
     contact?: ContactOrderByWithRelationInput
+    contactTag?: ContactTagOrderByWithRelationInput
     assignAnalytic?: AnalyticAccountOrderByWithRelationInput
+    purchaseOrderLines?: PurchaseOrderLineOrderByRelationAggregateInput
+    salesOrderLines?: SalesOrderLineOrderByRelationAggregateInput
+    vendorBillLines?: VendorBillLineOrderByRelationAggregateInput
+    customerInvoiceLines?: CustomerInvoiceLineOrderByRelationAggregateInput
   }
 
   export type AutoAnalyticRuleWhereUniqueInput = Prisma.AtLeast<{
@@ -37579,6 +43505,7 @@ export namespace Prisma {
     matchProductId?: UuidNullableFilter<"AutoAnalyticRule"> | string | null
     matchCategoryId?: UuidNullableFilter<"AutoAnalyticRule"> | string | null
     matchContactId?: UuidNullableFilter<"AutoAnalyticRule"> | string | null
+    matchContactTagId?: UuidNullableFilter<"AutoAnalyticRule"> | string | null
     assignAnalyticAccountId?: UuidFilter<"AutoAnalyticRule"> | string
     rulePriority?: IntFilter<"AutoAnalyticRule"> | number
     isActive?: BoolFilter<"AutoAnalyticRule"> | boolean
@@ -37586,7 +43513,12 @@ export namespace Prisma {
     product?: XOR<ProductNullableScalarRelationFilter, ProductWhereInput> | null
     category?: XOR<ProductCategoryNullableScalarRelationFilter, ProductCategoryWhereInput> | null
     contact?: XOR<ContactNullableScalarRelationFilter, ContactWhereInput> | null
+    contactTag?: XOR<ContactTagNullableScalarRelationFilter, ContactTagWhereInput> | null
     assignAnalytic?: XOR<AnalyticAccountScalarRelationFilter, AnalyticAccountWhereInput>
+    purchaseOrderLines?: PurchaseOrderLineListRelationFilter
+    salesOrderLines?: SalesOrderLineListRelationFilter
+    vendorBillLines?: VendorBillLineListRelationFilter
+    customerInvoiceLines?: CustomerInvoiceLineListRelationFilter
   }, "id">
 
   export type AutoAnalyticRuleOrderByWithAggregationInput = {
@@ -37596,6 +43528,7 @@ export namespace Prisma {
     matchProductId?: SortOrderInput | SortOrder
     matchCategoryId?: SortOrderInput | SortOrder
     matchContactId?: SortOrderInput | SortOrder
+    matchContactTagId?: SortOrderInput | SortOrder
     assignAnalyticAccountId?: SortOrder
     rulePriority?: SortOrder
     isActive?: SortOrder
@@ -37616,6 +43549,7 @@ export namespace Prisma {
     matchProductId?: UuidNullableWithAggregatesFilter<"AutoAnalyticRule"> | string | null
     matchCategoryId?: UuidNullableWithAggregatesFilter<"AutoAnalyticRule"> | string | null
     matchContactId?: UuidNullableWithAggregatesFilter<"AutoAnalyticRule"> | string | null
+    matchContactTagId?: UuidNullableWithAggregatesFilter<"AutoAnalyticRule"> | string | null
     assignAnalyticAccountId?: UuidWithAggregatesFilter<"AutoAnalyticRule"> | string
     rulePriority?: IntWithAggregatesFilter<"AutoAnalyticRule"> | number
     isActive?: BoolWithAggregatesFilter<"AutoAnalyticRule"> | boolean
@@ -37719,6 +43653,9 @@ export namespace Prisma {
     purchaseOrderId?: UuidFilter<"PurchaseOrderLine"> | string
     productId?: UuidFilter<"PurchaseOrderLine"> | string
     analyticAccountId?: UuidNullableFilter<"PurchaseOrderLine"> | string | null
+    autoAnalyticModelId?: UuidNullableFilter<"PurchaseOrderLine"> | string | null
+    autoAnalyticRuleId?: UuidNullableFilter<"PurchaseOrderLine"> | string | null
+    matchedFieldsCount?: IntNullableFilter<"PurchaseOrderLine"> | number | null
     description?: StringNullableFilter<"PurchaseOrderLine"> | string | null
     qty?: DecimalFilter<"PurchaseOrderLine"> | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFilter<"PurchaseOrderLine"> | Decimal | DecimalJsLike | number | string
@@ -37727,6 +43664,8 @@ export namespace Prisma {
     purchaseOrder?: XOR<PurchaseOrderScalarRelationFilter, PurchaseOrderWhereInput>
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
     analytic?: XOR<AnalyticAccountNullableScalarRelationFilter, AnalyticAccountWhereInput> | null
+    autoModel?: XOR<AutoAnalyticModelNullableScalarRelationFilter, AutoAnalyticModelWhereInput> | null
+    autoRule?: XOR<AutoAnalyticRuleNullableScalarRelationFilter, AutoAnalyticRuleWhereInput> | null
   }
 
   export type PurchaseOrderLineOrderByWithRelationInput = {
@@ -37734,6 +43673,9 @@ export namespace Prisma {
     purchaseOrderId?: SortOrder
     productId?: SortOrder
     analyticAccountId?: SortOrderInput | SortOrder
+    autoAnalyticModelId?: SortOrderInput | SortOrder
+    autoAnalyticRuleId?: SortOrderInput | SortOrder
+    matchedFieldsCount?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     qty?: SortOrder
     unitPrice?: SortOrder
@@ -37742,6 +43684,8 @@ export namespace Prisma {
     purchaseOrder?: PurchaseOrderOrderByWithRelationInput
     product?: ProductOrderByWithRelationInput
     analytic?: AnalyticAccountOrderByWithRelationInput
+    autoModel?: AutoAnalyticModelOrderByWithRelationInput
+    autoRule?: AutoAnalyticRuleOrderByWithRelationInput
   }
 
   export type PurchaseOrderLineWhereUniqueInput = Prisma.AtLeast<{
@@ -37752,6 +43696,9 @@ export namespace Prisma {
     purchaseOrderId?: UuidFilter<"PurchaseOrderLine"> | string
     productId?: UuidFilter<"PurchaseOrderLine"> | string
     analyticAccountId?: UuidNullableFilter<"PurchaseOrderLine"> | string | null
+    autoAnalyticModelId?: UuidNullableFilter<"PurchaseOrderLine"> | string | null
+    autoAnalyticRuleId?: UuidNullableFilter<"PurchaseOrderLine"> | string | null
+    matchedFieldsCount?: IntNullableFilter<"PurchaseOrderLine"> | number | null
     description?: StringNullableFilter<"PurchaseOrderLine"> | string | null
     qty?: DecimalFilter<"PurchaseOrderLine"> | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFilter<"PurchaseOrderLine"> | Decimal | DecimalJsLike | number | string
@@ -37760,6 +43707,8 @@ export namespace Prisma {
     purchaseOrder?: XOR<PurchaseOrderScalarRelationFilter, PurchaseOrderWhereInput>
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
     analytic?: XOR<AnalyticAccountNullableScalarRelationFilter, AnalyticAccountWhereInput> | null
+    autoModel?: XOR<AutoAnalyticModelNullableScalarRelationFilter, AutoAnalyticModelWhereInput> | null
+    autoRule?: XOR<AutoAnalyticRuleNullableScalarRelationFilter, AutoAnalyticRuleWhereInput> | null
   }, "id">
 
   export type PurchaseOrderLineOrderByWithAggregationInput = {
@@ -37767,6 +43716,9 @@ export namespace Prisma {
     purchaseOrderId?: SortOrder
     productId?: SortOrder
     analyticAccountId?: SortOrderInput | SortOrder
+    autoAnalyticModelId?: SortOrderInput | SortOrder
+    autoAnalyticRuleId?: SortOrderInput | SortOrder
+    matchedFieldsCount?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     qty?: SortOrder
     unitPrice?: SortOrder
@@ -37787,6 +43739,9 @@ export namespace Prisma {
     purchaseOrderId?: UuidWithAggregatesFilter<"PurchaseOrderLine"> | string
     productId?: UuidWithAggregatesFilter<"PurchaseOrderLine"> | string
     analyticAccountId?: UuidNullableWithAggregatesFilter<"PurchaseOrderLine"> | string | null
+    autoAnalyticModelId?: UuidNullableWithAggregatesFilter<"PurchaseOrderLine"> | string | null
+    autoAnalyticRuleId?: UuidNullableWithAggregatesFilter<"PurchaseOrderLine"> | string | null
+    matchedFieldsCount?: IntNullableWithAggregatesFilter<"PurchaseOrderLine"> | number | null
     description?: StringNullableWithAggregatesFilter<"PurchaseOrderLine"> | string | null
     qty?: DecimalWithAggregatesFilter<"PurchaseOrderLine"> | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalWithAggregatesFilter<"PurchaseOrderLine"> | Decimal | DecimalJsLike | number | string
@@ -37892,6 +43847,9 @@ export namespace Prisma {
     salesOrderId?: UuidFilter<"SalesOrderLine"> | string
     productId?: UuidFilter<"SalesOrderLine"> | string
     analyticAccountId?: UuidNullableFilter<"SalesOrderLine"> | string | null
+    autoAnalyticModelId?: UuidNullableFilter<"SalesOrderLine"> | string | null
+    autoAnalyticRuleId?: UuidNullableFilter<"SalesOrderLine"> | string | null
+    matchedFieldsCount?: IntNullableFilter<"SalesOrderLine"> | number | null
     description?: StringNullableFilter<"SalesOrderLine"> | string | null
     qty?: DecimalFilter<"SalesOrderLine"> | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFilter<"SalesOrderLine"> | Decimal | DecimalJsLike | number | string
@@ -37900,6 +43858,8 @@ export namespace Prisma {
     salesOrder?: XOR<SalesOrderScalarRelationFilter, SalesOrderWhereInput>
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
     analytic?: XOR<AnalyticAccountNullableScalarRelationFilter, AnalyticAccountWhereInput> | null
+    autoModel?: XOR<AutoAnalyticModelNullableScalarRelationFilter, AutoAnalyticModelWhereInput> | null
+    autoRule?: XOR<AutoAnalyticRuleNullableScalarRelationFilter, AutoAnalyticRuleWhereInput> | null
   }
 
   export type SalesOrderLineOrderByWithRelationInput = {
@@ -37907,6 +43867,9 @@ export namespace Prisma {
     salesOrderId?: SortOrder
     productId?: SortOrder
     analyticAccountId?: SortOrderInput | SortOrder
+    autoAnalyticModelId?: SortOrderInput | SortOrder
+    autoAnalyticRuleId?: SortOrderInput | SortOrder
+    matchedFieldsCount?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     qty?: SortOrder
     unitPrice?: SortOrder
@@ -37915,6 +43878,8 @@ export namespace Prisma {
     salesOrder?: SalesOrderOrderByWithRelationInput
     product?: ProductOrderByWithRelationInput
     analytic?: AnalyticAccountOrderByWithRelationInput
+    autoModel?: AutoAnalyticModelOrderByWithRelationInput
+    autoRule?: AutoAnalyticRuleOrderByWithRelationInput
   }
 
   export type SalesOrderLineWhereUniqueInput = Prisma.AtLeast<{
@@ -37925,6 +43890,9 @@ export namespace Prisma {
     salesOrderId?: UuidFilter<"SalesOrderLine"> | string
     productId?: UuidFilter<"SalesOrderLine"> | string
     analyticAccountId?: UuidNullableFilter<"SalesOrderLine"> | string | null
+    autoAnalyticModelId?: UuidNullableFilter<"SalesOrderLine"> | string | null
+    autoAnalyticRuleId?: UuidNullableFilter<"SalesOrderLine"> | string | null
+    matchedFieldsCount?: IntNullableFilter<"SalesOrderLine"> | number | null
     description?: StringNullableFilter<"SalesOrderLine"> | string | null
     qty?: DecimalFilter<"SalesOrderLine"> | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFilter<"SalesOrderLine"> | Decimal | DecimalJsLike | number | string
@@ -37933,6 +43901,8 @@ export namespace Prisma {
     salesOrder?: XOR<SalesOrderScalarRelationFilter, SalesOrderWhereInput>
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
     analytic?: XOR<AnalyticAccountNullableScalarRelationFilter, AnalyticAccountWhereInput> | null
+    autoModel?: XOR<AutoAnalyticModelNullableScalarRelationFilter, AutoAnalyticModelWhereInput> | null
+    autoRule?: XOR<AutoAnalyticRuleNullableScalarRelationFilter, AutoAnalyticRuleWhereInput> | null
   }, "id">
 
   export type SalesOrderLineOrderByWithAggregationInput = {
@@ -37940,6 +43910,9 @@ export namespace Prisma {
     salesOrderId?: SortOrder
     productId?: SortOrder
     analyticAccountId?: SortOrderInput | SortOrder
+    autoAnalyticModelId?: SortOrderInput | SortOrder
+    autoAnalyticRuleId?: SortOrderInput | SortOrder
+    matchedFieldsCount?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     qty?: SortOrder
     unitPrice?: SortOrder
@@ -37960,6 +43933,9 @@ export namespace Prisma {
     salesOrderId?: UuidWithAggregatesFilter<"SalesOrderLine"> | string
     productId?: UuidWithAggregatesFilter<"SalesOrderLine"> | string
     analyticAccountId?: UuidNullableWithAggregatesFilter<"SalesOrderLine"> | string | null
+    autoAnalyticModelId?: UuidNullableWithAggregatesFilter<"SalesOrderLine"> | string | null
+    autoAnalyticRuleId?: UuidNullableWithAggregatesFilter<"SalesOrderLine"> | string | null
+    matchedFieldsCount?: IntNullableWithAggregatesFilter<"SalesOrderLine"> | number | null
     description?: StringNullableWithAggregatesFilter<"SalesOrderLine"> | string | null
     qty?: DecimalWithAggregatesFilter<"SalesOrderLine"> | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalWithAggregatesFilter<"SalesOrderLine"> | Decimal | DecimalJsLike | number | string
@@ -37988,6 +43964,7 @@ export namespace Prisma {
     vendor?: XOR<ContactScalarRelationFilter, ContactWhereInput>
     po?: XOR<PurchaseOrderNullableScalarRelationFilter, PurchaseOrderWhereInput> | null
     lines?: VendorBillLineListRelationFilter
+    payments?: VendorBillPaymentListRelationFilter
   }
 
   export type VendorBillOrderByWithRelationInput = {
@@ -38008,6 +43985,7 @@ export namespace Prisma {
     vendor?: ContactOrderByWithRelationInput
     po?: PurchaseOrderOrderByWithRelationInput
     lines?: VendorBillLineOrderByRelationAggregateInput
+    payments?: VendorBillPaymentOrderByRelationAggregateInput
   }
 
   export type VendorBillWhereUniqueInput = Prisma.AtLeast<{
@@ -38032,6 +44010,7 @@ export namespace Prisma {
     vendor?: XOR<ContactScalarRelationFilter, ContactWhereInput>
     po?: XOR<PurchaseOrderNullableScalarRelationFilter, PurchaseOrderWhereInput> | null
     lines?: VendorBillLineListRelationFilter
+    payments?: VendorBillPaymentListRelationFilter
   }, "id" | "companyId_billNo">
 
   export type VendorBillOrderByWithAggregationInput = {
@@ -38082,6 +44061,9 @@ export namespace Prisma {
     vendorBillId?: UuidFilter<"VendorBillLine"> | string
     productId?: UuidNullableFilter<"VendorBillLine"> | string | null
     analyticAccountId?: UuidNullableFilter<"VendorBillLine"> | string | null
+    autoAnalyticModelId?: UuidNullableFilter<"VendorBillLine"> | string | null
+    autoAnalyticRuleId?: UuidNullableFilter<"VendorBillLine"> | string | null
+    matchedFieldsCount?: IntNullableFilter<"VendorBillLine"> | number | null
     glAccountId?: UuidNullableFilter<"VendorBillLine"> | string | null
     description?: StringNullableFilter<"VendorBillLine"> | string | null
     qty?: DecimalFilter<"VendorBillLine"> | Decimal | DecimalJsLike | number | string
@@ -38092,6 +44074,8 @@ export namespace Prisma {
     product?: XOR<ProductNullableScalarRelationFilter, ProductWhereInput> | null
     analytic?: XOR<AnalyticAccountNullableScalarRelationFilter, AnalyticAccountWhereInput> | null
     gl?: XOR<GLAccountNullableScalarRelationFilter, GLAccountWhereInput> | null
+    autoModel?: XOR<AutoAnalyticModelNullableScalarRelationFilter, AutoAnalyticModelWhereInput> | null
+    autoRule?: XOR<AutoAnalyticRuleNullableScalarRelationFilter, AutoAnalyticRuleWhereInput> | null
   }
 
   export type VendorBillLineOrderByWithRelationInput = {
@@ -38099,6 +44083,9 @@ export namespace Prisma {
     vendorBillId?: SortOrder
     productId?: SortOrderInput | SortOrder
     analyticAccountId?: SortOrderInput | SortOrder
+    autoAnalyticModelId?: SortOrderInput | SortOrder
+    autoAnalyticRuleId?: SortOrderInput | SortOrder
+    matchedFieldsCount?: SortOrderInput | SortOrder
     glAccountId?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     qty?: SortOrder
@@ -38109,6 +44096,8 @@ export namespace Prisma {
     product?: ProductOrderByWithRelationInput
     analytic?: AnalyticAccountOrderByWithRelationInput
     gl?: GLAccountOrderByWithRelationInput
+    autoModel?: AutoAnalyticModelOrderByWithRelationInput
+    autoRule?: AutoAnalyticRuleOrderByWithRelationInput
   }
 
   export type VendorBillLineWhereUniqueInput = Prisma.AtLeast<{
@@ -38119,6 +44108,9 @@ export namespace Prisma {
     vendorBillId?: UuidFilter<"VendorBillLine"> | string
     productId?: UuidNullableFilter<"VendorBillLine"> | string | null
     analyticAccountId?: UuidNullableFilter<"VendorBillLine"> | string | null
+    autoAnalyticModelId?: UuidNullableFilter<"VendorBillLine"> | string | null
+    autoAnalyticRuleId?: UuidNullableFilter<"VendorBillLine"> | string | null
+    matchedFieldsCount?: IntNullableFilter<"VendorBillLine"> | number | null
     glAccountId?: UuidNullableFilter<"VendorBillLine"> | string | null
     description?: StringNullableFilter<"VendorBillLine"> | string | null
     qty?: DecimalFilter<"VendorBillLine"> | Decimal | DecimalJsLike | number | string
@@ -38129,6 +44121,8 @@ export namespace Prisma {
     product?: XOR<ProductNullableScalarRelationFilter, ProductWhereInput> | null
     analytic?: XOR<AnalyticAccountNullableScalarRelationFilter, AnalyticAccountWhereInput> | null
     gl?: XOR<GLAccountNullableScalarRelationFilter, GLAccountWhereInput> | null
+    autoModel?: XOR<AutoAnalyticModelNullableScalarRelationFilter, AutoAnalyticModelWhereInput> | null
+    autoRule?: XOR<AutoAnalyticRuleNullableScalarRelationFilter, AutoAnalyticRuleWhereInput> | null
   }, "id">
 
   export type VendorBillLineOrderByWithAggregationInput = {
@@ -38136,6 +44130,9 @@ export namespace Prisma {
     vendorBillId?: SortOrder
     productId?: SortOrderInput | SortOrder
     analyticAccountId?: SortOrderInput | SortOrder
+    autoAnalyticModelId?: SortOrderInput | SortOrder
+    autoAnalyticRuleId?: SortOrderInput | SortOrder
+    matchedFieldsCount?: SortOrderInput | SortOrder
     glAccountId?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     qty?: SortOrder
@@ -38157,6 +44154,9 @@ export namespace Prisma {
     vendorBillId?: UuidWithAggregatesFilter<"VendorBillLine"> | string
     productId?: UuidNullableWithAggregatesFilter<"VendorBillLine"> | string | null
     analyticAccountId?: UuidNullableWithAggregatesFilter<"VendorBillLine"> | string | null
+    autoAnalyticModelId?: UuidNullableWithAggregatesFilter<"VendorBillLine"> | string | null
+    autoAnalyticRuleId?: UuidNullableWithAggregatesFilter<"VendorBillLine"> | string | null
+    matchedFieldsCount?: IntNullableWithAggregatesFilter<"VendorBillLine"> | number | null
     glAccountId?: UuidNullableWithAggregatesFilter<"VendorBillLine"> | string | null
     description?: StringNullableWithAggregatesFilter<"VendorBillLine"> | string | null
     qty?: DecimalWithAggregatesFilter<"VendorBillLine"> | Decimal | DecimalJsLike | number | string
@@ -38187,6 +44187,7 @@ export namespace Prisma {
     customer?: XOR<ContactScalarRelationFilter, ContactWhereInput>
     so?: XOR<SalesOrderNullableScalarRelationFilter, SalesOrderWhereInput> | null
     lines?: CustomerInvoiceLineListRelationFilter
+    payments?: CustomerInvoicePaymentListRelationFilter
   }
 
   export type CustomerInvoiceOrderByWithRelationInput = {
@@ -38208,6 +44209,7 @@ export namespace Prisma {
     customer?: ContactOrderByWithRelationInput
     so?: SalesOrderOrderByWithRelationInput
     lines?: CustomerInvoiceLineOrderByRelationAggregateInput
+    payments?: CustomerInvoicePaymentOrderByRelationAggregateInput
   }
 
   export type CustomerInvoiceWhereUniqueInput = Prisma.AtLeast<{
@@ -38233,6 +44235,7 @@ export namespace Prisma {
     customer?: XOR<ContactScalarRelationFilter, ContactWhereInput>
     so?: XOR<SalesOrderNullableScalarRelationFilter, SalesOrderWhereInput> | null
     lines?: CustomerInvoiceLineListRelationFilter
+    payments?: CustomerInvoicePaymentListRelationFilter
   }, "id" | "companyId_invoiceNo">
 
   export type CustomerInvoiceOrderByWithAggregationInput = {
@@ -38285,6 +44288,9 @@ export namespace Prisma {
     customerInvoiceId?: UuidFilter<"CustomerInvoiceLine"> | string
     productId?: UuidNullableFilter<"CustomerInvoiceLine"> | string | null
     analyticAccountId?: UuidNullableFilter<"CustomerInvoiceLine"> | string | null
+    autoAnalyticModelId?: UuidNullableFilter<"CustomerInvoiceLine"> | string | null
+    autoAnalyticRuleId?: UuidNullableFilter<"CustomerInvoiceLine"> | string | null
+    matchedFieldsCount?: IntNullableFilter<"CustomerInvoiceLine"> | number | null
     glAccountId?: UuidNullableFilter<"CustomerInvoiceLine"> | string | null
     description?: StringNullableFilter<"CustomerInvoiceLine"> | string | null
     qty?: DecimalFilter<"CustomerInvoiceLine"> | Decimal | DecimalJsLike | number | string
@@ -38295,6 +44301,8 @@ export namespace Prisma {
     product?: XOR<ProductNullableScalarRelationFilter, ProductWhereInput> | null
     analytic?: XOR<AnalyticAccountNullableScalarRelationFilter, AnalyticAccountWhereInput> | null
     gl?: XOR<GLAccountNullableScalarRelationFilter, GLAccountWhereInput> | null
+    autoModel?: XOR<AutoAnalyticModelNullableScalarRelationFilter, AutoAnalyticModelWhereInput> | null
+    autoRule?: XOR<AutoAnalyticRuleNullableScalarRelationFilter, AutoAnalyticRuleWhereInput> | null
   }
 
   export type CustomerInvoiceLineOrderByWithRelationInput = {
@@ -38302,6 +44310,9 @@ export namespace Prisma {
     customerInvoiceId?: SortOrder
     productId?: SortOrderInput | SortOrder
     analyticAccountId?: SortOrderInput | SortOrder
+    autoAnalyticModelId?: SortOrderInput | SortOrder
+    autoAnalyticRuleId?: SortOrderInput | SortOrder
+    matchedFieldsCount?: SortOrderInput | SortOrder
     glAccountId?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     qty?: SortOrder
@@ -38312,6 +44323,8 @@ export namespace Prisma {
     product?: ProductOrderByWithRelationInput
     analytic?: AnalyticAccountOrderByWithRelationInput
     gl?: GLAccountOrderByWithRelationInput
+    autoModel?: AutoAnalyticModelOrderByWithRelationInput
+    autoRule?: AutoAnalyticRuleOrderByWithRelationInput
   }
 
   export type CustomerInvoiceLineWhereUniqueInput = Prisma.AtLeast<{
@@ -38322,6 +44335,9 @@ export namespace Prisma {
     customerInvoiceId?: UuidFilter<"CustomerInvoiceLine"> | string
     productId?: UuidNullableFilter<"CustomerInvoiceLine"> | string | null
     analyticAccountId?: UuidNullableFilter<"CustomerInvoiceLine"> | string | null
+    autoAnalyticModelId?: UuidNullableFilter<"CustomerInvoiceLine"> | string | null
+    autoAnalyticRuleId?: UuidNullableFilter<"CustomerInvoiceLine"> | string | null
+    matchedFieldsCount?: IntNullableFilter<"CustomerInvoiceLine"> | number | null
     glAccountId?: UuidNullableFilter<"CustomerInvoiceLine"> | string | null
     description?: StringNullableFilter<"CustomerInvoiceLine"> | string | null
     qty?: DecimalFilter<"CustomerInvoiceLine"> | Decimal | DecimalJsLike | number | string
@@ -38332,6 +44348,8 @@ export namespace Prisma {
     product?: XOR<ProductNullableScalarRelationFilter, ProductWhereInput> | null
     analytic?: XOR<AnalyticAccountNullableScalarRelationFilter, AnalyticAccountWhereInput> | null
     gl?: XOR<GLAccountNullableScalarRelationFilter, GLAccountWhereInput> | null
+    autoModel?: XOR<AutoAnalyticModelNullableScalarRelationFilter, AutoAnalyticModelWhereInput> | null
+    autoRule?: XOR<AutoAnalyticRuleNullableScalarRelationFilter, AutoAnalyticRuleWhereInput> | null
   }, "id">
 
   export type CustomerInvoiceLineOrderByWithAggregationInput = {
@@ -38339,6 +44357,9 @@ export namespace Prisma {
     customerInvoiceId?: SortOrder
     productId?: SortOrderInput | SortOrder
     analyticAccountId?: SortOrderInput | SortOrder
+    autoAnalyticModelId?: SortOrderInput | SortOrder
+    autoAnalyticRuleId?: SortOrderInput | SortOrder
+    matchedFieldsCount?: SortOrderInput | SortOrder
     glAccountId?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     qty?: SortOrder
@@ -38360,6 +44381,9 @@ export namespace Prisma {
     customerInvoiceId?: UuidWithAggregatesFilter<"CustomerInvoiceLine"> | string
     productId?: UuidNullableWithAggregatesFilter<"CustomerInvoiceLine"> | string | null
     analyticAccountId?: UuidNullableWithAggregatesFilter<"CustomerInvoiceLine"> | string | null
+    autoAnalyticModelId?: UuidNullableWithAggregatesFilter<"CustomerInvoiceLine"> | string | null
+    autoAnalyticRuleId?: UuidNullableWithAggregatesFilter<"CustomerInvoiceLine"> | string | null
+    matchedFieldsCount?: IntNullableWithAggregatesFilter<"CustomerInvoiceLine"> | number | null
     glAccountId?: UuidNullableWithAggregatesFilter<"CustomerInvoiceLine"> | string | null
     description?: StringNullableWithAggregatesFilter<"CustomerInvoiceLine"> | string | null
     qty?: DecimalWithAggregatesFilter<"CustomerInvoiceLine"> | Decimal | DecimalJsLike | number | string
@@ -38385,6 +44409,8 @@ export namespace Prisma {
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
     contact?: XOR<ContactScalarRelationFilter, ContactWhereInput>
     allocations?: PaymentAllocationListRelationFilter
+    invoicePayments?: CustomerInvoicePaymentListRelationFilter
+    billPayments?: VendorBillPaymentListRelationFilter
   }
 
   export type PaymentOrderByWithRelationInput = {
@@ -38401,6 +44427,8 @@ export namespace Prisma {
     company?: CompanyOrderByWithRelationInput
     contact?: ContactOrderByWithRelationInput
     allocations?: PaymentAllocationOrderByRelationAggregateInput
+    invoicePayments?: CustomerInvoicePaymentOrderByRelationAggregateInput
+    billPayments?: VendorBillPaymentOrderByRelationAggregateInput
   }
 
   export type PaymentWhereUniqueInput = Prisma.AtLeast<{
@@ -38420,6 +44448,8 @@ export namespace Prisma {
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
     contact?: XOR<ContactScalarRelationFilter, ContactWhereInput>
     allocations?: PaymentAllocationListRelationFilter
+    invoicePayments?: CustomerInvoicePaymentListRelationFilter
+    billPayments?: VendorBillPaymentListRelationFilter
   }, "id">
 
   export type PaymentOrderByWithAggregationInput = {
@@ -38512,6 +44542,128 @@ export namespace Prisma {
     targetType?: EnumAllocationTargetTypeWithAggregatesFilter<"PaymentAllocation"> | $Enums.AllocationTargetType
     targetId?: UuidWithAggregatesFilter<"PaymentAllocation"> | string
     amount?: DecimalWithAggregatesFilter<"PaymentAllocation"> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type CustomerInvoicePaymentWhereInput = {
+    AND?: CustomerInvoicePaymentWhereInput | CustomerInvoicePaymentWhereInput[]
+    OR?: CustomerInvoicePaymentWhereInput[]
+    NOT?: CustomerInvoicePaymentWhereInput | CustomerInvoicePaymentWhereInput[]
+    id?: UuidFilter<"CustomerInvoicePayment"> | string
+    invoiceId?: UuidFilter<"CustomerInvoicePayment"> | string
+    paymentId?: UuidFilter<"CustomerInvoicePayment"> | string
+    amount?: DecimalFilter<"CustomerInvoicePayment"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFilter<"CustomerInvoicePayment"> | Date | string
+    invoice?: XOR<CustomerInvoiceScalarRelationFilter, CustomerInvoiceWhereInput>
+    payment?: XOR<PaymentScalarRelationFilter, PaymentWhereInput>
+  }
+
+  export type CustomerInvoicePaymentOrderByWithRelationInput = {
+    id?: SortOrder
+    invoiceId?: SortOrder
+    paymentId?: SortOrder
+    amount?: SortOrder
+    createdAt?: SortOrder
+    invoice?: CustomerInvoiceOrderByWithRelationInput
+    payment?: PaymentOrderByWithRelationInput
+  }
+
+  export type CustomerInvoicePaymentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    invoiceId_paymentId?: CustomerInvoicePaymentInvoiceIdPaymentIdCompoundUniqueInput
+    AND?: CustomerInvoicePaymentWhereInput | CustomerInvoicePaymentWhereInput[]
+    OR?: CustomerInvoicePaymentWhereInput[]
+    NOT?: CustomerInvoicePaymentWhereInput | CustomerInvoicePaymentWhereInput[]
+    invoiceId?: UuidFilter<"CustomerInvoicePayment"> | string
+    paymentId?: UuidFilter<"CustomerInvoicePayment"> | string
+    amount?: DecimalFilter<"CustomerInvoicePayment"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFilter<"CustomerInvoicePayment"> | Date | string
+    invoice?: XOR<CustomerInvoiceScalarRelationFilter, CustomerInvoiceWhereInput>
+    payment?: XOR<PaymentScalarRelationFilter, PaymentWhereInput>
+  }, "id" | "invoiceId_paymentId">
+
+  export type CustomerInvoicePaymentOrderByWithAggregationInput = {
+    id?: SortOrder
+    invoiceId?: SortOrder
+    paymentId?: SortOrder
+    amount?: SortOrder
+    createdAt?: SortOrder
+    _count?: CustomerInvoicePaymentCountOrderByAggregateInput
+    _avg?: CustomerInvoicePaymentAvgOrderByAggregateInput
+    _max?: CustomerInvoicePaymentMaxOrderByAggregateInput
+    _min?: CustomerInvoicePaymentMinOrderByAggregateInput
+    _sum?: CustomerInvoicePaymentSumOrderByAggregateInput
+  }
+
+  export type CustomerInvoicePaymentScalarWhereWithAggregatesInput = {
+    AND?: CustomerInvoicePaymentScalarWhereWithAggregatesInput | CustomerInvoicePaymentScalarWhereWithAggregatesInput[]
+    OR?: CustomerInvoicePaymentScalarWhereWithAggregatesInput[]
+    NOT?: CustomerInvoicePaymentScalarWhereWithAggregatesInput | CustomerInvoicePaymentScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"CustomerInvoicePayment"> | string
+    invoiceId?: UuidWithAggregatesFilter<"CustomerInvoicePayment"> | string
+    paymentId?: UuidWithAggregatesFilter<"CustomerInvoicePayment"> | string
+    amount?: DecimalWithAggregatesFilter<"CustomerInvoicePayment"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeWithAggregatesFilter<"CustomerInvoicePayment"> | Date | string
+  }
+
+  export type VendorBillPaymentWhereInput = {
+    AND?: VendorBillPaymentWhereInput | VendorBillPaymentWhereInput[]
+    OR?: VendorBillPaymentWhereInput[]
+    NOT?: VendorBillPaymentWhereInput | VendorBillPaymentWhereInput[]
+    id?: UuidFilter<"VendorBillPayment"> | string
+    billId?: UuidFilter<"VendorBillPayment"> | string
+    paymentId?: UuidFilter<"VendorBillPayment"> | string
+    amount?: DecimalFilter<"VendorBillPayment"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFilter<"VendorBillPayment"> | Date | string
+    bill?: XOR<VendorBillScalarRelationFilter, VendorBillWhereInput>
+    payment?: XOR<PaymentScalarRelationFilter, PaymentWhereInput>
+  }
+
+  export type VendorBillPaymentOrderByWithRelationInput = {
+    id?: SortOrder
+    billId?: SortOrder
+    paymentId?: SortOrder
+    amount?: SortOrder
+    createdAt?: SortOrder
+    bill?: VendorBillOrderByWithRelationInput
+    payment?: PaymentOrderByWithRelationInput
+  }
+
+  export type VendorBillPaymentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    billId_paymentId?: VendorBillPaymentBillIdPaymentIdCompoundUniqueInput
+    AND?: VendorBillPaymentWhereInput | VendorBillPaymentWhereInput[]
+    OR?: VendorBillPaymentWhereInput[]
+    NOT?: VendorBillPaymentWhereInput | VendorBillPaymentWhereInput[]
+    billId?: UuidFilter<"VendorBillPayment"> | string
+    paymentId?: UuidFilter<"VendorBillPayment"> | string
+    amount?: DecimalFilter<"VendorBillPayment"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFilter<"VendorBillPayment"> | Date | string
+    bill?: XOR<VendorBillScalarRelationFilter, VendorBillWhereInput>
+    payment?: XOR<PaymentScalarRelationFilter, PaymentWhereInput>
+  }, "id" | "billId_paymentId">
+
+  export type VendorBillPaymentOrderByWithAggregationInput = {
+    id?: SortOrder
+    billId?: SortOrder
+    paymentId?: SortOrder
+    amount?: SortOrder
+    createdAt?: SortOrder
+    _count?: VendorBillPaymentCountOrderByAggregateInput
+    _avg?: VendorBillPaymentAvgOrderByAggregateInput
+    _max?: VendorBillPaymentMaxOrderByAggregateInput
+    _min?: VendorBillPaymentMinOrderByAggregateInput
+    _sum?: VendorBillPaymentSumOrderByAggregateInput
+  }
+
+  export type VendorBillPaymentScalarWhereWithAggregatesInput = {
+    AND?: VendorBillPaymentScalarWhereWithAggregatesInput | VendorBillPaymentScalarWhereWithAggregatesInput[]
+    OR?: VendorBillPaymentScalarWhereWithAggregatesInput[]
+    NOT?: VendorBillPaymentScalarWhereWithAggregatesInput | VendorBillPaymentScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"VendorBillPayment"> | string
+    billId?: UuidWithAggregatesFilter<"VendorBillPayment"> | string
+    paymentId?: UuidWithAggregatesFilter<"VendorBillPayment"> | string
+    amount?: DecimalWithAggregatesFilter<"VendorBillPayment"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeWithAggregatesFilter<"VendorBillPayment"> | Date | string
   }
 
   export type DocumentFileWhereInput = {
@@ -38739,6 +44891,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryCreateNestedManyWithoutCompanyInput
     products?: ProductCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountCreateNestedManyWithoutCompanyInput
@@ -38759,6 +44912,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactUncheckedCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagUncheckedCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryUncheckedCreateNestedManyWithoutCompanyInput
     products?: ProductUncheckedCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountUncheckedCreateNestedManyWithoutCompanyInput
@@ -38779,6 +44933,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUpdateManyWithoutCompanyNestedInput
     products?: ProductUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUpdateManyWithoutCompanyNestedInput
@@ -38799,6 +44954,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUncheckedUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUncheckedUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUncheckedUpdateManyWithoutCompanyNestedInput
     products?: ProductUncheckedUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUncheckedUpdateManyWithoutCompanyNestedInput
@@ -38854,6 +45010,7 @@ export namespace Prisma {
     payments?: PaymentCreateNestedManyWithoutContactInput
     journalLines?: JournalLineCreateNestedManyWithoutContactInput
     autoAnalyticRules?: AutoAnalyticRuleCreateNestedManyWithoutContactInput
+    contactTags?: ContactTagAssignmentCreateNestedManyWithoutContactInput
     users?: UserCreateNestedManyWithoutContactInput
   }
 
@@ -38879,6 +45036,7 @@ export namespace Prisma {
     payments?: PaymentUncheckedCreateNestedManyWithoutContactInput
     journalLines?: JournalLineUncheckedCreateNestedManyWithoutContactInput
     autoAnalyticRules?: AutoAnalyticRuleUncheckedCreateNestedManyWithoutContactInput
+    contactTags?: ContactTagAssignmentUncheckedCreateNestedManyWithoutContactInput
     users?: UserUncheckedCreateNestedManyWithoutContactInput
   }
 
@@ -38904,6 +45062,7 @@ export namespace Prisma {
     payments?: PaymentUpdateManyWithoutContactNestedInput
     journalLines?: JournalLineUpdateManyWithoutContactNestedInput
     autoAnalyticRules?: AutoAnalyticRuleUpdateManyWithoutContactNestedInput
+    contactTags?: ContactTagAssignmentUpdateManyWithoutContactNestedInput
     users?: UserUpdateManyWithoutContactNestedInput
   }
 
@@ -38929,6 +45088,7 @@ export namespace Prisma {
     payments?: PaymentUncheckedUpdateManyWithoutContactNestedInput
     journalLines?: JournalLineUncheckedUpdateManyWithoutContactNestedInput
     autoAnalyticRules?: AutoAnalyticRuleUncheckedUpdateManyWithoutContactNestedInput
+    contactTags?: ContactTagAssignmentUncheckedUpdateManyWithoutContactNestedInput
     users?: UserUncheckedUpdateManyWithoutContactNestedInput
   }
 
@@ -38980,6 +45140,109 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContactTagCreateInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    company: CompanyCreateNestedOneWithoutContactTagsInput
+    contacts?: ContactTagAssignmentCreateNestedManyWithoutTagInput
+    autoAnalyticRules?: AutoAnalyticRuleCreateNestedManyWithoutContactTagInput
+  }
+
+  export type ContactTagUncheckedCreateInput = {
+    id?: string
+    companyId: string
+    name: string
+    createdAt?: Date | string
+    contacts?: ContactTagAssignmentUncheckedCreateNestedManyWithoutTagInput
+    autoAnalyticRules?: AutoAnalyticRuleUncheckedCreateNestedManyWithoutContactTagInput
+  }
+
+  export type ContactTagUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutContactTagsNestedInput
+    contacts?: ContactTagAssignmentUpdateManyWithoutTagNestedInput
+    autoAnalyticRules?: AutoAnalyticRuleUpdateManyWithoutContactTagNestedInput
+  }
+
+  export type ContactTagUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contacts?: ContactTagAssignmentUncheckedUpdateManyWithoutTagNestedInput
+    autoAnalyticRules?: AutoAnalyticRuleUncheckedUpdateManyWithoutContactTagNestedInput
+  }
+
+  export type ContactTagCreateManyInput = {
+    id?: string
+    companyId: string
+    name: string
+    createdAt?: Date | string
+  }
+
+  export type ContactTagUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContactTagUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContactTagAssignmentCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    contact: ContactCreateNestedOneWithoutContactTagsInput
+    tag: ContactTagCreateNestedOneWithoutContactsInput
+  }
+
+  export type ContactTagAssignmentUncheckedCreateInput = {
+    id?: string
+    contactId: string
+    tagId: string
+    createdAt?: Date | string
+  }
+
+  export type ContactTagAssignmentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contact?: ContactUpdateOneRequiredWithoutContactTagsNestedInput
+    tag?: ContactTagUpdateOneRequiredWithoutContactsNestedInput
+  }
+
+  export type ContactTagAssignmentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactId?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContactTagAssignmentCreateManyInput = {
+    id?: string
+    contactId: string
+    tagId: string
+    createdAt?: Date | string
+  }
+
+  export type ContactTagAssignmentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContactTagAssignmentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactId?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ProductCategoryCreateInput = {
@@ -39754,6 +46017,10 @@ export namespace Prisma {
     createdAt?: Date | string
     company: CompanyCreateNestedOneWithoutAutoAnalyticModelsInput
     rules?: AutoAnalyticRuleCreateNestedManyWithoutModelInput
+    purchaseOrderLines?: PurchaseOrderLineCreateNestedManyWithoutAutoModelInput
+    salesOrderLines?: SalesOrderLineCreateNestedManyWithoutAutoModelInput
+    vendorBillLines?: VendorBillLineCreateNestedManyWithoutAutoModelInput
+    customerInvoiceLines?: CustomerInvoiceLineCreateNestedManyWithoutAutoModelInput
   }
 
   export type AutoAnalyticModelUncheckedCreateInput = {
@@ -39764,6 +46031,10 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     rules?: AutoAnalyticRuleUncheckedCreateNestedManyWithoutModelInput
+    purchaseOrderLines?: PurchaseOrderLineUncheckedCreateNestedManyWithoutAutoModelInput
+    salesOrderLines?: SalesOrderLineUncheckedCreateNestedManyWithoutAutoModelInput
+    vendorBillLines?: VendorBillLineUncheckedCreateNestedManyWithoutAutoModelInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutAutoModelInput
   }
 
   export type AutoAnalyticModelUpdateInput = {
@@ -39774,6 +46045,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutAutoAnalyticModelsNestedInput
     rules?: AutoAnalyticRuleUpdateManyWithoutModelNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUpdateManyWithoutAutoModelNestedInput
+    salesOrderLines?: SalesOrderLineUpdateManyWithoutAutoModelNestedInput
+    vendorBillLines?: VendorBillLineUpdateManyWithoutAutoModelNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUpdateManyWithoutAutoModelNestedInput
   }
 
   export type AutoAnalyticModelUncheckedUpdateInput = {
@@ -39784,6 +46059,10 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     rules?: AutoAnalyticRuleUncheckedUpdateManyWithoutModelNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUncheckedUpdateManyWithoutAutoModelNestedInput
+    salesOrderLines?: SalesOrderLineUncheckedUpdateManyWithoutAutoModelNestedInput
+    vendorBillLines?: VendorBillLineUncheckedUpdateManyWithoutAutoModelNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedUpdateManyWithoutAutoModelNestedInput
   }
 
   export type AutoAnalyticModelCreateManyInput = {
@@ -39821,7 +46100,12 @@ export namespace Prisma {
     product?: ProductCreateNestedOneWithoutAutoAnalyticRulesInput
     category?: ProductCategoryCreateNestedOneWithoutAutoAnalyticRulesInput
     contact?: ContactCreateNestedOneWithoutAutoAnalyticRulesInput
+    contactTag?: ContactTagCreateNestedOneWithoutAutoAnalyticRulesInput
     assignAnalytic: AnalyticAccountCreateNestedOneWithoutAutoAnalyticRulesInput
+    purchaseOrderLines?: PurchaseOrderLineCreateNestedManyWithoutAutoRuleInput
+    salesOrderLines?: SalesOrderLineCreateNestedManyWithoutAutoRuleInput
+    vendorBillLines?: VendorBillLineCreateNestedManyWithoutAutoRuleInput
+    customerInvoiceLines?: CustomerInvoiceLineCreateNestedManyWithoutAutoRuleInput
   }
 
   export type AutoAnalyticRuleUncheckedCreateInput = {
@@ -39831,9 +46115,14 @@ export namespace Prisma {
     matchProductId?: string | null
     matchCategoryId?: string | null
     matchContactId?: string | null
+    matchContactTagId?: string | null
     assignAnalyticAccountId: string
     rulePriority?: number
     isActive?: boolean
+    purchaseOrderLines?: PurchaseOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    salesOrderLines?: SalesOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    vendorBillLines?: VendorBillLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutAutoRuleInput
   }
 
   export type AutoAnalyticRuleUpdateInput = {
@@ -39845,7 +46134,12 @@ export namespace Prisma {
     product?: ProductUpdateOneWithoutAutoAnalyticRulesNestedInput
     category?: ProductCategoryUpdateOneWithoutAutoAnalyticRulesNestedInput
     contact?: ContactUpdateOneWithoutAutoAnalyticRulesNestedInput
+    contactTag?: ContactTagUpdateOneWithoutAutoAnalyticRulesNestedInput
     assignAnalytic?: AnalyticAccountUpdateOneRequiredWithoutAutoAnalyticRulesNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUpdateManyWithoutAutoRuleNestedInput
+    salesOrderLines?: SalesOrderLineUpdateManyWithoutAutoRuleNestedInput
+    vendorBillLines?: VendorBillLineUpdateManyWithoutAutoRuleNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUpdateManyWithoutAutoRuleNestedInput
   }
 
   export type AutoAnalyticRuleUncheckedUpdateInput = {
@@ -39855,9 +46149,14 @@ export namespace Prisma {
     matchProductId?: NullableStringFieldUpdateOperationsInput | string | null
     matchCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
     matchContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactTagId?: NullableStringFieldUpdateOperationsInput | string | null
     assignAnalyticAccountId?: StringFieldUpdateOperationsInput | string
     rulePriority?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    purchaseOrderLines?: PurchaseOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    salesOrderLines?: SalesOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    vendorBillLines?: VendorBillLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedUpdateManyWithoutAutoRuleNestedInput
   }
 
   export type AutoAnalyticRuleCreateManyInput = {
@@ -39867,6 +46166,7 @@ export namespace Prisma {
     matchProductId?: string | null
     matchCategoryId?: string | null
     matchContactId?: string | null
+    matchContactTagId?: string | null
     assignAnalyticAccountId: string
     rulePriority?: number
     isActive?: boolean
@@ -39886,6 +46186,7 @@ export namespace Prisma {
     matchProductId?: NullableStringFieldUpdateOperationsInput | string | null
     matchCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
     matchContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactTagId?: NullableStringFieldUpdateOperationsInput | string | null
     assignAnalyticAccountId?: StringFieldUpdateOperationsInput | string
     rulePriority?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
@@ -39990,6 +46291,7 @@ export namespace Prisma {
 
   export type PurchaseOrderLineCreateInput = {
     id?: string
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -39998,6 +46300,8 @@ export namespace Prisma {
     purchaseOrder: PurchaseOrderCreateNestedOneWithoutLinesInput
     product: ProductCreateNestedOneWithoutPoLinesInput
     analytic?: AnalyticAccountCreateNestedOneWithoutPoLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutPurchaseOrderLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutPurchaseOrderLinesInput
   }
 
   export type PurchaseOrderLineUncheckedCreateInput = {
@@ -40005,6 +46309,9 @@ export namespace Prisma {
     purchaseOrderId: string
     productId: string
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -40014,6 +46321,7 @@ export namespace Prisma {
 
   export type PurchaseOrderLineUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -40022,6 +46330,8 @@ export namespace Prisma {
     purchaseOrder?: PurchaseOrderUpdateOneRequiredWithoutLinesNestedInput
     product?: ProductUpdateOneRequiredWithoutPoLinesNestedInput
     analytic?: AnalyticAccountUpdateOneWithoutPoLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutPurchaseOrderLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutPurchaseOrderLinesNestedInput
   }
 
   export type PurchaseOrderLineUncheckedUpdateInput = {
@@ -40029,6 +46339,9 @@ export namespace Prisma {
     purchaseOrderId?: StringFieldUpdateOperationsInput | string
     productId?: StringFieldUpdateOperationsInput | string
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -40041,6 +46354,9 @@ export namespace Prisma {
     purchaseOrderId: string
     productId: string
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -40050,6 +46366,7 @@ export namespace Prisma {
 
   export type PurchaseOrderLineUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -40062,6 +46379,9 @@ export namespace Prisma {
     purchaseOrderId?: StringFieldUpdateOperationsInput | string
     productId?: StringFieldUpdateOperationsInput | string
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -40168,6 +46488,7 @@ export namespace Prisma {
 
   export type SalesOrderLineCreateInput = {
     id?: string
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -40176,6 +46497,8 @@ export namespace Prisma {
     salesOrder: SalesOrderCreateNestedOneWithoutLinesInput
     product: ProductCreateNestedOneWithoutSoLinesInput
     analytic?: AnalyticAccountCreateNestedOneWithoutSoLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutSalesOrderLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutSalesOrderLinesInput
   }
 
   export type SalesOrderLineUncheckedCreateInput = {
@@ -40183,6 +46506,9 @@ export namespace Prisma {
     salesOrderId: string
     productId: string
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -40192,6 +46518,7 @@ export namespace Prisma {
 
   export type SalesOrderLineUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -40200,6 +46527,8 @@ export namespace Prisma {
     salesOrder?: SalesOrderUpdateOneRequiredWithoutLinesNestedInput
     product?: ProductUpdateOneRequiredWithoutSoLinesNestedInput
     analytic?: AnalyticAccountUpdateOneWithoutSoLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutSalesOrderLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutSalesOrderLinesNestedInput
   }
 
   export type SalesOrderLineUncheckedUpdateInput = {
@@ -40207,6 +46536,9 @@ export namespace Prisma {
     salesOrderId?: StringFieldUpdateOperationsInput | string
     productId?: StringFieldUpdateOperationsInput | string
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -40219,6 +46551,9 @@ export namespace Prisma {
     salesOrderId: string
     productId: string
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -40228,6 +46563,7 @@ export namespace Prisma {
 
   export type SalesOrderLineUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -40240,6 +46576,9 @@ export namespace Prisma {
     salesOrderId?: StringFieldUpdateOperationsInput | string
     productId?: StringFieldUpdateOperationsInput | string
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -40262,6 +46601,7 @@ export namespace Prisma {
     vendor: ContactCreateNestedOneWithoutVendorBillsInput
     po?: PurchaseOrderCreateNestedOneWithoutBillsInput
     lines?: VendorBillLineCreateNestedManyWithoutBillInput
+    payments?: VendorBillPaymentCreateNestedManyWithoutBillInput
   }
 
   export type VendorBillUncheckedCreateInput = {
@@ -40279,6 +46619,7 @@ export namespace Prisma {
     paymentState?: string
     createdAt?: Date | string
     lines?: VendorBillLineUncheckedCreateNestedManyWithoutBillInput
+    payments?: VendorBillPaymentUncheckedCreateNestedManyWithoutBillInput
   }
 
   export type VendorBillUpdateInput = {
@@ -40296,6 +46637,7 @@ export namespace Prisma {
     vendor?: ContactUpdateOneRequiredWithoutVendorBillsNestedInput
     po?: PurchaseOrderUpdateOneWithoutBillsNestedInput
     lines?: VendorBillLineUpdateManyWithoutBillNestedInput
+    payments?: VendorBillPaymentUpdateManyWithoutBillNestedInput
   }
 
   export type VendorBillUncheckedUpdateInput = {
@@ -40313,6 +46655,7 @@ export namespace Prisma {
     paymentState?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lines?: VendorBillLineUncheckedUpdateManyWithoutBillNestedInput
+    payments?: VendorBillPaymentUncheckedUpdateManyWithoutBillNestedInput
   }
 
   export type VendorBillCreateManyInput = {
@@ -40362,6 +46705,7 @@ export namespace Prisma {
 
   export type VendorBillLineCreateInput = {
     id?: string
+    matchedFieldsCount?: number | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -40371,6 +46715,8 @@ export namespace Prisma {
     product?: ProductCreateNestedOneWithoutBillLinesInput
     analytic?: AnalyticAccountCreateNestedOneWithoutBillLinesInput
     gl?: GLAccountCreateNestedOneWithoutBillLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutVendorBillLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutVendorBillLinesInput
   }
 
   export type VendorBillLineUncheckedCreateInput = {
@@ -40378,6 +46724,9 @@ export namespace Prisma {
     vendorBillId: string
     productId?: string | null
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     glAccountId?: string | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
@@ -40388,6 +46737,7 @@ export namespace Prisma {
 
   export type VendorBillLineUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -40397,6 +46747,8 @@ export namespace Prisma {
     product?: ProductUpdateOneWithoutBillLinesNestedInput
     analytic?: AnalyticAccountUpdateOneWithoutBillLinesNestedInput
     gl?: GLAccountUpdateOneWithoutBillLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutVendorBillLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutVendorBillLinesNestedInput
   }
 
   export type VendorBillLineUncheckedUpdateInput = {
@@ -40404,6 +46756,9 @@ export namespace Prisma {
     vendorBillId?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -40417,6 +46772,9 @@ export namespace Prisma {
     vendorBillId: string
     productId?: string | null
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     glAccountId?: string | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
@@ -40427,6 +46785,7 @@ export namespace Prisma {
 
   export type VendorBillLineUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -40439,6 +46798,9 @@ export namespace Prisma {
     vendorBillId?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -40463,6 +46825,7 @@ export namespace Prisma {
     customer: ContactCreateNestedOneWithoutCustomerInvoicesInput
     so?: SalesOrderCreateNestedOneWithoutInvoicesInput
     lines?: CustomerInvoiceLineCreateNestedManyWithoutInvoiceInput
+    payments?: CustomerInvoicePaymentCreateNestedManyWithoutInvoiceInput
   }
 
   export type CustomerInvoiceUncheckedCreateInput = {
@@ -40481,6 +46844,7 @@ export namespace Prisma {
     portalVisible?: boolean
     createdAt?: Date | string
     lines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutInvoiceInput
+    payments?: CustomerInvoicePaymentUncheckedCreateNestedManyWithoutInvoiceInput
   }
 
   export type CustomerInvoiceUpdateInput = {
@@ -40499,6 +46863,7 @@ export namespace Prisma {
     customer?: ContactUpdateOneRequiredWithoutCustomerInvoicesNestedInput
     so?: SalesOrderUpdateOneWithoutInvoicesNestedInput
     lines?: CustomerInvoiceLineUpdateManyWithoutInvoiceNestedInput
+    payments?: CustomerInvoicePaymentUpdateManyWithoutInvoiceNestedInput
   }
 
   export type CustomerInvoiceUncheckedUpdateInput = {
@@ -40517,6 +46882,7 @@ export namespace Prisma {
     portalVisible?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lines?: CustomerInvoiceLineUncheckedUpdateManyWithoutInvoiceNestedInput
+    payments?: CustomerInvoicePaymentUncheckedUpdateManyWithoutInvoiceNestedInput
   }
 
   export type CustomerInvoiceCreateManyInput = {
@@ -40569,6 +46935,7 @@ export namespace Prisma {
 
   export type CustomerInvoiceLineCreateInput = {
     id?: string
+    matchedFieldsCount?: number | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -40578,6 +46945,8 @@ export namespace Prisma {
     product?: ProductCreateNestedOneWithoutInvLinesInput
     analytic?: AnalyticAccountCreateNestedOneWithoutInvLinesInput
     gl?: GLAccountCreateNestedOneWithoutInvLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutCustomerInvoiceLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutCustomerInvoiceLinesInput
   }
 
   export type CustomerInvoiceLineUncheckedCreateInput = {
@@ -40585,6 +46954,9 @@ export namespace Prisma {
     customerInvoiceId: string
     productId?: string | null
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     glAccountId?: string | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
@@ -40595,6 +46967,7 @@ export namespace Prisma {
 
   export type CustomerInvoiceLineUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -40604,6 +46977,8 @@ export namespace Prisma {
     product?: ProductUpdateOneWithoutInvLinesNestedInput
     analytic?: AnalyticAccountUpdateOneWithoutInvLinesNestedInput
     gl?: GLAccountUpdateOneWithoutInvLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutCustomerInvoiceLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutCustomerInvoiceLinesNestedInput
   }
 
   export type CustomerInvoiceLineUncheckedUpdateInput = {
@@ -40611,6 +46986,9 @@ export namespace Prisma {
     customerInvoiceId?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -40624,6 +47002,9 @@ export namespace Prisma {
     customerInvoiceId: string
     productId?: string | null
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     glAccountId?: string | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
@@ -40634,6 +47015,7 @@ export namespace Prisma {
 
   export type CustomerInvoiceLineUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -40646,6 +47028,9 @@ export namespace Prisma {
     customerInvoiceId?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -40666,6 +47051,8 @@ export namespace Prisma {
     company: CompanyCreateNestedOneWithoutPaymentsInput
     contact: ContactCreateNestedOneWithoutPaymentsInput
     allocations?: PaymentAllocationCreateNestedManyWithoutPaymentInput
+    invoicePayments?: CustomerInvoicePaymentCreateNestedManyWithoutPaymentInput
+    billPayments?: VendorBillPaymentCreateNestedManyWithoutPaymentInput
   }
 
   export type PaymentUncheckedCreateInput = {
@@ -40680,6 +47067,8 @@ export namespace Prisma {
     status: $Enums.PaymentStatus
     createdAt?: Date | string
     allocations?: PaymentAllocationUncheckedCreateNestedManyWithoutPaymentInput
+    invoicePayments?: CustomerInvoicePaymentUncheckedCreateNestedManyWithoutPaymentInput
+    billPayments?: VendorBillPaymentUncheckedCreateNestedManyWithoutPaymentInput
   }
 
   export type PaymentUpdateInput = {
@@ -40694,6 +47083,8 @@ export namespace Prisma {
     company?: CompanyUpdateOneRequiredWithoutPaymentsNestedInput
     contact?: ContactUpdateOneRequiredWithoutPaymentsNestedInput
     allocations?: PaymentAllocationUpdateManyWithoutPaymentNestedInput
+    invoicePayments?: CustomerInvoicePaymentUpdateManyWithoutPaymentNestedInput
+    billPayments?: VendorBillPaymentUpdateManyWithoutPaymentNestedInput
   }
 
   export type PaymentUncheckedUpdateInput = {
@@ -40708,6 +47099,8 @@ export namespace Prisma {
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     allocations?: PaymentAllocationUncheckedUpdateManyWithoutPaymentNestedInput
+    invoicePayments?: CustomerInvoicePaymentUncheckedUpdateManyWithoutPaymentNestedInput
+    billPayments?: VendorBillPaymentUncheckedUpdateManyWithoutPaymentNestedInput
   }
 
   export type PaymentCreateManyInput = {
@@ -40800,6 +47193,114 @@ export namespace Prisma {
     targetType?: EnumAllocationTargetTypeFieldUpdateOperationsInput | $Enums.AllocationTargetType
     targetId?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type CustomerInvoicePaymentCreateInput = {
+    id?: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    invoice: CustomerInvoiceCreateNestedOneWithoutPaymentsInput
+    payment: PaymentCreateNestedOneWithoutInvoicePaymentsInput
+  }
+
+  export type CustomerInvoicePaymentUncheckedCreateInput = {
+    id?: string
+    invoiceId: string
+    paymentId: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+  }
+
+  export type CustomerInvoicePaymentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoice?: CustomerInvoiceUpdateOneRequiredWithoutPaymentsNestedInput
+    payment?: PaymentUpdateOneRequiredWithoutInvoicePaymentsNestedInput
+  }
+
+  export type CustomerInvoicePaymentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceId?: StringFieldUpdateOperationsInput | string
+    paymentId?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CustomerInvoicePaymentCreateManyInput = {
+    id?: string
+    invoiceId: string
+    paymentId: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+  }
+
+  export type CustomerInvoicePaymentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CustomerInvoicePaymentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceId?: StringFieldUpdateOperationsInput | string
+    paymentId?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VendorBillPaymentCreateInput = {
+    id?: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    bill: VendorBillCreateNestedOneWithoutPaymentsInput
+    payment: PaymentCreateNestedOneWithoutBillPaymentsInput
+  }
+
+  export type VendorBillPaymentUncheckedCreateInput = {
+    id?: string
+    billId: string
+    paymentId: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+  }
+
+  export type VendorBillPaymentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bill?: VendorBillUpdateOneRequiredWithoutPaymentsNestedInput
+    payment?: PaymentUpdateOneRequiredWithoutBillPaymentsNestedInput
+  }
+
+  export type VendorBillPaymentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    billId?: StringFieldUpdateOperationsInput | string
+    paymentId?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VendorBillPaymentCreateManyInput = {
+    id?: string
+    billId: string
+    paymentId: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+  }
+
+  export type VendorBillPaymentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VendorBillPaymentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    billId?: StringFieldUpdateOperationsInput | string
+    paymentId?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DocumentFileCreateInput = {
@@ -41085,6 +47586,12 @@ export namespace Prisma {
     none?: ContactWhereInput
   }
 
+  export type ContactTagListRelationFilter = {
+    every?: ContactTagWhereInput
+    some?: ContactTagWhereInput
+    none?: ContactTagWhereInput
+  }
+
   export type ProductCategoryListRelationFilter = {
     every?: ProductCategoryWhereInput
     some?: ProductCategoryWhereInput
@@ -41164,6 +47671,10 @@ export namespace Prisma {
   }
 
   export type ContactOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ContactTagOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -41351,6 +47862,12 @@ export namespace Prisma {
     none?: AutoAnalyticRuleWhereInput
   }
 
+  export type ContactTagAssignmentListRelationFilter = {
+    every?: ContactTagAssignmentWhereInput
+    some?: ContactTagAssignmentWhereInput
+    none?: ContactTagAssignmentWhereInput
+  }
+
   export type UserListRelationFilter = {
     every?: UserWhereInput
     some?: UserWhereInput
@@ -41367,6 +47884,10 @@ export namespace Prisma {
   }
 
   export type AutoAnalyticRuleOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ContactTagAssignmentOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -41486,6 +48007,68 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type ContactTagCompanyIdNameCompoundUniqueInput = {
+    companyId: string
+    name: string
+  }
+
+  export type ContactTagCountOrderByAggregateInput = {
+    id?: SortOrder
+    companyId?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ContactTagMaxOrderByAggregateInput = {
+    id?: SortOrder
+    companyId?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ContactTagMinOrderByAggregateInput = {
+    id?: SortOrder
+    companyId?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ContactScalarRelationFilter = {
+    is?: ContactWhereInput
+    isNot?: ContactWhereInput
+  }
+
+  export type ContactTagScalarRelationFilter = {
+    is?: ContactTagWhereInput
+    isNot?: ContactTagWhereInput
+  }
+
+  export type ContactTagAssignmentContactIdTagIdCompoundUniqueInput = {
+    contactId: string
+    tagId: string
+  }
+
+  export type ContactTagAssignmentCountOrderByAggregateInput = {
+    id?: SortOrder
+    contactId?: SortOrder
+    tagId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ContactTagAssignmentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    contactId?: SortOrder
+    tagId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ContactTagAssignmentMinOrderByAggregateInput = {
+    id?: SortOrder
+    contactId?: SortOrder
+    tagId?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type UuidNullableFilter<$PrismaModel = never> = {
@@ -42201,6 +48784,11 @@ export namespace Prisma {
     isNot?: AutoAnalyticModelWhereInput
   }
 
+  export type ContactTagNullableScalarRelationFilter = {
+    is?: ContactTagWhereInput | null
+    isNot?: ContactTagWhereInput | null
+  }
+
   export type AutoAnalyticRuleCountOrderByAggregateInput = {
     id?: SortOrder
     modelId?: SortOrder
@@ -42208,6 +48796,7 @@ export namespace Prisma {
     matchProductId?: SortOrder
     matchCategoryId?: SortOrder
     matchContactId?: SortOrder
+    matchContactTagId?: SortOrder
     assignAnalyticAccountId?: SortOrder
     rulePriority?: SortOrder
     isActive?: SortOrder
@@ -42224,6 +48813,7 @@ export namespace Prisma {
     matchProductId?: SortOrder
     matchCategoryId?: SortOrder
     matchContactId?: SortOrder
+    matchContactTagId?: SortOrder
     assignAnalyticAccountId?: SortOrder
     rulePriority?: SortOrder
     isActive?: SortOrder
@@ -42236,6 +48826,7 @@ export namespace Prisma {
     matchProductId?: SortOrder
     matchCategoryId?: SortOrder
     matchContactId?: SortOrder
+    matchContactTagId?: SortOrder
     assignAnalyticAccountId?: SortOrder
     rulePriority?: SortOrder
     isActive?: SortOrder
@@ -42260,11 +48851,6 @@ export namespace Prisma {
     in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumOrderStatusFilter<$PrismaModel> | $Enums.OrderStatus
-  }
-
-  export type ContactScalarRelationFilter = {
-    is?: ContactWhereInput
-    isNot?: ContactWhereInput
   }
 
   export type PurchaseOrderCompanyIdPoNoCompoundUniqueInput = {
@@ -42321,6 +48907,17 @@ export namespace Prisma {
     _max?: NestedEnumOrderStatusFilter<$PrismaModel>
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type PurchaseOrderScalarRelationFilter = {
     is?: PurchaseOrderWhereInput
     isNot?: PurchaseOrderWhereInput
@@ -42331,11 +48928,24 @@ export namespace Prisma {
     isNot?: ProductWhereInput
   }
 
+  export type AutoAnalyticModelNullableScalarRelationFilter = {
+    is?: AutoAnalyticModelWhereInput | null
+    isNot?: AutoAnalyticModelWhereInput | null
+  }
+
+  export type AutoAnalyticRuleNullableScalarRelationFilter = {
+    is?: AutoAnalyticRuleWhereInput | null
+    isNot?: AutoAnalyticRuleWhereInput | null
+  }
+
   export type PurchaseOrderLineCountOrderByAggregateInput = {
     id?: SortOrder
     purchaseOrderId?: SortOrder
     productId?: SortOrder
     analyticAccountId?: SortOrder
+    autoAnalyticModelId?: SortOrder
+    autoAnalyticRuleId?: SortOrder
+    matchedFieldsCount?: SortOrder
     description?: SortOrder
     qty?: SortOrder
     unitPrice?: SortOrder
@@ -42344,6 +48954,7 @@ export namespace Prisma {
   }
 
   export type PurchaseOrderLineAvgOrderByAggregateInput = {
+    matchedFieldsCount?: SortOrder
     qty?: SortOrder
     unitPrice?: SortOrder
     taxRate?: SortOrder
@@ -42355,6 +48966,9 @@ export namespace Prisma {
     purchaseOrderId?: SortOrder
     productId?: SortOrder
     analyticAccountId?: SortOrder
+    autoAnalyticModelId?: SortOrder
+    autoAnalyticRuleId?: SortOrder
+    matchedFieldsCount?: SortOrder
     description?: SortOrder
     qty?: SortOrder
     unitPrice?: SortOrder
@@ -42367,6 +48981,9 @@ export namespace Prisma {
     purchaseOrderId?: SortOrder
     productId?: SortOrder
     analyticAccountId?: SortOrder
+    autoAnalyticModelId?: SortOrder
+    autoAnalyticRuleId?: SortOrder
+    matchedFieldsCount?: SortOrder
     description?: SortOrder
     qty?: SortOrder
     unitPrice?: SortOrder
@@ -42375,10 +48992,27 @@ export namespace Prisma {
   }
 
   export type PurchaseOrderLineSumOrderByAggregateInput = {
+    matchedFieldsCount?: SortOrder
     qty?: SortOrder
     unitPrice?: SortOrder
     taxRate?: SortOrder
     lineTotal?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type SalesOrderCompanyIdSoNoCompoundUniqueInput = {
@@ -42435,6 +49069,9 @@ export namespace Prisma {
     salesOrderId?: SortOrder
     productId?: SortOrder
     analyticAccountId?: SortOrder
+    autoAnalyticModelId?: SortOrder
+    autoAnalyticRuleId?: SortOrder
+    matchedFieldsCount?: SortOrder
     description?: SortOrder
     qty?: SortOrder
     unitPrice?: SortOrder
@@ -42443,6 +49080,7 @@ export namespace Prisma {
   }
 
   export type SalesOrderLineAvgOrderByAggregateInput = {
+    matchedFieldsCount?: SortOrder
     qty?: SortOrder
     unitPrice?: SortOrder
     taxRate?: SortOrder
@@ -42454,6 +49092,9 @@ export namespace Prisma {
     salesOrderId?: SortOrder
     productId?: SortOrder
     analyticAccountId?: SortOrder
+    autoAnalyticModelId?: SortOrder
+    autoAnalyticRuleId?: SortOrder
+    matchedFieldsCount?: SortOrder
     description?: SortOrder
     qty?: SortOrder
     unitPrice?: SortOrder
@@ -42466,6 +49107,9 @@ export namespace Prisma {
     salesOrderId?: SortOrder
     productId?: SortOrder
     analyticAccountId?: SortOrder
+    autoAnalyticModelId?: SortOrder
+    autoAnalyticRuleId?: SortOrder
+    matchedFieldsCount?: SortOrder
     description?: SortOrder
     qty?: SortOrder
     unitPrice?: SortOrder
@@ -42474,6 +49118,7 @@ export namespace Prisma {
   }
 
   export type SalesOrderLineSumOrderByAggregateInput = {
+    matchedFieldsCount?: SortOrder
     qty?: SortOrder
     unitPrice?: SortOrder
     taxRate?: SortOrder
@@ -42490,6 +49135,16 @@ export namespace Prisma {
   export type PurchaseOrderNullableScalarRelationFilter = {
     is?: PurchaseOrderWhereInput | null
     isNot?: PurchaseOrderWhereInput | null
+  }
+
+  export type VendorBillPaymentListRelationFilter = {
+    every?: VendorBillPaymentWhereInput
+    some?: VendorBillPaymentWhereInput
+    none?: VendorBillPaymentWhereInput
+  }
+
+  export type VendorBillPaymentOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type VendorBillCompanyIdBillNoCompoundUniqueInput = {
@@ -42575,6 +49230,9 @@ export namespace Prisma {
     vendorBillId?: SortOrder
     productId?: SortOrder
     analyticAccountId?: SortOrder
+    autoAnalyticModelId?: SortOrder
+    autoAnalyticRuleId?: SortOrder
+    matchedFieldsCount?: SortOrder
     glAccountId?: SortOrder
     description?: SortOrder
     qty?: SortOrder
@@ -42584,6 +49242,7 @@ export namespace Prisma {
   }
 
   export type VendorBillLineAvgOrderByAggregateInput = {
+    matchedFieldsCount?: SortOrder
     qty?: SortOrder
     unitPrice?: SortOrder
     taxRate?: SortOrder
@@ -42595,6 +49254,9 @@ export namespace Prisma {
     vendorBillId?: SortOrder
     productId?: SortOrder
     analyticAccountId?: SortOrder
+    autoAnalyticModelId?: SortOrder
+    autoAnalyticRuleId?: SortOrder
+    matchedFieldsCount?: SortOrder
     glAccountId?: SortOrder
     description?: SortOrder
     qty?: SortOrder
@@ -42608,6 +49270,9 @@ export namespace Prisma {
     vendorBillId?: SortOrder
     productId?: SortOrder
     analyticAccountId?: SortOrder
+    autoAnalyticModelId?: SortOrder
+    autoAnalyticRuleId?: SortOrder
+    matchedFieldsCount?: SortOrder
     glAccountId?: SortOrder
     description?: SortOrder
     qty?: SortOrder
@@ -42617,6 +49282,7 @@ export namespace Prisma {
   }
 
   export type VendorBillLineSumOrderByAggregateInput = {
+    matchedFieldsCount?: SortOrder
     qty?: SortOrder
     unitPrice?: SortOrder
     taxRate?: SortOrder
@@ -42626,6 +49292,16 @@ export namespace Prisma {
   export type SalesOrderNullableScalarRelationFilter = {
     is?: SalesOrderWhereInput | null
     isNot?: SalesOrderWhereInput | null
+  }
+
+  export type CustomerInvoicePaymentListRelationFilter = {
+    every?: CustomerInvoicePaymentWhereInput
+    some?: CustomerInvoicePaymentWhereInput
+    none?: CustomerInvoicePaymentWhereInput
+  }
+
+  export type CustomerInvoicePaymentOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type CustomerInvoiceCompanyIdInvoiceNoCompoundUniqueInput = {
@@ -42704,6 +49380,9 @@ export namespace Prisma {
     customerInvoiceId?: SortOrder
     productId?: SortOrder
     analyticAccountId?: SortOrder
+    autoAnalyticModelId?: SortOrder
+    autoAnalyticRuleId?: SortOrder
+    matchedFieldsCount?: SortOrder
     glAccountId?: SortOrder
     description?: SortOrder
     qty?: SortOrder
@@ -42713,6 +49392,7 @@ export namespace Prisma {
   }
 
   export type CustomerInvoiceLineAvgOrderByAggregateInput = {
+    matchedFieldsCount?: SortOrder
     qty?: SortOrder
     unitPrice?: SortOrder
     taxRate?: SortOrder
@@ -42724,6 +49404,9 @@ export namespace Prisma {
     customerInvoiceId?: SortOrder
     productId?: SortOrder
     analyticAccountId?: SortOrder
+    autoAnalyticModelId?: SortOrder
+    autoAnalyticRuleId?: SortOrder
+    matchedFieldsCount?: SortOrder
     glAccountId?: SortOrder
     description?: SortOrder
     qty?: SortOrder
@@ -42737,6 +49420,9 @@ export namespace Prisma {
     customerInvoiceId?: SortOrder
     productId?: SortOrder
     analyticAccountId?: SortOrder
+    autoAnalyticModelId?: SortOrder
+    autoAnalyticRuleId?: SortOrder
+    matchedFieldsCount?: SortOrder
     glAccountId?: SortOrder
     description?: SortOrder
     qty?: SortOrder
@@ -42746,6 +49432,7 @@ export namespace Prisma {
   }
 
   export type CustomerInvoiceLineSumOrderByAggregateInput = {
+    matchedFieldsCount?: SortOrder
     qty?: SortOrder
     unitPrice?: SortOrder
     taxRate?: SortOrder
@@ -42920,6 +49607,80 @@ export namespace Prisma {
     _max?: NestedEnumAllocationTargetTypeFilter<$PrismaModel>
   }
 
+  export type CustomerInvoicePaymentInvoiceIdPaymentIdCompoundUniqueInput = {
+    invoiceId: string
+    paymentId: string
+  }
+
+  export type CustomerInvoicePaymentCountOrderByAggregateInput = {
+    id?: SortOrder
+    invoiceId?: SortOrder
+    paymentId?: SortOrder
+    amount?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CustomerInvoicePaymentAvgOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type CustomerInvoicePaymentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    invoiceId?: SortOrder
+    paymentId?: SortOrder
+    amount?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CustomerInvoicePaymentMinOrderByAggregateInput = {
+    id?: SortOrder
+    invoiceId?: SortOrder
+    paymentId?: SortOrder
+    amount?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CustomerInvoicePaymentSumOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type VendorBillPaymentBillIdPaymentIdCompoundUniqueInput = {
+    billId: string
+    paymentId: string
+  }
+
+  export type VendorBillPaymentCountOrderByAggregateInput = {
+    id?: SortOrder
+    billId?: SortOrder
+    paymentId?: SortOrder
+    amount?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type VendorBillPaymentAvgOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type VendorBillPaymentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    billId?: SortOrder
+    paymentId?: SortOrder
+    amount?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type VendorBillPaymentMinOrderByAggregateInput = {
+    id?: SortOrder
+    billId?: SortOrder
+    paymentId?: SortOrder
+    amount?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type VendorBillPaymentSumOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
   export type EnumDocOwnerTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.DocOwnerType | EnumDocOwnerTypeFieldRefInput<$PrismaModel>
     in?: $Enums.DocOwnerType[] | ListEnumDocOwnerTypeFieldRefInput<$PrismaModel>
@@ -43084,6 +49845,13 @@ export namespace Prisma {
     connect?: ContactWhereUniqueInput | ContactWhereUniqueInput[]
   }
 
+  export type ContactTagCreateNestedManyWithoutCompanyInput = {
+    create?: XOR<ContactTagCreateWithoutCompanyInput, ContactTagUncheckedCreateWithoutCompanyInput> | ContactTagCreateWithoutCompanyInput[] | ContactTagUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: ContactTagCreateOrConnectWithoutCompanyInput | ContactTagCreateOrConnectWithoutCompanyInput[]
+    createMany?: ContactTagCreateManyCompanyInputEnvelope
+    connect?: ContactTagWhereUniqueInput | ContactTagWhereUniqueInput[]
+  }
+
   export type ProductCategoryCreateNestedManyWithoutCompanyInput = {
     create?: XOR<ProductCategoryCreateWithoutCompanyInput, ProductCategoryUncheckedCreateWithoutCompanyInput> | ProductCategoryCreateWithoutCompanyInput[] | ProductCategoryUncheckedCreateWithoutCompanyInput[]
     connectOrCreate?: ProductCategoryCreateOrConnectWithoutCompanyInput | ProductCategoryCreateOrConnectWithoutCompanyInput[]
@@ -43180,6 +49948,13 @@ export namespace Prisma {
     connectOrCreate?: ContactCreateOrConnectWithoutCompanyInput | ContactCreateOrConnectWithoutCompanyInput[]
     createMany?: ContactCreateManyCompanyInputEnvelope
     connect?: ContactWhereUniqueInput | ContactWhereUniqueInput[]
+  }
+
+  export type ContactTagUncheckedCreateNestedManyWithoutCompanyInput = {
+    create?: XOR<ContactTagCreateWithoutCompanyInput, ContactTagUncheckedCreateWithoutCompanyInput> | ContactTagCreateWithoutCompanyInput[] | ContactTagUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: ContactTagCreateOrConnectWithoutCompanyInput | ContactTagCreateOrConnectWithoutCompanyInput[]
+    createMany?: ContactTagCreateManyCompanyInputEnvelope
+    connect?: ContactTagWhereUniqueInput | ContactTagWhereUniqueInput[]
   }
 
   export type ProductCategoryUncheckedCreateNestedManyWithoutCompanyInput = {
@@ -43293,6 +50068,20 @@ export namespace Prisma {
     update?: ContactUpdateWithWhereUniqueWithoutCompanyInput | ContactUpdateWithWhereUniqueWithoutCompanyInput[]
     updateMany?: ContactUpdateManyWithWhereWithoutCompanyInput | ContactUpdateManyWithWhereWithoutCompanyInput[]
     deleteMany?: ContactScalarWhereInput | ContactScalarWhereInput[]
+  }
+
+  export type ContactTagUpdateManyWithoutCompanyNestedInput = {
+    create?: XOR<ContactTagCreateWithoutCompanyInput, ContactTagUncheckedCreateWithoutCompanyInput> | ContactTagCreateWithoutCompanyInput[] | ContactTagUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: ContactTagCreateOrConnectWithoutCompanyInput | ContactTagCreateOrConnectWithoutCompanyInput[]
+    upsert?: ContactTagUpsertWithWhereUniqueWithoutCompanyInput | ContactTagUpsertWithWhereUniqueWithoutCompanyInput[]
+    createMany?: ContactTagCreateManyCompanyInputEnvelope
+    set?: ContactTagWhereUniqueInput | ContactTagWhereUniqueInput[]
+    disconnect?: ContactTagWhereUniqueInput | ContactTagWhereUniqueInput[]
+    delete?: ContactTagWhereUniqueInput | ContactTagWhereUniqueInput[]
+    connect?: ContactTagWhereUniqueInput | ContactTagWhereUniqueInput[]
+    update?: ContactTagUpdateWithWhereUniqueWithoutCompanyInput | ContactTagUpdateWithWhereUniqueWithoutCompanyInput[]
+    updateMany?: ContactTagUpdateManyWithWhereWithoutCompanyInput | ContactTagUpdateManyWithWhereWithoutCompanyInput[]
+    deleteMany?: ContactTagScalarWhereInput | ContactTagScalarWhereInput[]
   }
 
   export type ProductCategoryUpdateManyWithoutCompanyNestedInput = {
@@ -43489,6 +50278,20 @@ export namespace Prisma {
     update?: ContactUpdateWithWhereUniqueWithoutCompanyInput | ContactUpdateWithWhereUniqueWithoutCompanyInput[]
     updateMany?: ContactUpdateManyWithWhereWithoutCompanyInput | ContactUpdateManyWithWhereWithoutCompanyInput[]
     deleteMany?: ContactScalarWhereInput | ContactScalarWhereInput[]
+  }
+
+  export type ContactTagUncheckedUpdateManyWithoutCompanyNestedInput = {
+    create?: XOR<ContactTagCreateWithoutCompanyInput, ContactTagUncheckedCreateWithoutCompanyInput> | ContactTagCreateWithoutCompanyInput[] | ContactTagUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: ContactTagCreateOrConnectWithoutCompanyInput | ContactTagCreateOrConnectWithoutCompanyInput[]
+    upsert?: ContactTagUpsertWithWhereUniqueWithoutCompanyInput | ContactTagUpsertWithWhereUniqueWithoutCompanyInput[]
+    createMany?: ContactTagCreateManyCompanyInputEnvelope
+    set?: ContactTagWhereUniqueInput | ContactTagWhereUniqueInput[]
+    disconnect?: ContactTagWhereUniqueInput | ContactTagWhereUniqueInput[]
+    delete?: ContactTagWhereUniqueInput | ContactTagWhereUniqueInput[]
+    connect?: ContactTagWhereUniqueInput | ContactTagWhereUniqueInput[]
+    update?: ContactTagUpdateWithWhereUniqueWithoutCompanyInput | ContactTagUpdateWithWhereUniqueWithoutCompanyInput[]
+    updateMany?: ContactTagUpdateManyWithWhereWithoutCompanyInput | ContactTagUpdateManyWithWhereWithoutCompanyInput[]
+    deleteMany?: ContactTagScalarWhereInput | ContactTagScalarWhereInput[]
   }
 
   export type ProductCategoryUncheckedUpdateManyWithoutCompanyNestedInput = {
@@ -43728,6 +50531,13 @@ export namespace Prisma {
     connect?: AutoAnalyticRuleWhereUniqueInput | AutoAnalyticRuleWhereUniqueInput[]
   }
 
+  export type ContactTagAssignmentCreateNestedManyWithoutContactInput = {
+    create?: XOR<ContactTagAssignmentCreateWithoutContactInput, ContactTagAssignmentUncheckedCreateWithoutContactInput> | ContactTagAssignmentCreateWithoutContactInput[] | ContactTagAssignmentUncheckedCreateWithoutContactInput[]
+    connectOrCreate?: ContactTagAssignmentCreateOrConnectWithoutContactInput | ContactTagAssignmentCreateOrConnectWithoutContactInput[]
+    createMany?: ContactTagAssignmentCreateManyContactInputEnvelope
+    connect?: ContactTagAssignmentWhereUniqueInput | ContactTagAssignmentWhereUniqueInput[]
+  }
+
   export type UserCreateNestedManyWithoutContactInput = {
     create?: XOR<UserCreateWithoutContactInput, UserUncheckedCreateWithoutContactInput> | UserCreateWithoutContactInput[] | UserUncheckedCreateWithoutContactInput[]
     connectOrCreate?: UserCreateOrConnectWithoutContactInput | UserCreateOrConnectWithoutContactInput[]
@@ -43782,6 +50592,13 @@ export namespace Prisma {
     connectOrCreate?: AutoAnalyticRuleCreateOrConnectWithoutContactInput | AutoAnalyticRuleCreateOrConnectWithoutContactInput[]
     createMany?: AutoAnalyticRuleCreateManyContactInputEnvelope
     connect?: AutoAnalyticRuleWhereUniqueInput | AutoAnalyticRuleWhereUniqueInput[]
+  }
+
+  export type ContactTagAssignmentUncheckedCreateNestedManyWithoutContactInput = {
+    create?: XOR<ContactTagAssignmentCreateWithoutContactInput, ContactTagAssignmentUncheckedCreateWithoutContactInput> | ContactTagAssignmentCreateWithoutContactInput[] | ContactTagAssignmentUncheckedCreateWithoutContactInput[]
+    connectOrCreate?: ContactTagAssignmentCreateOrConnectWithoutContactInput | ContactTagAssignmentCreateOrConnectWithoutContactInput[]
+    createMany?: ContactTagAssignmentCreateManyContactInputEnvelope
+    connect?: ContactTagAssignmentWhereUniqueInput | ContactTagAssignmentWhereUniqueInput[]
   }
 
   export type UserUncheckedCreateNestedManyWithoutContactInput = {
@@ -43909,6 +50726,20 @@ export namespace Prisma {
     deleteMany?: AutoAnalyticRuleScalarWhereInput | AutoAnalyticRuleScalarWhereInput[]
   }
 
+  export type ContactTagAssignmentUpdateManyWithoutContactNestedInput = {
+    create?: XOR<ContactTagAssignmentCreateWithoutContactInput, ContactTagAssignmentUncheckedCreateWithoutContactInput> | ContactTagAssignmentCreateWithoutContactInput[] | ContactTagAssignmentUncheckedCreateWithoutContactInput[]
+    connectOrCreate?: ContactTagAssignmentCreateOrConnectWithoutContactInput | ContactTagAssignmentCreateOrConnectWithoutContactInput[]
+    upsert?: ContactTagAssignmentUpsertWithWhereUniqueWithoutContactInput | ContactTagAssignmentUpsertWithWhereUniqueWithoutContactInput[]
+    createMany?: ContactTagAssignmentCreateManyContactInputEnvelope
+    set?: ContactTagAssignmentWhereUniqueInput | ContactTagAssignmentWhereUniqueInput[]
+    disconnect?: ContactTagAssignmentWhereUniqueInput | ContactTagAssignmentWhereUniqueInput[]
+    delete?: ContactTagAssignmentWhereUniqueInput | ContactTagAssignmentWhereUniqueInput[]
+    connect?: ContactTagAssignmentWhereUniqueInput | ContactTagAssignmentWhereUniqueInput[]
+    update?: ContactTagAssignmentUpdateWithWhereUniqueWithoutContactInput | ContactTagAssignmentUpdateWithWhereUniqueWithoutContactInput[]
+    updateMany?: ContactTagAssignmentUpdateManyWithWhereWithoutContactInput | ContactTagAssignmentUpdateManyWithWhereWithoutContactInput[]
+    deleteMany?: ContactTagAssignmentScalarWhereInput | ContactTagAssignmentScalarWhereInput[]
+  }
+
   export type UserUpdateManyWithoutContactNestedInput = {
     create?: XOR<UserCreateWithoutContactInput, UserUncheckedCreateWithoutContactInput> | UserCreateWithoutContactInput[] | UserUncheckedCreateWithoutContactInput[]
     connectOrCreate?: UserCreateOrConnectWithoutContactInput | UserCreateOrConnectWithoutContactInput[]
@@ -44021,6 +50852,20 @@ export namespace Prisma {
     deleteMany?: AutoAnalyticRuleScalarWhereInput | AutoAnalyticRuleScalarWhereInput[]
   }
 
+  export type ContactTagAssignmentUncheckedUpdateManyWithoutContactNestedInput = {
+    create?: XOR<ContactTagAssignmentCreateWithoutContactInput, ContactTagAssignmentUncheckedCreateWithoutContactInput> | ContactTagAssignmentCreateWithoutContactInput[] | ContactTagAssignmentUncheckedCreateWithoutContactInput[]
+    connectOrCreate?: ContactTagAssignmentCreateOrConnectWithoutContactInput | ContactTagAssignmentCreateOrConnectWithoutContactInput[]
+    upsert?: ContactTagAssignmentUpsertWithWhereUniqueWithoutContactInput | ContactTagAssignmentUpsertWithWhereUniqueWithoutContactInput[]
+    createMany?: ContactTagAssignmentCreateManyContactInputEnvelope
+    set?: ContactTagAssignmentWhereUniqueInput | ContactTagAssignmentWhereUniqueInput[]
+    disconnect?: ContactTagAssignmentWhereUniqueInput | ContactTagAssignmentWhereUniqueInput[]
+    delete?: ContactTagAssignmentWhereUniqueInput | ContactTagAssignmentWhereUniqueInput[]
+    connect?: ContactTagAssignmentWhereUniqueInput | ContactTagAssignmentWhereUniqueInput[]
+    update?: ContactTagAssignmentUpdateWithWhereUniqueWithoutContactInput | ContactTagAssignmentUpdateWithWhereUniqueWithoutContactInput[]
+    updateMany?: ContactTagAssignmentUpdateManyWithWhereWithoutContactInput | ContactTagAssignmentUpdateManyWithWhereWithoutContactInput[]
+    deleteMany?: ContactTagAssignmentScalarWhereInput | ContactTagAssignmentScalarWhereInput[]
+  }
+
   export type UserUncheckedUpdateManyWithoutContactNestedInput = {
     create?: XOR<UserCreateWithoutContactInput, UserUncheckedCreateWithoutContactInput> | UserCreateWithoutContactInput[] | UserUncheckedCreateWithoutContactInput[]
     connectOrCreate?: UserCreateOrConnectWithoutContactInput | UserCreateOrConnectWithoutContactInput[]
@@ -44033,6 +50878,132 @@ export namespace Prisma {
     update?: UserUpdateWithWhereUniqueWithoutContactInput | UserUpdateWithWhereUniqueWithoutContactInput[]
     updateMany?: UserUpdateManyWithWhereWithoutContactInput | UserUpdateManyWithWhereWithoutContactInput[]
     deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type CompanyCreateNestedOneWithoutContactTagsInput = {
+    create?: XOR<CompanyCreateWithoutContactTagsInput, CompanyUncheckedCreateWithoutContactTagsInput>
+    connectOrCreate?: CompanyCreateOrConnectWithoutContactTagsInput
+    connect?: CompanyWhereUniqueInput
+  }
+
+  export type ContactTagAssignmentCreateNestedManyWithoutTagInput = {
+    create?: XOR<ContactTagAssignmentCreateWithoutTagInput, ContactTagAssignmentUncheckedCreateWithoutTagInput> | ContactTagAssignmentCreateWithoutTagInput[] | ContactTagAssignmentUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: ContactTagAssignmentCreateOrConnectWithoutTagInput | ContactTagAssignmentCreateOrConnectWithoutTagInput[]
+    createMany?: ContactTagAssignmentCreateManyTagInputEnvelope
+    connect?: ContactTagAssignmentWhereUniqueInput | ContactTagAssignmentWhereUniqueInput[]
+  }
+
+  export type AutoAnalyticRuleCreateNestedManyWithoutContactTagInput = {
+    create?: XOR<AutoAnalyticRuleCreateWithoutContactTagInput, AutoAnalyticRuleUncheckedCreateWithoutContactTagInput> | AutoAnalyticRuleCreateWithoutContactTagInput[] | AutoAnalyticRuleUncheckedCreateWithoutContactTagInput[]
+    connectOrCreate?: AutoAnalyticRuleCreateOrConnectWithoutContactTagInput | AutoAnalyticRuleCreateOrConnectWithoutContactTagInput[]
+    createMany?: AutoAnalyticRuleCreateManyContactTagInputEnvelope
+    connect?: AutoAnalyticRuleWhereUniqueInput | AutoAnalyticRuleWhereUniqueInput[]
+  }
+
+  export type ContactTagAssignmentUncheckedCreateNestedManyWithoutTagInput = {
+    create?: XOR<ContactTagAssignmentCreateWithoutTagInput, ContactTagAssignmentUncheckedCreateWithoutTagInput> | ContactTagAssignmentCreateWithoutTagInput[] | ContactTagAssignmentUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: ContactTagAssignmentCreateOrConnectWithoutTagInput | ContactTagAssignmentCreateOrConnectWithoutTagInput[]
+    createMany?: ContactTagAssignmentCreateManyTagInputEnvelope
+    connect?: ContactTagAssignmentWhereUniqueInput | ContactTagAssignmentWhereUniqueInput[]
+  }
+
+  export type AutoAnalyticRuleUncheckedCreateNestedManyWithoutContactTagInput = {
+    create?: XOR<AutoAnalyticRuleCreateWithoutContactTagInput, AutoAnalyticRuleUncheckedCreateWithoutContactTagInput> | AutoAnalyticRuleCreateWithoutContactTagInput[] | AutoAnalyticRuleUncheckedCreateWithoutContactTagInput[]
+    connectOrCreate?: AutoAnalyticRuleCreateOrConnectWithoutContactTagInput | AutoAnalyticRuleCreateOrConnectWithoutContactTagInput[]
+    createMany?: AutoAnalyticRuleCreateManyContactTagInputEnvelope
+    connect?: AutoAnalyticRuleWhereUniqueInput | AutoAnalyticRuleWhereUniqueInput[]
+  }
+
+  export type CompanyUpdateOneRequiredWithoutContactTagsNestedInput = {
+    create?: XOR<CompanyCreateWithoutContactTagsInput, CompanyUncheckedCreateWithoutContactTagsInput>
+    connectOrCreate?: CompanyCreateOrConnectWithoutContactTagsInput
+    upsert?: CompanyUpsertWithoutContactTagsInput
+    connect?: CompanyWhereUniqueInput
+    update?: XOR<XOR<CompanyUpdateToOneWithWhereWithoutContactTagsInput, CompanyUpdateWithoutContactTagsInput>, CompanyUncheckedUpdateWithoutContactTagsInput>
+  }
+
+  export type ContactTagAssignmentUpdateManyWithoutTagNestedInput = {
+    create?: XOR<ContactTagAssignmentCreateWithoutTagInput, ContactTagAssignmentUncheckedCreateWithoutTagInput> | ContactTagAssignmentCreateWithoutTagInput[] | ContactTagAssignmentUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: ContactTagAssignmentCreateOrConnectWithoutTagInput | ContactTagAssignmentCreateOrConnectWithoutTagInput[]
+    upsert?: ContactTagAssignmentUpsertWithWhereUniqueWithoutTagInput | ContactTagAssignmentUpsertWithWhereUniqueWithoutTagInput[]
+    createMany?: ContactTagAssignmentCreateManyTagInputEnvelope
+    set?: ContactTagAssignmentWhereUniqueInput | ContactTagAssignmentWhereUniqueInput[]
+    disconnect?: ContactTagAssignmentWhereUniqueInput | ContactTagAssignmentWhereUniqueInput[]
+    delete?: ContactTagAssignmentWhereUniqueInput | ContactTagAssignmentWhereUniqueInput[]
+    connect?: ContactTagAssignmentWhereUniqueInput | ContactTagAssignmentWhereUniqueInput[]
+    update?: ContactTagAssignmentUpdateWithWhereUniqueWithoutTagInput | ContactTagAssignmentUpdateWithWhereUniqueWithoutTagInput[]
+    updateMany?: ContactTagAssignmentUpdateManyWithWhereWithoutTagInput | ContactTagAssignmentUpdateManyWithWhereWithoutTagInput[]
+    deleteMany?: ContactTagAssignmentScalarWhereInput | ContactTagAssignmentScalarWhereInput[]
+  }
+
+  export type AutoAnalyticRuleUpdateManyWithoutContactTagNestedInput = {
+    create?: XOR<AutoAnalyticRuleCreateWithoutContactTagInput, AutoAnalyticRuleUncheckedCreateWithoutContactTagInput> | AutoAnalyticRuleCreateWithoutContactTagInput[] | AutoAnalyticRuleUncheckedCreateWithoutContactTagInput[]
+    connectOrCreate?: AutoAnalyticRuleCreateOrConnectWithoutContactTagInput | AutoAnalyticRuleCreateOrConnectWithoutContactTagInput[]
+    upsert?: AutoAnalyticRuleUpsertWithWhereUniqueWithoutContactTagInput | AutoAnalyticRuleUpsertWithWhereUniqueWithoutContactTagInput[]
+    createMany?: AutoAnalyticRuleCreateManyContactTagInputEnvelope
+    set?: AutoAnalyticRuleWhereUniqueInput | AutoAnalyticRuleWhereUniqueInput[]
+    disconnect?: AutoAnalyticRuleWhereUniqueInput | AutoAnalyticRuleWhereUniqueInput[]
+    delete?: AutoAnalyticRuleWhereUniqueInput | AutoAnalyticRuleWhereUniqueInput[]
+    connect?: AutoAnalyticRuleWhereUniqueInput | AutoAnalyticRuleWhereUniqueInput[]
+    update?: AutoAnalyticRuleUpdateWithWhereUniqueWithoutContactTagInput | AutoAnalyticRuleUpdateWithWhereUniqueWithoutContactTagInput[]
+    updateMany?: AutoAnalyticRuleUpdateManyWithWhereWithoutContactTagInput | AutoAnalyticRuleUpdateManyWithWhereWithoutContactTagInput[]
+    deleteMany?: AutoAnalyticRuleScalarWhereInput | AutoAnalyticRuleScalarWhereInput[]
+  }
+
+  export type ContactTagAssignmentUncheckedUpdateManyWithoutTagNestedInput = {
+    create?: XOR<ContactTagAssignmentCreateWithoutTagInput, ContactTagAssignmentUncheckedCreateWithoutTagInput> | ContactTagAssignmentCreateWithoutTagInput[] | ContactTagAssignmentUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: ContactTagAssignmentCreateOrConnectWithoutTagInput | ContactTagAssignmentCreateOrConnectWithoutTagInput[]
+    upsert?: ContactTagAssignmentUpsertWithWhereUniqueWithoutTagInput | ContactTagAssignmentUpsertWithWhereUniqueWithoutTagInput[]
+    createMany?: ContactTagAssignmentCreateManyTagInputEnvelope
+    set?: ContactTagAssignmentWhereUniqueInput | ContactTagAssignmentWhereUniqueInput[]
+    disconnect?: ContactTagAssignmentWhereUniqueInput | ContactTagAssignmentWhereUniqueInput[]
+    delete?: ContactTagAssignmentWhereUniqueInput | ContactTagAssignmentWhereUniqueInput[]
+    connect?: ContactTagAssignmentWhereUniqueInput | ContactTagAssignmentWhereUniqueInput[]
+    update?: ContactTagAssignmentUpdateWithWhereUniqueWithoutTagInput | ContactTagAssignmentUpdateWithWhereUniqueWithoutTagInput[]
+    updateMany?: ContactTagAssignmentUpdateManyWithWhereWithoutTagInput | ContactTagAssignmentUpdateManyWithWhereWithoutTagInput[]
+    deleteMany?: ContactTagAssignmentScalarWhereInput | ContactTagAssignmentScalarWhereInput[]
+  }
+
+  export type AutoAnalyticRuleUncheckedUpdateManyWithoutContactTagNestedInput = {
+    create?: XOR<AutoAnalyticRuleCreateWithoutContactTagInput, AutoAnalyticRuleUncheckedCreateWithoutContactTagInput> | AutoAnalyticRuleCreateWithoutContactTagInput[] | AutoAnalyticRuleUncheckedCreateWithoutContactTagInput[]
+    connectOrCreate?: AutoAnalyticRuleCreateOrConnectWithoutContactTagInput | AutoAnalyticRuleCreateOrConnectWithoutContactTagInput[]
+    upsert?: AutoAnalyticRuleUpsertWithWhereUniqueWithoutContactTagInput | AutoAnalyticRuleUpsertWithWhereUniqueWithoutContactTagInput[]
+    createMany?: AutoAnalyticRuleCreateManyContactTagInputEnvelope
+    set?: AutoAnalyticRuleWhereUniqueInput | AutoAnalyticRuleWhereUniqueInput[]
+    disconnect?: AutoAnalyticRuleWhereUniqueInput | AutoAnalyticRuleWhereUniqueInput[]
+    delete?: AutoAnalyticRuleWhereUniqueInput | AutoAnalyticRuleWhereUniqueInput[]
+    connect?: AutoAnalyticRuleWhereUniqueInput | AutoAnalyticRuleWhereUniqueInput[]
+    update?: AutoAnalyticRuleUpdateWithWhereUniqueWithoutContactTagInput | AutoAnalyticRuleUpdateWithWhereUniqueWithoutContactTagInput[]
+    updateMany?: AutoAnalyticRuleUpdateManyWithWhereWithoutContactTagInput | AutoAnalyticRuleUpdateManyWithWhereWithoutContactTagInput[]
+    deleteMany?: AutoAnalyticRuleScalarWhereInput | AutoAnalyticRuleScalarWhereInput[]
+  }
+
+  export type ContactCreateNestedOneWithoutContactTagsInput = {
+    create?: XOR<ContactCreateWithoutContactTagsInput, ContactUncheckedCreateWithoutContactTagsInput>
+    connectOrCreate?: ContactCreateOrConnectWithoutContactTagsInput
+    connect?: ContactWhereUniqueInput
+  }
+
+  export type ContactTagCreateNestedOneWithoutContactsInput = {
+    create?: XOR<ContactTagCreateWithoutContactsInput, ContactTagUncheckedCreateWithoutContactsInput>
+    connectOrCreate?: ContactTagCreateOrConnectWithoutContactsInput
+    connect?: ContactTagWhereUniqueInput
+  }
+
+  export type ContactUpdateOneRequiredWithoutContactTagsNestedInput = {
+    create?: XOR<ContactCreateWithoutContactTagsInput, ContactUncheckedCreateWithoutContactTagsInput>
+    connectOrCreate?: ContactCreateOrConnectWithoutContactTagsInput
+    upsert?: ContactUpsertWithoutContactTagsInput
+    connect?: ContactWhereUniqueInput
+    update?: XOR<XOR<ContactUpdateToOneWithWhereWithoutContactTagsInput, ContactUpdateWithoutContactTagsInput>, ContactUncheckedUpdateWithoutContactTagsInput>
+  }
+
+  export type ContactTagUpdateOneRequiredWithoutContactsNestedInput = {
+    create?: XOR<ContactTagCreateWithoutContactsInput, ContactTagUncheckedCreateWithoutContactsInput>
+    connectOrCreate?: ContactTagCreateOrConnectWithoutContactsInput
+    upsert?: ContactTagUpsertWithoutContactsInput
+    connect?: ContactTagWhereUniqueInput
+    update?: XOR<XOR<ContactTagUpdateToOneWithWhereWithoutContactsInput, ContactTagUpdateWithoutContactsInput>, ContactTagUncheckedUpdateWithoutContactsInput>
   }
 
   export type CompanyCreateNestedOneWithoutProductCategoriesInput = {
@@ -45358,11 +52329,67 @@ export namespace Prisma {
     connect?: AutoAnalyticRuleWhereUniqueInput | AutoAnalyticRuleWhereUniqueInput[]
   }
 
+  export type PurchaseOrderLineCreateNestedManyWithoutAutoModelInput = {
+    create?: XOR<PurchaseOrderLineCreateWithoutAutoModelInput, PurchaseOrderLineUncheckedCreateWithoutAutoModelInput> | PurchaseOrderLineCreateWithoutAutoModelInput[] | PurchaseOrderLineUncheckedCreateWithoutAutoModelInput[]
+    connectOrCreate?: PurchaseOrderLineCreateOrConnectWithoutAutoModelInput | PurchaseOrderLineCreateOrConnectWithoutAutoModelInput[]
+    createMany?: PurchaseOrderLineCreateManyAutoModelInputEnvelope
+    connect?: PurchaseOrderLineWhereUniqueInput | PurchaseOrderLineWhereUniqueInput[]
+  }
+
+  export type SalesOrderLineCreateNestedManyWithoutAutoModelInput = {
+    create?: XOR<SalesOrderLineCreateWithoutAutoModelInput, SalesOrderLineUncheckedCreateWithoutAutoModelInput> | SalesOrderLineCreateWithoutAutoModelInput[] | SalesOrderLineUncheckedCreateWithoutAutoModelInput[]
+    connectOrCreate?: SalesOrderLineCreateOrConnectWithoutAutoModelInput | SalesOrderLineCreateOrConnectWithoutAutoModelInput[]
+    createMany?: SalesOrderLineCreateManyAutoModelInputEnvelope
+    connect?: SalesOrderLineWhereUniqueInput | SalesOrderLineWhereUniqueInput[]
+  }
+
+  export type VendorBillLineCreateNestedManyWithoutAutoModelInput = {
+    create?: XOR<VendorBillLineCreateWithoutAutoModelInput, VendorBillLineUncheckedCreateWithoutAutoModelInput> | VendorBillLineCreateWithoutAutoModelInput[] | VendorBillLineUncheckedCreateWithoutAutoModelInput[]
+    connectOrCreate?: VendorBillLineCreateOrConnectWithoutAutoModelInput | VendorBillLineCreateOrConnectWithoutAutoModelInput[]
+    createMany?: VendorBillLineCreateManyAutoModelInputEnvelope
+    connect?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+  }
+
+  export type CustomerInvoiceLineCreateNestedManyWithoutAutoModelInput = {
+    create?: XOR<CustomerInvoiceLineCreateWithoutAutoModelInput, CustomerInvoiceLineUncheckedCreateWithoutAutoModelInput> | CustomerInvoiceLineCreateWithoutAutoModelInput[] | CustomerInvoiceLineUncheckedCreateWithoutAutoModelInput[]
+    connectOrCreate?: CustomerInvoiceLineCreateOrConnectWithoutAutoModelInput | CustomerInvoiceLineCreateOrConnectWithoutAutoModelInput[]
+    createMany?: CustomerInvoiceLineCreateManyAutoModelInputEnvelope
+    connect?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
+  }
+
   export type AutoAnalyticRuleUncheckedCreateNestedManyWithoutModelInput = {
     create?: XOR<AutoAnalyticRuleCreateWithoutModelInput, AutoAnalyticRuleUncheckedCreateWithoutModelInput> | AutoAnalyticRuleCreateWithoutModelInput[] | AutoAnalyticRuleUncheckedCreateWithoutModelInput[]
     connectOrCreate?: AutoAnalyticRuleCreateOrConnectWithoutModelInput | AutoAnalyticRuleCreateOrConnectWithoutModelInput[]
     createMany?: AutoAnalyticRuleCreateManyModelInputEnvelope
     connect?: AutoAnalyticRuleWhereUniqueInput | AutoAnalyticRuleWhereUniqueInput[]
+  }
+
+  export type PurchaseOrderLineUncheckedCreateNestedManyWithoutAutoModelInput = {
+    create?: XOR<PurchaseOrderLineCreateWithoutAutoModelInput, PurchaseOrderLineUncheckedCreateWithoutAutoModelInput> | PurchaseOrderLineCreateWithoutAutoModelInput[] | PurchaseOrderLineUncheckedCreateWithoutAutoModelInput[]
+    connectOrCreate?: PurchaseOrderLineCreateOrConnectWithoutAutoModelInput | PurchaseOrderLineCreateOrConnectWithoutAutoModelInput[]
+    createMany?: PurchaseOrderLineCreateManyAutoModelInputEnvelope
+    connect?: PurchaseOrderLineWhereUniqueInput | PurchaseOrderLineWhereUniqueInput[]
+  }
+
+  export type SalesOrderLineUncheckedCreateNestedManyWithoutAutoModelInput = {
+    create?: XOR<SalesOrderLineCreateWithoutAutoModelInput, SalesOrderLineUncheckedCreateWithoutAutoModelInput> | SalesOrderLineCreateWithoutAutoModelInput[] | SalesOrderLineUncheckedCreateWithoutAutoModelInput[]
+    connectOrCreate?: SalesOrderLineCreateOrConnectWithoutAutoModelInput | SalesOrderLineCreateOrConnectWithoutAutoModelInput[]
+    createMany?: SalesOrderLineCreateManyAutoModelInputEnvelope
+    connect?: SalesOrderLineWhereUniqueInput | SalesOrderLineWhereUniqueInput[]
+  }
+
+  export type VendorBillLineUncheckedCreateNestedManyWithoutAutoModelInput = {
+    create?: XOR<VendorBillLineCreateWithoutAutoModelInput, VendorBillLineUncheckedCreateWithoutAutoModelInput> | VendorBillLineCreateWithoutAutoModelInput[] | VendorBillLineUncheckedCreateWithoutAutoModelInput[]
+    connectOrCreate?: VendorBillLineCreateOrConnectWithoutAutoModelInput | VendorBillLineCreateOrConnectWithoutAutoModelInput[]
+    createMany?: VendorBillLineCreateManyAutoModelInputEnvelope
+    connect?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+  }
+
+  export type CustomerInvoiceLineUncheckedCreateNestedManyWithoutAutoModelInput = {
+    create?: XOR<CustomerInvoiceLineCreateWithoutAutoModelInput, CustomerInvoiceLineUncheckedCreateWithoutAutoModelInput> | CustomerInvoiceLineCreateWithoutAutoModelInput[] | CustomerInvoiceLineUncheckedCreateWithoutAutoModelInput[]
+    connectOrCreate?: CustomerInvoiceLineCreateOrConnectWithoutAutoModelInput | CustomerInvoiceLineCreateOrConnectWithoutAutoModelInput[]
+    createMany?: CustomerInvoiceLineCreateManyAutoModelInputEnvelope
+    connect?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
   }
 
   export type CompanyUpdateOneRequiredWithoutAutoAnalyticModelsNestedInput = {
@@ -45387,6 +52414,62 @@ export namespace Prisma {
     deleteMany?: AutoAnalyticRuleScalarWhereInput | AutoAnalyticRuleScalarWhereInput[]
   }
 
+  export type PurchaseOrderLineUpdateManyWithoutAutoModelNestedInput = {
+    create?: XOR<PurchaseOrderLineCreateWithoutAutoModelInput, PurchaseOrderLineUncheckedCreateWithoutAutoModelInput> | PurchaseOrderLineCreateWithoutAutoModelInput[] | PurchaseOrderLineUncheckedCreateWithoutAutoModelInput[]
+    connectOrCreate?: PurchaseOrderLineCreateOrConnectWithoutAutoModelInput | PurchaseOrderLineCreateOrConnectWithoutAutoModelInput[]
+    upsert?: PurchaseOrderLineUpsertWithWhereUniqueWithoutAutoModelInput | PurchaseOrderLineUpsertWithWhereUniqueWithoutAutoModelInput[]
+    createMany?: PurchaseOrderLineCreateManyAutoModelInputEnvelope
+    set?: PurchaseOrderLineWhereUniqueInput | PurchaseOrderLineWhereUniqueInput[]
+    disconnect?: PurchaseOrderLineWhereUniqueInput | PurchaseOrderLineWhereUniqueInput[]
+    delete?: PurchaseOrderLineWhereUniqueInput | PurchaseOrderLineWhereUniqueInput[]
+    connect?: PurchaseOrderLineWhereUniqueInput | PurchaseOrderLineWhereUniqueInput[]
+    update?: PurchaseOrderLineUpdateWithWhereUniqueWithoutAutoModelInput | PurchaseOrderLineUpdateWithWhereUniqueWithoutAutoModelInput[]
+    updateMany?: PurchaseOrderLineUpdateManyWithWhereWithoutAutoModelInput | PurchaseOrderLineUpdateManyWithWhereWithoutAutoModelInput[]
+    deleteMany?: PurchaseOrderLineScalarWhereInput | PurchaseOrderLineScalarWhereInput[]
+  }
+
+  export type SalesOrderLineUpdateManyWithoutAutoModelNestedInput = {
+    create?: XOR<SalesOrderLineCreateWithoutAutoModelInput, SalesOrderLineUncheckedCreateWithoutAutoModelInput> | SalesOrderLineCreateWithoutAutoModelInput[] | SalesOrderLineUncheckedCreateWithoutAutoModelInput[]
+    connectOrCreate?: SalesOrderLineCreateOrConnectWithoutAutoModelInput | SalesOrderLineCreateOrConnectWithoutAutoModelInput[]
+    upsert?: SalesOrderLineUpsertWithWhereUniqueWithoutAutoModelInput | SalesOrderLineUpsertWithWhereUniqueWithoutAutoModelInput[]
+    createMany?: SalesOrderLineCreateManyAutoModelInputEnvelope
+    set?: SalesOrderLineWhereUniqueInput | SalesOrderLineWhereUniqueInput[]
+    disconnect?: SalesOrderLineWhereUniqueInput | SalesOrderLineWhereUniqueInput[]
+    delete?: SalesOrderLineWhereUniqueInput | SalesOrderLineWhereUniqueInput[]
+    connect?: SalesOrderLineWhereUniqueInput | SalesOrderLineWhereUniqueInput[]
+    update?: SalesOrderLineUpdateWithWhereUniqueWithoutAutoModelInput | SalesOrderLineUpdateWithWhereUniqueWithoutAutoModelInput[]
+    updateMany?: SalesOrderLineUpdateManyWithWhereWithoutAutoModelInput | SalesOrderLineUpdateManyWithWhereWithoutAutoModelInput[]
+    deleteMany?: SalesOrderLineScalarWhereInput | SalesOrderLineScalarWhereInput[]
+  }
+
+  export type VendorBillLineUpdateManyWithoutAutoModelNestedInput = {
+    create?: XOR<VendorBillLineCreateWithoutAutoModelInput, VendorBillLineUncheckedCreateWithoutAutoModelInput> | VendorBillLineCreateWithoutAutoModelInput[] | VendorBillLineUncheckedCreateWithoutAutoModelInput[]
+    connectOrCreate?: VendorBillLineCreateOrConnectWithoutAutoModelInput | VendorBillLineCreateOrConnectWithoutAutoModelInput[]
+    upsert?: VendorBillLineUpsertWithWhereUniqueWithoutAutoModelInput | VendorBillLineUpsertWithWhereUniqueWithoutAutoModelInput[]
+    createMany?: VendorBillLineCreateManyAutoModelInputEnvelope
+    set?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+    disconnect?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+    delete?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+    connect?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+    update?: VendorBillLineUpdateWithWhereUniqueWithoutAutoModelInput | VendorBillLineUpdateWithWhereUniqueWithoutAutoModelInput[]
+    updateMany?: VendorBillLineUpdateManyWithWhereWithoutAutoModelInput | VendorBillLineUpdateManyWithWhereWithoutAutoModelInput[]
+    deleteMany?: VendorBillLineScalarWhereInput | VendorBillLineScalarWhereInput[]
+  }
+
+  export type CustomerInvoiceLineUpdateManyWithoutAutoModelNestedInput = {
+    create?: XOR<CustomerInvoiceLineCreateWithoutAutoModelInput, CustomerInvoiceLineUncheckedCreateWithoutAutoModelInput> | CustomerInvoiceLineCreateWithoutAutoModelInput[] | CustomerInvoiceLineUncheckedCreateWithoutAutoModelInput[]
+    connectOrCreate?: CustomerInvoiceLineCreateOrConnectWithoutAutoModelInput | CustomerInvoiceLineCreateOrConnectWithoutAutoModelInput[]
+    upsert?: CustomerInvoiceLineUpsertWithWhereUniqueWithoutAutoModelInput | CustomerInvoiceLineUpsertWithWhereUniqueWithoutAutoModelInput[]
+    createMany?: CustomerInvoiceLineCreateManyAutoModelInputEnvelope
+    set?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
+    disconnect?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
+    delete?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
+    connect?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
+    update?: CustomerInvoiceLineUpdateWithWhereUniqueWithoutAutoModelInput | CustomerInvoiceLineUpdateWithWhereUniqueWithoutAutoModelInput[]
+    updateMany?: CustomerInvoiceLineUpdateManyWithWhereWithoutAutoModelInput | CustomerInvoiceLineUpdateManyWithWhereWithoutAutoModelInput[]
+    deleteMany?: CustomerInvoiceLineScalarWhereInput | CustomerInvoiceLineScalarWhereInput[]
+  }
+
   export type AutoAnalyticRuleUncheckedUpdateManyWithoutModelNestedInput = {
     create?: XOR<AutoAnalyticRuleCreateWithoutModelInput, AutoAnalyticRuleUncheckedCreateWithoutModelInput> | AutoAnalyticRuleCreateWithoutModelInput[] | AutoAnalyticRuleUncheckedCreateWithoutModelInput[]
     connectOrCreate?: AutoAnalyticRuleCreateOrConnectWithoutModelInput | AutoAnalyticRuleCreateOrConnectWithoutModelInput[]
@@ -45399,6 +52482,62 @@ export namespace Prisma {
     update?: AutoAnalyticRuleUpdateWithWhereUniqueWithoutModelInput | AutoAnalyticRuleUpdateWithWhereUniqueWithoutModelInput[]
     updateMany?: AutoAnalyticRuleUpdateManyWithWhereWithoutModelInput | AutoAnalyticRuleUpdateManyWithWhereWithoutModelInput[]
     deleteMany?: AutoAnalyticRuleScalarWhereInput | AutoAnalyticRuleScalarWhereInput[]
+  }
+
+  export type PurchaseOrderLineUncheckedUpdateManyWithoutAutoModelNestedInput = {
+    create?: XOR<PurchaseOrderLineCreateWithoutAutoModelInput, PurchaseOrderLineUncheckedCreateWithoutAutoModelInput> | PurchaseOrderLineCreateWithoutAutoModelInput[] | PurchaseOrderLineUncheckedCreateWithoutAutoModelInput[]
+    connectOrCreate?: PurchaseOrderLineCreateOrConnectWithoutAutoModelInput | PurchaseOrderLineCreateOrConnectWithoutAutoModelInput[]
+    upsert?: PurchaseOrderLineUpsertWithWhereUniqueWithoutAutoModelInput | PurchaseOrderLineUpsertWithWhereUniqueWithoutAutoModelInput[]
+    createMany?: PurchaseOrderLineCreateManyAutoModelInputEnvelope
+    set?: PurchaseOrderLineWhereUniqueInput | PurchaseOrderLineWhereUniqueInput[]
+    disconnect?: PurchaseOrderLineWhereUniqueInput | PurchaseOrderLineWhereUniqueInput[]
+    delete?: PurchaseOrderLineWhereUniqueInput | PurchaseOrderLineWhereUniqueInput[]
+    connect?: PurchaseOrderLineWhereUniqueInput | PurchaseOrderLineWhereUniqueInput[]
+    update?: PurchaseOrderLineUpdateWithWhereUniqueWithoutAutoModelInput | PurchaseOrderLineUpdateWithWhereUniqueWithoutAutoModelInput[]
+    updateMany?: PurchaseOrderLineUpdateManyWithWhereWithoutAutoModelInput | PurchaseOrderLineUpdateManyWithWhereWithoutAutoModelInput[]
+    deleteMany?: PurchaseOrderLineScalarWhereInput | PurchaseOrderLineScalarWhereInput[]
+  }
+
+  export type SalesOrderLineUncheckedUpdateManyWithoutAutoModelNestedInput = {
+    create?: XOR<SalesOrderLineCreateWithoutAutoModelInput, SalesOrderLineUncheckedCreateWithoutAutoModelInput> | SalesOrderLineCreateWithoutAutoModelInput[] | SalesOrderLineUncheckedCreateWithoutAutoModelInput[]
+    connectOrCreate?: SalesOrderLineCreateOrConnectWithoutAutoModelInput | SalesOrderLineCreateOrConnectWithoutAutoModelInput[]
+    upsert?: SalesOrderLineUpsertWithWhereUniqueWithoutAutoModelInput | SalesOrderLineUpsertWithWhereUniqueWithoutAutoModelInput[]
+    createMany?: SalesOrderLineCreateManyAutoModelInputEnvelope
+    set?: SalesOrderLineWhereUniqueInput | SalesOrderLineWhereUniqueInput[]
+    disconnect?: SalesOrderLineWhereUniqueInput | SalesOrderLineWhereUniqueInput[]
+    delete?: SalesOrderLineWhereUniqueInput | SalesOrderLineWhereUniqueInput[]
+    connect?: SalesOrderLineWhereUniqueInput | SalesOrderLineWhereUniqueInput[]
+    update?: SalesOrderLineUpdateWithWhereUniqueWithoutAutoModelInput | SalesOrderLineUpdateWithWhereUniqueWithoutAutoModelInput[]
+    updateMany?: SalesOrderLineUpdateManyWithWhereWithoutAutoModelInput | SalesOrderLineUpdateManyWithWhereWithoutAutoModelInput[]
+    deleteMany?: SalesOrderLineScalarWhereInput | SalesOrderLineScalarWhereInput[]
+  }
+
+  export type VendorBillLineUncheckedUpdateManyWithoutAutoModelNestedInput = {
+    create?: XOR<VendorBillLineCreateWithoutAutoModelInput, VendorBillLineUncheckedCreateWithoutAutoModelInput> | VendorBillLineCreateWithoutAutoModelInput[] | VendorBillLineUncheckedCreateWithoutAutoModelInput[]
+    connectOrCreate?: VendorBillLineCreateOrConnectWithoutAutoModelInput | VendorBillLineCreateOrConnectWithoutAutoModelInput[]
+    upsert?: VendorBillLineUpsertWithWhereUniqueWithoutAutoModelInput | VendorBillLineUpsertWithWhereUniqueWithoutAutoModelInput[]
+    createMany?: VendorBillLineCreateManyAutoModelInputEnvelope
+    set?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+    disconnect?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+    delete?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+    connect?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+    update?: VendorBillLineUpdateWithWhereUniqueWithoutAutoModelInput | VendorBillLineUpdateWithWhereUniqueWithoutAutoModelInput[]
+    updateMany?: VendorBillLineUpdateManyWithWhereWithoutAutoModelInput | VendorBillLineUpdateManyWithWhereWithoutAutoModelInput[]
+    deleteMany?: VendorBillLineScalarWhereInput | VendorBillLineScalarWhereInput[]
+  }
+
+  export type CustomerInvoiceLineUncheckedUpdateManyWithoutAutoModelNestedInput = {
+    create?: XOR<CustomerInvoiceLineCreateWithoutAutoModelInput, CustomerInvoiceLineUncheckedCreateWithoutAutoModelInput> | CustomerInvoiceLineCreateWithoutAutoModelInput[] | CustomerInvoiceLineUncheckedCreateWithoutAutoModelInput[]
+    connectOrCreate?: CustomerInvoiceLineCreateOrConnectWithoutAutoModelInput | CustomerInvoiceLineCreateOrConnectWithoutAutoModelInput[]
+    upsert?: CustomerInvoiceLineUpsertWithWhereUniqueWithoutAutoModelInput | CustomerInvoiceLineUpsertWithWhereUniqueWithoutAutoModelInput[]
+    createMany?: CustomerInvoiceLineCreateManyAutoModelInputEnvelope
+    set?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
+    disconnect?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
+    delete?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
+    connect?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
+    update?: CustomerInvoiceLineUpdateWithWhereUniqueWithoutAutoModelInput | CustomerInvoiceLineUpdateWithWhereUniqueWithoutAutoModelInput[]
+    updateMany?: CustomerInvoiceLineUpdateManyWithWhereWithoutAutoModelInput | CustomerInvoiceLineUpdateManyWithWhereWithoutAutoModelInput[]
+    deleteMany?: CustomerInvoiceLineScalarWhereInput | CustomerInvoiceLineScalarWhereInput[]
   }
 
   export type AutoAnalyticModelCreateNestedOneWithoutRulesInput = {
@@ -45425,10 +52564,72 @@ export namespace Prisma {
     connect?: ContactWhereUniqueInput
   }
 
+  export type ContactTagCreateNestedOneWithoutAutoAnalyticRulesInput = {
+    create?: XOR<ContactTagCreateWithoutAutoAnalyticRulesInput, ContactTagUncheckedCreateWithoutAutoAnalyticRulesInput>
+    connectOrCreate?: ContactTagCreateOrConnectWithoutAutoAnalyticRulesInput
+    connect?: ContactTagWhereUniqueInput
+  }
+
   export type AnalyticAccountCreateNestedOneWithoutAutoAnalyticRulesInput = {
     create?: XOR<AnalyticAccountCreateWithoutAutoAnalyticRulesInput, AnalyticAccountUncheckedCreateWithoutAutoAnalyticRulesInput>
     connectOrCreate?: AnalyticAccountCreateOrConnectWithoutAutoAnalyticRulesInput
     connect?: AnalyticAccountWhereUniqueInput
+  }
+
+  export type PurchaseOrderLineCreateNestedManyWithoutAutoRuleInput = {
+    create?: XOR<PurchaseOrderLineCreateWithoutAutoRuleInput, PurchaseOrderLineUncheckedCreateWithoutAutoRuleInput> | PurchaseOrderLineCreateWithoutAutoRuleInput[] | PurchaseOrderLineUncheckedCreateWithoutAutoRuleInput[]
+    connectOrCreate?: PurchaseOrderLineCreateOrConnectWithoutAutoRuleInput | PurchaseOrderLineCreateOrConnectWithoutAutoRuleInput[]
+    createMany?: PurchaseOrderLineCreateManyAutoRuleInputEnvelope
+    connect?: PurchaseOrderLineWhereUniqueInput | PurchaseOrderLineWhereUniqueInput[]
+  }
+
+  export type SalesOrderLineCreateNestedManyWithoutAutoRuleInput = {
+    create?: XOR<SalesOrderLineCreateWithoutAutoRuleInput, SalesOrderLineUncheckedCreateWithoutAutoRuleInput> | SalesOrderLineCreateWithoutAutoRuleInput[] | SalesOrderLineUncheckedCreateWithoutAutoRuleInput[]
+    connectOrCreate?: SalesOrderLineCreateOrConnectWithoutAutoRuleInput | SalesOrderLineCreateOrConnectWithoutAutoRuleInput[]
+    createMany?: SalesOrderLineCreateManyAutoRuleInputEnvelope
+    connect?: SalesOrderLineWhereUniqueInput | SalesOrderLineWhereUniqueInput[]
+  }
+
+  export type VendorBillLineCreateNestedManyWithoutAutoRuleInput = {
+    create?: XOR<VendorBillLineCreateWithoutAutoRuleInput, VendorBillLineUncheckedCreateWithoutAutoRuleInput> | VendorBillLineCreateWithoutAutoRuleInput[] | VendorBillLineUncheckedCreateWithoutAutoRuleInput[]
+    connectOrCreate?: VendorBillLineCreateOrConnectWithoutAutoRuleInput | VendorBillLineCreateOrConnectWithoutAutoRuleInput[]
+    createMany?: VendorBillLineCreateManyAutoRuleInputEnvelope
+    connect?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+  }
+
+  export type CustomerInvoiceLineCreateNestedManyWithoutAutoRuleInput = {
+    create?: XOR<CustomerInvoiceLineCreateWithoutAutoRuleInput, CustomerInvoiceLineUncheckedCreateWithoutAutoRuleInput> | CustomerInvoiceLineCreateWithoutAutoRuleInput[] | CustomerInvoiceLineUncheckedCreateWithoutAutoRuleInput[]
+    connectOrCreate?: CustomerInvoiceLineCreateOrConnectWithoutAutoRuleInput | CustomerInvoiceLineCreateOrConnectWithoutAutoRuleInput[]
+    createMany?: CustomerInvoiceLineCreateManyAutoRuleInputEnvelope
+    connect?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
+  }
+
+  export type PurchaseOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput = {
+    create?: XOR<PurchaseOrderLineCreateWithoutAutoRuleInput, PurchaseOrderLineUncheckedCreateWithoutAutoRuleInput> | PurchaseOrderLineCreateWithoutAutoRuleInput[] | PurchaseOrderLineUncheckedCreateWithoutAutoRuleInput[]
+    connectOrCreate?: PurchaseOrderLineCreateOrConnectWithoutAutoRuleInput | PurchaseOrderLineCreateOrConnectWithoutAutoRuleInput[]
+    createMany?: PurchaseOrderLineCreateManyAutoRuleInputEnvelope
+    connect?: PurchaseOrderLineWhereUniqueInput | PurchaseOrderLineWhereUniqueInput[]
+  }
+
+  export type SalesOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput = {
+    create?: XOR<SalesOrderLineCreateWithoutAutoRuleInput, SalesOrderLineUncheckedCreateWithoutAutoRuleInput> | SalesOrderLineCreateWithoutAutoRuleInput[] | SalesOrderLineUncheckedCreateWithoutAutoRuleInput[]
+    connectOrCreate?: SalesOrderLineCreateOrConnectWithoutAutoRuleInput | SalesOrderLineCreateOrConnectWithoutAutoRuleInput[]
+    createMany?: SalesOrderLineCreateManyAutoRuleInputEnvelope
+    connect?: SalesOrderLineWhereUniqueInput | SalesOrderLineWhereUniqueInput[]
+  }
+
+  export type VendorBillLineUncheckedCreateNestedManyWithoutAutoRuleInput = {
+    create?: XOR<VendorBillLineCreateWithoutAutoRuleInput, VendorBillLineUncheckedCreateWithoutAutoRuleInput> | VendorBillLineCreateWithoutAutoRuleInput[] | VendorBillLineUncheckedCreateWithoutAutoRuleInput[]
+    connectOrCreate?: VendorBillLineCreateOrConnectWithoutAutoRuleInput | VendorBillLineCreateOrConnectWithoutAutoRuleInput[]
+    createMany?: VendorBillLineCreateManyAutoRuleInputEnvelope
+    connect?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+  }
+
+  export type CustomerInvoiceLineUncheckedCreateNestedManyWithoutAutoRuleInput = {
+    create?: XOR<CustomerInvoiceLineCreateWithoutAutoRuleInput, CustomerInvoiceLineUncheckedCreateWithoutAutoRuleInput> | CustomerInvoiceLineCreateWithoutAutoRuleInput[] | CustomerInvoiceLineUncheckedCreateWithoutAutoRuleInput[]
+    connectOrCreate?: CustomerInvoiceLineCreateOrConnectWithoutAutoRuleInput | CustomerInvoiceLineCreateOrConnectWithoutAutoRuleInput[]
+    createMany?: CustomerInvoiceLineCreateManyAutoRuleInputEnvelope
+    connect?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
   }
 
   export type EnumAutoDocTypeFieldUpdateOperationsInput = {
@@ -45473,12 +52674,134 @@ export namespace Prisma {
     update?: XOR<XOR<ContactUpdateToOneWithWhereWithoutAutoAnalyticRulesInput, ContactUpdateWithoutAutoAnalyticRulesInput>, ContactUncheckedUpdateWithoutAutoAnalyticRulesInput>
   }
 
+  export type ContactTagUpdateOneWithoutAutoAnalyticRulesNestedInput = {
+    create?: XOR<ContactTagCreateWithoutAutoAnalyticRulesInput, ContactTagUncheckedCreateWithoutAutoAnalyticRulesInput>
+    connectOrCreate?: ContactTagCreateOrConnectWithoutAutoAnalyticRulesInput
+    upsert?: ContactTagUpsertWithoutAutoAnalyticRulesInput
+    disconnect?: ContactTagWhereInput | boolean
+    delete?: ContactTagWhereInput | boolean
+    connect?: ContactTagWhereUniqueInput
+    update?: XOR<XOR<ContactTagUpdateToOneWithWhereWithoutAutoAnalyticRulesInput, ContactTagUpdateWithoutAutoAnalyticRulesInput>, ContactTagUncheckedUpdateWithoutAutoAnalyticRulesInput>
+  }
+
   export type AnalyticAccountUpdateOneRequiredWithoutAutoAnalyticRulesNestedInput = {
     create?: XOR<AnalyticAccountCreateWithoutAutoAnalyticRulesInput, AnalyticAccountUncheckedCreateWithoutAutoAnalyticRulesInput>
     connectOrCreate?: AnalyticAccountCreateOrConnectWithoutAutoAnalyticRulesInput
     upsert?: AnalyticAccountUpsertWithoutAutoAnalyticRulesInput
     connect?: AnalyticAccountWhereUniqueInput
     update?: XOR<XOR<AnalyticAccountUpdateToOneWithWhereWithoutAutoAnalyticRulesInput, AnalyticAccountUpdateWithoutAutoAnalyticRulesInput>, AnalyticAccountUncheckedUpdateWithoutAutoAnalyticRulesInput>
+  }
+
+  export type PurchaseOrderLineUpdateManyWithoutAutoRuleNestedInput = {
+    create?: XOR<PurchaseOrderLineCreateWithoutAutoRuleInput, PurchaseOrderLineUncheckedCreateWithoutAutoRuleInput> | PurchaseOrderLineCreateWithoutAutoRuleInput[] | PurchaseOrderLineUncheckedCreateWithoutAutoRuleInput[]
+    connectOrCreate?: PurchaseOrderLineCreateOrConnectWithoutAutoRuleInput | PurchaseOrderLineCreateOrConnectWithoutAutoRuleInput[]
+    upsert?: PurchaseOrderLineUpsertWithWhereUniqueWithoutAutoRuleInput | PurchaseOrderLineUpsertWithWhereUniqueWithoutAutoRuleInput[]
+    createMany?: PurchaseOrderLineCreateManyAutoRuleInputEnvelope
+    set?: PurchaseOrderLineWhereUniqueInput | PurchaseOrderLineWhereUniqueInput[]
+    disconnect?: PurchaseOrderLineWhereUniqueInput | PurchaseOrderLineWhereUniqueInput[]
+    delete?: PurchaseOrderLineWhereUniqueInput | PurchaseOrderLineWhereUniqueInput[]
+    connect?: PurchaseOrderLineWhereUniqueInput | PurchaseOrderLineWhereUniqueInput[]
+    update?: PurchaseOrderLineUpdateWithWhereUniqueWithoutAutoRuleInput | PurchaseOrderLineUpdateWithWhereUniqueWithoutAutoRuleInput[]
+    updateMany?: PurchaseOrderLineUpdateManyWithWhereWithoutAutoRuleInput | PurchaseOrderLineUpdateManyWithWhereWithoutAutoRuleInput[]
+    deleteMany?: PurchaseOrderLineScalarWhereInput | PurchaseOrderLineScalarWhereInput[]
+  }
+
+  export type SalesOrderLineUpdateManyWithoutAutoRuleNestedInput = {
+    create?: XOR<SalesOrderLineCreateWithoutAutoRuleInput, SalesOrderLineUncheckedCreateWithoutAutoRuleInput> | SalesOrderLineCreateWithoutAutoRuleInput[] | SalesOrderLineUncheckedCreateWithoutAutoRuleInput[]
+    connectOrCreate?: SalesOrderLineCreateOrConnectWithoutAutoRuleInput | SalesOrderLineCreateOrConnectWithoutAutoRuleInput[]
+    upsert?: SalesOrderLineUpsertWithWhereUniqueWithoutAutoRuleInput | SalesOrderLineUpsertWithWhereUniqueWithoutAutoRuleInput[]
+    createMany?: SalesOrderLineCreateManyAutoRuleInputEnvelope
+    set?: SalesOrderLineWhereUniqueInput | SalesOrderLineWhereUniqueInput[]
+    disconnect?: SalesOrderLineWhereUniqueInput | SalesOrderLineWhereUniqueInput[]
+    delete?: SalesOrderLineWhereUniqueInput | SalesOrderLineWhereUniqueInput[]
+    connect?: SalesOrderLineWhereUniqueInput | SalesOrderLineWhereUniqueInput[]
+    update?: SalesOrderLineUpdateWithWhereUniqueWithoutAutoRuleInput | SalesOrderLineUpdateWithWhereUniqueWithoutAutoRuleInput[]
+    updateMany?: SalesOrderLineUpdateManyWithWhereWithoutAutoRuleInput | SalesOrderLineUpdateManyWithWhereWithoutAutoRuleInput[]
+    deleteMany?: SalesOrderLineScalarWhereInput | SalesOrderLineScalarWhereInput[]
+  }
+
+  export type VendorBillLineUpdateManyWithoutAutoRuleNestedInput = {
+    create?: XOR<VendorBillLineCreateWithoutAutoRuleInput, VendorBillLineUncheckedCreateWithoutAutoRuleInput> | VendorBillLineCreateWithoutAutoRuleInput[] | VendorBillLineUncheckedCreateWithoutAutoRuleInput[]
+    connectOrCreate?: VendorBillLineCreateOrConnectWithoutAutoRuleInput | VendorBillLineCreateOrConnectWithoutAutoRuleInput[]
+    upsert?: VendorBillLineUpsertWithWhereUniqueWithoutAutoRuleInput | VendorBillLineUpsertWithWhereUniqueWithoutAutoRuleInput[]
+    createMany?: VendorBillLineCreateManyAutoRuleInputEnvelope
+    set?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+    disconnect?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+    delete?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+    connect?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+    update?: VendorBillLineUpdateWithWhereUniqueWithoutAutoRuleInput | VendorBillLineUpdateWithWhereUniqueWithoutAutoRuleInput[]
+    updateMany?: VendorBillLineUpdateManyWithWhereWithoutAutoRuleInput | VendorBillLineUpdateManyWithWhereWithoutAutoRuleInput[]
+    deleteMany?: VendorBillLineScalarWhereInput | VendorBillLineScalarWhereInput[]
+  }
+
+  export type CustomerInvoiceLineUpdateManyWithoutAutoRuleNestedInput = {
+    create?: XOR<CustomerInvoiceLineCreateWithoutAutoRuleInput, CustomerInvoiceLineUncheckedCreateWithoutAutoRuleInput> | CustomerInvoiceLineCreateWithoutAutoRuleInput[] | CustomerInvoiceLineUncheckedCreateWithoutAutoRuleInput[]
+    connectOrCreate?: CustomerInvoiceLineCreateOrConnectWithoutAutoRuleInput | CustomerInvoiceLineCreateOrConnectWithoutAutoRuleInput[]
+    upsert?: CustomerInvoiceLineUpsertWithWhereUniqueWithoutAutoRuleInput | CustomerInvoiceLineUpsertWithWhereUniqueWithoutAutoRuleInput[]
+    createMany?: CustomerInvoiceLineCreateManyAutoRuleInputEnvelope
+    set?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
+    disconnect?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
+    delete?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
+    connect?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
+    update?: CustomerInvoiceLineUpdateWithWhereUniqueWithoutAutoRuleInput | CustomerInvoiceLineUpdateWithWhereUniqueWithoutAutoRuleInput[]
+    updateMany?: CustomerInvoiceLineUpdateManyWithWhereWithoutAutoRuleInput | CustomerInvoiceLineUpdateManyWithWhereWithoutAutoRuleInput[]
+    deleteMany?: CustomerInvoiceLineScalarWhereInput | CustomerInvoiceLineScalarWhereInput[]
+  }
+
+  export type PurchaseOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput = {
+    create?: XOR<PurchaseOrderLineCreateWithoutAutoRuleInput, PurchaseOrderLineUncheckedCreateWithoutAutoRuleInput> | PurchaseOrderLineCreateWithoutAutoRuleInput[] | PurchaseOrderLineUncheckedCreateWithoutAutoRuleInput[]
+    connectOrCreate?: PurchaseOrderLineCreateOrConnectWithoutAutoRuleInput | PurchaseOrderLineCreateOrConnectWithoutAutoRuleInput[]
+    upsert?: PurchaseOrderLineUpsertWithWhereUniqueWithoutAutoRuleInput | PurchaseOrderLineUpsertWithWhereUniqueWithoutAutoRuleInput[]
+    createMany?: PurchaseOrderLineCreateManyAutoRuleInputEnvelope
+    set?: PurchaseOrderLineWhereUniqueInput | PurchaseOrderLineWhereUniqueInput[]
+    disconnect?: PurchaseOrderLineWhereUniqueInput | PurchaseOrderLineWhereUniqueInput[]
+    delete?: PurchaseOrderLineWhereUniqueInput | PurchaseOrderLineWhereUniqueInput[]
+    connect?: PurchaseOrderLineWhereUniqueInput | PurchaseOrderLineWhereUniqueInput[]
+    update?: PurchaseOrderLineUpdateWithWhereUniqueWithoutAutoRuleInput | PurchaseOrderLineUpdateWithWhereUniqueWithoutAutoRuleInput[]
+    updateMany?: PurchaseOrderLineUpdateManyWithWhereWithoutAutoRuleInput | PurchaseOrderLineUpdateManyWithWhereWithoutAutoRuleInput[]
+    deleteMany?: PurchaseOrderLineScalarWhereInput | PurchaseOrderLineScalarWhereInput[]
+  }
+
+  export type SalesOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput = {
+    create?: XOR<SalesOrderLineCreateWithoutAutoRuleInput, SalesOrderLineUncheckedCreateWithoutAutoRuleInput> | SalesOrderLineCreateWithoutAutoRuleInput[] | SalesOrderLineUncheckedCreateWithoutAutoRuleInput[]
+    connectOrCreate?: SalesOrderLineCreateOrConnectWithoutAutoRuleInput | SalesOrderLineCreateOrConnectWithoutAutoRuleInput[]
+    upsert?: SalesOrderLineUpsertWithWhereUniqueWithoutAutoRuleInput | SalesOrderLineUpsertWithWhereUniqueWithoutAutoRuleInput[]
+    createMany?: SalesOrderLineCreateManyAutoRuleInputEnvelope
+    set?: SalesOrderLineWhereUniqueInput | SalesOrderLineWhereUniqueInput[]
+    disconnect?: SalesOrderLineWhereUniqueInput | SalesOrderLineWhereUniqueInput[]
+    delete?: SalesOrderLineWhereUniqueInput | SalesOrderLineWhereUniqueInput[]
+    connect?: SalesOrderLineWhereUniqueInput | SalesOrderLineWhereUniqueInput[]
+    update?: SalesOrderLineUpdateWithWhereUniqueWithoutAutoRuleInput | SalesOrderLineUpdateWithWhereUniqueWithoutAutoRuleInput[]
+    updateMany?: SalesOrderLineUpdateManyWithWhereWithoutAutoRuleInput | SalesOrderLineUpdateManyWithWhereWithoutAutoRuleInput[]
+    deleteMany?: SalesOrderLineScalarWhereInput | SalesOrderLineScalarWhereInput[]
+  }
+
+  export type VendorBillLineUncheckedUpdateManyWithoutAutoRuleNestedInput = {
+    create?: XOR<VendorBillLineCreateWithoutAutoRuleInput, VendorBillLineUncheckedCreateWithoutAutoRuleInput> | VendorBillLineCreateWithoutAutoRuleInput[] | VendorBillLineUncheckedCreateWithoutAutoRuleInput[]
+    connectOrCreate?: VendorBillLineCreateOrConnectWithoutAutoRuleInput | VendorBillLineCreateOrConnectWithoutAutoRuleInput[]
+    upsert?: VendorBillLineUpsertWithWhereUniqueWithoutAutoRuleInput | VendorBillLineUpsertWithWhereUniqueWithoutAutoRuleInput[]
+    createMany?: VendorBillLineCreateManyAutoRuleInputEnvelope
+    set?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+    disconnect?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+    delete?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+    connect?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+    update?: VendorBillLineUpdateWithWhereUniqueWithoutAutoRuleInput | VendorBillLineUpdateWithWhereUniqueWithoutAutoRuleInput[]
+    updateMany?: VendorBillLineUpdateManyWithWhereWithoutAutoRuleInput | VendorBillLineUpdateManyWithWhereWithoutAutoRuleInput[]
+    deleteMany?: VendorBillLineScalarWhereInput | VendorBillLineScalarWhereInput[]
+  }
+
+  export type CustomerInvoiceLineUncheckedUpdateManyWithoutAutoRuleNestedInput = {
+    create?: XOR<CustomerInvoiceLineCreateWithoutAutoRuleInput, CustomerInvoiceLineUncheckedCreateWithoutAutoRuleInput> | CustomerInvoiceLineCreateWithoutAutoRuleInput[] | CustomerInvoiceLineUncheckedCreateWithoutAutoRuleInput[]
+    connectOrCreate?: CustomerInvoiceLineCreateOrConnectWithoutAutoRuleInput | CustomerInvoiceLineCreateOrConnectWithoutAutoRuleInput[]
+    upsert?: CustomerInvoiceLineUpsertWithWhereUniqueWithoutAutoRuleInput | CustomerInvoiceLineUpsertWithWhereUniqueWithoutAutoRuleInput[]
+    createMany?: CustomerInvoiceLineCreateManyAutoRuleInputEnvelope
+    set?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
+    disconnect?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
+    delete?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
+    connect?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
+    update?: CustomerInvoiceLineUpdateWithWhereUniqueWithoutAutoRuleInput | CustomerInvoiceLineUpdateWithWhereUniqueWithoutAutoRuleInput[]
+    updateMany?: CustomerInvoiceLineUpdateManyWithWhereWithoutAutoRuleInput | CustomerInvoiceLineUpdateManyWithWhereWithoutAutoRuleInput[]
+    deleteMany?: CustomerInvoiceLineScalarWhereInput | CustomerInvoiceLineScalarWhereInput[]
   }
 
   export type CompanyCreateNestedOneWithoutPurchaseOrdersInput = {
@@ -45615,6 +52938,26 @@ export namespace Prisma {
     connect?: AnalyticAccountWhereUniqueInput
   }
 
+  export type AutoAnalyticModelCreateNestedOneWithoutPurchaseOrderLinesInput = {
+    create?: XOR<AutoAnalyticModelCreateWithoutPurchaseOrderLinesInput, AutoAnalyticModelUncheckedCreateWithoutPurchaseOrderLinesInput>
+    connectOrCreate?: AutoAnalyticModelCreateOrConnectWithoutPurchaseOrderLinesInput
+    connect?: AutoAnalyticModelWhereUniqueInput
+  }
+
+  export type AutoAnalyticRuleCreateNestedOneWithoutPurchaseOrderLinesInput = {
+    create?: XOR<AutoAnalyticRuleCreateWithoutPurchaseOrderLinesInput, AutoAnalyticRuleUncheckedCreateWithoutPurchaseOrderLinesInput>
+    connectOrCreate?: AutoAnalyticRuleCreateOrConnectWithoutPurchaseOrderLinesInput
+    connect?: AutoAnalyticRuleWhereUniqueInput
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type PurchaseOrderUpdateOneRequiredWithoutLinesNestedInput = {
     create?: XOR<PurchaseOrderCreateWithoutLinesInput, PurchaseOrderUncheckedCreateWithoutLinesInput>
     connectOrCreate?: PurchaseOrderCreateOrConnectWithoutLinesInput
@@ -45639,6 +52982,26 @@ export namespace Prisma {
     delete?: AnalyticAccountWhereInput | boolean
     connect?: AnalyticAccountWhereUniqueInput
     update?: XOR<XOR<AnalyticAccountUpdateToOneWithWhereWithoutPoLinesInput, AnalyticAccountUpdateWithoutPoLinesInput>, AnalyticAccountUncheckedUpdateWithoutPoLinesInput>
+  }
+
+  export type AutoAnalyticModelUpdateOneWithoutPurchaseOrderLinesNestedInput = {
+    create?: XOR<AutoAnalyticModelCreateWithoutPurchaseOrderLinesInput, AutoAnalyticModelUncheckedCreateWithoutPurchaseOrderLinesInput>
+    connectOrCreate?: AutoAnalyticModelCreateOrConnectWithoutPurchaseOrderLinesInput
+    upsert?: AutoAnalyticModelUpsertWithoutPurchaseOrderLinesInput
+    disconnect?: AutoAnalyticModelWhereInput | boolean
+    delete?: AutoAnalyticModelWhereInput | boolean
+    connect?: AutoAnalyticModelWhereUniqueInput
+    update?: XOR<XOR<AutoAnalyticModelUpdateToOneWithWhereWithoutPurchaseOrderLinesInput, AutoAnalyticModelUpdateWithoutPurchaseOrderLinesInput>, AutoAnalyticModelUncheckedUpdateWithoutPurchaseOrderLinesInput>
+  }
+
+  export type AutoAnalyticRuleUpdateOneWithoutPurchaseOrderLinesNestedInput = {
+    create?: XOR<AutoAnalyticRuleCreateWithoutPurchaseOrderLinesInput, AutoAnalyticRuleUncheckedCreateWithoutPurchaseOrderLinesInput>
+    connectOrCreate?: AutoAnalyticRuleCreateOrConnectWithoutPurchaseOrderLinesInput
+    upsert?: AutoAnalyticRuleUpsertWithoutPurchaseOrderLinesInput
+    disconnect?: AutoAnalyticRuleWhereInput | boolean
+    delete?: AutoAnalyticRuleWhereInput | boolean
+    connect?: AutoAnalyticRuleWhereUniqueInput
+    update?: XOR<XOR<AutoAnalyticRuleUpdateToOneWithWhereWithoutPurchaseOrderLinesInput, AutoAnalyticRuleUpdateWithoutPurchaseOrderLinesInput>, AutoAnalyticRuleUncheckedUpdateWithoutPurchaseOrderLinesInput>
   }
 
   export type CompanyCreateNestedOneWithoutSalesOrdersInput = {
@@ -45771,6 +53134,18 @@ export namespace Prisma {
     connect?: AnalyticAccountWhereUniqueInput
   }
 
+  export type AutoAnalyticModelCreateNestedOneWithoutSalesOrderLinesInput = {
+    create?: XOR<AutoAnalyticModelCreateWithoutSalesOrderLinesInput, AutoAnalyticModelUncheckedCreateWithoutSalesOrderLinesInput>
+    connectOrCreate?: AutoAnalyticModelCreateOrConnectWithoutSalesOrderLinesInput
+    connect?: AutoAnalyticModelWhereUniqueInput
+  }
+
+  export type AutoAnalyticRuleCreateNestedOneWithoutSalesOrderLinesInput = {
+    create?: XOR<AutoAnalyticRuleCreateWithoutSalesOrderLinesInput, AutoAnalyticRuleUncheckedCreateWithoutSalesOrderLinesInput>
+    connectOrCreate?: AutoAnalyticRuleCreateOrConnectWithoutSalesOrderLinesInput
+    connect?: AutoAnalyticRuleWhereUniqueInput
+  }
+
   export type SalesOrderUpdateOneRequiredWithoutLinesNestedInput = {
     create?: XOR<SalesOrderCreateWithoutLinesInput, SalesOrderUncheckedCreateWithoutLinesInput>
     connectOrCreate?: SalesOrderCreateOrConnectWithoutLinesInput
@@ -45795,6 +53170,26 @@ export namespace Prisma {
     delete?: AnalyticAccountWhereInput | boolean
     connect?: AnalyticAccountWhereUniqueInput
     update?: XOR<XOR<AnalyticAccountUpdateToOneWithWhereWithoutSoLinesInput, AnalyticAccountUpdateWithoutSoLinesInput>, AnalyticAccountUncheckedUpdateWithoutSoLinesInput>
+  }
+
+  export type AutoAnalyticModelUpdateOneWithoutSalesOrderLinesNestedInput = {
+    create?: XOR<AutoAnalyticModelCreateWithoutSalesOrderLinesInput, AutoAnalyticModelUncheckedCreateWithoutSalesOrderLinesInput>
+    connectOrCreate?: AutoAnalyticModelCreateOrConnectWithoutSalesOrderLinesInput
+    upsert?: AutoAnalyticModelUpsertWithoutSalesOrderLinesInput
+    disconnect?: AutoAnalyticModelWhereInput | boolean
+    delete?: AutoAnalyticModelWhereInput | boolean
+    connect?: AutoAnalyticModelWhereUniqueInput
+    update?: XOR<XOR<AutoAnalyticModelUpdateToOneWithWhereWithoutSalesOrderLinesInput, AutoAnalyticModelUpdateWithoutSalesOrderLinesInput>, AutoAnalyticModelUncheckedUpdateWithoutSalesOrderLinesInput>
+  }
+
+  export type AutoAnalyticRuleUpdateOneWithoutSalesOrderLinesNestedInput = {
+    create?: XOR<AutoAnalyticRuleCreateWithoutSalesOrderLinesInput, AutoAnalyticRuleUncheckedCreateWithoutSalesOrderLinesInput>
+    connectOrCreate?: AutoAnalyticRuleCreateOrConnectWithoutSalesOrderLinesInput
+    upsert?: AutoAnalyticRuleUpsertWithoutSalesOrderLinesInput
+    disconnect?: AutoAnalyticRuleWhereInput | boolean
+    delete?: AutoAnalyticRuleWhereInput | boolean
+    connect?: AutoAnalyticRuleWhereUniqueInput
+    update?: XOR<XOR<AutoAnalyticRuleUpdateToOneWithWhereWithoutSalesOrderLinesInput, AutoAnalyticRuleUpdateWithoutSalesOrderLinesInput>, AutoAnalyticRuleUncheckedUpdateWithoutSalesOrderLinesInput>
   }
 
   export type CompanyCreateNestedOneWithoutVendorBillsInput = {
@@ -45822,11 +53217,25 @@ export namespace Prisma {
     connect?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
   }
 
+  export type VendorBillPaymentCreateNestedManyWithoutBillInput = {
+    create?: XOR<VendorBillPaymentCreateWithoutBillInput, VendorBillPaymentUncheckedCreateWithoutBillInput> | VendorBillPaymentCreateWithoutBillInput[] | VendorBillPaymentUncheckedCreateWithoutBillInput[]
+    connectOrCreate?: VendorBillPaymentCreateOrConnectWithoutBillInput | VendorBillPaymentCreateOrConnectWithoutBillInput[]
+    createMany?: VendorBillPaymentCreateManyBillInputEnvelope
+    connect?: VendorBillPaymentWhereUniqueInput | VendorBillPaymentWhereUniqueInput[]
+  }
+
   export type VendorBillLineUncheckedCreateNestedManyWithoutBillInput = {
     create?: XOR<VendorBillLineCreateWithoutBillInput, VendorBillLineUncheckedCreateWithoutBillInput> | VendorBillLineCreateWithoutBillInput[] | VendorBillLineUncheckedCreateWithoutBillInput[]
     connectOrCreate?: VendorBillLineCreateOrConnectWithoutBillInput | VendorBillLineCreateOrConnectWithoutBillInput[]
     createMany?: VendorBillLineCreateManyBillInputEnvelope
     connect?: VendorBillLineWhereUniqueInput | VendorBillLineWhereUniqueInput[]
+  }
+
+  export type VendorBillPaymentUncheckedCreateNestedManyWithoutBillInput = {
+    create?: XOR<VendorBillPaymentCreateWithoutBillInput, VendorBillPaymentUncheckedCreateWithoutBillInput> | VendorBillPaymentCreateWithoutBillInput[] | VendorBillPaymentUncheckedCreateWithoutBillInput[]
+    connectOrCreate?: VendorBillPaymentCreateOrConnectWithoutBillInput | VendorBillPaymentCreateOrConnectWithoutBillInput[]
+    createMany?: VendorBillPaymentCreateManyBillInputEnvelope
+    connect?: VendorBillPaymentWhereUniqueInput | VendorBillPaymentWhereUniqueInput[]
   }
 
   export type EnumDocStatusFieldUpdateOperationsInput = {
@@ -45873,6 +53282,20 @@ export namespace Prisma {
     deleteMany?: VendorBillLineScalarWhereInput | VendorBillLineScalarWhereInput[]
   }
 
+  export type VendorBillPaymentUpdateManyWithoutBillNestedInput = {
+    create?: XOR<VendorBillPaymentCreateWithoutBillInput, VendorBillPaymentUncheckedCreateWithoutBillInput> | VendorBillPaymentCreateWithoutBillInput[] | VendorBillPaymentUncheckedCreateWithoutBillInput[]
+    connectOrCreate?: VendorBillPaymentCreateOrConnectWithoutBillInput | VendorBillPaymentCreateOrConnectWithoutBillInput[]
+    upsert?: VendorBillPaymentUpsertWithWhereUniqueWithoutBillInput | VendorBillPaymentUpsertWithWhereUniqueWithoutBillInput[]
+    createMany?: VendorBillPaymentCreateManyBillInputEnvelope
+    set?: VendorBillPaymentWhereUniqueInput | VendorBillPaymentWhereUniqueInput[]
+    disconnect?: VendorBillPaymentWhereUniqueInput | VendorBillPaymentWhereUniqueInput[]
+    delete?: VendorBillPaymentWhereUniqueInput | VendorBillPaymentWhereUniqueInput[]
+    connect?: VendorBillPaymentWhereUniqueInput | VendorBillPaymentWhereUniqueInput[]
+    update?: VendorBillPaymentUpdateWithWhereUniqueWithoutBillInput | VendorBillPaymentUpdateWithWhereUniqueWithoutBillInput[]
+    updateMany?: VendorBillPaymentUpdateManyWithWhereWithoutBillInput | VendorBillPaymentUpdateManyWithWhereWithoutBillInput[]
+    deleteMany?: VendorBillPaymentScalarWhereInput | VendorBillPaymentScalarWhereInput[]
+  }
+
   export type VendorBillLineUncheckedUpdateManyWithoutBillNestedInput = {
     create?: XOR<VendorBillLineCreateWithoutBillInput, VendorBillLineUncheckedCreateWithoutBillInput> | VendorBillLineCreateWithoutBillInput[] | VendorBillLineUncheckedCreateWithoutBillInput[]
     connectOrCreate?: VendorBillLineCreateOrConnectWithoutBillInput | VendorBillLineCreateOrConnectWithoutBillInput[]
@@ -45885,6 +53308,20 @@ export namespace Prisma {
     update?: VendorBillLineUpdateWithWhereUniqueWithoutBillInput | VendorBillLineUpdateWithWhereUniqueWithoutBillInput[]
     updateMany?: VendorBillLineUpdateManyWithWhereWithoutBillInput | VendorBillLineUpdateManyWithWhereWithoutBillInput[]
     deleteMany?: VendorBillLineScalarWhereInput | VendorBillLineScalarWhereInput[]
+  }
+
+  export type VendorBillPaymentUncheckedUpdateManyWithoutBillNestedInput = {
+    create?: XOR<VendorBillPaymentCreateWithoutBillInput, VendorBillPaymentUncheckedCreateWithoutBillInput> | VendorBillPaymentCreateWithoutBillInput[] | VendorBillPaymentUncheckedCreateWithoutBillInput[]
+    connectOrCreate?: VendorBillPaymentCreateOrConnectWithoutBillInput | VendorBillPaymentCreateOrConnectWithoutBillInput[]
+    upsert?: VendorBillPaymentUpsertWithWhereUniqueWithoutBillInput | VendorBillPaymentUpsertWithWhereUniqueWithoutBillInput[]
+    createMany?: VendorBillPaymentCreateManyBillInputEnvelope
+    set?: VendorBillPaymentWhereUniqueInput | VendorBillPaymentWhereUniqueInput[]
+    disconnect?: VendorBillPaymentWhereUniqueInput | VendorBillPaymentWhereUniqueInput[]
+    delete?: VendorBillPaymentWhereUniqueInput | VendorBillPaymentWhereUniqueInput[]
+    connect?: VendorBillPaymentWhereUniqueInput | VendorBillPaymentWhereUniqueInput[]
+    update?: VendorBillPaymentUpdateWithWhereUniqueWithoutBillInput | VendorBillPaymentUpdateWithWhereUniqueWithoutBillInput[]
+    updateMany?: VendorBillPaymentUpdateManyWithWhereWithoutBillInput | VendorBillPaymentUpdateManyWithWhereWithoutBillInput[]
+    deleteMany?: VendorBillPaymentScalarWhereInput | VendorBillPaymentScalarWhereInput[]
   }
 
   export type VendorBillCreateNestedOneWithoutLinesInput = {
@@ -45909,6 +53346,18 @@ export namespace Prisma {
     create?: XOR<GLAccountCreateWithoutBillLinesInput, GLAccountUncheckedCreateWithoutBillLinesInput>
     connectOrCreate?: GLAccountCreateOrConnectWithoutBillLinesInput
     connect?: GLAccountWhereUniqueInput
+  }
+
+  export type AutoAnalyticModelCreateNestedOneWithoutVendorBillLinesInput = {
+    create?: XOR<AutoAnalyticModelCreateWithoutVendorBillLinesInput, AutoAnalyticModelUncheckedCreateWithoutVendorBillLinesInput>
+    connectOrCreate?: AutoAnalyticModelCreateOrConnectWithoutVendorBillLinesInput
+    connect?: AutoAnalyticModelWhereUniqueInput
+  }
+
+  export type AutoAnalyticRuleCreateNestedOneWithoutVendorBillLinesInput = {
+    create?: XOR<AutoAnalyticRuleCreateWithoutVendorBillLinesInput, AutoAnalyticRuleUncheckedCreateWithoutVendorBillLinesInput>
+    connectOrCreate?: AutoAnalyticRuleCreateOrConnectWithoutVendorBillLinesInput
+    connect?: AutoAnalyticRuleWhereUniqueInput
   }
 
   export type VendorBillUpdateOneRequiredWithoutLinesNestedInput = {
@@ -45949,6 +53398,26 @@ export namespace Prisma {
     update?: XOR<XOR<GLAccountUpdateToOneWithWhereWithoutBillLinesInput, GLAccountUpdateWithoutBillLinesInput>, GLAccountUncheckedUpdateWithoutBillLinesInput>
   }
 
+  export type AutoAnalyticModelUpdateOneWithoutVendorBillLinesNestedInput = {
+    create?: XOR<AutoAnalyticModelCreateWithoutVendorBillLinesInput, AutoAnalyticModelUncheckedCreateWithoutVendorBillLinesInput>
+    connectOrCreate?: AutoAnalyticModelCreateOrConnectWithoutVendorBillLinesInput
+    upsert?: AutoAnalyticModelUpsertWithoutVendorBillLinesInput
+    disconnect?: AutoAnalyticModelWhereInput | boolean
+    delete?: AutoAnalyticModelWhereInput | boolean
+    connect?: AutoAnalyticModelWhereUniqueInput
+    update?: XOR<XOR<AutoAnalyticModelUpdateToOneWithWhereWithoutVendorBillLinesInput, AutoAnalyticModelUpdateWithoutVendorBillLinesInput>, AutoAnalyticModelUncheckedUpdateWithoutVendorBillLinesInput>
+  }
+
+  export type AutoAnalyticRuleUpdateOneWithoutVendorBillLinesNestedInput = {
+    create?: XOR<AutoAnalyticRuleCreateWithoutVendorBillLinesInput, AutoAnalyticRuleUncheckedCreateWithoutVendorBillLinesInput>
+    connectOrCreate?: AutoAnalyticRuleCreateOrConnectWithoutVendorBillLinesInput
+    upsert?: AutoAnalyticRuleUpsertWithoutVendorBillLinesInput
+    disconnect?: AutoAnalyticRuleWhereInput | boolean
+    delete?: AutoAnalyticRuleWhereInput | boolean
+    connect?: AutoAnalyticRuleWhereUniqueInput
+    update?: XOR<XOR<AutoAnalyticRuleUpdateToOneWithWhereWithoutVendorBillLinesInput, AutoAnalyticRuleUpdateWithoutVendorBillLinesInput>, AutoAnalyticRuleUncheckedUpdateWithoutVendorBillLinesInput>
+  }
+
   export type CompanyCreateNestedOneWithoutCustomerInvoicesInput = {
     create?: XOR<CompanyCreateWithoutCustomerInvoicesInput, CompanyUncheckedCreateWithoutCustomerInvoicesInput>
     connectOrCreate?: CompanyCreateOrConnectWithoutCustomerInvoicesInput
@@ -45974,11 +53443,25 @@ export namespace Prisma {
     connect?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
   }
 
+  export type CustomerInvoicePaymentCreateNestedManyWithoutInvoiceInput = {
+    create?: XOR<CustomerInvoicePaymentCreateWithoutInvoiceInput, CustomerInvoicePaymentUncheckedCreateWithoutInvoiceInput> | CustomerInvoicePaymentCreateWithoutInvoiceInput[] | CustomerInvoicePaymentUncheckedCreateWithoutInvoiceInput[]
+    connectOrCreate?: CustomerInvoicePaymentCreateOrConnectWithoutInvoiceInput | CustomerInvoicePaymentCreateOrConnectWithoutInvoiceInput[]
+    createMany?: CustomerInvoicePaymentCreateManyInvoiceInputEnvelope
+    connect?: CustomerInvoicePaymentWhereUniqueInput | CustomerInvoicePaymentWhereUniqueInput[]
+  }
+
   export type CustomerInvoiceLineUncheckedCreateNestedManyWithoutInvoiceInput = {
     create?: XOR<CustomerInvoiceLineCreateWithoutInvoiceInput, CustomerInvoiceLineUncheckedCreateWithoutInvoiceInput> | CustomerInvoiceLineCreateWithoutInvoiceInput[] | CustomerInvoiceLineUncheckedCreateWithoutInvoiceInput[]
     connectOrCreate?: CustomerInvoiceLineCreateOrConnectWithoutInvoiceInput | CustomerInvoiceLineCreateOrConnectWithoutInvoiceInput[]
     createMany?: CustomerInvoiceLineCreateManyInvoiceInputEnvelope
     connect?: CustomerInvoiceLineWhereUniqueInput | CustomerInvoiceLineWhereUniqueInput[]
+  }
+
+  export type CustomerInvoicePaymentUncheckedCreateNestedManyWithoutInvoiceInput = {
+    create?: XOR<CustomerInvoicePaymentCreateWithoutInvoiceInput, CustomerInvoicePaymentUncheckedCreateWithoutInvoiceInput> | CustomerInvoicePaymentCreateWithoutInvoiceInput[] | CustomerInvoicePaymentUncheckedCreateWithoutInvoiceInput[]
+    connectOrCreate?: CustomerInvoicePaymentCreateOrConnectWithoutInvoiceInput | CustomerInvoicePaymentCreateOrConnectWithoutInvoiceInput[]
+    createMany?: CustomerInvoicePaymentCreateManyInvoiceInputEnvelope
+    connect?: CustomerInvoicePaymentWhereUniqueInput | CustomerInvoicePaymentWhereUniqueInput[]
   }
 
   export type CompanyUpdateOneRequiredWithoutCustomerInvoicesNestedInput = {
@@ -46021,6 +53504,20 @@ export namespace Prisma {
     deleteMany?: CustomerInvoiceLineScalarWhereInput | CustomerInvoiceLineScalarWhereInput[]
   }
 
+  export type CustomerInvoicePaymentUpdateManyWithoutInvoiceNestedInput = {
+    create?: XOR<CustomerInvoicePaymentCreateWithoutInvoiceInput, CustomerInvoicePaymentUncheckedCreateWithoutInvoiceInput> | CustomerInvoicePaymentCreateWithoutInvoiceInput[] | CustomerInvoicePaymentUncheckedCreateWithoutInvoiceInput[]
+    connectOrCreate?: CustomerInvoicePaymentCreateOrConnectWithoutInvoiceInput | CustomerInvoicePaymentCreateOrConnectWithoutInvoiceInput[]
+    upsert?: CustomerInvoicePaymentUpsertWithWhereUniqueWithoutInvoiceInput | CustomerInvoicePaymentUpsertWithWhereUniqueWithoutInvoiceInput[]
+    createMany?: CustomerInvoicePaymentCreateManyInvoiceInputEnvelope
+    set?: CustomerInvoicePaymentWhereUniqueInput | CustomerInvoicePaymentWhereUniqueInput[]
+    disconnect?: CustomerInvoicePaymentWhereUniqueInput | CustomerInvoicePaymentWhereUniqueInput[]
+    delete?: CustomerInvoicePaymentWhereUniqueInput | CustomerInvoicePaymentWhereUniqueInput[]
+    connect?: CustomerInvoicePaymentWhereUniqueInput | CustomerInvoicePaymentWhereUniqueInput[]
+    update?: CustomerInvoicePaymentUpdateWithWhereUniqueWithoutInvoiceInput | CustomerInvoicePaymentUpdateWithWhereUniqueWithoutInvoiceInput[]
+    updateMany?: CustomerInvoicePaymentUpdateManyWithWhereWithoutInvoiceInput | CustomerInvoicePaymentUpdateManyWithWhereWithoutInvoiceInput[]
+    deleteMany?: CustomerInvoicePaymentScalarWhereInput | CustomerInvoicePaymentScalarWhereInput[]
+  }
+
   export type CustomerInvoiceLineUncheckedUpdateManyWithoutInvoiceNestedInput = {
     create?: XOR<CustomerInvoiceLineCreateWithoutInvoiceInput, CustomerInvoiceLineUncheckedCreateWithoutInvoiceInput> | CustomerInvoiceLineCreateWithoutInvoiceInput[] | CustomerInvoiceLineUncheckedCreateWithoutInvoiceInput[]
     connectOrCreate?: CustomerInvoiceLineCreateOrConnectWithoutInvoiceInput | CustomerInvoiceLineCreateOrConnectWithoutInvoiceInput[]
@@ -46033,6 +53530,20 @@ export namespace Prisma {
     update?: CustomerInvoiceLineUpdateWithWhereUniqueWithoutInvoiceInput | CustomerInvoiceLineUpdateWithWhereUniqueWithoutInvoiceInput[]
     updateMany?: CustomerInvoiceLineUpdateManyWithWhereWithoutInvoiceInput | CustomerInvoiceLineUpdateManyWithWhereWithoutInvoiceInput[]
     deleteMany?: CustomerInvoiceLineScalarWhereInput | CustomerInvoiceLineScalarWhereInput[]
+  }
+
+  export type CustomerInvoicePaymentUncheckedUpdateManyWithoutInvoiceNestedInput = {
+    create?: XOR<CustomerInvoicePaymentCreateWithoutInvoiceInput, CustomerInvoicePaymentUncheckedCreateWithoutInvoiceInput> | CustomerInvoicePaymentCreateWithoutInvoiceInput[] | CustomerInvoicePaymentUncheckedCreateWithoutInvoiceInput[]
+    connectOrCreate?: CustomerInvoicePaymentCreateOrConnectWithoutInvoiceInput | CustomerInvoicePaymentCreateOrConnectWithoutInvoiceInput[]
+    upsert?: CustomerInvoicePaymentUpsertWithWhereUniqueWithoutInvoiceInput | CustomerInvoicePaymentUpsertWithWhereUniqueWithoutInvoiceInput[]
+    createMany?: CustomerInvoicePaymentCreateManyInvoiceInputEnvelope
+    set?: CustomerInvoicePaymentWhereUniqueInput | CustomerInvoicePaymentWhereUniqueInput[]
+    disconnect?: CustomerInvoicePaymentWhereUniqueInput | CustomerInvoicePaymentWhereUniqueInput[]
+    delete?: CustomerInvoicePaymentWhereUniqueInput | CustomerInvoicePaymentWhereUniqueInput[]
+    connect?: CustomerInvoicePaymentWhereUniqueInput | CustomerInvoicePaymentWhereUniqueInput[]
+    update?: CustomerInvoicePaymentUpdateWithWhereUniqueWithoutInvoiceInput | CustomerInvoicePaymentUpdateWithWhereUniqueWithoutInvoiceInput[]
+    updateMany?: CustomerInvoicePaymentUpdateManyWithWhereWithoutInvoiceInput | CustomerInvoicePaymentUpdateManyWithWhereWithoutInvoiceInput[]
+    deleteMany?: CustomerInvoicePaymentScalarWhereInput | CustomerInvoicePaymentScalarWhereInput[]
   }
 
   export type CustomerInvoiceCreateNestedOneWithoutLinesInput = {
@@ -46057,6 +53568,18 @@ export namespace Prisma {
     create?: XOR<GLAccountCreateWithoutInvLinesInput, GLAccountUncheckedCreateWithoutInvLinesInput>
     connectOrCreate?: GLAccountCreateOrConnectWithoutInvLinesInput
     connect?: GLAccountWhereUniqueInput
+  }
+
+  export type AutoAnalyticModelCreateNestedOneWithoutCustomerInvoiceLinesInput = {
+    create?: XOR<AutoAnalyticModelCreateWithoutCustomerInvoiceLinesInput, AutoAnalyticModelUncheckedCreateWithoutCustomerInvoiceLinesInput>
+    connectOrCreate?: AutoAnalyticModelCreateOrConnectWithoutCustomerInvoiceLinesInput
+    connect?: AutoAnalyticModelWhereUniqueInput
+  }
+
+  export type AutoAnalyticRuleCreateNestedOneWithoutCustomerInvoiceLinesInput = {
+    create?: XOR<AutoAnalyticRuleCreateWithoutCustomerInvoiceLinesInput, AutoAnalyticRuleUncheckedCreateWithoutCustomerInvoiceLinesInput>
+    connectOrCreate?: AutoAnalyticRuleCreateOrConnectWithoutCustomerInvoiceLinesInput
+    connect?: AutoAnalyticRuleWhereUniqueInput
   }
 
   export type CustomerInvoiceUpdateOneRequiredWithoutLinesNestedInput = {
@@ -46097,6 +53620,26 @@ export namespace Prisma {
     update?: XOR<XOR<GLAccountUpdateToOneWithWhereWithoutInvLinesInput, GLAccountUpdateWithoutInvLinesInput>, GLAccountUncheckedUpdateWithoutInvLinesInput>
   }
 
+  export type AutoAnalyticModelUpdateOneWithoutCustomerInvoiceLinesNestedInput = {
+    create?: XOR<AutoAnalyticModelCreateWithoutCustomerInvoiceLinesInput, AutoAnalyticModelUncheckedCreateWithoutCustomerInvoiceLinesInput>
+    connectOrCreate?: AutoAnalyticModelCreateOrConnectWithoutCustomerInvoiceLinesInput
+    upsert?: AutoAnalyticModelUpsertWithoutCustomerInvoiceLinesInput
+    disconnect?: AutoAnalyticModelWhereInput | boolean
+    delete?: AutoAnalyticModelWhereInput | boolean
+    connect?: AutoAnalyticModelWhereUniqueInput
+    update?: XOR<XOR<AutoAnalyticModelUpdateToOneWithWhereWithoutCustomerInvoiceLinesInput, AutoAnalyticModelUpdateWithoutCustomerInvoiceLinesInput>, AutoAnalyticModelUncheckedUpdateWithoutCustomerInvoiceLinesInput>
+  }
+
+  export type AutoAnalyticRuleUpdateOneWithoutCustomerInvoiceLinesNestedInput = {
+    create?: XOR<AutoAnalyticRuleCreateWithoutCustomerInvoiceLinesInput, AutoAnalyticRuleUncheckedCreateWithoutCustomerInvoiceLinesInput>
+    connectOrCreate?: AutoAnalyticRuleCreateOrConnectWithoutCustomerInvoiceLinesInput
+    upsert?: AutoAnalyticRuleUpsertWithoutCustomerInvoiceLinesInput
+    disconnect?: AutoAnalyticRuleWhereInput | boolean
+    delete?: AutoAnalyticRuleWhereInput | boolean
+    connect?: AutoAnalyticRuleWhereUniqueInput
+    update?: XOR<XOR<AutoAnalyticRuleUpdateToOneWithWhereWithoutCustomerInvoiceLinesInput, AutoAnalyticRuleUpdateWithoutCustomerInvoiceLinesInput>, AutoAnalyticRuleUncheckedUpdateWithoutCustomerInvoiceLinesInput>
+  }
+
   export type CompanyCreateNestedOneWithoutPaymentsInput = {
     create?: XOR<CompanyCreateWithoutPaymentsInput, CompanyUncheckedCreateWithoutPaymentsInput>
     connectOrCreate?: CompanyCreateOrConnectWithoutPaymentsInput
@@ -46116,11 +53659,39 @@ export namespace Prisma {
     connect?: PaymentAllocationWhereUniqueInput | PaymentAllocationWhereUniqueInput[]
   }
 
+  export type CustomerInvoicePaymentCreateNestedManyWithoutPaymentInput = {
+    create?: XOR<CustomerInvoicePaymentCreateWithoutPaymentInput, CustomerInvoicePaymentUncheckedCreateWithoutPaymentInput> | CustomerInvoicePaymentCreateWithoutPaymentInput[] | CustomerInvoicePaymentUncheckedCreateWithoutPaymentInput[]
+    connectOrCreate?: CustomerInvoicePaymentCreateOrConnectWithoutPaymentInput | CustomerInvoicePaymentCreateOrConnectWithoutPaymentInput[]
+    createMany?: CustomerInvoicePaymentCreateManyPaymentInputEnvelope
+    connect?: CustomerInvoicePaymentWhereUniqueInput | CustomerInvoicePaymentWhereUniqueInput[]
+  }
+
+  export type VendorBillPaymentCreateNestedManyWithoutPaymentInput = {
+    create?: XOR<VendorBillPaymentCreateWithoutPaymentInput, VendorBillPaymentUncheckedCreateWithoutPaymentInput> | VendorBillPaymentCreateWithoutPaymentInput[] | VendorBillPaymentUncheckedCreateWithoutPaymentInput[]
+    connectOrCreate?: VendorBillPaymentCreateOrConnectWithoutPaymentInput | VendorBillPaymentCreateOrConnectWithoutPaymentInput[]
+    createMany?: VendorBillPaymentCreateManyPaymentInputEnvelope
+    connect?: VendorBillPaymentWhereUniqueInput | VendorBillPaymentWhereUniqueInput[]
+  }
+
   export type PaymentAllocationUncheckedCreateNestedManyWithoutPaymentInput = {
     create?: XOR<PaymentAllocationCreateWithoutPaymentInput, PaymentAllocationUncheckedCreateWithoutPaymentInput> | PaymentAllocationCreateWithoutPaymentInput[] | PaymentAllocationUncheckedCreateWithoutPaymentInput[]
     connectOrCreate?: PaymentAllocationCreateOrConnectWithoutPaymentInput | PaymentAllocationCreateOrConnectWithoutPaymentInput[]
     createMany?: PaymentAllocationCreateManyPaymentInputEnvelope
     connect?: PaymentAllocationWhereUniqueInput | PaymentAllocationWhereUniqueInput[]
+  }
+
+  export type CustomerInvoicePaymentUncheckedCreateNestedManyWithoutPaymentInput = {
+    create?: XOR<CustomerInvoicePaymentCreateWithoutPaymentInput, CustomerInvoicePaymentUncheckedCreateWithoutPaymentInput> | CustomerInvoicePaymentCreateWithoutPaymentInput[] | CustomerInvoicePaymentUncheckedCreateWithoutPaymentInput[]
+    connectOrCreate?: CustomerInvoicePaymentCreateOrConnectWithoutPaymentInput | CustomerInvoicePaymentCreateOrConnectWithoutPaymentInput[]
+    createMany?: CustomerInvoicePaymentCreateManyPaymentInputEnvelope
+    connect?: CustomerInvoicePaymentWhereUniqueInput | CustomerInvoicePaymentWhereUniqueInput[]
+  }
+
+  export type VendorBillPaymentUncheckedCreateNestedManyWithoutPaymentInput = {
+    create?: XOR<VendorBillPaymentCreateWithoutPaymentInput, VendorBillPaymentUncheckedCreateWithoutPaymentInput> | VendorBillPaymentCreateWithoutPaymentInput[] | VendorBillPaymentUncheckedCreateWithoutPaymentInput[]
+    connectOrCreate?: VendorBillPaymentCreateOrConnectWithoutPaymentInput | VendorBillPaymentCreateOrConnectWithoutPaymentInput[]
+    createMany?: VendorBillPaymentCreateManyPaymentInputEnvelope
+    connect?: VendorBillPaymentWhereUniqueInput | VendorBillPaymentWhereUniqueInput[]
   }
 
   export type EnumPaymentDirectionFieldUpdateOperationsInput = {
@@ -46165,6 +53736,34 @@ export namespace Prisma {
     deleteMany?: PaymentAllocationScalarWhereInput | PaymentAllocationScalarWhereInput[]
   }
 
+  export type CustomerInvoicePaymentUpdateManyWithoutPaymentNestedInput = {
+    create?: XOR<CustomerInvoicePaymentCreateWithoutPaymentInput, CustomerInvoicePaymentUncheckedCreateWithoutPaymentInput> | CustomerInvoicePaymentCreateWithoutPaymentInput[] | CustomerInvoicePaymentUncheckedCreateWithoutPaymentInput[]
+    connectOrCreate?: CustomerInvoicePaymentCreateOrConnectWithoutPaymentInput | CustomerInvoicePaymentCreateOrConnectWithoutPaymentInput[]
+    upsert?: CustomerInvoicePaymentUpsertWithWhereUniqueWithoutPaymentInput | CustomerInvoicePaymentUpsertWithWhereUniqueWithoutPaymentInput[]
+    createMany?: CustomerInvoicePaymentCreateManyPaymentInputEnvelope
+    set?: CustomerInvoicePaymentWhereUniqueInput | CustomerInvoicePaymentWhereUniqueInput[]
+    disconnect?: CustomerInvoicePaymentWhereUniqueInput | CustomerInvoicePaymentWhereUniqueInput[]
+    delete?: CustomerInvoicePaymentWhereUniqueInput | CustomerInvoicePaymentWhereUniqueInput[]
+    connect?: CustomerInvoicePaymentWhereUniqueInput | CustomerInvoicePaymentWhereUniqueInput[]
+    update?: CustomerInvoicePaymentUpdateWithWhereUniqueWithoutPaymentInput | CustomerInvoicePaymentUpdateWithWhereUniqueWithoutPaymentInput[]
+    updateMany?: CustomerInvoicePaymentUpdateManyWithWhereWithoutPaymentInput | CustomerInvoicePaymentUpdateManyWithWhereWithoutPaymentInput[]
+    deleteMany?: CustomerInvoicePaymentScalarWhereInput | CustomerInvoicePaymentScalarWhereInput[]
+  }
+
+  export type VendorBillPaymentUpdateManyWithoutPaymentNestedInput = {
+    create?: XOR<VendorBillPaymentCreateWithoutPaymentInput, VendorBillPaymentUncheckedCreateWithoutPaymentInput> | VendorBillPaymentCreateWithoutPaymentInput[] | VendorBillPaymentUncheckedCreateWithoutPaymentInput[]
+    connectOrCreate?: VendorBillPaymentCreateOrConnectWithoutPaymentInput | VendorBillPaymentCreateOrConnectWithoutPaymentInput[]
+    upsert?: VendorBillPaymentUpsertWithWhereUniqueWithoutPaymentInput | VendorBillPaymentUpsertWithWhereUniqueWithoutPaymentInput[]
+    createMany?: VendorBillPaymentCreateManyPaymentInputEnvelope
+    set?: VendorBillPaymentWhereUniqueInput | VendorBillPaymentWhereUniqueInput[]
+    disconnect?: VendorBillPaymentWhereUniqueInput | VendorBillPaymentWhereUniqueInput[]
+    delete?: VendorBillPaymentWhereUniqueInput | VendorBillPaymentWhereUniqueInput[]
+    connect?: VendorBillPaymentWhereUniqueInput | VendorBillPaymentWhereUniqueInput[]
+    update?: VendorBillPaymentUpdateWithWhereUniqueWithoutPaymentInput | VendorBillPaymentUpdateWithWhereUniqueWithoutPaymentInput[]
+    updateMany?: VendorBillPaymentUpdateManyWithWhereWithoutPaymentInput | VendorBillPaymentUpdateManyWithWhereWithoutPaymentInput[]
+    deleteMany?: VendorBillPaymentScalarWhereInput | VendorBillPaymentScalarWhereInput[]
+  }
+
   export type PaymentAllocationUncheckedUpdateManyWithoutPaymentNestedInput = {
     create?: XOR<PaymentAllocationCreateWithoutPaymentInput, PaymentAllocationUncheckedCreateWithoutPaymentInput> | PaymentAllocationCreateWithoutPaymentInput[] | PaymentAllocationUncheckedCreateWithoutPaymentInput[]
     connectOrCreate?: PaymentAllocationCreateOrConnectWithoutPaymentInput | PaymentAllocationCreateOrConnectWithoutPaymentInput[]
@@ -46177,6 +53776,34 @@ export namespace Prisma {
     update?: PaymentAllocationUpdateWithWhereUniqueWithoutPaymentInput | PaymentAllocationUpdateWithWhereUniqueWithoutPaymentInput[]
     updateMany?: PaymentAllocationUpdateManyWithWhereWithoutPaymentInput | PaymentAllocationUpdateManyWithWhereWithoutPaymentInput[]
     deleteMany?: PaymentAllocationScalarWhereInput | PaymentAllocationScalarWhereInput[]
+  }
+
+  export type CustomerInvoicePaymentUncheckedUpdateManyWithoutPaymentNestedInput = {
+    create?: XOR<CustomerInvoicePaymentCreateWithoutPaymentInput, CustomerInvoicePaymentUncheckedCreateWithoutPaymentInput> | CustomerInvoicePaymentCreateWithoutPaymentInput[] | CustomerInvoicePaymentUncheckedCreateWithoutPaymentInput[]
+    connectOrCreate?: CustomerInvoicePaymentCreateOrConnectWithoutPaymentInput | CustomerInvoicePaymentCreateOrConnectWithoutPaymentInput[]
+    upsert?: CustomerInvoicePaymentUpsertWithWhereUniqueWithoutPaymentInput | CustomerInvoicePaymentUpsertWithWhereUniqueWithoutPaymentInput[]
+    createMany?: CustomerInvoicePaymentCreateManyPaymentInputEnvelope
+    set?: CustomerInvoicePaymentWhereUniqueInput | CustomerInvoicePaymentWhereUniqueInput[]
+    disconnect?: CustomerInvoicePaymentWhereUniqueInput | CustomerInvoicePaymentWhereUniqueInput[]
+    delete?: CustomerInvoicePaymentWhereUniqueInput | CustomerInvoicePaymentWhereUniqueInput[]
+    connect?: CustomerInvoicePaymentWhereUniqueInput | CustomerInvoicePaymentWhereUniqueInput[]
+    update?: CustomerInvoicePaymentUpdateWithWhereUniqueWithoutPaymentInput | CustomerInvoicePaymentUpdateWithWhereUniqueWithoutPaymentInput[]
+    updateMany?: CustomerInvoicePaymentUpdateManyWithWhereWithoutPaymentInput | CustomerInvoicePaymentUpdateManyWithWhereWithoutPaymentInput[]
+    deleteMany?: CustomerInvoicePaymentScalarWhereInput | CustomerInvoicePaymentScalarWhereInput[]
+  }
+
+  export type VendorBillPaymentUncheckedUpdateManyWithoutPaymentNestedInput = {
+    create?: XOR<VendorBillPaymentCreateWithoutPaymentInput, VendorBillPaymentUncheckedCreateWithoutPaymentInput> | VendorBillPaymentCreateWithoutPaymentInput[] | VendorBillPaymentUncheckedCreateWithoutPaymentInput[]
+    connectOrCreate?: VendorBillPaymentCreateOrConnectWithoutPaymentInput | VendorBillPaymentCreateOrConnectWithoutPaymentInput[]
+    upsert?: VendorBillPaymentUpsertWithWhereUniqueWithoutPaymentInput | VendorBillPaymentUpsertWithWhereUniqueWithoutPaymentInput[]
+    createMany?: VendorBillPaymentCreateManyPaymentInputEnvelope
+    set?: VendorBillPaymentWhereUniqueInput | VendorBillPaymentWhereUniqueInput[]
+    disconnect?: VendorBillPaymentWhereUniqueInput | VendorBillPaymentWhereUniqueInput[]
+    delete?: VendorBillPaymentWhereUniqueInput | VendorBillPaymentWhereUniqueInput[]
+    connect?: VendorBillPaymentWhereUniqueInput | VendorBillPaymentWhereUniqueInput[]
+    update?: VendorBillPaymentUpdateWithWhereUniqueWithoutPaymentInput | VendorBillPaymentUpdateWithWhereUniqueWithoutPaymentInput[]
+    updateMany?: VendorBillPaymentUpdateManyWithWhereWithoutPaymentInput | VendorBillPaymentUpdateManyWithWhereWithoutPaymentInput[]
+    deleteMany?: VendorBillPaymentScalarWhereInput | VendorBillPaymentScalarWhereInput[]
   }
 
   export type PaymentCreateNestedOneWithoutAllocationsInput = {
@@ -46195,6 +53822,62 @@ export namespace Prisma {
     upsert?: PaymentUpsertWithoutAllocationsInput
     connect?: PaymentWhereUniqueInput
     update?: XOR<XOR<PaymentUpdateToOneWithWhereWithoutAllocationsInput, PaymentUpdateWithoutAllocationsInput>, PaymentUncheckedUpdateWithoutAllocationsInput>
+  }
+
+  export type CustomerInvoiceCreateNestedOneWithoutPaymentsInput = {
+    create?: XOR<CustomerInvoiceCreateWithoutPaymentsInput, CustomerInvoiceUncheckedCreateWithoutPaymentsInput>
+    connectOrCreate?: CustomerInvoiceCreateOrConnectWithoutPaymentsInput
+    connect?: CustomerInvoiceWhereUniqueInput
+  }
+
+  export type PaymentCreateNestedOneWithoutInvoicePaymentsInput = {
+    create?: XOR<PaymentCreateWithoutInvoicePaymentsInput, PaymentUncheckedCreateWithoutInvoicePaymentsInput>
+    connectOrCreate?: PaymentCreateOrConnectWithoutInvoicePaymentsInput
+    connect?: PaymentWhereUniqueInput
+  }
+
+  export type CustomerInvoiceUpdateOneRequiredWithoutPaymentsNestedInput = {
+    create?: XOR<CustomerInvoiceCreateWithoutPaymentsInput, CustomerInvoiceUncheckedCreateWithoutPaymentsInput>
+    connectOrCreate?: CustomerInvoiceCreateOrConnectWithoutPaymentsInput
+    upsert?: CustomerInvoiceUpsertWithoutPaymentsInput
+    connect?: CustomerInvoiceWhereUniqueInput
+    update?: XOR<XOR<CustomerInvoiceUpdateToOneWithWhereWithoutPaymentsInput, CustomerInvoiceUpdateWithoutPaymentsInput>, CustomerInvoiceUncheckedUpdateWithoutPaymentsInput>
+  }
+
+  export type PaymentUpdateOneRequiredWithoutInvoicePaymentsNestedInput = {
+    create?: XOR<PaymentCreateWithoutInvoicePaymentsInput, PaymentUncheckedCreateWithoutInvoicePaymentsInput>
+    connectOrCreate?: PaymentCreateOrConnectWithoutInvoicePaymentsInput
+    upsert?: PaymentUpsertWithoutInvoicePaymentsInput
+    connect?: PaymentWhereUniqueInput
+    update?: XOR<XOR<PaymentUpdateToOneWithWhereWithoutInvoicePaymentsInput, PaymentUpdateWithoutInvoicePaymentsInput>, PaymentUncheckedUpdateWithoutInvoicePaymentsInput>
+  }
+
+  export type VendorBillCreateNestedOneWithoutPaymentsInput = {
+    create?: XOR<VendorBillCreateWithoutPaymentsInput, VendorBillUncheckedCreateWithoutPaymentsInput>
+    connectOrCreate?: VendorBillCreateOrConnectWithoutPaymentsInput
+    connect?: VendorBillWhereUniqueInput
+  }
+
+  export type PaymentCreateNestedOneWithoutBillPaymentsInput = {
+    create?: XOR<PaymentCreateWithoutBillPaymentsInput, PaymentUncheckedCreateWithoutBillPaymentsInput>
+    connectOrCreate?: PaymentCreateOrConnectWithoutBillPaymentsInput
+    connect?: PaymentWhereUniqueInput
+  }
+
+  export type VendorBillUpdateOneRequiredWithoutPaymentsNestedInput = {
+    create?: XOR<VendorBillCreateWithoutPaymentsInput, VendorBillUncheckedCreateWithoutPaymentsInput>
+    connectOrCreate?: VendorBillCreateOrConnectWithoutPaymentsInput
+    upsert?: VendorBillUpsertWithoutPaymentsInput
+    connect?: VendorBillWhereUniqueInput
+    update?: XOR<XOR<VendorBillUpdateToOneWithWhereWithoutPaymentsInput, VendorBillUpdateWithoutPaymentsInput>, VendorBillUncheckedUpdateWithoutPaymentsInput>
+  }
+
+  export type PaymentUpdateOneRequiredWithoutBillPaymentsNestedInput = {
+    create?: XOR<PaymentCreateWithoutBillPaymentsInput, PaymentUncheckedCreateWithoutBillPaymentsInput>
+    connectOrCreate?: PaymentCreateOrConnectWithoutBillPaymentsInput
+    upsert?: PaymentUpsertWithoutBillPaymentsInput
+    connect?: PaymentWhereUniqueInput
+    update?: XOR<XOR<PaymentUpdateToOneWithWhereWithoutBillPaymentsInput, PaymentUpdateWithoutBillPaymentsInput>, PaymentUncheckedUpdateWithoutBillPaymentsInput>
   }
 
   export type CompanyCreateNestedOneWithoutDocumentFilesInput = {
@@ -46686,6 +54369,33 @@ export namespace Prisma {
     _max?: NestedEnumOrderStatusFilter<$PrismaModel>
   }
 
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedEnumDocStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.DocStatus | EnumDocStatusFieldRefInput<$PrismaModel>
     in?: $Enums.DocStatus[] | ListEnumDocStatusFieldRefInput<$PrismaModel>
@@ -46826,6 +54536,7 @@ export namespace Prisma {
     payments?: PaymentCreateNestedManyWithoutContactInput
     journalLines?: JournalLineCreateNestedManyWithoutContactInput
     autoAnalyticRules?: AutoAnalyticRuleCreateNestedManyWithoutContactInput
+    contactTags?: ContactTagAssignmentCreateNestedManyWithoutContactInput
     users?: UserCreateNestedManyWithoutContactInput
   }
 
@@ -46850,6 +54561,7 @@ export namespace Prisma {
     payments?: PaymentUncheckedCreateNestedManyWithoutContactInput
     journalLines?: JournalLineUncheckedCreateNestedManyWithoutContactInput
     autoAnalyticRules?: AutoAnalyticRuleUncheckedCreateNestedManyWithoutContactInput
+    contactTags?: ContactTagAssignmentUncheckedCreateNestedManyWithoutContactInput
     users?: UserUncheckedCreateNestedManyWithoutContactInput
   }
 
@@ -46860,6 +54572,32 @@ export namespace Prisma {
 
   export type ContactCreateManyCompanyInputEnvelope = {
     data: ContactCreateManyCompanyInput | ContactCreateManyCompanyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ContactTagCreateWithoutCompanyInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    contacts?: ContactTagAssignmentCreateNestedManyWithoutTagInput
+    autoAnalyticRules?: AutoAnalyticRuleCreateNestedManyWithoutContactTagInput
+  }
+
+  export type ContactTagUncheckedCreateWithoutCompanyInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    contacts?: ContactTagAssignmentUncheckedCreateNestedManyWithoutTagInput
+    autoAnalyticRules?: AutoAnalyticRuleUncheckedCreateNestedManyWithoutContactTagInput
+  }
+
+  export type ContactTagCreateOrConnectWithoutCompanyInput = {
+    where: ContactTagWhereUniqueInput
+    create: XOR<ContactTagCreateWithoutCompanyInput, ContactTagUncheckedCreateWithoutCompanyInput>
+  }
+
+  export type ContactTagCreateManyCompanyInputEnvelope = {
+    data: ContactTagCreateManyCompanyInput | ContactTagCreateManyCompanyInput[]
     skipDuplicates?: boolean
   }
 
@@ -47102,6 +54840,10 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     rules?: AutoAnalyticRuleCreateNestedManyWithoutModelInput
+    purchaseOrderLines?: PurchaseOrderLineCreateNestedManyWithoutAutoModelInput
+    salesOrderLines?: SalesOrderLineCreateNestedManyWithoutAutoModelInput
+    vendorBillLines?: VendorBillLineCreateNestedManyWithoutAutoModelInput
+    customerInvoiceLines?: CustomerInvoiceLineCreateNestedManyWithoutAutoModelInput
   }
 
   export type AutoAnalyticModelUncheckedCreateWithoutCompanyInput = {
@@ -47111,6 +54853,10 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     rules?: AutoAnalyticRuleUncheckedCreateNestedManyWithoutModelInput
+    purchaseOrderLines?: PurchaseOrderLineUncheckedCreateNestedManyWithoutAutoModelInput
+    salesOrderLines?: SalesOrderLineUncheckedCreateNestedManyWithoutAutoModelInput
+    vendorBillLines?: VendorBillLineUncheckedCreateNestedManyWithoutAutoModelInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutAutoModelInput
   }
 
   export type AutoAnalyticModelCreateOrConnectWithoutCompanyInput = {
@@ -47213,6 +54959,7 @@ export namespace Prisma {
     vendor: ContactCreateNestedOneWithoutVendorBillsInput
     po?: PurchaseOrderCreateNestedOneWithoutBillsInput
     lines?: VendorBillLineCreateNestedManyWithoutBillInput
+    payments?: VendorBillPaymentCreateNestedManyWithoutBillInput
   }
 
   export type VendorBillUncheckedCreateWithoutCompanyInput = {
@@ -47229,6 +54976,7 @@ export namespace Prisma {
     paymentState?: string
     createdAt?: Date | string
     lines?: VendorBillLineUncheckedCreateNestedManyWithoutBillInput
+    payments?: VendorBillPaymentUncheckedCreateNestedManyWithoutBillInput
   }
 
   export type VendorBillCreateOrConnectWithoutCompanyInput = {
@@ -47256,6 +55004,7 @@ export namespace Prisma {
     customer: ContactCreateNestedOneWithoutCustomerInvoicesInput
     so?: SalesOrderCreateNestedOneWithoutInvoicesInput
     lines?: CustomerInvoiceLineCreateNestedManyWithoutInvoiceInput
+    payments?: CustomerInvoicePaymentCreateNestedManyWithoutInvoiceInput
   }
 
   export type CustomerInvoiceUncheckedCreateWithoutCompanyInput = {
@@ -47273,6 +55022,7 @@ export namespace Prisma {
     portalVisible?: boolean
     createdAt?: Date | string
     lines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutInvoiceInput
+    payments?: CustomerInvoicePaymentUncheckedCreateNestedManyWithoutInvoiceInput
   }
 
   export type CustomerInvoiceCreateOrConnectWithoutCompanyInput = {
@@ -47296,6 +55046,8 @@ export namespace Prisma {
     createdAt?: Date | string
     contact: ContactCreateNestedOneWithoutPaymentsInput
     allocations?: PaymentAllocationCreateNestedManyWithoutPaymentInput
+    invoicePayments?: CustomerInvoicePaymentCreateNestedManyWithoutPaymentInput
+    billPayments?: VendorBillPaymentCreateNestedManyWithoutPaymentInput
   }
 
   export type PaymentUncheckedCreateWithoutCompanyInput = {
@@ -47309,6 +55061,8 @@ export namespace Prisma {
     status: $Enums.PaymentStatus
     createdAt?: Date | string
     allocations?: PaymentAllocationUncheckedCreateNestedManyWithoutPaymentInput
+    invoicePayments?: CustomerInvoicePaymentUncheckedCreateNestedManyWithoutPaymentInput
+    billPayments?: VendorBillPaymentUncheckedCreateNestedManyWithoutPaymentInput
   }
 
   export type PaymentCreateOrConnectWithoutCompanyInput = {
@@ -47385,6 +55139,32 @@ export namespace Prisma {
     isActive?: BoolFilter<"Contact"> | boolean
     createdAt?: DateTimeFilter<"Contact"> | Date | string
     updatedAt?: DateTimeFilter<"Contact"> | Date | string
+  }
+
+  export type ContactTagUpsertWithWhereUniqueWithoutCompanyInput = {
+    where: ContactTagWhereUniqueInput
+    update: XOR<ContactTagUpdateWithoutCompanyInput, ContactTagUncheckedUpdateWithoutCompanyInput>
+    create: XOR<ContactTagCreateWithoutCompanyInput, ContactTagUncheckedCreateWithoutCompanyInput>
+  }
+
+  export type ContactTagUpdateWithWhereUniqueWithoutCompanyInput = {
+    where: ContactTagWhereUniqueInput
+    data: XOR<ContactTagUpdateWithoutCompanyInput, ContactTagUncheckedUpdateWithoutCompanyInput>
+  }
+
+  export type ContactTagUpdateManyWithWhereWithoutCompanyInput = {
+    where: ContactTagScalarWhereInput
+    data: XOR<ContactTagUpdateManyMutationInput, ContactTagUncheckedUpdateManyWithoutCompanyInput>
+  }
+
+  export type ContactTagScalarWhereInput = {
+    AND?: ContactTagScalarWhereInput | ContactTagScalarWhereInput[]
+    OR?: ContactTagScalarWhereInput[]
+    NOT?: ContactTagScalarWhereInput | ContactTagScalarWhereInput[]
+    id?: UuidFilter<"ContactTag"> | string
+    companyId?: UuidFilter<"ContactTag"> | string
+    name?: StringFilter<"ContactTag"> | string
+    createdAt?: DateTimeFilter<"ContactTag"> | Date | string
   }
 
   export type ProductCategoryUpsertWithWhereUniqueWithoutCompanyInput = {
@@ -47799,6 +55579,7 @@ export namespace Prisma {
     id?: string
     name: string
     createdAt?: Date | string
+    contactTags?: ContactTagCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryCreateNestedManyWithoutCompanyInput
     products?: ProductCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountCreateNestedManyWithoutCompanyInput
@@ -47818,6 +55599,7 @@ export namespace Prisma {
     id?: string
     name: string
     createdAt?: Date | string
+    contactTags?: ContactTagUncheckedCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryUncheckedCreateNestedManyWithoutCompanyInput
     products?: ProductUncheckedCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountUncheckedCreateNestedManyWithoutCompanyInput
@@ -47928,6 +55710,7 @@ export namespace Prisma {
     company: CompanyCreateNestedOneWithoutVendorBillsInput
     po?: PurchaseOrderCreateNestedOneWithoutBillsInput
     lines?: VendorBillLineCreateNestedManyWithoutBillInput
+    payments?: VendorBillPaymentCreateNestedManyWithoutBillInput
   }
 
   export type VendorBillUncheckedCreateWithoutVendorInput = {
@@ -47944,6 +55727,7 @@ export namespace Prisma {
     paymentState?: string
     createdAt?: Date | string
     lines?: VendorBillLineUncheckedCreateNestedManyWithoutBillInput
+    payments?: VendorBillPaymentUncheckedCreateNestedManyWithoutBillInput
   }
 
   export type VendorBillCreateOrConnectWithoutVendorInput = {
@@ -47971,6 +55755,7 @@ export namespace Prisma {
     company: CompanyCreateNestedOneWithoutCustomerInvoicesInput
     so?: SalesOrderCreateNestedOneWithoutInvoicesInput
     lines?: CustomerInvoiceLineCreateNestedManyWithoutInvoiceInput
+    payments?: CustomerInvoicePaymentCreateNestedManyWithoutInvoiceInput
   }
 
   export type CustomerInvoiceUncheckedCreateWithoutCustomerInput = {
@@ -47988,6 +55773,7 @@ export namespace Prisma {
     portalVisible?: boolean
     createdAt?: Date | string
     lines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutInvoiceInput
+    payments?: CustomerInvoicePaymentUncheckedCreateNestedManyWithoutInvoiceInput
   }
 
   export type CustomerInvoiceCreateOrConnectWithoutCustomerInput = {
@@ -48011,6 +55797,8 @@ export namespace Prisma {
     createdAt?: Date | string
     company: CompanyCreateNestedOneWithoutPaymentsInput
     allocations?: PaymentAllocationCreateNestedManyWithoutPaymentInput
+    invoicePayments?: CustomerInvoicePaymentCreateNestedManyWithoutPaymentInput
+    billPayments?: VendorBillPaymentCreateNestedManyWithoutPaymentInput
   }
 
   export type PaymentUncheckedCreateWithoutContactInput = {
@@ -48024,6 +55812,8 @@ export namespace Prisma {
     status: $Enums.PaymentStatus
     createdAt?: Date | string
     allocations?: PaymentAllocationUncheckedCreateNestedManyWithoutPaymentInput
+    invoicePayments?: CustomerInvoicePaymentUncheckedCreateNestedManyWithoutPaymentInput
+    billPayments?: VendorBillPaymentUncheckedCreateNestedManyWithoutPaymentInput
   }
 
   export type PaymentCreateOrConnectWithoutContactInput = {
@@ -48076,7 +55866,12 @@ export namespace Prisma {
     model: AutoAnalyticModelCreateNestedOneWithoutRulesInput
     product?: ProductCreateNestedOneWithoutAutoAnalyticRulesInput
     category?: ProductCategoryCreateNestedOneWithoutAutoAnalyticRulesInput
+    contactTag?: ContactTagCreateNestedOneWithoutAutoAnalyticRulesInput
     assignAnalytic: AnalyticAccountCreateNestedOneWithoutAutoAnalyticRulesInput
+    purchaseOrderLines?: PurchaseOrderLineCreateNestedManyWithoutAutoRuleInput
+    salesOrderLines?: SalesOrderLineCreateNestedManyWithoutAutoRuleInput
+    vendorBillLines?: VendorBillLineCreateNestedManyWithoutAutoRuleInput
+    customerInvoiceLines?: CustomerInvoiceLineCreateNestedManyWithoutAutoRuleInput
   }
 
   export type AutoAnalyticRuleUncheckedCreateWithoutContactInput = {
@@ -48085,9 +55880,14 @@ export namespace Prisma {
     docType: $Enums.AutoDocType
     matchProductId?: string | null
     matchCategoryId?: string | null
+    matchContactTagId?: string | null
     assignAnalyticAccountId: string
     rulePriority?: number
     isActive?: boolean
+    purchaseOrderLines?: PurchaseOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    salesOrderLines?: SalesOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    vendorBillLines?: VendorBillLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutAutoRuleInput
   }
 
   export type AutoAnalyticRuleCreateOrConnectWithoutContactInput = {
@@ -48097,6 +55897,28 @@ export namespace Prisma {
 
   export type AutoAnalyticRuleCreateManyContactInputEnvelope = {
     data: AutoAnalyticRuleCreateManyContactInput | AutoAnalyticRuleCreateManyContactInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ContactTagAssignmentCreateWithoutContactInput = {
+    id?: string
+    createdAt?: Date | string
+    tag: ContactTagCreateNestedOneWithoutContactsInput
+  }
+
+  export type ContactTagAssignmentUncheckedCreateWithoutContactInput = {
+    id?: string
+    tagId: string
+    createdAt?: Date | string
+  }
+
+  export type ContactTagAssignmentCreateOrConnectWithoutContactInput = {
+    where: ContactTagAssignmentWhereUniqueInput
+    create: XOR<ContactTagAssignmentCreateWithoutContactInput, ContactTagAssignmentUncheckedCreateWithoutContactInput>
+  }
+
+  export type ContactTagAssignmentCreateManyContactInputEnvelope = {
+    data: ContactTagAssignmentCreateManyContactInput | ContactTagAssignmentCreateManyContactInput[]
     skipDuplicates?: boolean
   }
 
@@ -48151,6 +55973,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contactTags?: ContactTagUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUpdateManyWithoutCompanyNestedInput
     products?: ProductUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUpdateManyWithoutCompanyNestedInput
@@ -48170,6 +55993,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contactTags?: ContactTagUncheckedUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUncheckedUpdateManyWithoutCompanyNestedInput
     products?: ProductUncheckedUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUncheckedUpdateManyWithoutCompanyNestedInput
@@ -48322,9 +56146,36 @@ export namespace Prisma {
     matchProductId?: UuidNullableFilter<"AutoAnalyticRule"> | string | null
     matchCategoryId?: UuidNullableFilter<"AutoAnalyticRule"> | string | null
     matchContactId?: UuidNullableFilter<"AutoAnalyticRule"> | string | null
+    matchContactTagId?: UuidNullableFilter<"AutoAnalyticRule"> | string | null
     assignAnalyticAccountId?: UuidFilter<"AutoAnalyticRule"> | string
     rulePriority?: IntFilter<"AutoAnalyticRule"> | number
     isActive?: BoolFilter<"AutoAnalyticRule"> | boolean
+  }
+
+  export type ContactTagAssignmentUpsertWithWhereUniqueWithoutContactInput = {
+    where: ContactTagAssignmentWhereUniqueInput
+    update: XOR<ContactTagAssignmentUpdateWithoutContactInput, ContactTagAssignmentUncheckedUpdateWithoutContactInput>
+    create: XOR<ContactTagAssignmentCreateWithoutContactInput, ContactTagAssignmentUncheckedCreateWithoutContactInput>
+  }
+
+  export type ContactTagAssignmentUpdateWithWhereUniqueWithoutContactInput = {
+    where: ContactTagAssignmentWhereUniqueInput
+    data: XOR<ContactTagAssignmentUpdateWithoutContactInput, ContactTagAssignmentUncheckedUpdateWithoutContactInput>
+  }
+
+  export type ContactTagAssignmentUpdateManyWithWhereWithoutContactInput = {
+    where: ContactTagAssignmentScalarWhereInput
+    data: XOR<ContactTagAssignmentUpdateManyMutationInput, ContactTagAssignmentUncheckedUpdateManyWithoutContactInput>
+  }
+
+  export type ContactTagAssignmentScalarWhereInput = {
+    AND?: ContactTagAssignmentScalarWhereInput | ContactTagAssignmentScalarWhereInput[]
+    OR?: ContactTagAssignmentScalarWhereInput[]
+    NOT?: ContactTagAssignmentScalarWhereInput | ContactTagAssignmentScalarWhereInput[]
+    id?: UuidFilter<"ContactTagAssignment"> | string
+    contactId?: UuidFilter<"ContactTagAssignment"> | string
+    tagId?: UuidFilter<"ContactTagAssignment"> | string
+    createdAt?: DateTimeFilter<"ContactTagAssignment"> | Date | string
   }
 
   export type UserUpsertWithWhereUniqueWithoutContactInput = {
@@ -48359,11 +56210,368 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
   }
 
+  export type CompanyCreateWithoutContactTagsInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    contacts?: ContactCreateNestedManyWithoutCompanyInput
+    productCategories?: ProductCategoryCreateNestedManyWithoutCompanyInput
+    products?: ProductCreateNestedManyWithoutCompanyInput
+    analyticAccounts?: AnalyticAccountCreateNestedManyWithoutCompanyInput
+    glAccounts?: GLAccountCreateNestedManyWithoutCompanyInput
+    journalEntries?: JournalEntryCreateNestedManyWithoutCompanyInput
+    budgets?: BudgetCreateNestedManyWithoutCompanyInput
+    autoAnalyticModels?: AutoAnalyticModelCreateNestedManyWithoutCompanyInput
+    purchaseOrders?: PurchaseOrderCreateNestedManyWithoutCompanyInput
+    salesOrders?: SalesOrderCreateNestedManyWithoutCompanyInput
+    vendorBills?: VendorBillCreateNestedManyWithoutCompanyInput
+    customerInvoices?: CustomerInvoiceCreateNestedManyWithoutCompanyInput
+    payments?: PaymentCreateNestedManyWithoutCompanyInput
+    documentFiles?: DocumentFileCreateNestedManyWithoutCompanyInput
+  }
+
+  export type CompanyUncheckedCreateWithoutContactTagsInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    contacts?: ContactUncheckedCreateNestedManyWithoutCompanyInput
+    productCategories?: ProductCategoryUncheckedCreateNestedManyWithoutCompanyInput
+    products?: ProductUncheckedCreateNestedManyWithoutCompanyInput
+    analyticAccounts?: AnalyticAccountUncheckedCreateNestedManyWithoutCompanyInput
+    glAccounts?: GLAccountUncheckedCreateNestedManyWithoutCompanyInput
+    journalEntries?: JournalEntryUncheckedCreateNestedManyWithoutCompanyInput
+    budgets?: BudgetUncheckedCreateNestedManyWithoutCompanyInput
+    autoAnalyticModels?: AutoAnalyticModelUncheckedCreateNestedManyWithoutCompanyInput
+    purchaseOrders?: PurchaseOrderUncheckedCreateNestedManyWithoutCompanyInput
+    salesOrders?: SalesOrderUncheckedCreateNestedManyWithoutCompanyInput
+    vendorBills?: VendorBillUncheckedCreateNestedManyWithoutCompanyInput
+    customerInvoices?: CustomerInvoiceUncheckedCreateNestedManyWithoutCompanyInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutCompanyInput
+    documentFiles?: DocumentFileUncheckedCreateNestedManyWithoutCompanyInput
+  }
+
+  export type CompanyCreateOrConnectWithoutContactTagsInput = {
+    where: CompanyWhereUniqueInput
+    create: XOR<CompanyCreateWithoutContactTagsInput, CompanyUncheckedCreateWithoutContactTagsInput>
+  }
+
+  export type ContactTagAssignmentCreateWithoutTagInput = {
+    id?: string
+    createdAt?: Date | string
+    contact: ContactCreateNestedOneWithoutContactTagsInput
+  }
+
+  export type ContactTagAssignmentUncheckedCreateWithoutTagInput = {
+    id?: string
+    contactId: string
+    createdAt?: Date | string
+  }
+
+  export type ContactTagAssignmentCreateOrConnectWithoutTagInput = {
+    where: ContactTagAssignmentWhereUniqueInput
+    create: XOR<ContactTagAssignmentCreateWithoutTagInput, ContactTagAssignmentUncheckedCreateWithoutTagInput>
+  }
+
+  export type ContactTagAssignmentCreateManyTagInputEnvelope = {
+    data: ContactTagAssignmentCreateManyTagInput | ContactTagAssignmentCreateManyTagInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AutoAnalyticRuleCreateWithoutContactTagInput = {
+    id?: string
+    docType: $Enums.AutoDocType
+    rulePriority?: number
+    isActive?: boolean
+    model: AutoAnalyticModelCreateNestedOneWithoutRulesInput
+    product?: ProductCreateNestedOneWithoutAutoAnalyticRulesInput
+    category?: ProductCategoryCreateNestedOneWithoutAutoAnalyticRulesInput
+    contact?: ContactCreateNestedOneWithoutAutoAnalyticRulesInput
+    assignAnalytic: AnalyticAccountCreateNestedOneWithoutAutoAnalyticRulesInput
+    purchaseOrderLines?: PurchaseOrderLineCreateNestedManyWithoutAutoRuleInput
+    salesOrderLines?: SalesOrderLineCreateNestedManyWithoutAutoRuleInput
+    vendorBillLines?: VendorBillLineCreateNestedManyWithoutAutoRuleInput
+    customerInvoiceLines?: CustomerInvoiceLineCreateNestedManyWithoutAutoRuleInput
+  }
+
+  export type AutoAnalyticRuleUncheckedCreateWithoutContactTagInput = {
+    id?: string
+    modelId: string
+    docType: $Enums.AutoDocType
+    matchProductId?: string | null
+    matchCategoryId?: string | null
+    matchContactId?: string | null
+    assignAnalyticAccountId: string
+    rulePriority?: number
+    isActive?: boolean
+    purchaseOrderLines?: PurchaseOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    salesOrderLines?: SalesOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    vendorBillLines?: VendorBillLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutAutoRuleInput
+  }
+
+  export type AutoAnalyticRuleCreateOrConnectWithoutContactTagInput = {
+    where: AutoAnalyticRuleWhereUniqueInput
+    create: XOR<AutoAnalyticRuleCreateWithoutContactTagInput, AutoAnalyticRuleUncheckedCreateWithoutContactTagInput>
+  }
+
+  export type AutoAnalyticRuleCreateManyContactTagInputEnvelope = {
+    data: AutoAnalyticRuleCreateManyContactTagInput | AutoAnalyticRuleCreateManyContactTagInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CompanyUpsertWithoutContactTagsInput = {
+    update: XOR<CompanyUpdateWithoutContactTagsInput, CompanyUncheckedUpdateWithoutContactTagsInput>
+    create: XOR<CompanyCreateWithoutContactTagsInput, CompanyUncheckedCreateWithoutContactTagsInput>
+    where?: CompanyWhereInput
+  }
+
+  export type CompanyUpdateToOneWithWhereWithoutContactTagsInput = {
+    where?: CompanyWhereInput
+    data: XOR<CompanyUpdateWithoutContactTagsInput, CompanyUncheckedUpdateWithoutContactTagsInput>
+  }
+
+  export type CompanyUpdateWithoutContactTagsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contacts?: ContactUpdateManyWithoutCompanyNestedInput
+    productCategories?: ProductCategoryUpdateManyWithoutCompanyNestedInput
+    products?: ProductUpdateManyWithoutCompanyNestedInput
+    analyticAccounts?: AnalyticAccountUpdateManyWithoutCompanyNestedInput
+    glAccounts?: GLAccountUpdateManyWithoutCompanyNestedInput
+    journalEntries?: JournalEntryUpdateManyWithoutCompanyNestedInput
+    budgets?: BudgetUpdateManyWithoutCompanyNestedInput
+    autoAnalyticModels?: AutoAnalyticModelUpdateManyWithoutCompanyNestedInput
+    purchaseOrders?: PurchaseOrderUpdateManyWithoutCompanyNestedInput
+    salesOrders?: SalesOrderUpdateManyWithoutCompanyNestedInput
+    vendorBills?: VendorBillUpdateManyWithoutCompanyNestedInput
+    customerInvoices?: CustomerInvoiceUpdateManyWithoutCompanyNestedInput
+    payments?: PaymentUpdateManyWithoutCompanyNestedInput
+    documentFiles?: DocumentFileUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type CompanyUncheckedUpdateWithoutContactTagsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contacts?: ContactUncheckedUpdateManyWithoutCompanyNestedInput
+    productCategories?: ProductCategoryUncheckedUpdateManyWithoutCompanyNestedInput
+    products?: ProductUncheckedUpdateManyWithoutCompanyNestedInput
+    analyticAccounts?: AnalyticAccountUncheckedUpdateManyWithoutCompanyNestedInput
+    glAccounts?: GLAccountUncheckedUpdateManyWithoutCompanyNestedInput
+    journalEntries?: JournalEntryUncheckedUpdateManyWithoutCompanyNestedInput
+    budgets?: BudgetUncheckedUpdateManyWithoutCompanyNestedInput
+    autoAnalyticModels?: AutoAnalyticModelUncheckedUpdateManyWithoutCompanyNestedInput
+    purchaseOrders?: PurchaseOrderUncheckedUpdateManyWithoutCompanyNestedInput
+    salesOrders?: SalesOrderUncheckedUpdateManyWithoutCompanyNestedInput
+    vendorBills?: VendorBillUncheckedUpdateManyWithoutCompanyNestedInput
+    customerInvoices?: CustomerInvoiceUncheckedUpdateManyWithoutCompanyNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutCompanyNestedInput
+    documentFiles?: DocumentFileUncheckedUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type ContactTagAssignmentUpsertWithWhereUniqueWithoutTagInput = {
+    where: ContactTagAssignmentWhereUniqueInput
+    update: XOR<ContactTagAssignmentUpdateWithoutTagInput, ContactTagAssignmentUncheckedUpdateWithoutTagInput>
+    create: XOR<ContactTagAssignmentCreateWithoutTagInput, ContactTagAssignmentUncheckedCreateWithoutTagInput>
+  }
+
+  export type ContactTagAssignmentUpdateWithWhereUniqueWithoutTagInput = {
+    where: ContactTagAssignmentWhereUniqueInput
+    data: XOR<ContactTagAssignmentUpdateWithoutTagInput, ContactTagAssignmentUncheckedUpdateWithoutTagInput>
+  }
+
+  export type ContactTagAssignmentUpdateManyWithWhereWithoutTagInput = {
+    where: ContactTagAssignmentScalarWhereInput
+    data: XOR<ContactTagAssignmentUpdateManyMutationInput, ContactTagAssignmentUncheckedUpdateManyWithoutTagInput>
+  }
+
+  export type AutoAnalyticRuleUpsertWithWhereUniqueWithoutContactTagInput = {
+    where: AutoAnalyticRuleWhereUniqueInput
+    update: XOR<AutoAnalyticRuleUpdateWithoutContactTagInput, AutoAnalyticRuleUncheckedUpdateWithoutContactTagInput>
+    create: XOR<AutoAnalyticRuleCreateWithoutContactTagInput, AutoAnalyticRuleUncheckedCreateWithoutContactTagInput>
+  }
+
+  export type AutoAnalyticRuleUpdateWithWhereUniqueWithoutContactTagInput = {
+    where: AutoAnalyticRuleWhereUniqueInput
+    data: XOR<AutoAnalyticRuleUpdateWithoutContactTagInput, AutoAnalyticRuleUncheckedUpdateWithoutContactTagInput>
+  }
+
+  export type AutoAnalyticRuleUpdateManyWithWhereWithoutContactTagInput = {
+    where: AutoAnalyticRuleScalarWhereInput
+    data: XOR<AutoAnalyticRuleUpdateManyMutationInput, AutoAnalyticRuleUncheckedUpdateManyWithoutContactTagInput>
+  }
+
+  export type ContactCreateWithoutContactTagsInput = {
+    id?: string
+    contactType: $Enums.ContactType
+    displayName: string
+    email?: string | null
+    phone?: string | null
+    gstin?: string | null
+    billingAddress?: NullableJsonNullValueInput | InputJsonValue
+    shippingAddress?: NullableJsonNullValueInput | InputJsonValue
+    isPortalUser?: boolean
+    portalUserExternalId?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    company: CompanyCreateNestedOneWithoutContactsInput
+    vendorPurchaseOrders?: PurchaseOrderCreateNestedManyWithoutVendorInput
+    customerSalesOrders?: SalesOrderCreateNestedManyWithoutCustomerInput
+    vendorBills?: VendorBillCreateNestedManyWithoutVendorInput
+    customerInvoices?: CustomerInvoiceCreateNestedManyWithoutCustomerInput
+    payments?: PaymentCreateNestedManyWithoutContactInput
+    journalLines?: JournalLineCreateNestedManyWithoutContactInput
+    autoAnalyticRules?: AutoAnalyticRuleCreateNestedManyWithoutContactInput
+    users?: UserCreateNestedManyWithoutContactInput
+  }
+
+  export type ContactUncheckedCreateWithoutContactTagsInput = {
+    id?: string
+    companyId: string
+    contactType: $Enums.ContactType
+    displayName: string
+    email?: string | null
+    phone?: string | null
+    gstin?: string | null
+    billingAddress?: NullableJsonNullValueInput | InputJsonValue
+    shippingAddress?: NullableJsonNullValueInput | InputJsonValue
+    isPortalUser?: boolean
+    portalUserExternalId?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vendorPurchaseOrders?: PurchaseOrderUncheckedCreateNestedManyWithoutVendorInput
+    customerSalesOrders?: SalesOrderUncheckedCreateNestedManyWithoutCustomerInput
+    vendorBills?: VendorBillUncheckedCreateNestedManyWithoutVendorInput
+    customerInvoices?: CustomerInvoiceUncheckedCreateNestedManyWithoutCustomerInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutContactInput
+    journalLines?: JournalLineUncheckedCreateNestedManyWithoutContactInput
+    autoAnalyticRules?: AutoAnalyticRuleUncheckedCreateNestedManyWithoutContactInput
+    users?: UserUncheckedCreateNestedManyWithoutContactInput
+  }
+
+  export type ContactCreateOrConnectWithoutContactTagsInput = {
+    where: ContactWhereUniqueInput
+    create: XOR<ContactCreateWithoutContactTagsInput, ContactUncheckedCreateWithoutContactTagsInput>
+  }
+
+  export type ContactTagCreateWithoutContactsInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    company: CompanyCreateNestedOneWithoutContactTagsInput
+    autoAnalyticRules?: AutoAnalyticRuleCreateNestedManyWithoutContactTagInput
+  }
+
+  export type ContactTagUncheckedCreateWithoutContactsInput = {
+    id?: string
+    companyId: string
+    name: string
+    createdAt?: Date | string
+    autoAnalyticRules?: AutoAnalyticRuleUncheckedCreateNestedManyWithoutContactTagInput
+  }
+
+  export type ContactTagCreateOrConnectWithoutContactsInput = {
+    where: ContactTagWhereUniqueInput
+    create: XOR<ContactTagCreateWithoutContactsInput, ContactTagUncheckedCreateWithoutContactsInput>
+  }
+
+  export type ContactUpsertWithoutContactTagsInput = {
+    update: XOR<ContactUpdateWithoutContactTagsInput, ContactUncheckedUpdateWithoutContactTagsInput>
+    create: XOR<ContactCreateWithoutContactTagsInput, ContactUncheckedCreateWithoutContactTagsInput>
+    where?: ContactWhereInput
+  }
+
+  export type ContactUpdateToOneWithWhereWithoutContactTagsInput = {
+    where?: ContactWhereInput
+    data: XOR<ContactUpdateWithoutContactTagsInput, ContactUncheckedUpdateWithoutContactTagsInput>
+  }
+
+  export type ContactUpdateWithoutContactTagsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactType?: EnumContactTypeFieldUpdateOperationsInput | $Enums.ContactType
+    displayName?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    gstin?: NullableStringFieldUpdateOperationsInput | string | null
+    billingAddress?: NullableJsonNullValueInput | InputJsonValue
+    shippingAddress?: NullableJsonNullValueInput | InputJsonValue
+    isPortalUser?: BoolFieldUpdateOperationsInput | boolean
+    portalUserExternalId?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutContactsNestedInput
+    vendorPurchaseOrders?: PurchaseOrderUpdateManyWithoutVendorNestedInput
+    customerSalesOrders?: SalesOrderUpdateManyWithoutCustomerNestedInput
+    vendorBills?: VendorBillUpdateManyWithoutVendorNestedInput
+    customerInvoices?: CustomerInvoiceUpdateManyWithoutCustomerNestedInput
+    payments?: PaymentUpdateManyWithoutContactNestedInput
+    journalLines?: JournalLineUpdateManyWithoutContactNestedInput
+    autoAnalyticRules?: AutoAnalyticRuleUpdateManyWithoutContactNestedInput
+    users?: UserUpdateManyWithoutContactNestedInput
+  }
+
+  export type ContactUncheckedUpdateWithoutContactTagsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    contactType?: EnumContactTypeFieldUpdateOperationsInput | $Enums.ContactType
+    displayName?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    gstin?: NullableStringFieldUpdateOperationsInput | string | null
+    billingAddress?: NullableJsonNullValueInput | InputJsonValue
+    shippingAddress?: NullableJsonNullValueInput | InputJsonValue
+    isPortalUser?: BoolFieldUpdateOperationsInput | boolean
+    portalUserExternalId?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vendorPurchaseOrders?: PurchaseOrderUncheckedUpdateManyWithoutVendorNestedInput
+    customerSalesOrders?: SalesOrderUncheckedUpdateManyWithoutCustomerNestedInput
+    vendorBills?: VendorBillUncheckedUpdateManyWithoutVendorNestedInput
+    customerInvoices?: CustomerInvoiceUncheckedUpdateManyWithoutCustomerNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutContactNestedInput
+    journalLines?: JournalLineUncheckedUpdateManyWithoutContactNestedInput
+    autoAnalyticRules?: AutoAnalyticRuleUncheckedUpdateManyWithoutContactNestedInput
+    users?: UserUncheckedUpdateManyWithoutContactNestedInput
+  }
+
+  export type ContactTagUpsertWithoutContactsInput = {
+    update: XOR<ContactTagUpdateWithoutContactsInput, ContactTagUncheckedUpdateWithoutContactsInput>
+    create: XOR<ContactTagCreateWithoutContactsInput, ContactTagUncheckedCreateWithoutContactsInput>
+    where?: ContactTagWhereInput
+  }
+
+  export type ContactTagUpdateToOneWithWhereWithoutContactsInput = {
+    where?: ContactTagWhereInput
+    data: XOR<ContactTagUpdateWithoutContactsInput, ContactTagUncheckedUpdateWithoutContactsInput>
+  }
+
+  export type ContactTagUpdateWithoutContactsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutContactTagsNestedInput
+    autoAnalyticRules?: AutoAnalyticRuleUpdateManyWithoutContactTagNestedInput
+  }
+
+  export type ContactTagUncheckedUpdateWithoutContactsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    autoAnalyticRules?: AutoAnalyticRuleUncheckedUpdateManyWithoutContactTagNestedInput
+  }
+
   export type CompanyCreateWithoutProductCategoriesInput = {
     id?: string
     name: string
     createdAt?: Date | string
     contacts?: ContactCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagCreateNestedManyWithoutCompanyInput
     products?: ProductCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountCreateNestedManyWithoutCompanyInput
     glAccounts?: GLAccountCreateNestedManyWithoutCompanyInput
@@ -48383,6 +56591,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactUncheckedCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagUncheckedCreateNestedManyWithoutCompanyInput
     products?: ProductUncheckedCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountUncheckedCreateNestedManyWithoutCompanyInput
     glAccounts?: GLAccountUncheckedCreateNestedManyWithoutCompanyInput
@@ -48509,7 +56718,12 @@ export namespace Prisma {
     model: AutoAnalyticModelCreateNestedOneWithoutRulesInput
     product?: ProductCreateNestedOneWithoutAutoAnalyticRulesInput
     contact?: ContactCreateNestedOneWithoutAutoAnalyticRulesInput
+    contactTag?: ContactTagCreateNestedOneWithoutAutoAnalyticRulesInput
     assignAnalytic: AnalyticAccountCreateNestedOneWithoutAutoAnalyticRulesInput
+    purchaseOrderLines?: PurchaseOrderLineCreateNestedManyWithoutAutoRuleInput
+    salesOrderLines?: SalesOrderLineCreateNestedManyWithoutAutoRuleInput
+    vendorBillLines?: VendorBillLineCreateNestedManyWithoutAutoRuleInput
+    customerInvoiceLines?: CustomerInvoiceLineCreateNestedManyWithoutAutoRuleInput
   }
 
   export type AutoAnalyticRuleUncheckedCreateWithoutCategoryInput = {
@@ -48518,9 +56732,14 @@ export namespace Prisma {
     docType: $Enums.AutoDocType
     matchProductId?: string | null
     matchContactId?: string | null
+    matchContactTagId?: string | null
     assignAnalyticAccountId: string
     rulePriority?: number
     isActive?: boolean
+    purchaseOrderLines?: PurchaseOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    salesOrderLines?: SalesOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    vendorBillLines?: VendorBillLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutAutoRuleInput
   }
 
   export type AutoAnalyticRuleCreateOrConnectWithoutCategoryInput = {
@@ -48549,6 +56768,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUpdateManyWithoutCompanyNestedInput
     products?: ProductUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUpdateManyWithoutCompanyNestedInput
     glAccounts?: GLAccountUpdateManyWithoutCompanyNestedInput
@@ -48568,6 +56788,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUncheckedUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUncheckedUpdateManyWithoutCompanyNestedInput
     products?: ProductUncheckedUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUncheckedUpdateManyWithoutCompanyNestedInput
     glAccounts?: GLAccountUncheckedUpdateManyWithoutCompanyNestedInput
@@ -48664,6 +56885,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountCreateNestedManyWithoutCompanyInput
     glAccounts?: GLAccountCreateNestedManyWithoutCompanyInput
@@ -48683,6 +56905,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactUncheckedCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagUncheckedCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryUncheckedCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountUncheckedCreateNestedManyWithoutCompanyInput
     glAccounts?: GLAccountUncheckedCreateNestedManyWithoutCompanyInput
@@ -48727,6 +56950,7 @@ export namespace Prisma {
 
   export type PurchaseOrderLineCreateWithoutProductInput = {
     id?: string
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -48734,12 +56958,17 @@ export namespace Prisma {
     lineTotal: Decimal | DecimalJsLike | number | string
     purchaseOrder: PurchaseOrderCreateNestedOneWithoutLinesInput
     analytic?: AnalyticAccountCreateNestedOneWithoutPoLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutPurchaseOrderLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutPurchaseOrderLinesInput
   }
 
   export type PurchaseOrderLineUncheckedCreateWithoutProductInput = {
     id?: string
     purchaseOrderId: string
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -48759,6 +56988,7 @@ export namespace Prisma {
 
   export type SalesOrderLineCreateWithoutProductInput = {
     id?: string
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -48766,12 +56996,17 @@ export namespace Prisma {
     lineTotal: Decimal | DecimalJsLike | number | string
     salesOrder: SalesOrderCreateNestedOneWithoutLinesInput
     analytic?: AnalyticAccountCreateNestedOneWithoutSoLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutSalesOrderLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutSalesOrderLinesInput
   }
 
   export type SalesOrderLineUncheckedCreateWithoutProductInput = {
     id?: string
     salesOrderId: string
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -48791,6 +57026,7 @@ export namespace Prisma {
 
   export type VendorBillLineCreateWithoutProductInput = {
     id?: string
+    matchedFieldsCount?: number | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -48799,12 +57035,17 @@ export namespace Prisma {
     bill: VendorBillCreateNestedOneWithoutLinesInput
     analytic?: AnalyticAccountCreateNestedOneWithoutBillLinesInput
     gl?: GLAccountCreateNestedOneWithoutBillLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutVendorBillLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutVendorBillLinesInput
   }
 
   export type VendorBillLineUncheckedCreateWithoutProductInput = {
     id?: string
     vendorBillId: string
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     glAccountId?: string | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
@@ -48825,6 +57066,7 @@ export namespace Prisma {
 
   export type CustomerInvoiceLineCreateWithoutProductInput = {
     id?: string
+    matchedFieldsCount?: number | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -48833,12 +57075,17 @@ export namespace Prisma {
     invoice: CustomerInvoiceCreateNestedOneWithoutLinesInput
     analytic?: AnalyticAccountCreateNestedOneWithoutInvLinesInput
     gl?: GLAccountCreateNestedOneWithoutInvLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutCustomerInvoiceLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutCustomerInvoiceLinesInput
   }
 
   export type CustomerInvoiceLineUncheckedCreateWithoutProductInput = {
     id?: string
     customerInvoiceId: string
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     glAccountId?: string | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
@@ -48897,7 +57144,12 @@ export namespace Prisma {
     model: AutoAnalyticModelCreateNestedOneWithoutRulesInput
     category?: ProductCategoryCreateNestedOneWithoutAutoAnalyticRulesInput
     contact?: ContactCreateNestedOneWithoutAutoAnalyticRulesInput
+    contactTag?: ContactTagCreateNestedOneWithoutAutoAnalyticRulesInput
     assignAnalytic: AnalyticAccountCreateNestedOneWithoutAutoAnalyticRulesInput
+    purchaseOrderLines?: PurchaseOrderLineCreateNestedManyWithoutAutoRuleInput
+    salesOrderLines?: SalesOrderLineCreateNestedManyWithoutAutoRuleInput
+    vendorBillLines?: VendorBillLineCreateNestedManyWithoutAutoRuleInput
+    customerInvoiceLines?: CustomerInvoiceLineCreateNestedManyWithoutAutoRuleInput
   }
 
   export type AutoAnalyticRuleUncheckedCreateWithoutProductInput = {
@@ -48906,9 +57158,14 @@ export namespace Prisma {
     docType: $Enums.AutoDocType
     matchCategoryId?: string | null
     matchContactId?: string | null
+    matchContactTagId?: string | null
     assignAnalyticAccountId: string
     rulePriority?: number
     isActive?: boolean
+    purchaseOrderLines?: PurchaseOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    salesOrderLines?: SalesOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    vendorBillLines?: VendorBillLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutAutoRuleInput
   }
 
   export type AutoAnalyticRuleCreateOrConnectWithoutProductInput = {
@@ -48937,6 +57194,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUpdateManyWithoutCompanyNestedInput
     glAccounts?: GLAccountUpdateManyWithoutCompanyNestedInput
@@ -48956,6 +57214,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUncheckedUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUncheckedUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUncheckedUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUncheckedUpdateManyWithoutCompanyNestedInput
     glAccounts?: GLAccountUncheckedUpdateManyWithoutCompanyNestedInput
@@ -49023,6 +57282,9 @@ export namespace Prisma {
     purchaseOrderId?: UuidFilter<"PurchaseOrderLine"> | string
     productId?: UuidFilter<"PurchaseOrderLine"> | string
     analyticAccountId?: UuidNullableFilter<"PurchaseOrderLine"> | string | null
+    autoAnalyticModelId?: UuidNullableFilter<"PurchaseOrderLine"> | string | null
+    autoAnalyticRuleId?: UuidNullableFilter<"PurchaseOrderLine"> | string | null
+    matchedFieldsCount?: IntNullableFilter<"PurchaseOrderLine"> | number | null
     description?: StringNullableFilter<"PurchaseOrderLine"> | string | null
     qty?: DecimalFilter<"PurchaseOrderLine"> | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFilter<"PurchaseOrderLine"> | Decimal | DecimalJsLike | number | string
@@ -49054,6 +57316,9 @@ export namespace Prisma {
     salesOrderId?: UuidFilter<"SalesOrderLine"> | string
     productId?: UuidFilter<"SalesOrderLine"> | string
     analyticAccountId?: UuidNullableFilter<"SalesOrderLine"> | string | null
+    autoAnalyticModelId?: UuidNullableFilter<"SalesOrderLine"> | string | null
+    autoAnalyticRuleId?: UuidNullableFilter<"SalesOrderLine"> | string | null
+    matchedFieldsCount?: IntNullableFilter<"SalesOrderLine"> | number | null
     description?: StringNullableFilter<"SalesOrderLine"> | string | null
     qty?: DecimalFilter<"SalesOrderLine"> | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFilter<"SalesOrderLine"> | Decimal | DecimalJsLike | number | string
@@ -49085,6 +57350,9 @@ export namespace Prisma {
     vendorBillId?: UuidFilter<"VendorBillLine"> | string
     productId?: UuidNullableFilter<"VendorBillLine"> | string | null
     analyticAccountId?: UuidNullableFilter<"VendorBillLine"> | string | null
+    autoAnalyticModelId?: UuidNullableFilter<"VendorBillLine"> | string | null
+    autoAnalyticRuleId?: UuidNullableFilter<"VendorBillLine"> | string | null
+    matchedFieldsCount?: IntNullableFilter<"VendorBillLine"> | number | null
     glAccountId?: UuidNullableFilter<"VendorBillLine"> | string | null
     description?: StringNullableFilter<"VendorBillLine"> | string | null
     qty?: DecimalFilter<"VendorBillLine"> | Decimal | DecimalJsLike | number | string
@@ -49117,6 +57385,9 @@ export namespace Prisma {
     customerInvoiceId?: UuidFilter<"CustomerInvoiceLine"> | string
     productId?: UuidNullableFilter<"CustomerInvoiceLine"> | string | null
     analyticAccountId?: UuidNullableFilter<"CustomerInvoiceLine"> | string | null
+    autoAnalyticModelId?: UuidNullableFilter<"CustomerInvoiceLine"> | string | null
+    autoAnalyticRuleId?: UuidNullableFilter<"CustomerInvoiceLine"> | string | null
+    matchedFieldsCount?: IntNullableFilter<"CustomerInvoiceLine"> | number | null
     glAccountId?: UuidNullableFilter<"CustomerInvoiceLine"> | string | null
     description?: StringNullableFilter<"CustomerInvoiceLine"> | string | null
     qty?: DecimalFilter<"CustomerInvoiceLine"> | Decimal | DecimalJsLike | number | string
@@ -49162,6 +57433,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryCreateNestedManyWithoutCompanyInput
     products?: ProductCreateNestedManyWithoutCompanyInput
     glAccounts?: GLAccountCreateNestedManyWithoutCompanyInput
@@ -49181,6 +57453,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactUncheckedCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagUncheckedCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryUncheckedCreateNestedManyWithoutCompanyInput
     products?: ProductUncheckedCreateNestedManyWithoutCompanyInput
     glAccounts?: GLAccountUncheckedCreateNestedManyWithoutCompanyInput
@@ -49341,6 +57614,7 @@ export namespace Prisma {
 
   export type PurchaseOrderLineCreateWithoutAnalyticInput = {
     id?: string
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -49348,12 +57622,17 @@ export namespace Prisma {
     lineTotal: Decimal | DecimalJsLike | number | string
     purchaseOrder: PurchaseOrderCreateNestedOneWithoutLinesInput
     product: ProductCreateNestedOneWithoutPoLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutPurchaseOrderLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutPurchaseOrderLinesInput
   }
 
   export type PurchaseOrderLineUncheckedCreateWithoutAnalyticInput = {
     id?: string
     purchaseOrderId: string
     productId: string
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -49373,6 +57652,7 @@ export namespace Prisma {
 
   export type SalesOrderLineCreateWithoutAnalyticInput = {
     id?: string
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -49380,12 +57660,17 @@ export namespace Prisma {
     lineTotal: Decimal | DecimalJsLike | number | string
     salesOrder: SalesOrderCreateNestedOneWithoutLinesInput
     product: ProductCreateNestedOneWithoutSoLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutSalesOrderLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutSalesOrderLinesInput
   }
 
   export type SalesOrderLineUncheckedCreateWithoutAnalyticInput = {
     id?: string
     salesOrderId: string
     productId: string
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -49405,6 +57690,7 @@ export namespace Prisma {
 
   export type VendorBillLineCreateWithoutAnalyticInput = {
     id?: string
+    matchedFieldsCount?: number | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -49413,12 +57699,17 @@ export namespace Prisma {
     bill: VendorBillCreateNestedOneWithoutLinesInput
     product?: ProductCreateNestedOneWithoutBillLinesInput
     gl?: GLAccountCreateNestedOneWithoutBillLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutVendorBillLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutVendorBillLinesInput
   }
 
   export type VendorBillLineUncheckedCreateWithoutAnalyticInput = {
     id?: string
     vendorBillId: string
     productId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     glAccountId?: string | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
@@ -49439,6 +57730,7 @@ export namespace Prisma {
 
   export type CustomerInvoiceLineCreateWithoutAnalyticInput = {
     id?: string
+    matchedFieldsCount?: number | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -49447,12 +57739,17 @@ export namespace Prisma {
     invoice: CustomerInvoiceCreateNestedOneWithoutLinesInput
     product?: ProductCreateNestedOneWithoutInvLinesInput
     gl?: GLAccountCreateNestedOneWithoutInvLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutCustomerInvoiceLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutCustomerInvoiceLinesInput
   }
 
   export type CustomerInvoiceLineUncheckedCreateWithoutAnalyticInput = {
     id?: string
     customerInvoiceId: string
     productId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     glAccountId?: string | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
@@ -49480,6 +57777,11 @@ export namespace Prisma {
     product?: ProductCreateNestedOneWithoutAutoAnalyticRulesInput
     category?: ProductCategoryCreateNestedOneWithoutAutoAnalyticRulesInput
     contact?: ContactCreateNestedOneWithoutAutoAnalyticRulesInput
+    contactTag?: ContactTagCreateNestedOneWithoutAutoAnalyticRulesInput
+    purchaseOrderLines?: PurchaseOrderLineCreateNestedManyWithoutAutoRuleInput
+    salesOrderLines?: SalesOrderLineCreateNestedManyWithoutAutoRuleInput
+    vendorBillLines?: VendorBillLineCreateNestedManyWithoutAutoRuleInput
+    customerInvoiceLines?: CustomerInvoiceLineCreateNestedManyWithoutAutoRuleInput
   }
 
   export type AutoAnalyticRuleUncheckedCreateWithoutAssignAnalyticInput = {
@@ -49489,8 +57791,13 @@ export namespace Prisma {
     matchProductId?: string | null
     matchCategoryId?: string | null
     matchContactId?: string | null
+    matchContactTagId?: string | null
     rulePriority?: number
     isActive?: boolean
+    purchaseOrderLines?: PurchaseOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    salesOrderLines?: SalesOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    vendorBillLines?: VendorBillLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutAutoRuleInput
   }
 
   export type AutoAnalyticRuleCreateOrConnectWithoutAssignAnalyticInput = {
@@ -49519,6 +57826,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUpdateManyWithoutCompanyNestedInput
     products?: ProductUpdateManyWithoutCompanyNestedInput
     glAccounts?: GLAccountUpdateManyWithoutCompanyNestedInput
@@ -49538,6 +57846,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUncheckedUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUncheckedUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUncheckedUpdateManyWithoutCompanyNestedInput
     products?: ProductUncheckedUpdateManyWithoutCompanyNestedInput
     glAccounts?: GLAccountUncheckedUpdateManyWithoutCompanyNestedInput
@@ -49741,6 +58050,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryCreateNestedManyWithoutCompanyInput
     products?: ProductCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountCreateNestedManyWithoutCompanyInput
@@ -49760,6 +58070,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactUncheckedCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagUncheckedCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryUncheckedCreateNestedManyWithoutCompanyInput
     products?: ProductUncheckedCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountUncheckedCreateNestedManyWithoutCompanyInput
@@ -49837,6 +58148,7 @@ export namespace Prisma {
 
   export type VendorBillLineCreateWithoutGlInput = {
     id?: string
+    matchedFieldsCount?: number | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -49845,6 +58157,8 @@ export namespace Prisma {
     bill: VendorBillCreateNestedOneWithoutLinesInput
     product?: ProductCreateNestedOneWithoutBillLinesInput
     analytic?: AnalyticAccountCreateNestedOneWithoutBillLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutVendorBillLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutVendorBillLinesInput
   }
 
   export type VendorBillLineUncheckedCreateWithoutGlInput = {
@@ -49852,6 +58166,9 @@ export namespace Prisma {
     vendorBillId: string
     productId?: string | null
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -49871,6 +58188,7 @@ export namespace Prisma {
 
   export type CustomerInvoiceLineCreateWithoutGlInput = {
     id?: string
+    matchedFieldsCount?: number | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -49879,6 +58197,8 @@ export namespace Prisma {
     invoice: CustomerInvoiceCreateNestedOneWithoutLinesInput
     product?: ProductCreateNestedOneWithoutInvLinesInput
     analytic?: AnalyticAccountCreateNestedOneWithoutInvLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutCustomerInvoiceLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutCustomerInvoiceLinesInput
   }
 
   export type CustomerInvoiceLineUncheckedCreateWithoutGlInput = {
@@ -49886,6 +58206,9 @@ export namespace Prisma {
     customerInvoiceId: string
     productId?: string | null
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -49919,6 +58242,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUpdateManyWithoutCompanyNestedInput
     products?: ProductUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUpdateManyWithoutCompanyNestedInput
@@ -49938,6 +58262,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUncheckedUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUncheckedUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUncheckedUpdateManyWithoutCompanyNestedInput
     products?: ProductUncheckedUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUncheckedUpdateManyWithoutCompanyNestedInput
@@ -50021,6 +58346,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryCreateNestedManyWithoutCompanyInput
     products?: ProductCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountCreateNestedManyWithoutCompanyInput
@@ -50040,6 +58366,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactUncheckedCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagUncheckedCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryUncheckedCreateNestedManyWithoutCompanyInput
     products?: ProductUncheckedCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountUncheckedCreateNestedManyWithoutCompanyInput
@@ -50107,6 +58434,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUpdateManyWithoutCompanyNestedInput
     products?: ProductUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUpdateManyWithoutCompanyNestedInput
@@ -50126,6 +58454,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUncheckedUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUncheckedUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUncheckedUpdateManyWithoutCompanyNestedInput
     products?: ProductUncheckedUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUncheckedUpdateManyWithoutCompanyNestedInput
@@ -50274,6 +58603,7 @@ export namespace Prisma {
     customerInvoices?: CustomerInvoiceCreateNestedManyWithoutCustomerInput
     payments?: PaymentCreateNestedManyWithoutContactInput
     autoAnalyticRules?: AutoAnalyticRuleCreateNestedManyWithoutContactInput
+    contactTags?: ContactTagAssignmentCreateNestedManyWithoutContactInput
     users?: UserCreateNestedManyWithoutContactInput
   }
 
@@ -50298,6 +58628,7 @@ export namespace Prisma {
     customerInvoices?: CustomerInvoiceUncheckedCreateNestedManyWithoutCustomerInput
     payments?: PaymentUncheckedCreateNestedManyWithoutContactInput
     autoAnalyticRules?: AutoAnalyticRuleUncheckedCreateNestedManyWithoutContactInput
+    contactTags?: ContactTagAssignmentUncheckedCreateNestedManyWithoutContactInput
     users?: UserUncheckedCreateNestedManyWithoutContactInput
   }
 
@@ -50496,6 +58827,7 @@ export namespace Prisma {
     customerInvoices?: CustomerInvoiceUpdateManyWithoutCustomerNestedInput
     payments?: PaymentUpdateManyWithoutContactNestedInput
     autoAnalyticRules?: AutoAnalyticRuleUpdateManyWithoutContactNestedInput
+    contactTags?: ContactTagAssignmentUpdateManyWithoutContactNestedInput
     users?: UserUpdateManyWithoutContactNestedInput
   }
 
@@ -50520,6 +58852,7 @@ export namespace Prisma {
     customerInvoices?: CustomerInvoiceUncheckedUpdateManyWithoutCustomerNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutContactNestedInput
     autoAnalyticRules?: AutoAnalyticRuleUncheckedUpdateManyWithoutContactNestedInput
+    contactTags?: ContactTagAssignmentUncheckedUpdateManyWithoutContactNestedInput
     users?: UserUncheckedUpdateManyWithoutContactNestedInput
   }
 
@@ -50577,6 +58910,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryCreateNestedManyWithoutCompanyInput
     products?: ProductCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountCreateNestedManyWithoutCompanyInput
@@ -50596,6 +58930,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactUncheckedCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagUncheckedCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryUncheckedCreateNestedManyWithoutCompanyInput
     products?: ProductUncheckedCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountUncheckedCreateNestedManyWithoutCompanyInput
@@ -50659,6 +58994,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUpdateManyWithoutCompanyNestedInput
     products?: ProductUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUpdateManyWithoutCompanyNestedInput
@@ -50678,6 +59014,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUncheckedUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUncheckedUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUncheckedUpdateManyWithoutCompanyNestedInput
     products?: ProductUncheckedUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUncheckedUpdateManyWithoutCompanyNestedInput
@@ -51049,6 +59386,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryCreateNestedManyWithoutCompanyInput
     products?: ProductCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountCreateNestedManyWithoutCompanyInput
@@ -51068,6 +59406,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactUncheckedCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagUncheckedCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryUncheckedCreateNestedManyWithoutCompanyInput
     products?: ProductUncheckedCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountUncheckedCreateNestedManyWithoutCompanyInput
@@ -51095,7 +59434,12 @@ export namespace Prisma {
     product?: ProductCreateNestedOneWithoutAutoAnalyticRulesInput
     category?: ProductCategoryCreateNestedOneWithoutAutoAnalyticRulesInput
     contact?: ContactCreateNestedOneWithoutAutoAnalyticRulesInput
+    contactTag?: ContactTagCreateNestedOneWithoutAutoAnalyticRulesInput
     assignAnalytic: AnalyticAccountCreateNestedOneWithoutAutoAnalyticRulesInput
+    purchaseOrderLines?: PurchaseOrderLineCreateNestedManyWithoutAutoRuleInput
+    salesOrderLines?: SalesOrderLineCreateNestedManyWithoutAutoRuleInput
+    vendorBillLines?: VendorBillLineCreateNestedManyWithoutAutoRuleInput
+    customerInvoiceLines?: CustomerInvoiceLineCreateNestedManyWithoutAutoRuleInput
   }
 
   export type AutoAnalyticRuleUncheckedCreateWithoutModelInput = {
@@ -51104,9 +59448,14 @@ export namespace Prisma {
     matchProductId?: string | null
     matchCategoryId?: string | null
     matchContactId?: string | null
+    matchContactTagId?: string | null
     assignAnalyticAccountId: string
     rulePriority?: number
     isActive?: boolean
+    purchaseOrderLines?: PurchaseOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    salesOrderLines?: SalesOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    vendorBillLines?: VendorBillLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutAutoRuleInput
   }
 
   export type AutoAnalyticRuleCreateOrConnectWithoutModelInput = {
@@ -51116,6 +59465,162 @@ export namespace Prisma {
 
   export type AutoAnalyticRuleCreateManyModelInputEnvelope = {
     data: AutoAnalyticRuleCreateManyModelInput | AutoAnalyticRuleCreateManyModelInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PurchaseOrderLineCreateWithoutAutoModelInput = {
+    id?: string
+    matchedFieldsCount?: number | null
+    description?: string | null
+    qty: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+    purchaseOrder: PurchaseOrderCreateNestedOneWithoutLinesInput
+    product: ProductCreateNestedOneWithoutPoLinesInput
+    analytic?: AnalyticAccountCreateNestedOneWithoutPoLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutPurchaseOrderLinesInput
+  }
+
+  export type PurchaseOrderLineUncheckedCreateWithoutAutoModelInput = {
+    id?: string
+    purchaseOrderId: string
+    productId: string
+    analyticAccountId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
+    description?: string | null
+    qty: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+  }
+
+  export type PurchaseOrderLineCreateOrConnectWithoutAutoModelInput = {
+    where: PurchaseOrderLineWhereUniqueInput
+    create: XOR<PurchaseOrderLineCreateWithoutAutoModelInput, PurchaseOrderLineUncheckedCreateWithoutAutoModelInput>
+  }
+
+  export type PurchaseOrderLineCreateManyAutoModelInputEnvelope = {
+    data: PurchaseOrderLineCreateManyAutoModelInput | PurchaseOrderLineCreateManyAutoModelInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SalesOrderLineCreateWithoutAutoModelInput = {
+    id?: string
+    matchedFieldsCount?: number | null
+    description?: string | null
+    qty: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+    salesOrder: SalesOrderCreateNestedOneWithoutLinesInput
+    product: ProductCreateNestedOneWithoutSoLinesInput
+    analytic?: AnalyticAccountCreateNestedOneWithoutSoLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutSalesOrderLinesInput
+  }
+
+  export type SalesOrderLineUncheckedCreateWithoutAutoModelInput = {
+    id?: string
+    salesOrderId: string
+    productId: string
+    analyticAccountId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
+    description?: string | null
+    qty: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+  }
+
+  export type SalesOrderLineCreateOrConnectWithoutAutoModelInput = {
+    where: SalesOrderLineWhereUniqueInput
+    create: XOR<SalesOrderLineCreateWithoutAutoModelInput, SalesOrderLineUncheckedCreateWithoutAutoModelInput>
+  }
+
+  export type SalesOrderLineCreateManyAutoModelInputEnvelope = {
+    data: SalesOrderLineCreateManyAutoModelInput | SalesOrderLineCreateManyAutoModelInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type VendorBillLineCreateWithoutAutoModelInput = {
+    id?: string
+    matchedFieldsCount?: number | null
+    description?: string | null
+    qty?: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+    bill: VendorBillCreateNestedOneWithoutLinesInput
+    product?: ProductCreateNestedOneWithoutBillLinesInput
+    analytic?: AnalyticAccountCreateNestedOneWithoutBillLinesInput
+    gl?: GLAccountCreateNestedOneWithoutBillLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutVendorBillLinesInput
+  }
+
+  export type VendorBillLineUncheckedCreateWithoutAutoModelInput = {
+    id?: string
+    vendorBillId: string
+    productId?: string | null
+    analyticAccountId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
+    glAccountId?: string | null
+    description?: string | null
+    qty?: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+  }
+
+  export type VendorBillLineCreateOrConnectWithoutAutoModelInput = {
+    where: VendorBillLineWhereUniqueInput
+    create: XOR<VendorBillLineCreateWithoutAutoModelInput, VendorBillLineUncheckedCreateWithoutAutoModelInput>
+  }
+
+  export type VendorBillLineCreateManyAutoModelInputEnvelope = {
+    data: VendorBillLineCreateManyAutoModelInput | VendorBillLineCreateManyAutoModelInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CustomerInvoiceLineCreateWithoutAutoModelInput = {
+    id?: string
+    matchedFieldsCount?: number | null
+    description?: string | null
+    qty?: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+    invoice: CustomerInvoiceCreateNestedOneWithoutLinesInput
+    product?: ProductCreateNestedOneWithoutInvLinesInput
+    analytic?: AnalyticAccountCreateNestedOneWithoutInvLinesInput
+    gl?: GLAccountCreateNestedOneWithoutInvLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutCustomerInvoiceLinesInput
+  }
+
+  export type CustomerInvoiceLineUncheckedCreateWithoutAutoModelInput = {
+    id?: string
+    customerInvoiceId: string
+    productId?: string | null
+    analyticAccountId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
+    glAccountId?: string | null
+    description?: string | null
+    qty?: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+  }
+
+  export type CustomerInvoiceLineCreateOrConnectWithoutAutoModelInput = {
+    where: CustomerInvoiceLineWhereUniqueInput
+    create: XOR<CustomerInvoiceLineCreateWithoutAutoModelInput, CustomerInvoiceLineUncheckedCreateWithoutAutoModelInput>
+  }
+
+  export type CustomerInvoiceLineCreateManyAutoModelInputEnvelope = {
+    data: CustomerInvoiceLineCreateManyAutoModelInput | CustomerInvoiceLineCreateManyAutoModelInput[]
     skipDuplicates?: boolean
   }
 
@@ -51135,6 +59640,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUpdateManyWithoutCompanyNestedInput
     products?: ProductUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUpdateManyWithoutCompanyNestedInput
@@ -51154,6 +59660,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUncheckedUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUncheckedUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUncheckedUpdateManyWithoutCompanyNestedInput
     products?: ProductUncheckedUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUncheckedUpdateManyWithoutCompanyNestedInput
@@ -51184,6 +59691,70 @@ export namespace Prisma {
     data: XOR<AutoAnalyticRuleUpdateManyMutationInput, AutoAnalyticRuleUncheckedUpdateManyWithoutModelInput>
   }
 
+  export type PurchaseOrderLineUpsertWithWhereUniqueWithoutAutoModelInput = {
+    where: PurchaseOrderLineWhereUniqueInput
+    update: XOR<PurchaseOrderLineUpdateWithoutAutoModelInput, PurchaseOrderLineUncheckedUpdateWithoutAutoModelInput>
+    create: XOR<PurchaseOrderLineCreateWithoutAutoModelInput, PurchaseOrderLineUncheckedCreateWithoutAutoModelInput>
+  }
+
+  export type PurchaseOrderLineUpdateWithWhereUniqueWithoutAutoModelInput = {
+    where: PurchaseOrderLineWhereUniqueInput
+    data: XOR<PurchaseOrderLineUpdateWithoutAutoModelInput, PurchaseOrderLineUncheckedUpdateWithoutAutoModelInput>
+  }
+
+  export type PurchaseOrderLineUpdateManyWithWhereWithoutAutoModelInput = {
+    where: PurchaseOrderLineScalarWhereInput
+    data: XOR<PurchaseOrderLineUpdateManyMutationInput, PurchaseOrderLineUncheckedUpdateManyWithoutAutoModelInput>
+  }
+
+  export type SalesOrderLineUpsertWithWhereUniqueWithoutAutoModelInput = {
+    where: SalesOrderLineWhereUniqueInput
+    update: XOR<SalesOrderLineUpdateWithoutAutoModelInput, SalesOrderLineUncheckedUpdateWithoutAutoModelInput>
+    create: XOR<SalesOrderLineCreateWithoutAutoModelInput, SalesOrderLineUncheckedCreateWithoutAutoModelInput>
+  }
+
+  export type SalesOrderLineUpdateWithWhereUniqueWithoutAutoModelInput = {
+    where: SalesOrderLineWhereUniqueInput
+    data: XOR<SalesOrderLineUpdateWithoutAutoModelInput, SalesOrderLineUncheckedUpdateWithoutAutoModelInput>
+  }
+
+  export type SalesOrderLineUpdateManyWithWhereWithoutAutoModelInput = {
+    where: SalesOrderLineScalarWhereInput
+    data: XOR<SalesOrderLineUpdateManyMutationInput, SalesOrderLineUncheckedUpdateManyWithoutAutoModelInput>
+  }
+
+  export type VendorBillLineUpsertWithWhereUniqueWithoutAutoModelInput = {
+    where: VendorBillLineWhereUniqueInput
+    update: XOR<VendorBillLineUpdateWithoutAutoModelInput, VendorBillLineUncheckedUpdateWithoutAutoModelInput>
+    create: XOR<VendorBillLineCreateWithoutAutoModelInput, VendorBillLineUncheckedCreateWithoutAutoModelInput>
+  }
+
+  export type VendorBillLineUpdateWithWhereUniqueWithoutAutoModelInput = {
+    where: VendorBillLineWhereUniqueInput
+    data: XOR<VendorBillLineUpdateWithoutAutoModelInput, VendorBillLineUncheckedUpdateWithoutAutoModelInput>
+  }
+
+  export type VendorBillLineUpdateManyWithWhereWithoutAutoModelInput = {
+    where: VendorBillLineScalarWhereInput
+    data: XOR<VendorBillLineUpdateManyMutationInput, VendorBillLineUncheckedUpdateManyWithoutAutoModelInput>
+  }
+
+  export type CustomerInvoiceLineUpsertWithWhereUniqueWithoutAutoModelInput = {
+    where: CustomerInvoiceLineWhereUniqueInput
+    update: XOR<CustomerInvoiceLineUpdateWithoutAutoModelInput, CustomerInvoiceLineUncheckedUpdateWithoutAutoModelInput>
+    create: XOR<CustomerInvoiceLineCreateWithoutAutoModelInput, CustomerInvoiceLineUncheckedCreateWithoutAutoModelInput>
+  }
+
+  export type CustomerInvoiceLineUpdateWithWhereUniqueWithoutAutoModelInput = {
+    where: CustomerInvoiceLineWhereUniqueInput
+    data: XOR<CustomerInvoiceLineUpdateWithoutAutoModelInput, CustomerInvoiceLineUncheckedUpdateWithoutAutoModelInput>
+  }
+
+  export type CustomerInvoiceLineUpdateManyWithWhereWithoutAutoModelInput = {
+    where: CustomerInvoiceLineScalarWhereInput
+    data: XOR<CustomerInvoiceLineUpdateManyMutationInput, CustomerInvoiceLineUncheckedUpdateManyWithoutAutoModelInput>
+  }
+
   export type AutoAnalyticModelCreateWithoutRulesInput = {
     id?: string
     name: string
@@ -51191,6 +59762,10 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     company: CompanyCreateNestedOneWithoutAutoAnalyticModelsInput
+    purchaseOrderLines?: PurchaseOrderLineCreateNestedManyWithoutAutoModelInput
+    salesOrderLines?: SalesOrderLineCreateNestedManyWithoutAutoModelInput
+    vendorBillLines?: VendorBillLineCreateNestedManyWithoutAutoModelInput
+    customerInvoiceLines?: CustomerInvoiceLineCreateNestedManyWithoutAutoModelInput
   }
 
   export type AutoAnalyticModelUncheckedCreateWithoutRulesInput = {
@@ -51200,6 +59775,10 @@ export namespace Prisma {
     priority?: number
     isActive?: boolean
     createdAt?: Date | string
+    purchaseOrderLines?: PurchaseOrderLineUncheckedCreateNestedManyWithoutAutoModelInput
+    salesOrderLines?: SalesOrderLineUncheckedCreateNestedManyWithoutAutoModelInput
+    vendorBillLines?: VendorBillLineUncheckedCreateNestedManyWithoutAutoModelInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutAutoModelInput
   }
 
   export type AutoAnalyticModelCreateOrConnectWithoutRulesInput = {
@@ -51294,6 +59873,7 @@ export namespace Prisma {
     customerInvoices?: CustomerInvoiceCreateNestedManyWithoutCustomerInput
     payments?: PaymentCreateNestedManyWithoutContactInput
     journalLines?: JournalLineCreateNestedManyWithoutContactInput
+    contactTags?: ContactTagAssignmentCreateNestedManyWithoutContactInput
     users?: UserCreateNestedManyWithoutContactInput
   }
 
@@ -51318,12 +59898,34 @@ export namespace Prisma {
     customerInvoices?: CustomerInvoiceUncheckedCreateNestedManyWithoutCustomerInput
     payments?: PaymentUncheckedCreateNestedManyWithoutContactInput
     journalLines?: JournalLineUncheckedCreateNestedManyWithoutContactInput
+    contactTags?: ContactTagAssignmentUncheckedCreateNestedManyWithoutContactInput
     users?: UserUncheckedCreateNestedManyWithoutContactInput
   }
 
   export type ContactCreateOrConnectWithoutAutoAnalyticRulesInput = {
     where: ContactWhereUniqueInput
     create: XOR<ContactCreateWithoutAutoAnalyticRulesInput, ContactUncheckedCreateWithoutAutoAnalyticRulesInput>
+  }
+
+  export type ContactTagCreateWithoutAutoAnalyticRulesInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    company: CompanyCreateNestedOneWithoutContactTagsInput
+    contacts?: ContactTagAssignmentCreateNestedManyWithoutTagInput
+  }
+
+  export type ContactTagUncheckedCreateWithoutAutoAnalyticRulesInput = {
+    id?: string
+    companyId: string
+    name: string
+    createdAt?: Date | string
+    contacts?: ContactTagAssignmentUncheckedCreateNestedManyWithoutTagInput
+  }
+
+  export type ContactTagCreateOrConnectWithoutAutoAnalyticRulesInput = {
+    where: ContactTagWhereUniqueInput
+    create: XOR<ContactTagCreateWithoutAutoAnalyticRulesInput, ContactTagUncheckedCreateWithoutAutoAnalyticRulesInput>
   }
 
   export type AnalyticAccountCreateWithoutAutoAnalyticRulesInput = {
@@ -51365,6 +59967,162 @@ export namespace Prisma {
     create: XOR<AnalyticAccountCreateWithoutAutoAnalyticRulesInput, AnalyticAccountUncheckedCreateWithoutAutoAnalyticRulesInput>
   }
 
+  export type PurchaseOrderLineCreateWithoutAutoRuleInput = {
+    id?: string
+    matchedFieldsCount?: number | null
+    description?: string | null
+    qty: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+    purchaseOrder: PurchaseOrderCreateNestedOneWithoutLinesInput
+    product: ProductCreateNestedOneWithoutPoLinesInput
+    analytic?: AnalyticAccountCreateNestedOneWithoutPoLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutPurchaseOrderLinesInput
+  }
+
+  export type PurchaseOrderLineUncheckedCreateWithoutAutoRuleInput = {
+    id?: string
+    purchaseOrderId: string
+    productId: string
+    analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    matchedFieldsCount?: number | null
+    description?: string | null
+    qty: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+  }
+
+  export type PurchaseOrderLineCreateOrConnectWithoutAutoRuleInput = {
+    where: PurchaseOrderLineWhereUniqueInput
+    create: XOR<PurchaseOrderLineCreateWithoutAutoRuleInput, PurchaseOrderLineUncheckedCreateWithoutAutoRuleInput>
+  }
+
+  export type PurchaseOrderLineCreateManyAutoRuleInputEnvelope = {
+    data: PurchaseOrderLineCreateManyAutoRuleInput | PurchaseOrderLineCreateManyAutoRuleInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SalesOrderLineCreateWithoutAutoRuleInput = {
+    id?: string
+    matchedFieldsCount?: number | null
+    description?: string | null
+    qty: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+    salesOrder: SalesOrderCreateNestedOneWithoutLinesInput
+    product: ProductCreateNestedOneWithoutSoLinesInput
+    analytic?: AnalyticAccountCreateNestedOneWithoutSoLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutSalesOrderLinesInput
+  }
+
+  export type SalesOrderLineUncheckedCreateWithoutAutoRuleInput = {
+    id?: string
+    salesOrderId: string
+    productId: string
+    analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    matchedFieldsCount?: number | null
+    description?: string | null
+    qty: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+  }
+
+  export type SalesOrderLineCreateOrConnectWithoutAutoRuleInput = {
+    where: SalesOrderLineWhereUniqueInput
+    create: XOR<SalesOrderLineCreateWithoutAutoRuleInput, SalesOrderLineUncheckedCreateWithoutAutoRuleInput>
+  }
+
+  export type SalesOrderLineCreateManyAutoRuleInputEnvelope = {
+    data: SalesOrderLineCreateManyAutoRuleInput | SalesOrderLineCreateManyAutoRuleInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type VendorBillLineCreateWithoutAutoRuleInput = {
+    id?: string
+    matchedFieldsCount?: number | null
+    description?: string | null
+    qty?: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+    bill: VendorBillCreateNestedOneWithoutLinesInput
+    product?: ProductCreateNestedOneWithoutBillLinesInput
+    analytic?: AnalyticAccountCreateNestedOneWithoutBillLinesInput
+    gl?: GLAccountCreateNestedOneWithoutBillLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutVendorBillLinesInput
+  }
+
+  export type VendorBillLineUncheckedCreateWithoutAutoRuleInput = {
+    id?: string
+    vendorBillId: string
+    productId?: string | null
+    analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    matchedFieldsCount?: number | null
+    glAccountId?: string | null
+    description?: string | null
+    qty?: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+  }
+
+  export type VendorBillLineCreateOrConnectWithoutAutoRuleInput = {
+    where: VendorBillLineWhereUniqueInput
+    create: XOR<VendorBillLineCreateWithoutAutoRuleInput, VendorBillLineUncheckedCreateWithoutAutoRuleInput>
+  }
+
+  export type VendorBillLineCreateManyAutoRuleInputEnvelope = {
+    data: VendorBillLineCreateManyAutoRuleInput | VendorBillLineCreateManyAutoRuleInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CustomerInvoiceLineCreateWithoutAutoRuleInput = {
+    id?: string
+    matchedFieldsCount?: number | null
+    description?: string | null
+    qty?: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+    invoice: CustomerInvoiceCreateNestedOneWithoutLinesInput
+    product?: ProductCreateNestedOneWithoutInvLinesInput
+    analytic?: AnalyticAccountCreateNestedOneWithoutInvLinesInput
+    gl?: GLAccountCreateNestedOneWithoutInvLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutCustomerInvoiceLinesInput
+  }
+
+  export type CustomerInvoiceLineUncheckedCreateWithoutAutoRuleInput = {
+    id?: string
+    customerInvoiceId: string
+    productId?: string | null
+    analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    matchedFieldsCount?: number | null
+    glAccountId?: string | null
+    description?: string | null
+    qty?: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+  }
+
+  export type CustomerInvoiceLineCreateOrConnectWithoutAutoRuleInput = {
+    where: CustomerInvoiceLineWhereUniqueInput
+    create: XOR<CustomerInvoiceLineCreateWithoutAutoRuleInput, CustomerInvoiceLineUncheckedCreateWithoutAutoRuleInput>
+  }
+
+  export type CustomerInvoiceLineCreateManyAutoRuleInputEnvelope = {
+    data: CustomerInvoiceLineCreateManyAutoRuleInput | CustomerInvoiceLineCreateManyAutoRuleInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AutoAnalyticModelUpsertWithoutRulesInput = {
     update: XOR<AutoAnalyticModelUpdateWithoutRulesInput, AutoAnalyticModelUncheckedUpdateWithoutRulesInput>
     create: XOR<AutoAnalyticModelCreateWithoutRulesInput, AutoAnalyticModelUncheckedCreateWithoutRulesInput>
@@ -51383,6 +60141,10 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutAutoAnalyticModelsNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUpdateManyWithoutAutoModelNestedInput
+    salesOrderLines?: SalesOrderLineUpdateManyWithoutAutoModelNestedInput
+    vendorBillLines?: VendorBillLineUpdateManyWithoutAutoModelNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUpdateManyWithoutAutoModelNestedInput
   }
 
   export type AutoAnalyticModelUncheckedUpdateWithoutRulesInput = {
@@ -51392,6 +60154,10 @@ export namespace Prisma {
     priority?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    purchaseOrderLines?: PurchaseOrderLineUncheckedUpdateManyWithoutAutoModelNestedInput
+    salesOrderLines?: SalesOrderLineUncheckedUpdateManyWithoutAutoModelNestedInput
+    vendorBillLines?: VendorBillLineUncheckedUpdateManyWithoutAutoModelNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedUpdateManyWithoutAutoModelNestedInput
   }
 
   export type ProductUpsertWithoutAutoAnalyticRulesInput = {
@@ -51504,6 +60270,7 @@ export namespace Prisma {
     customerInvoices?: CustomerInvoiceUpdateManyWithoutCustomerNestedInput
     payments?: PaymentUpdateManyWithoutContactNestedInput
     journalLines?: JournalLineUpdateManyWithoutContactNestedInput
+    contactTags?: ContactTagAssignmentUpdateManyWithoutContactNestedInput
     users?: UserUpdateManyWithoutContactNestedInput
   }
 
@@ -51528,7 +60295,35 @@ export namespace Prisma {
     customerInvoices?: CustomerInvoiceUncheckedUpdateManyWithoutCustomerNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutContactNestedInput
     journalLines?: JournalLineUncheckedUpdateManyWithoutContactNestedInput
+    contactTags?: ContactTagAssignmentUncheckedUpdateManyWithoutContactNestedInput
     users?: UserUncheckedUpdateManyWithoutContactNestedInput
+  }
+
+  export type ContactTagUpsertWithoutAutoAnalyticRulesInput = {
+    update: XOR<ContactTagUpdateWithoutAutoAnalyticRulesInput, ContactTagUncheckedUpdateWithoutAutoAnalyticRulesInput>
+    create: XOR<ContactTagCreateWithoutAutoAnalyticRulesInput, ContactTagUncheckedCreateWithoutAutoAnalyticRulesInput>
+    where?: ContactTagWhereInput
+  }
+
+  export type ContactTagUpdateToOneWithWhereWithoutAutoAnalyticRulesInput = {
+    where?: ContactTagWhereInput
+    data: XOR<ContactTagUpdateWithoutAutoAnalyticRulesInput, ContactTagUncheckedUpdateWithoutAutoAnalyticRulesInput>
+  }
+
+  export type ContactTagUpdateWithoutAutoAnalyticRulesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutContactTagsNestedInput
+    contacts?: ContactTagAssignmentUpdateManyWithoutTagNestedInput
+  }
+
+  export type ContactTagUncheckedUpdateWithoutAutoAnalyticRulesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contacts?: ContactTagAssignmentUncheckedUpdateManyWithoutTagNestedInput
   }
 
   export type AnalyticAccountUpsertWithoutAutoAnalyticRulesInput = {
@@ -51576,11 +60371,76 @@ export namespace Prisma {
     invLines?: CustomerInvoiceLineUncheckedUpdateManyWithoutAnalyticNestedInput
   }
 
+  export type PurchaseOrderLineUpsertWithWhereUniqueWithoutAutoRuleInput = {
+    where: PurchaseOrderLineWhereUniqueInput
+    update: XOR<PurchaseOrderLineUpdateWithoutAutoRuleInput, PurchaseOrderLineUncheckedUpdateWithoutAutoRuleInput>
+    create: XOR<PurchaseOrderLineCreateWithoutAutoRuleInput, PurchaseOrderLineUncheckedCreateWithoutAutoRuleInput>
+  }
+
+  export type PurchaseOrderLineUpdateWithWhereUniqueWithoutAutoRuleInput = {
+    where: PurchaseOrderLineWhereUniqueInput
+    data: XOR<PurchaseOrderLineUpdateWithoutAutoRuleInput, PurchaseOrderLineUncheckedUpdateWithoutAutoRuleInput>
+  }
+
+  export type PurchaseOrderLineUpdateManyWithWhereWithoutAutoRuleInput = {
+    where: PurchaseOrderLineScalarWhereInput
+    data: XOR<PurchaseOrderLineUpdateManyMutationInput, PurchaseOrderLineUncheckedUpdateManyWithoutAutoRuleInput>
+  }
+
+  export type SalesOrderLineUpsertWithWhereUniqueWithoutAutoRuleInput = {
+    where: SalesOrderLineWhereUniqueInput
+    update: XOR<SalesOrderLineUpdateWithoutAutoRuleInput, SalesOrderLineUncheckedUpdateWithoutAutoRuleInput>
+    create: XOR<SalesOrderLineCreateWithoutAutoRuleInput, SalesOrderLineUncheckedCreateWithoutAutoRuleInput>
+  }
+
+  export type SalesOrderLineUpdateWithWhereUniqueWithoutAutoRuleInput = {
+    where: SalesOrderLineWhereUniqueInput
+    data: XOR<SalesOrderLineUpdateWithoutAutoRuleInput, SalesOrderLineUncheckedUpdateWithoutAutoRuleInput>
+  }
+
+  export type SalesOrderLineUpdateManyWithWhereWithoutAutoRuleInput = {
+    where: SalesOrderLineScalarWhereInput
+    data: XOR<SalesOrderLineUpdateManyMutationInput, SalesOrderLineUncheckedUpdateManyWithoutAutoRuleInput>
+  }
+
+  export type VendorBillLineUpsertWithWhereUniqueWithoutAutoRuleInput = {
+    where: VendorBillLineWhereUniqueInput
+    update: XOR<VendorBillLineUpdateWithoutAutoRuleInput, VendorBillLineUncheckedUpdateWithoutAutoRuleInput>
+    create: XOR<VendorBillLineCreateWithoutAutoRuleInput, VendorBillLineUncheckedCreateWithoutAutoRuleInput>
+  }
+
+  export type VendorBillLineUpdateWithWhereUniqueWithoutAutoRuleInput = {
+    where: VendorBillLineWhereUniqueInput
+    data: XOR<VendorBillLineUpdateWithoutAutoRuleInput, VendorBillLineUncheckedUpdateWithoutAutoRuleInput>
+  }
+
+  export type VendorBillLineUpdateManyWithWhereWithoutAutoRuleInput = {
+    where: VendorBillLineScalarWhereInput
+    data: XOR<VendorBillLineUpdateManyMutationInput, VendorBillLineUncheckedUpdateManyWithoutAutoRuleInput>
+  }
+
+  export type CustomerInvoiceLineUpsertWithWhereUniqueWithoutAutoRuleInput = {
+    where: CustomerInvoiceLineWhereUniqueInput
+    update: XOR<CustomerInvoiceLineUpdateWithoutAutoRuleInput, CustomerInvoiceLineUncheckedUpdateWithoutAutoRuleInput>
+    create: XOR<CustomerInvoiceLineCreateWithoutAutoRuleInput, CustomerInvoiceLineUncheckedCreateWithoutAutoRuleInput>
+  }
+
+  export type CustomerInvoiceLineUpdateWithWhereUniqueWithoutAutoRuleInput = {
+    where: CustomerInvoiceLineWhereUniqueInput
+    data: XOR<CustomerInvoiceLineUpdateWithoutAutoRuleInput, CustomerInvoiceLineUncheckedUpdateWithoutAutoRuleInput>
+  }
+
+  export type CustomerInvoiceLineUpdateManyWithWhereWithoutAutoRuleInput = {
+    where: CustomerInvoiceLineScalarWhereInput
+    data: XOR<CustomerInvoiceLineUpdateManyMutationInput, CustomerInvoiceLineUncheckedUpdateManyWithoutAutoRuleInput>
+  }
+
   export type CompanyCreateWithoutPurchaseOrdersInput = {
     id?: string
     name: string
     createdAt?: Date | string
     contacts?: ContactCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryCreateNestedManyWithoutCompanyInput
     products?: ProductCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountCreateNestedManyWithoutCompanyInput
@@ -51600,6 +60460,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactUncheckedCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagUncheckedCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryUncheckedCreateNestedManyWithoutCompanyInput
     products?: ProductUncheckedCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountUncheckedCreateNestedManyWithoutCompanyInput
@@ -51640,6 +60501,7 @@ export namespace Prisma {
     payments?: PaymentCreateNestedManyWithoutContactInput
     journalLines?: JournalLineCreateNestedManyWithoutContactInput
     autoAnalyticRules?: AutoAnalyticRuleCreateNestedManyWithoutContactInput
+    contactTags?: ContactTagAssignmentCreateNestedManyWithoutContactInput
     users?: UserCreateNestedManyWithoutContactInput
   }
 
@@ -51664,6 +60526,7 @@ export namespace Prisma {
     payments?: PaymentUncheckedCreateNestedManyWithoutContactInput
     journalLines?: JournalLineUncheckedCreateNestedManyWithoutContactInput
     autoAnalyticRules?: AutoAnalyticRuleUncheckedCreateNestedManyWithoutContactInput
+    contactTags?: ContactTagAssignmentUncheckedCreateNestedManyWithoutContactInput
     users?: UserUncheckedCreateNestedManyWithoutContactInput
   }
 
@@ -51674,6 +60537,7 @@ export namespace Prisma {
 
   export type PurchaseOrderLineCreateWithoutPurchaseOrderInput = {
     id?: string
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -51681,12 +60545,17 @@ export namespace Prisma {
     lineTotal: Decimal | DecimalJsLike | number | string
     product: ProductCreateNestedOneWithoutPoLinesInput
     analytic?: AnalyticAccountCreateNestedOneWithoutPoLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutPurchaseOrderLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutPurchaseOrderLinesInput
   }
 
   export type PurchaseOrderLineUncheckedCreateWithoutPurchaseOrderInput = {
     id?: string
     productId: string
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -51718,6 +60587,7 @@ export namespace Prisma {
     company: CompanyCreateNestedOneWithoutVendorBillsInput
     vendor: ContactCreateNestedOneWithoutVendorBillsInput
     lines?: VendorBillLineCreateNestedManyWithoutBillInput
+    payments?: VendorBillPaymentCreateNestedManyWithoutBillInput
   }
 
   export type VendorBillUncheckedCreateWithoutPoInput = {
@@ -51734,6 +60604,7 @@ export namespace Prisma {
     paymentState?: string
     createdAt?: Date | string
     lines?: VendorBillLineUncheckedCreateNestedManyWithoutBillInput
+    payments?: VendorBillPaymentUncheckedCreateNestedManyWithoutBillInput
   }
 
   export type VendorBillCreateOrConnectWithoutPoInput = {
@@ -51762,6 +60633,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUpdateManyWithoutCompanyNestedInput
     products?: ProductUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUpdateManyWithoutCompanyNestedInput
@@ -51781,6 +60653,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUncheckedUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUncheckedUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUncheckedUpdateManyWithoutCompanyNestedInput
     products?: ProductUncheckedUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUncheckedUpdateManyWithoutCompanyNestedInput
@@ -51827,6 +60700,7 @@ export namespace Prisma {
     payments?: PaymentUpdateManyWithoutContactNestedInput
     journalLines?: JournalLineUpdateManyWithoutContactNestedInput
     autoAnalyticRules?: AutoAnalyticRuleUpdateManyWithoutContactNestedInput
+    contactTags?: ContactTagAssignmentUpdateManyWithoutContactNestedInput
     users?: UserUpdateManyWithoutContactNestedInput
   }
 
@@ -51851,6 +60725,7 @@ export namespace Prisma {
     payments?: PaymentUncheckedUpdateManyWithoutContactNestedInput
     journalLines?: JournalLineUncheckedUpdateManyWithoutContactNestedInput
     autoAnalyticRules?: AutoAnalyticRuleUncheckedUpdateManyWithoutContactNestedInput
+    contactTags?: ContactTagAssignmentUncheckedUpdateManyWithoutContactNestedInput
     users?: UserUncheckedUpdateManyWithoutContactNestedInput
   }
 
@@ -52001,6 +60876,74 @@ export namespace Prisma {
     create: XOR<AnalyticAccountCreateWithoutPoLinesInput, AnalyticAccountUncheckedCreateWithoutPoLinesInput>
   }
 
+  export type AutoAnalyticModelCreateWithoutPurchaseOrderLinesInput = {
+    id?: string
+    name: string
+    priority?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    company: CompanyCreateNestedOneWithoutAutoAnalyticModelsInput
+    rules?: AutoAnalyticRuleCreateNestedManyWithoutModelInput
+    salesOrderLines?: SalesOrderLineCreateNestedManyWithoutAutoModelInput
+    vendorBillLines?: VendorBillLineCreateNestedManyWithoutAutoModelInput
+    customerInvoiceLines?: CustomerInvoiceLineCreateNestedManyWithoutAutoModelInput
+  }
+
+  export type AutoAnalyticModelUncheckedCreateWithoutPurchaseOrderLinesInput = {
+    id?: string
+    companyId: string
+    name: string
+    priority?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    rules?: AutoAnalyticRuleUncheckedCreateNestedManyWithoutModelInput
+    salesOrderLines?: SalesOrderLineUncheckedCreateNestedManyWithoutAutoModelInput
+    vendorBillLines?: VendorBillLineUncheckedCreateNestedManyWithoutAutoModelInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutAutoModelInput
+  }
+
+  export type AutoAnalyticModelCreateOrConnectWithoutPurchaseOrderLinesInput = {
+    where: AutoAnalyticModelWhereUniqueInput
+    create: XOR<AutoAnalyticModelCreateWithoutPurchaseOrderLinesInput, AutoAnalyticModelUncheckedCreateWithoutPurchaseOrderLinesInput>
+  }
+
+  export type AutoAnalyticRuleCreateWithoutPurchaseOrderLinesInput = {
+    id?: string
+    docType: $Enums.AutoDocType
+    rulePriority?: number
+    isActive?: boolean
+    model: AutoAnalyticModelCreateNestedOneWithoutRulesInput
+    product?: ProductCreateNestedOneWithoutAutoAnalyticRulesInput
+    category?: ProductCategoryCreateNestedOneWithoutAutoAnalyticRulesInput
+    contact?: ContactCreateNestedOneWithoutAutoAnalyticRulesInput
+    contactTag?: ContactTagCreateNestedOneWithoutAutoAnalyticRulesInput
+    assignAnalytic: AnalyticAccountCreateNestedOneWithoutAutoAnalyticRulesInput
+    salesOrderLines?: SalesOrderLineCreateNestedManyWithoutAutoRuleInput
+    vendorBillLines?: VendorBillLineCreateNestedManyWithoutAutoRuleInput
+    customerInvoiceLines?: CustomerInvoiceLineCreateNestedManyWithoutAutoRuleInput
+  }
+
+  export type AutoAnalyticRuleUncheckedCreateWithoutPurchaseOrderLinesInput = {
+    id?: string
+    modelId: string
+    docType: $Enums.AutoDocType
+    matchProductId?: string | null
+    matchCategoryId?: string | null
+    matchContactId?: string | null
+    matchContactTagId?: string | null
+    assignAnalyticAccountId: string
+    rulePriority?: number
+    isActive?: boolean
+    salesOrderLines?: SalesOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    vendorBillLines?: VendorBillLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutAutoRuleInput
+  }
+
+  export type AutoAnalyticRuleCreateOrConnectWithoutPurchaseOrderLinesInput = {
+    where: AutoAnalyticRuleWhereUniqueInput
+    create: XOR<AutoAnalyticRuleCreateWithoutPurchaseOrderLinesInput, AutoAnalyticRuleUncheckedCreateWithoutPurchaseOrderLinesInput>
+  }
+
   export type PurchaseOrderUpsertWithoutLinesInput = {
     update: XOR<PurchaseOrderUpdateWithoutLinesInput, PurchaseOrderUncheckedUpdateWithoutLinesInput>
     create: XOR<PurchaseOrderCreateWithoutLinesInput, PurchaseOrderUncheckedCreateWithoutLinesInput>
@@ -52134,11 +61077,92 @@ export namespace Prisma {
     autoAnalyticRules?: AutoAnalyticRuleUncheckedUpdateManyWithoutAssignAnalyticNestedInput
   }
 
+  export type AutoAnalyticModelUpsertWithoutPurchaseOrderLinesInput = {
+    update: XOR<AutoAnalyticModelUpdateWithoutPurchaseOrderLinesInput, AutoAnalyticModelUncheckedUpdateWithoutPurchaseOrderLinesInput>
+    create: XOR<AutoAnalyticModelCreateWithoutPurchaseOrderLinesInput, AutoAnalyticModelUncheckedCreateWithoutPurchaseOrderLinesInput>
+    where?: AutoAnalyticModelWhereInput
+  }
+
+  export type AutoAnalyticModelUpdateToOneWithWhereWithoutPurchaseOrderLinesInput = {
+    where?: AutoAnalyticModelWhereInput
+    data: XOR<AutoAnalyticModelUpdateWithoutPurchaseOrderLinesInput, AutoAnalyticModelUncheckedUpdateWithoutPurchaseOrderLinesInput>
+  }
+
+  export type AutoAnalyticModelUpdateWithoutPurchaseOrderLinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    priority?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutAutoAnalyticModelsNestedInput
+    rules?: AutoAnalyticRuleUpdateManyWithoutModelNestedInput
+    salesOrderLines?: SalesOrderLineUpdateManyWithoutAutoModelNestedInput
+    vendorBillLines?: VendorBillLineUpdateManyWithoutAutoModelNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUpdateManyWithoutAutoModelNestedInput
+  }
+
+  export type AutoAnalyticModelUncheckedUpdateWithoutPurchaseOrderLinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    priority?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rules?: AutoAnalyticRuleUncheckedUpdateManyWithoutModelNestedInput
+    salesOrderLines?: SalesOrderLineUncheckedUpdateManyWithoutAutoModelNestedInput
+    vendorBillLines?: VendorBillLineUncheckedUpdateManyWithoutAutoModelNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedUpdateManyWithoutAutoModelNestedInput
+  }
+
+  export type AutoAnalyticRuleUpsertWithoutPurchaseOrderLinesInput = {
+    update: XOR<AutoAnalyticRuleUpdateWithoutPurchaseOrderLinesInput, AutoAnalyticRuleUncheckedUpdateWithoutPurchaseOrderLinesInput>
+    create: XOR<AutoAnalyticRuleCreateWithoutPurchaseOrderLinesInput, AutoAnalyticRuleUncheckedCreateWithoutPurchaseOrderLinesInput>
+    where?: AutoAnalyticRuleWhereInput
+  }
+
+  export type AutoAnalyticRuleUpdateToOneWithWhereWithoutPurchaseOrderLinesInput = {
+    where?: AutoAnalyticRuleWhereInput
+    data: XOR<AutoAnalyticRuleUpdateWithoutPurchaseOrderLinesInput, AutoAnalyticRuleUncheckedUpdateWithoutPurchaseOrderLinesInput>
+  }
+
+  export type AutoAnalyticRuleUpdateWithoutPurchaseOrderLinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docType?: EnumAutoDocTypeFieldUpdateOperationsInput | $Enums.AutoDocType
+    rulePriority?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    model?: AutoAnalyticModelUpdateOneRequiredWithoutRulesNestedInput
+    product?: ProductUpdateOneWithoutAutoAnalyticRulesNestedInput
+    category?: ProductCategoryUpdateOneWithoutAutoAnalyticRulesNestedInput
+    contact?: ContactUpdateOneWithoutAutoAnalyticRulesNestedInput
+    contactTag?: ContactTagUpdateOneWithoutAutoAnalyticRulesNestedInput
+    assignAnalytic?: AnalyticAccountUpdateOneRequiredWithoutAutoAnalyticRulesNestedInput
+    salesOrderLines?: SalesOrderLineUpdateManyWithoutAutoRuleNestedInput
+    vendorBillLines?: VendorBillLineUpdateManyWithoutAutoRuleNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUpdateManyWithoutAutoRuleNestedInput
+  }
+
+  export type AutoAnalyticRuleUncheckedUpdateWithoutPurchaseOrderLinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    modelId?: StringFieldUpdateOperationsInput | string
+    docType?: EnumAutoDocTypeFieldUpdateOperationsInput | $Enums.AutoDocType
+    matchProductId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    assignAnalyticAccountId?: StringFieldUpdateOperationsInput | string
+    rulePriority?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    salesOrderLines?: SalesOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    vendorBillLines?: VendorBillLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+  }
+
   export type CompanyCreateWithoutSalesOrdersInput = {
     id?: string
     name: string
     createdAt?: Date | string
     contacts?: ContactCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryCreateNestedManyWithoutCompanyInput
     products?: ProductCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountCreateNestedManyWithoutCompanyInput
@@ -52158,6 +61182,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactUncheckedCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagUncheckedCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryUncheckedCreateNestedManyWithoutCompanyInput
     products?: ProductUncheckedCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountUncheckedCreateNestedManyWithoutCompanyInput
@@ -52198,6 +61223,7 @@ export namespace Prisma {
     payments?: PaymentCreateNestedManyWithoutContactInput
     journalLines?: JournalLineCreateNestedManyWithoutContactInput
     autoAnalyticRules?: AutoAnalyticRuleCreateNestedManyWithoutContactInput
+    contactTags?: ContactTagAssignmentCreateNestedManyWithoutContactInput
     users?: UserCreateNestedManyWithoutContactInput
   }
 
@@ -52222,6 +61248,7 @@ export namespace Prisma {
     payments?: PaymentUncheckedCreateNestedManyWithoutContactInput
     journalLines?: JournalLineUncheckedCreateNestedManyWithoutContactInput
     autoAnalyticRules?: AutoAnalyticRuleUncheckedCreateNestedManyWithoutContactInput
+    contactTags?: ContactTagAssignmentUncheckedCreateNestedManyWithoutContactInput
     users?: UserUncheckedCreateNestedManyWithoutContactInput
   }
 
@@ -52232,6 +61259,7 @@ export namespace Prisma {
 
   export type SalesOrderLineCreateWithoutSalesOrderInput = {
     id?: string
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -52239,12 +61267,17 @@ export namespace Prisma {
     lineTotal: Decimal | DecimalJsLike | number | string
     product: ProductCreateNestedOneWithoutSoLinesInput
     analytic?: AnalyticAccountCreateNestedOneWithoutSoLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutSalesOrderLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutSalesOrderLinesInput
   }
 
   export type SalesOrderLineUncheckedCreateWithoutSalesOrderInput = {
     id?: string
     productId: string
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -52277,6 +61310,7 @@ export namespace Prisma {
     company: CompanyCreateNestedOneWithoutCustomerInvoicesInput
     customer: ContactCreateNestedOneWithoutCustomerInvoicesInput
     lines?: CustomerInvoiceLineCreateNestedManyWithoutInvoiceInput
+    payments?: CustomerInvoicePaymentCreateNestedManyWithoutInvoiceInput
   }
 
   export type CustomerInvoiceUncheckedCreateWithoutSoInput = {
@@ -52294,6 +61328,7 @@ export namespace Prisma {
     portalVisible?: boolean
     createdAt?: Date | string
     lines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutInvoiceInput
+    payments?: CustomerInvoicePaymentUncheckedCreateNestedManyWithoutInvoiceInput
   }
 
   export type CustomerInvoiceCreateOrConnectWithoutSoInput = {
@@ -52322,6 +61357,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUpdateManyWithoutCompanyNestedInput
     products?: ProductUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUpdateManyWithoutCompanyNestedInput
@@ -52341,6 +61377,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUncheckedUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUncheckedUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUncheckedUpdateManyWithoutCompanyNestedInput
     products?: ProductUncheckedUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUncheckedUpdateManyWithoutCompanyNestedInput
@@ -52387,6 +61424,7 @@ export namespace Prisma {
     payments?: PaymentUpdateManyWithoutContactNestedInput
     journalLines?: JournalLineUpdateManyWithoutContactNestedInput
     autoAnalyticRules?: AutoAnalyticRuleUpdateManyWithoutContactNestedInput
+    contactTags?: ContactTagAssignmentUpdateManyWithoutContactNestedInput
     users?: UserUpdateManyWithoutContactNestedInput
   }
 
@@ -52411,6 +61449,7 @@ export namespace Prisma {
     payments?: PaymentUncheckedUpdateManyWithoutContactNestedInput
     journalLines?: JournalLineUncheckedUpdateManyWithoutContactNestedInput
     autoAnalyticRules?: AutoAnalyticRuleUncheckedUpdateManyWithoutContactNestedInput
+    contactTags?: ContactTagAssignmentUncheckedUpdateManyWithoutContactNestedInput
     users?: UserUncheckedUpdateManyWithoutContactNestedInput
   }
 
@@ -52561,6 +61600,74 @@ export namespace Prisma {
     create: XOR<AnalyticAccountCreateWithoutSoLinesInput, AnalyticAccountUncheckedCreateWithoutSoLinesInput>
   }
 
+  export type AutoAnalyticModelCreateWithoutSalesOrderLinesInput = {
+    id?: string
+    name: string
+    priority?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    company: CompanyCreateNestedOneWithoutAutoAnalyticModelsInput
+    rules?: AutoAnalyticRuleCreateNestedManyWithoutModelInput
+    purchaseOrderLines?: PurchaseOrderLineCreateNestedManyWithoutAutoModelInput
+    vendorBillLines?: VendorBillLineCreateNestedManyWithoutAutoModelInput
+    customerInvoiceLines?: CustomerInvoiceLineCreateNestedManyWithoutAutoModelInput
+  }
+
+  export type AutoAnalyticModelUncheckedCreateWithoutSalesOrderLinesInput = {
+    id?: string
+    companyId: string
+    name: string
+    priority?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    rules?: AutoAnalyticRuleUncheckedCreateNestedManyWithoutModelInput
+    purchaseOrderLines?: PurchaseOrderLineUncheckedCreateNestedManyWithoutAutoModelInput
+    vendorBillLines?: VendorBillLineUncheckedCreateNestedManyWithoutAutoModelInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutAutoModelInput
+  }
+
+  export type AutoAnalyticModelCreateOrConnectWithoutSalesOrderLinesInput = {
+    where: AutoAnalyticModelWhereUniqueInput
+    create: XOR<AutoAnalyticModelCreateWithoutSalesOrderLinesInput, AutoAnalyticModelUncheckedCreateWithoutSalesOrderLinesInput>
+  }
+
+  export type AutoAnalyticRuleCreateWithoutSalesOrderLinesInput = {
+    id?: string
+    docType: $Enums.AutoDocType
+    rulePriority?: number
+    isActive?: boolean
+    model: AutoAnalyticModelCreateNestedOneWithoutRulesInput
+    product?: ProductCreateNestedOneWithoutAutoAnalyticRulesInput
+    category?: ProductCategoryCreateNestedOneWithoutAutoAnalyticRulesInput
+    contact?: ContactCreateNestedOneWithoutAutoAnalyticRulesInput
+    contactTag?: ContactTagCreateNestedOneWithoutAutoAnalyticRulesInput
+    assignAnalytic: AnalyticAccountCreateNestedOneWithoutAutoAnalyticRulesInput
+    purchaseOrderLines?: PurchaseOrderLineCreateNestedManyWithoutAutoRuleInput
+    vendorBillLines?: VendorBillLineCreateNestedManyWithoutAutoRuleInput
+    customerInvoiceLines?: CustomerInvoiceLineCreateNestedManyWithoutAutoRuleInput
+  }
+
+  export type AutoAnalyticRuleUncheckedCreateWithoutSalesOrderLinesInput = {
+    id?: string
+    modelId: string
+    docType: $Enums.AutoDocType
+    matchProductId?: string | null
+    matchCategoryId?: string | null
+    matchContactId?: string | null
+    matchContactTagId?: string | null
+    assignAnalyticAccountId: string
+    rulePriority?: number
+    isActive?: boolean
+    purchaseOrderLines?: PurchaseOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    vendorBillLines?: VendorBillLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutAutoRuleInput
+  }
+
+  export type AutoAnalyticRuleCreateOrConnectWithoutSalesOrderLinesInput = {
+    where: AutoAnalyticRuleWhereUniqueInput
+    create: XOR<AutoAnalyticRuleCreateWithoutSalesOrderLinesInput, AutoAnalyticRuleUncheckedCreateWithoutSalesOrderLinesInput>
+  }
+
   export type SalesOrderUpsertWithoutLinesInput = {
     update: XOR<SalesOrderUpdateWithoutLinesInput, SalesOrderUncheckedUpdateWithoutLinesInput>
     create: XOR<SalesOrderCreateWithoutLinesInput, SalesOrderUncheckedCreateWithoutLinesInput>
@@ -52694,11 +61801,92 @@ export namespace Prisma {
     autoAnalyticRules?: AutoAnalyticRuleUncheckedUpdateManyWithoutAssignAnalyticNestedInput
   }
 
+  export type AutoAnalyticModelUpsertWithoutSalesOrderLinesInput = {
+    update: XOR<AutoAnalyticModelUpdateWithoutSalesOrderLinesInput, AutoAnalyticModelUncheckedUpdateWithoutSalesOrderLinesInput>
+    create: XOR<AutoAnalyticModelCreateWithoutSalesOrderLinesInput, AutoAnalyticModelUncheckedCreateWithoutSalesOrderLinesInput>
+    where?: AutoAnalyticModelWhereInput
+  }
+
+  export type AutoAnalyticModelUpdateToOneWithWhereWithoutSalesOrderLinesInput = {
+    where?: AutoAnalyticModelWhereInput
+    data: XOR<AutoAnalyticModelUpdateWithoutSalesOrderLinesInput, AutoAnalyticModelUncheckedUpdateWithoutSalesOrderLinesInput>
+  }
+
+  export type AutoAnalyticModelUpdateWithoutSalesOrderLinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    priority?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutAutoAnalyticModelsNestedInput
+    rules?: AutoAnalyticRuleUpdateManyWithoutModelNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUpdateManyWithoutAutoModelNestedInput
+    vendorBillLines?: VendorBillLineUpdateManyWithoutAutoModelNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUpdateManyWithoutAutoModelNestedInput
+  }
+
+  export type AutoAnalyticModelUncheckedUpdateWithoutSalesOrderLinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    priority?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rules?: AutoAnalyticRuleUncheckedUpdateManyWithoutModelNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUncheckedUpdateManyWithoutAutoModelNestedInput
+    vendorBillLines?: VendorBillLineUncheckedUpdateManyWithoutAutoModelNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedUpdateManyWithoutAutoModelNestedInput
+  }
+
+  export type AutoAnalyticRuleUpsertWithoutSalesOrderLinesInput = {
+    update: XOR<AutoAnalyticRuleUpdateWithoutSalesOrderLinesInput, AutoAnalyticRuleUncheckedUpdateWithoutSalesOrderLinesInput>
+    create: XOR<AutoAnalyticRuleCreateWithoutSalesOrderLinesInput, AutoAnalyticRuleUncheckedCreateWithoutSalesOrderLinesInput>
+    where?: AutoAnalyticRuleWhereInput
+  }
+
+  export type AutoAnalyticRuleUpdateToOneWithWhereWithoutSalesOrderLinesInput = {
+    where?: AutoAnalyticRuleWhereInput
+    data: XOR<AutoAnalyticRuleUpdateWithoutSalesOrderLinesInput, AutoAnalyticRuleUncheckedUpdateWithoutSalesOrderLinesInput>
+  }
+
+  export type AutoAnalyticRuleUpdateWithoutSalesOrderLinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docType?: EnumAutoDocTypeFieldUpdateOperationsInput | $Enums.AutoDocType
+    rulePriority?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    model?: AutoAnalyticModelUpdateOneRequiredWithoutRulesNestedInput
+    product?: ProductUpdateOneWithoutAutoAnalyticRulesNestedInput
+    category?: ProductCategoryUpdateOneWithoutAutoAnalyticRulesNestedInput
+    contact?: ContactUpdateOneWithoutAutoAnalyticRulesNestedInput
+    contactTag?: ContactTagUpdateOneWithoutAutoAnalyticRulesNestedInput
+    assignAnalytic?: AnalyticAccountUpdateOneRequiredWithoutAutoAnalyticRulesNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUpdateManyWithoutAutoRuleNestedInput
+    vendorBillLines?: VendorBillLineUpdateManyWithoutAutoRuleNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUpdateManyWithoutAutoRuleNestedInput
+  }
+
+  export type AutoAnalyticRuleUncheckedUpdateWithoutSalesOrderLinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    modelId?: StringFieldUpdateOperationsInput | string
+    docType?: EnumAutoDocTypeFieldUpdateOperationsInput | $Enums.AutoDocType
+    matchProductId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    assignAnalyticAccountId?: StringFieldUpdateOperationsInput | string
+    rulePriority?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    purchaseOrderLines?: PurchaseOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    vendorBillLines?: VendorBillLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+  }
+
   export type CompanyCreateWithoutVendorBillsInput = {
     id?: string
     name: string
     createdAt?: Date | string
     contacts?: ContactCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryCreateNestedManyWithoutCompanyInput
     products?: ProductCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountCreateNestedManyWithoutCompanyInput
@@ -52718,6 +61906,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactUncheckedCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagUncheckedCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryUncheckedCreateNestedManyWithoutCompanyInput
     products?: ProductUncheckedCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountUncheckedCreateNestedManyWithoutCompanyInput
@@ -52758,6 +61947,7 @@ export namespace Prisma {
     payments?: PaymentCreateNestedManyWithoutContactInput
     journalLines?: JournalLineCreateNestedManyWithoutContactInput
     autoAnalyticRules?: AutoAnalyticRuleCreateNestedManyWithoutContactInput
+    contactTags?: ContactTagAssignmentCreateNestedManyWithoutContactInput
     users?: UserCreateNestedManyWithoutContactInput
   }
 
@@ -52782,6 +61972,7 @@ export namespace Prisma {
     payments?: PaymentUncheckedCreateNestedManyWithoutContactInput
     journalLines?: JournalLineUncheckedCreateNestedManyWithoutContactInput
     autoAnalyticRules?: AutoAnalyticRuleUncheckedCreateNestedManyWithoutContactInput
+    contactTags?: ContactTagAssignmentUncheckedCreateNestedManyWithoutContactInput
     users?: UserUncheckedCreateNestedManyWithoutContactInput
   }
 
@@ -52825,6 +62016,7 @@ export namespace Prisma {
 
   export type VendorBillLineCreateWithoutBillInput = {
     id?: string
+    matchedFieldsCount?: number | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -52833,12 +62025,17 @@ export namespace Prisma {
     product?: ProductCreateNestedOneWithoutBillLinesInput
     analytic?: AnalyticAccountCreateNestedOneWithoutBillLinesInput
     gl?: GLAccountCreateNestedOneWithoutBillLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutVendorBillLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutVendorBillLinesInput
   }
 
   export type VendorBillLineUncheckedCreateWithoutBillInput = {
     id?: string
     productId?: string | null
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     glAccountId?: string | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
@@ -52854,6 +62051,30 @@ export namespace Prisma {
 
   export type VendorBillLineCreateManyBillInputEnvelope = {
     data: VendorBillLineCreateManyBillInput | VendorBillLineCreateManyBillInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type VendorBillPaymentCreateWithoutBillInput = {
+    id?: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    payment: PaymentCreateNestedOneWithoutBillPaymentsInput
+  }
+
+  export type VendorBillPaymentUncheckedCreateWithoutBillInput = {
+    id?: string
+    paymentId: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+  }
+
+  export type VendorBillPaymentCreateOrConnectWithoutBillInput = {
+    where: VendorBillPaymentWhereUniqueInput
+    create: XOR<VendorBillPaymentCreateWithoutBillInput, VendorBillPaymentUncheckedCreateWithoutBillInput>
+  }
+
+  export type VendorBillPaymentCreateManyBillInputEnvelope = {
+    data: VendorBillPaymentCreateManyBillInput | VendorBillPaymentCreateManyBillInput[]
     skipDuplicates?: boolean
   }
 
@@ -52873,6 +62094,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUpdateManyWithoutCompanyNestedInput
     products?: ProductUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUpdateManyWithoutCompanyNestedInput
@@ -52892,6 +62114,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUncheckedUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUncheckedUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUncheckedUpdateManyWithoutCompanyNestedInput
     products?: ProductUncheckedUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUncheckedUpdateManyWithoutCompanyNestedInput
@@ -52938,6 +62161,7 @@ export namespace Prisma {
     payments?: PaymentUpdateManyWithoutContactNestedInput
     journalLines?: JournalLineUpdateManyWithoutContactNestedInput
     autoAnalyticRules?: AutoAnalyticRuleUpdateManyWithoutContactNestedInput
+    contactTags?: ContactTagAssignmentUpdateManyWithoutContactNestedInput
     users?: UserUpdateManyWithoutContactNestedInput
   }
 
@@ -52962,6 +62186,7 @@ export namespace Prisma {
     payments?: PaymentUncheckedUpdateManyWithoutContactNestedInput
     journalLines?: JournalLineUncheckedUpdateManyWithoutContactNestedInput
     autoAnalyticRules?: AutoAnalyticRuleUncheckedUpdateManyWithoutContactNestedInput
+    contactTags?: ContactTagAssignmentUncheckedUpdateManyWithoutContactNestedInput
     users?: UserUncheckedUpdateManyWithoutContactNestedInput
   }
 
@@ -53020,6 +62245,33 @@ export namespace Prisma {
     data: XOR<VendorBillLineUpdateManyMutationInput, VendorBillLineUncheckedUpdateManyWithoutBillInput>
   }
 
+  export type VendorBillPaymentUpsertWithWhereUniqueWithoutBillInput = {
+    where: VendorBillPaymentWhereUniqueInput
+    update: XOR<VendorBillPaymentUpdateWithoutBillInput, VendorBillPaymentUncheckedUpdateWithoutBillInput>
+    create: XOR<VendorBillPaymentCreateWithoutBillInput, VendorBillPaymentUncheckedCreateWithoutBillInput>
+  }
+
+  export type VendorBillPaymentUpdateWithWhereUniqueWithoutBillInput = {
+    where: VendorBillPaymentWhereUniqueInput
+    data: XOR<VendorBillPaymentUpdateWithoutBillInput, VendorBillPaymentUncheckedUpdateWithoutBillInput>
+  }
+
+  export type VendorBillPaymentUpdateManyWithWhereWithoutBillInput = {
+    where: VendorBillPaymentScalarWhereInput
+    data: XOR<VendorBillPaymentUpdateManyMutationInput, VendorBillPaymentUncheckedUpdateManyWithoutBillInput>
+  }
+
+  export type VendorBillPaymentScalarWhereInput = {
+    AND?: VendorBillPaymentScalarWhereInput | VendorBillPaymentScalarWhereInput[]
+    OR?: VendorBillPaymentScalarWhereInput[]
+    NOT?: VendorBillPaymentScalarWhereInput | VendorBillPaymentScalarWhereInput[]
+    id?: UuidFilter<"VendorBillPayment"> | string
+    billId?: UuidFilter<"VendorBillPayment"> | string
+    paymentId?: UuidFilter<"VendorBillPayment"> | string
+    amount?: DecimalFilter<"VendorBillPayment"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFilter<"VendorBillPayment"> | Date | string
+  }
+
   export type VendorBillCreateWithoutLinesInput = {
     id?: string
     billNo: string
@@ -53034,6 +62286,7 @@ export namespace Prisma {
     company: CompanyCreateNestedOneWithoutVendorBillsInput
     vendor: ContactCreateNestedOneWithoutVendorBillsInput
     po?: PurchaseOrderCreateNestedOneWithoutBillsInput
+    payments?: VendorBillPaymentCreateNestedManyWithoutBillInput
   }
 
   export type VendorBillUncheckedCreateWithoutLinesInput = {
@@ -53050,6 +62303,7 @@ export namespace Prisma {
     paidAmount?: Decimal | DecimalJsLike | number | string
     paymentState?: string
     createdAt?: Date | string
+    payments?: VendorBillPaymentUncheckedCreateNestedManyWithoutBillInput
   }
 
   export type VendorBillCreateOrConnectWithoutLinesInput = {
@@ -53168,6 +62422,74 @@ export namespace Prisma {
     create: XOR<GLAccountCreateWithoutBillLinesInput, GLAccountUncheckedCreateWithoutBillLinesInput>
   }
 
+  export type AutoAnalyticModelCreateWithoutVendorBillLinesInput = {
+    id?: string
+    name: string
+    priority?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    company: CompanyCreateNestedOneWithoutAutoAnalyticModelsInput
+    rules?: AutoAnalyticRuleCreateNestedManyWithoutModelInput
+    purchaseOrderLines?: PurchaseOrderLineCreateNestedManyWithoutAutoModelInput
+    salesOrderLines?: SalesOrderLineCreateNestedManyWithoutAutoModelInput
+    customerInvoiceLines?: CustomerInvoiceLineCreateNestedManyWithoutAutoModelInput
+  }
+
+  export type AutoAnalyticModelUncheckedCreateWithoutVendorBillLinesInput = {
+    id?: string
+    companyId: string
+    name: string
+    priority?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    rules?: AutoAnalyticRuleUncheckedCreateNestedManyWithoutModelInput
+    purchaseOrderLines?: PurchaseOrderLineUncheckedCreateNestedManyWithoutAutoModelInput
+    salesOrderLines?: SalesOrderLineUncheckedCreateNestedManyWithoutAutoModelInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutAutoModelInput
+  }
+
+  export type AutoAnalyticModelCreateOrConnectWithoutVendorBillLinesInput = {
+    where: AutoAnalyticModelWhereUniqueInput
+    create: XOR<AutoAnalyticModelCreateWithoutVendorBillLinesInput, AutoAnalyticModelUncheckedCreateWithoutVendorBillLinesInput>
+  }
+
+  export type AutoAnalyticRuleCreateWithoutVendorBillLinesInput = {
+    id?: string
+    docType: $Enums.AutoDocType
+    rulePriority?: number
+    isActive?: boolean
+    model: AutoAnalyticModelCreateNestedOneWithoutRulesInput
+    product?: ProductCreateNestedOneWithoutAutoAnalyticRulesInput
+    category?: ProductCategoryCreateNestedOneWithoutAutoAnalyticRulesInput
+    contact?: ContactCreateNestedOneWithoutAutoAnalyticRulesInput
+    contactTag?: ContactTagCreateNestedOneWithoutAutoAnalyticRulesInput
+    assignAnalytic: AnalyticAccountCreateNestedOneWithoutAutoAnalyticRulesInput
+    purchaseOrderLines?: PurchaseOrderLineCreateNestedManyWithoutAutoRuleInput
+    salesOrderLines?: SalesOrderLineCreateNestedManyWithoutAutoRuleInput
+    customerInvoiceLines?: CustomerInvoiceLineCreateNestedManyWithoutAutoRuleInput
+  }
+
+  export type AutoAnalyticRuleUncheckedCreateWithoutVendorBillLinesInput = {
+    id?: string
+    modelId: string
+    docType: $Enums.AutoDocType
+    matchProductId?: string | null
+    matchCategoryId?: string | null
+    matchContactId?: string | null
+    matchContactTagId?: string | null
+    assignAnalyticAccountId: string
+    rulePriority?: number
+    isActive?: boolean
+    purchaseOrderLines?: PurchaseOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    salesOrderLines?: SalesOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutAutoRuleInput
+  }
+
+  export type AutoAnalyticRuleCreateOrConnectWithoutVendorBillLinesInput = {
+    where: AutoAnalyticRuleWhereUniqueInput
+    create: XOR<AutoAnalyticRuleCreateWithoutVendorBillLinesInput, AutoAnalyticRuleUncheckedCreateWithoutVendorBillLinesInput>
+  }
+
   export type VendorBillUpsertWithoutLinesInput = {
     update: XOR<VendorBillUpdateWithoutLinesInput, VendorBillUncheckedUpdateWithoutLinesInput>
     create: XOR<VendorBillCreateWithoutLinesInput, VendorBillUncheckedCreateWithoutLinesInput>
@@ -53193,6 +62515,7 @@ export namespace Prisma {
     company?: CompanyUpdateOneRequiredWithoutVendorBillsNestedInput
     vendor?: ContactUpdateOneRequiredWithoutVendorBillsNestedInput
     po?: PurchaseOrderUpdateOneWithoutBillsNestedInput
+    payments?: VendorBillPaymentUpdateManyWithoutBillNestedInput
   }
 
   export type VendorBillUncheckedUpdateWithoutLinesInput = {
@@ -53209,6 +62532,7 @@ export namespace Prisma {
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paymentState?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    payments?: VendorBillPaymentUncheckedUpdateManyWithoutBillNestedInput
   }
 
   export type ProductUpsertWithoutBillLinesInput = {
@@ -53340,11 +62664,92 @@ export namespace Prisma {
     invLines?: CustomerInvoiceLineUncheckedUpdateManyWithoutGlNestedInput
   }
 
+  export type AutoAnalyticModelUpsertWithoutVendorBillLinesInput = {
+    update: XOR<AutoAnalyticModelUpdateWithoutVendorBillLinesInput, AutoAnalyticModelUncheckedUpdateWithoutVendorBillLinesInput>
+    create: XOR<AutoAnalyticModelCreateWithoutVendorBillLinesInput, AutoAnalyticModelUncheckedCreateWithoutVendorBillLinesInput>
+    where?: AutoAnalyticModelWhereInput
+  }
+
+  export type AutoAnalyticModelUpdateToOneWithWhereWithoutVendorBillLinesInput = {
+    where?: AutoAnalyticModelWhereInput
+    data: XOR<AutoAnalyticModelUpdateWithoutVendorBillLinesInput, AutoAnalyticModelUncheckedUpdateWithoutVendorBillLinesInput>
+  }
+
+  export type AutoAnalyticModelUpdateWithoutVendorBillLinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    priority?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutAutoAnalyticModelsNestedInput
+    rules?: AutoAnalyticRuleUpdateManyWithoutModelNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUpdateManyWithoutAutoModelNestedInput
+    salesOrderLines?: SalesOrderLineUpdateManyWithoutAutoModelNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUpdateManyWithoutAutoModelNestedInput
+  }
+
+  export type AutoAnalyticModelUncheckedUpdateWithoutVendorBillLinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    priority?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rules?: AutoAnalyticRuleUncheckedUpdateManyWithoutModelNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUncheckedUpdateManyWithoutAutoModelNestedInput
+    salesOrderLines?: SalesOrderLineUncheckedUpdateManyWithoutAutoModelNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedUpdateManyWithoutAutoModelNestedInput
+  }
+
+  export type AutoAnalyticRuleUpsertWithoutVendorBillLinesInput = {
+    update: XOR<AutoAnalyticRuleUpdateWithoutVendorBillLinesInput, AutoAnalyticRuleUncheckedUpdateWithoutVendorBillLinesInput>
+    create: XOR<AutoAnalyticRuleCreateWithoutVendorBillLinesInput, AutoAnalyticRuleUncheckedCreateWithoutVendorBillLinesInput>
+    where?: AutoAnalyticRuleWhereInput
+  }
+
+  export type AutoAnalyticRuleUpdateToOneWithWhereWithoutVendorBillLinesInput = {
+    where?: AutoAnalyticRuleWhereInput
+    data: XOR<AutoAnalyticRuleUpdateWithoutVendorBillLinesInput, AutoAnalyticRuleUncheckedUpdateWithoutVendorBillLinesInput>
+  }
+
+  export type AutoAnalyticRuleUpdateWithoutVendorBillLinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docType?: EnumAutoDocTypeFieldUpdateOperationsInput | $Enums.AutoDocType
+    rulePriority?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    model?: AutoAnalyticModelUpdateOneRequiredWithoutRulesNestedInput
+    product?: ProductUpdateOneWithoutAutoAnalyticRulesNestedInput
+    category?: ProductCategoryUpdateOneWithoutAutoAnalyticRulesNestedInput
+    contact?: ContactUpdateOneWithoutAutoAnalyticRulesNestedInput
+    contactTag?: ContactTagUpdateOneWithoutAutoAnalyticRulesNestedInput
+    assignAnalytic?: AnalyticAccountUpdateOneRequiredWithoutAutoAnalyticRulesNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUpdateManyWithoutAutoRuleNestedInput
+    salesOrderLines?: SalesOrderLineUpdateManyWithoutAutoRuleNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUpdateManyWithoutAutoRuleNestedInput
+  }
+
+  export type AutoAnalyticRuleUncheckedUpdateWithoutVendorBillLinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    modelId?: StringFieldUpdateOperationsInput | string
+    docType?: EnumAutoDocTypeFieldUpdateOperationsInput | $Enums.AutoDocType
+    matchProductId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    assignAnalyticAccountId?: StringFieldUpdateOperationsInput | string
+    rulePriority?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    purchaseOrderLines?: PurchaseOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    salesOrderLines?: SalesOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+  }
+
   export type CompanyCreateWithoutCustomerInvoicesInput = {
     id?: string
     name: string
     createdAt?: Date | string
     contacts?: ContactCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryCreateNestedManyWithoutCompanyInput
     products?: ProductCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountCreateNestedManyWithoutCompanyInput
@@ -53364,6 +62769,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactUncheckedCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagUncheckedCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryUncheckedCreateNestedManyWithoutCompanyInput
     products?: ProductUncheckedCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountUncheckedCreateNestedManyWithoutCompanyInput
@@ -53404,6 +62810,7 @@ export namespace Prisma {
     payments?: PaymentCreateNestedManyWithoutContactInput
     journalLines?: JournalLineCreateNestedManyWithoutContactInput
     autoAnalyticRules?: AutoAnalyticRuleCreateNestedManyWithoutContactInput
+    contactTags?: ContactTagAssignmentCreateNestedManyWithoutContactInput
     users?: UserCreateNestedManyWithoutContactInput
   }
 
@@ -53428,6 +62835,7 @@ export namespace Prisma {
     payments?: PaymentUncheckedCreateNestedManyWithoutContactInput
     journalLines?: JournalLineUncheckedCreateNestedManyWithoutContactInput
     autoAnalyticRules?: AutoAnalyticRuleUncheckedCreateNestedManyWithoutContactInput
+    contactTags?: ContactTagAssignmentUncheckedCreateNestedManyWithoutContactInput
     users?: UserUncheckedCreateNestedManyWithoutContactInput
   }
 
@@ -53471,6 +62879,7 @@ export namespace Prisma {
 
   export type CustomerInvoiceLineCreateWithoutInvoiceInput = {
     id?: string
+    matchedFieldsCount?: number | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -53479,12 +62888,17 @@ export namespace Prisma {
     product?: ProductCreateNestedOneWithoutInvLinesInput
     analytic?: AnalyticAccountCreateNestedOneWithoutInvLinesInput
     gl?: GLAccountCreateNestedOneWithoutInvLinesInput
+    autoModel?: AutoAnalyticModelCreateNestedOneWithoutCustomerInvoiceLinesInput
+    autoRule?: AutoAnalyticRuleCreateNestedOneWithoutCustomerInvoiceLinesInput
   }
 
   export type CustomerInvoiceLineUncheckedCreateWithoutInvoiceInput = {
     id?: string
     productId?: string | null
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     glAccountId?: string | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
@@ -53500,6 +62914,30 @@ export namespace Prisma {
 
   export type CustomerInvoiceLineCreateManyInvoiceInputEnvelope = {
     data: CustomerInvoiceLineCreateManyInvoiceInput | CustomerInvoiceLineCreateManyInvoiceInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CustomerInvoicePaymentCreateWithoutInvoiceInput = {
+    id?: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    payment: PaymentCreateNestedOneWithoutInvoicePaymentsInput
+  }
+
+  export type CustomerInvoicePaymentUncheckedCreateWithoutInvoiceInput = {
+    id?: string
+    paymentId: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+  }
+
+  export type CustomerInvoicePaymentCreateOrConnectWithoutInvoiceInput = {
+    where: CustomerInvoicePaymentWhereUniqueInput
+    create: XOR<CustomerInvoicePaymentCreateWithoutInvoiceInput, CustomerInvoicePaymentUncheckedCreateWithoutInvoiceInput>
+  }
+
+  export type CustomerInvoicePaymentCreateManyInvoiceInputEnvelope = {
+    data: CustomerInvoicePaymentCreateManyInvoiceInput | CustomerInvoicePaymentCreateManyInvoiceInput[]
     skipDuplicates?: boolean
   }
 
@@ -53519,6 +62957,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUpdateManyWithoutCompanyNestedInput
     products?: ProductUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUpdateManyWithoutCompanyNestedInput
@@ -53538,6 +62977,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUncheckedUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUncheckedUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUncheckedUpdateManyWithoutCompanyNestedInput
     products?: ProductUncheckedUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUncheckedUpdateManyWithoutCompanyNestedInput
@@ -53584,6 +63024,7 @@ export namespace Prisma {
     payments?: PaymentUpdateManyWithoutContactNestedInput
     journalLines?: JournalLineUpdateManyWithoutContactNestedInput
     autoAnalyticRules?: AutoAnalyticRuleUpdateManyWithoutContactNestedInput
+    contactTags?: ContactTagAssignmentUpdateManyWithoutContactNestedInput
     users?: UserUpdateManyWithoutContactNestedInput
   }
 
@@ -53608,6 +63049,7 @@ export namespace Prisma {
     payments?: PaymentUncheckedUpdateManyWithoutContactNestedInput
     journalLines?: JournalLineUncheckedUpdateManyWithoutContactNestedInput
     autoAnalyticRules?: AutoAnalyticRuleUncheckedUpdateManyWithoutContactNestedInput
+    contactTags?: ContactTagAssignmentUncheckedUpdateManyWithoutContactNestedInput
     users?: UserUncheckedUpdateManyWithoutContactNestedInput
   }
 
@@ -53666,6 +63108,33 @@ export namespace Prisma {
     data: XOR<CustomerInvoiceLineUpdateManyMutationInput, CustomerInvoiceLineUncheckedUpdateManyWithoutInvoiceInput>
   }
 
+  export type CustomerInvoicePaymentUpsertWithWhereUniqueWithoutInvoiceInput = {
+    where: CustomerInvoicePaymentWhereUniqueInput
+    update: XOR<CustomerInvoicePaymentUpdateWithoutInvoiceInput, CustomerInvoicePaymentUncheckedUpdateWithoutInvoiceInput>
+    create: XOR<CustomerInvoicePaymentCreateWithoutInvoiceInput, CustomerInvoicePaymentUncheckedCreateWithoutInvoiceInput>
+  }
+
+  export type CustomerInvoicePaymentUpdateWithWhereUniqueWithoutInvoiceInput = {
+    where: CustomerInvoicePaymentWhereUniqueInput
+    data: XOR<CustomerInvoicePaymentUpdateWithoutInvoiceInput, CustomerInvoicePaymentUncheckedUpdateWithoutInvoiceInput>
+  }
+
+  export type CustomerInvoicePaymentUpdateManyWithWhereWithoutInvoiceInput = {
+    where: CustomerInvoicePaymentScalarWhereInput
+    data: XOR<CustomerInvoicePaymentUpdateManyMutationInput, CustomerInvoicePaymentUncheckedUpdateManyWithoutInvoiceInput>
+  }
+
+  export type CustomerInvoicePaymentScalarWhereInput = {
+    AND?: CustomerInvoicePaymentScalarWhereInput | CustomerInvoicePaymentScalarWhereInput[]
+    OR?: CustomerInvoicePaymentScalarWhereInput[]
+    NOT?: CustomerInvoicePaymentScalarWhereInput | CustomerInvoicePaymentScalarWhereInput[]
+    id?: UuidFilter<"CustomerInvoicePayment"> | string
+    invoiceId?: UuidFilter<"CustomerInvoicePayment"> | string
+    paymentId?: UuidFilter<"CustomerInvoicePayment"> | string
+    amount?: DecimalFilter<"CustomerInvoicePayment"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFilter<"CustomerInvoicePayment"> | Date | string
+  }
+
   export type CustomerInvoiceCreateWithoutLinesInput = {
     id?: string
     invoiceNo: string
@@ -53681,6 +63150,7 @@ export namespace Prisma {
     company: CompanyCreateNestedOneWithoutCustomerInvoicesInput
     customer: ContactCreateNestedOneWithoutCustomerInvoicesInput
     so?: SalesOrderCreateNestedOneWithoutInvoicesInput
+    payments?: CustomerInvoicePaymentCreateNestedManyWithoutInvoiceInput
   }
 
   export type CustomerInvoiceUncheckedCreateWithoutLinesInput = {
@@ -53698,6 +63168,7 @@ export namespace Prisma {
     paymentState?: string
     portalVisible?: boolean
     createdAt?: Date | string
+    payments?: CustomerInvoicePaymentUncheckedCreateNestedManyWithoutInvoiceInput
   }
 
   export type CustomerInvoiceCreateOrConnectWithoutLinesInput = {
@@ -53816,6 +63287,74 @@ export namespace Prisma {
     create: XOR<GLAccountCreateWithoutInvLinesInput, GLAccountUncheckedCreateWithoutInvLinesInput>
   }
 
+  export type AutoAnalyticModelCreateWithoutCustomerInvoiceLinesInput = {
+    id?: string
+    name: string
+    priority?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    company: CompanyCreateNestedOneWithoutAutoAnalyticModelsInput
+    rules?: AutoAnalyticRuleCreateNestedManyWithoutModelInput
+    purchaseOrderLines?: PurchaseOrderLineCreateNestedManyWithoutAutoModelInput
+    salesOrderLines?: SalesOrderLineCreateNestedManyWithoutAutoModelInput
+    vendorBillLines?: VendorBillLineCreateNestedManyWithoutAutoModelInput
+  }
+
+  export type AutoAnalyticModelUncheckedCreateWithoutCustomerInvoiceLinesInput = {
+    id?: string
+    companyId: string
+    name: string
+    priority?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    rules?: AutoAnalyticRuleUncheckedCreateNestedManyWithoutModelInput
+    purchaseOrderLines?: PurchaseOrderLineUncheckedCreateNestedManyWithoutAutoModelInput
+    salesOrderLines?: SalesOrderLineUncheckedCreateNestedManyWithoutAutoModelInput
+    vendorBillLines?: VendorBillLineUncheckedCreateNestedManyWithoutAutoModelInput
+  }
+
+  export type AutoAnalyticModelCreateOrConnectWithoutCustomerInvoiceLinesInput = {
+    where: AutoAnalyticModelWhereUniqueInput
+    create: XOR<AutoAnalyticModelCreateWithoutCustomerInvoiceLinesInput, AutoAnalyticModelUncheckedCreateWithoutCustomerInvoiceLinesInput>
+  }
+
+  export type AutoAnalyticRuleCreateWithoutCustomerInvoiceLinesInput = {
+    id?: string
+    docType: $Enums.AutoDocType
+    rulePriority?: number
+    isActive?: boolean
+    model: AutoAnalyticModelCreateNestedOneWithoutRulesInput
+    product?: ProductCreateNestedOneWithoutAutoAnalyticRulesInput
+    category?: ProductCategoryCreateNestedOneWithoutAutoAnalyticRulesInput
+    contact?: ContactCreateNestedOneWithoutAutoAnalyticRulesInput
+    contactTag?: ContactTagCreateNestedOneWithoutAutoAnalyticRulesInput
+    assignAnalytic: AnalyticAccountCreateNestedOneWithoutAutoAnalyticRulesInput
+    purchaseOrderLines?: PurchaseOrderLineCreateNestedManyWithoutAutoRuleInput
+    salesOrderLines?: SalesOrderLineCreateNestedManyWithoutAutoRuleInput
+    vendorBillLines?: VendorBillLineCreateNestedManyWithoutAutoRuleInput
+  }
+
+  export type AutoAnalyticRuleUncheckedCreateWithoutCustomerInvoiceLinesInput = {
+    id?: string
+    modelId: string
+    docType: $Enums.AutoDocType
+    matchProductId?: string | null
+    matchCategoryId?: string | null
+    matchContactId?: string | null
+    matchContactTagId?: string | null
+    assignAnalyticAccountId: string
+    rulePriority?: number
+    isActive?: boolean
+    purchaseOrderLines?: PurchaseOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    salesOrderLines?: SalesOrderLineUncheckedCreateNestedManyWithoutAutoRuleInput
+    vendorBillLines?: VendorBillLineUncheckedCreateNestedManyWithoutAutoRuleInput
+  }
+
+  export type AutoAnalyticRuleCreateOrConnectWithoutCustomerInvoiceLinesInput = {
+    where: AutoAnalyticRuleWhereUniqueInput
+    create: XOR<AutoAnalyticRuleCreateWithoutCustomerInvoiceLinesInput, AutoAnalyticRuleUncheckedCreateWithoutCustomerInvoiceLinesInput>
+  }
+
   export type CustomerInvoiceUpsertWithoutLinesInput = {
     update: XOR<CustomerInvoiceUpdateWithoutLinesInput, CustomerInvoiceUncheckedUpdateWithoutLinesInput>
     create: XOR<CustomerInvoiceCreateWithoutLinesInput, CustomerInvoiceUncheckedCreateWithoutLinesInput>
@@ -53842,6 +63381,7 @@ export namespace Prisma {
     company?: CompanyUpdateOneRequiredWithoutCustomerInvoicesNestedInput
     customer?: ContactUpdateOneRequiredWithoutCustomerInvoicesNestedInput
     so?: SalesOrderUpdateOneWithoutInvoicesNestedInput
+    payments?: CustomerInvoicePaymentUpdateManyWithoutInvoiceNestedInput
   }
 
   export type CustomerInvoiceUncheckedUpdateWithoutLinesInput = {
@@ -53859,6 +63399,7 @@ export namespace Prisma {
     paymentState?: StringFieldUpdateOperationsInput | string
     portalVisible?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    payments?: CustomerInvoicePaymentUncheckedUpdateManyWithoutInvoiceNestedInput
   }
 
   export type ProductUpsertWithoutInvLinesInput = {
@@ -53990,11 +63531,92 @@ export namespace Prisma {
     billLines?: VendorBillLineUncheckedUpdateManyWithoutGlNestedInput
   }
 
+  export type AutoAnalyticModelUpsertWithoutCustomerInvoiceLinesInput = {
+    update: XOR<AutoAnalyticModelUpdateWithoutCustomerInvoiceLinesInput, AutoAnalyticModelUncheckedUpdateWithoutCustomerInvoiceLinesInput>
+    create: XOR<AutoAnalyticModelCreateWithoutCustomerInvoiceLinesInput, AutoAnalyticModelUncheckedCreateWithoutCustomerInvoiceLinesInput>
+    where?: AutoAnalyticModelWhereInput
+  }
+
+  export type AutoAnalyticModelUpdateToOneWithWhereWithoutCustomerInvoiceLinesInput = {
+    where?: AutoAnalyticModelWhereInput
+    data: XOR<AutoAnalyticModelUpdateWithoutCustomerInvoiceLinesInput, AutoAnalyticModelUncheckedUpdateWithoutCustomerInvoiceLinesInput>
+  }
+
+  export type AutoAnalyticModelUpdateWithoutCustomerInvoiceLinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    priority?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutAutoAnalyticModelsNestedInput
+    rules?: AutoAnalyticRuleUpdateManyWithoutModelNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUpdateManyWithoutAutoModelNestedInput
+    salesOrderLines?: SalesOrderLineUpdateManyWithoutAutoModelNestedInput
+    vendorBillLines?: VendorBillLineUpdateManyWithoutAutoModelNestedInput
+  }
+
+  export type AutoAnalyticModelUncheckedUpdateWithoutCustomerInvoiceLinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    priority?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rules?: AutoAnalyticRuleUncheckedUpdateManyWithoutModelNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUncheckedUpdateManyWithoutAutoModelNestedInput
+    salesOrderLines?: SalesOrderLineUncheckedUpdateManyWithoutAutoModelNestedInput
+    vendorBillLines?: VendorBillLineUncheckedUpdateManyWithoutAutoModelNestedInput
+  }
+
+  export type AutoAnalyticRuleUpsertWithoutCustomerInvoiceLinesInput = {
+    update: XOR<AutoAnalyticRuleUpdateWithoutCustomerInvoiceLinesInput, AutoAnalyticRuleUncheckedUpdateWithoutCustomerInvoiceLinesInput>
+    create: XOR<AutoAnalyticRuleCreateWithoutCustomerInvoiceLinesInput, AutoAnalyticRuleUncheckedCreateWithoutCustomerInvoiceLinesInput>
+    where?: AutoAnalyticRuleWhereInput
+  }
+
+  export type AutoAnalyticRuleUpdateToOneWithWhereWithoutCustomerInvoiceLinesInput = {
+    where?: AutoAnalyticRuleWhereInput
+    data: XOR<AutoAnalyticRuleUpdateWithoutCustomerInvoiceLinesInput, AutoAnalyticRuleUncheckedUpdateWithoutCustomerInvoiceLinesInput>
+  }
+
+  export type AutoAnalyticRuleUpdateWithoutCustomerInvoiceLinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docType?: EnumAutoDocTypeFieldUpdateOperationsInput | $Enums.AutoDocType
+    rulePriority?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    model?: AutoAnalyticModelUpdateOneRequiredWithoutRulesNestedInput
+    product?: ProductUpdateOneWithoutAutoAnalyticRulesNestedInput
+    category?: ProductCategoryUpdateOneWithoutAutoAnalyticRulesNestedInput
+    contact?: ContactUpdateOneWithoutAutoAnalyticRulesNestedInput
+    contactTag?: ContactTagUpdateOneWithoutAutoAnalyticRulesNestedInput
+    assignAnalytic?: AnalyticAccountUpdateOneRequiredWithoutAutoAnalyticRulesNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUpdateManyWithoutAutoRuleNestedInput
+    salesOrderLines?: SalesOrderLineUpdateManyWithoutAutoRuleNestedInput
+    vendorBillLines?: VendorBillLineUpdateManyWithoutAutoRuleNestedInput
+  }
+
+  export type AutoAnalyticRuleUncheckedUpdateWithoutCustomerInvoiceLinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    modelId?: StringFieldUpdateOperationsInput | string
+    docType?: EnumAutoDocTypeFieldUpdateOperationsInput | $Enums.AutoDocType
+    matchProductId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    assignAnalyticAccountId?: StringFieldUpdateOperationsInput | string
+    rulePriority?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    purchaseOrderLines?: PurchaseOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    salesOrderLines?: SalesOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    vendorBillLines?: VendorBillLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+  }
+
   export type CompanyCreateWithoutPaymentsInput = {
     id?: string
     name: string
     createdAt?: Date | string
     contacts?: ContactCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryCreateNestedManyWithoutCompanyInput
     products?: ProductCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountCreateNestedManyWithoutCompanyInput
@@ -54014,6 +63636,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactUncheckedCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagUncheckedCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryUncheckedCreateNestedManyWithoutCompanyInput
     products?: ProductUncheckedCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountUncheckedCreateNestedManyWithoutCompanyInput
@@ -54054,6 +63677,7 @@ export namespace Prisma {
     customerInvoices?: CustomerInvoiceCreateNestedManyWithoutCustomerInput
     journalLines?: JournalLineCreateNestedManyWithoutContactInput
     autoAnalyticRules?: AutoAnalyticRuleCreateNestedManyWithoutContactInput
+    contactTags?: ContactTagAssignmentCreateNestedManyWithoutContactInput
     users?: UserCreateNestedManyWithoutContactInput
   }
 
@@ -54078,6 +63702,7 @@ export namespace Prisma {
     customerInvoices?: CustomerInvoiceUncheckedCreateNestedManyWithoutCustomerInput
     journalLines?: JournalLineUncheckedCreateNestedManyWithoutContactInput
     autoAnalyticRules?: AutoAnalyticRuleUncheckedCreateNestedManyWithoutContactInput
+    contactTags?: ContactTagAssignmentUncheckedCreateNestedManyWithoutContactInput
     users?: UserUncheckedCreateNestedManyWithoutContactInput
   }
 
@@ -54110,6 +63735,54 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CustomerInvoicePaymentCreateWithoutPaymentInput = {
+    id?: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    invoice: CustomerInvoiceCreateNestedOneWithoutPaymentsInput
+  }
+
+  export type CustomerInvoicePaymentUncheckedCreateWithoutPaymentInput = {
+    id?: string
+    invoiceId: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+  }
+
+  export type CustomerInvoicePaymentCreateOrConnectWithoutPaymentInput = {
+    where: CustomerInvoicePaymentWhereUniqueInput
+    create: XOR<CustomerInvoicePaymentCreateWithoutPaymentInput, CustomerInvoicePaymentUncheckedCreateWithoutPaymentInput>
+  }
+
+  export type CustomerInvoicePaymentCreateManyPaymentInputEnvelope = {
+    data: CustomerInvoicePaymentCreateManyPaymentInput | CustomerInvoicePaymentCreateManyPaymentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type VendorBillPaymentCreateWithoutPaymentInput = {
+    id?: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    bill: VendorBillCreateNestedOneWithoutPaymentsInput
+  }
+
+  export type VendorBillPaymentUncheckedCreateWithoutPaymentInput = {
+    id?: string
+    billId: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+  }
+
+  export type VendorBillPaymentCreateOrConnectWithoutPaymentInput = {
+    where: VendorBillPaymentWhereUniqueInput
+    create: XOR<VendorBillPaymentCreateWithoutPaymentInput, VendorBillPaymentUncheckedCreateWithoutPaymentInput>
+  }
+
+  export type VendorBillPaymentCreateManyPaymentInputEnvelope = {
+    data: VendorBillPaymentCreateManyPaymentInput | VendorBillPaymentCreateManyPaymentInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CompanyUpsertWithoutPaymentsInput = {
     update: XOR<CompanyUpdateWithoutPaymentsInput, CompanyUncheckedUpdateWithoutPaymentsInput>
     create: XOR<CompanyCreateWithoutPaymentsInput, CompanyUncheckedCreateWithoutPaymentsInput>
@@ -54126,6 +63799,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUpdateManyWithoutCompanyNestedInput
     products?: ProductUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUpdateManyWithoutCompanyNestedInput
@@ -54145,6 +63819,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUncheckedUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUncheckedUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUncheckedUpdateManyWithoutCompanyNestedInput
     products?: ProductUncheckedUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUncheckedUpdateManyWithoutCompanyNestedInput
@@ -54191,6 +63866,7 @@ export namespace Prisma {
     customerInvoices?: CustomerInvoiceUpdateManyWithoutCustomerNestedInput
     journalLines?: JournalLineUpdateManyWithoutContactNestedInput
     autoAnalyticRules?: AutoAnalyticRuleUpdateManyWithoutContactNestedInput
+    contactTags?: ContactTagAssignmentUpdateManyWithoutContactNestedInput
     users?: UserUpdateManyWithoutContactNestedInput
   }
 
@@ -54215,6 +63891,7 @@ export namespace Prisma {
     customerInvoices?: CustomerInvoiceUncheckedUpdateManyWithoutCustomerNestedInput
     journalLines?: JournalLineUncheckedUpdateManyWithoutContactNestedInput
     autoAnalyticRules?: AutoAnalyticRuleUncheckedUpdateManyWithoutContactNestedInput
+    contactTags?: ContactTagAssignmentUncheckedUpdateManyWithoutContactNestedInput
     users?: UserUncheckedUpdateManyWithoutContactNestedInput
   }
 
@@ -54245,6 +63922,38 @@ export namespace Prisma {
     amount?: DecimalFilter<"PaymentAllocation"> | Decimal | DecimalJsLike | number | string
   }
 
+  export type CustomerInvoicePaymentUpsertWithWhereUniqueWithoutPaymentInput = {
+    where: CustomerInvoicePaymentWhereUniqueInput
+    update: XOR<CustomerInvoicePaymentUpdateWithoutPaymentInput, CustomerInvoicePaymentUncheckedUpdateWithoutPaymentInput>
+    create: XOR<CustomerInvoicePaymentCreateWithoutPaymentInput, CustomerInvoicePaymentUncheckedCreateWithoutPaymentInput>
+  }
+
+  export type CustomerInvoicePaymentUpdateWithWhereUniqueWithoutPaymentInput = {
+    where: CustomerInvoicePaymentWhereUniqueInput
+    data: XOR<CustomerInvoicePaymentUpdateWithoutPaymentInput, CustomerInvoicePaymentUncheckedUpdateWithoutPaymentInput>
+  }
+
+  export type CustomerInvoicePaymentUpdateManyWithWhereWithoutPaymentInput = {
+    where: CustomerInvoicePaymentScalarWhereInput
+    data: XOR<CustomerInvoicePaymentUpdateManyMutationInput, CustomerInvoicePaymentUncheckedUpdateManyWithoutPaymentInput>
+  }
+
+  export type VendorBillPaymentUpsertWithWhereUniqueWithoutPaymentInput = {
+    where: VendorBillPaymentWhereUniqueInput
+    update: XOR<VendorBillPaymentUpdateWithoutPaymentInput, VendorBillPaymentUncheckedUpdateWithoutPaymentInput>
+    create: XOR<VendorBillPaymentCreateWithoutPaymentInput, VendorBillPaymentUncheckedCreateWithoutPaymentInput>
+  }
+
+  export type VendorBillPaymentUpdateWithWhereUniqueWithoutPaymentInput = {
+    where: VendorBillPaymentWhereUniqueInput
+    data: XOR<VendorBillPaymentUpdateWithoutPaymentInput, VendorBillPaymentUncheckedUpdateWithoutPaymentInput>
+  }
+
+  export type VendorBillPaymentUpdateManyWithWhereWithoutPaymentInput = {
+    where: VendorBillPaymentScalarWhereInput
+    data: XOR<VendorBillPaymentUpdateManyMutationInput, VendorBillPaymentUncheckedUpdateManyWithoutPaymentInput>
+  }
+
   export type PaymentCreateWithoutAllocationsInput = {
     id?: string
     direction: $Enums.PaymentDirection
@@ -54256,6 +63965,8 @@ export namespace Prisma {
     createdAt?: Date | string
     company: CompanyCreateNestedOneWithoutPaymentsInput
     contact: ContactCreateNestedOneWithoutPaymentsInput
+    invoicePayments?: CustomerInvoicePaymentCreateNestedManyWithoutPaymentInput
+    billPayments?: VendorBillPaymentCreateNestedManyWithoutPaymentInput
   }
 
   export type PaymentUncheckedCreateWithoutAllocationsInput = {
@@ -54269,6 +63980,8 @@ export namespace Prisma {
     amount: Decimal | DecimalJsLike | number | string
     status: $Enums.PaymentStatus
     createdAt?: Date | string
+    invoicePayments?: CustomerInvoicePaymentUncheckedCreateNestedManyWithoutPaymentInput
+    billPayments?: VendorBillPaymentUncheckedCreateNestedManyWithoutPaymentInput
   }
 
   export type PaymentCreateOrConnectWithoutAllocationsInput = {
@@ -54298,6 +64011,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutPaymentsNestedInput
     contact?: ContactUpdateOneRequiredWithoutPaymentsNestedInput
+    invoicePayments?: CustomerInvoicePaymentUpdateManyWithoutPaymentNestedInput
+    billPayments?: VendorBillPaymentUpdateManyWithoutPaymentNestedInput
   }
 
   export type PaymentUncheckedUpdateWithoutAllocationsInput = {
@@ -54311,6 +64026,332 @@ export namespace Prisma {
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoicePayments?: CustomerInvoicePaymentUncheckedUpdateManyWithoutPaymentNestedInput
+    billPayments?: VendorBillPaymentUncheckedUpdateManyWithoutPaymentNestedInput
+  }
+
+  export type CustomerInvoiceCreateWithoutPaymentsInput = {
+    id?: string
+    invoiceNo: string
+    invoiceDate: Date | string
+    dueDate?: Date | string | null
+    status: $Enums.DocStatus
+    currency?: string
+    totalAmount?: Decimal | DecimalJsLike | number | string
+    paidAmount?: Decimal | DecimalJsLike | number | string
+    paymentState?: string
+    portalVisible?: boolean
+    createdAt?: Date | string
+    company: CompanyCreateNestedOneWithoutCustomerInvoicesInput
+    customer: ContactCreateNestedOneWithoutCustomerInvoicesInput
+    so?: SalesOrderCreateNestedOneWithoutInvoicesInput
+    lines?: CustomerInvoiceLineCreateNestedManyWithoutInvoiceInput
+  }
+
+  export type CustomerInvoiceUncheckedCreateWithoutPaymentsInput = {
+    id?: string
+    companyId: string
+    invoiceNo: string
+    customerId: string
+    invoiceDate: Date | string
+    dueDate?: Date | string | null
+    status: $Enums.DocStatus
+    currency?: string
+    soId?: string | null
+    totalAmount?: Decimal | DecimalJsLike | number | string
+    paidAmount?: Decimal | DecimalJsLike | number | string
+    paymentState?: string
+    portalVisible?: boolean
+    createdAt?: Date | string
+    lines?: CustomerInvoiceLineUncheckedCreateNestedManyWithoutInvoiceInput
+  }
+
+  export type CustomerInvoiceCreateOrConnectWithoutPaymentsInput = {
+    where: CustomerInvoiceWhereUniqueInput
+    create: XOR<CustomerInvoiceCreateWithoutPaymentsInput, CustomerInvoiceUncheckedCreateWithoutPaymentsInput>
+  }
+
+  export type PaymentCreateWithoutInvoicePaymentsInput = {
+    id?: string
+    direction: $Enums.PaymentDirection
+    paymentDate: Date | string
+    method: $Enums.PaymentMethod
+    reference?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    status: $Enums.PaymentStatus
+    createdAt?: Date | string
+    company: CompanyCreateNestedOneWithoutPaymentsInput
+    contact: ContactCreateNestedOneWithoutPaymentsInput
+    allocations?: PaymentAllocationCreateNestedManyWithoutPaymentInput
+    billPayments?: VendorBillPaymentCreateNestedManyWithoutPaymentInput
+  }
+
+  export type PaymentUncheckedCreateWithoutInvoicePaymentsInput = {
+    id?: string
+    companyId: string
+    direction: $Enums.PaymentDirection
+    contactId: string
+    paymentDate: Date | string
+    method: $Enums.PaymentMethod
+    reference?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    status: $Enums.PaymentStatus
+    createdAt?: Date | string
+    allocations?: PaymentAllocationUncheckedCreateNestedManyWithoutPaymentInput
+    billPayments?: VendorBillPaymentUncheckedCreateNestedManyWithoutPaymentInput
+  }
+
+  export type PaymentCreateOrConnectWithoutInvoicePaymentsInput = {
+    where: PaymentWhereUniqueInput
+    create: XOR<PaymentCreateWithoutInvoicePaymentsInput, PaymentUncheckedCreateWithoutInvoicePaymentsInput>
+  }
+
+  export type CustomerInvoiceUpsertWithoutPaymentsInput = {
+    update: XOR<CustomerInvoiceUpdateWithoutPaymentsInput, CustomerInvoiceUncheckedUpdateWithoutPaymentsInput>
+    create: XOR<CustomerInvoiceCreateWithoutPaymentsInput, CustomerInvoiceUncheckedCreateWithoutPaymentsInput>
+    where?: CustomerInvoiceWhereInput
+  }
+
+  export type CustomerInvoiceUpdateToOneWithWhereWithoutPaymentsInput = {
+    where?: CustomerInvoiceWhereInput
+    data: XOR<CustomerInvoiceUpdateWithoutPaymentsInput, CustomerInvoiceUncheckedUpdateWithoutPaymentsInput>
+  }
+
+  export type CustomerInvoiceUpdateWithoutPaymentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceNo?: StringFieldUpdateOperationsInput | string
+    invoiceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumDocStatusFieldUpdateOperationsInput | $Enums.DocStatus
+    currency?: StringFieldUpdateOperationsInput | string
+    totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    paymentState?: StringFieldUpdateOperationsInput | string
+    portalVisible?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutCustomerInvoicesNestedInput
+    customer?: ContactUpdateOneRequiredWithoutCustomerInvoicesNestedInput
+    so?: SalesOrderUpdateOneWithoutInvoicesNestedInput
+    lines?: CustomerInvoiceLineUpdateManyWithoutInvoiceNestedInput
+  }
+
+  export type CustomerInvoiceUncheckedUpdateWithoutPaymentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    invoiceNo?: StringFieldUpdateOperationsInput | string
+    customerId?: StringFieldUpdateOperationsInput | string
+    invoiceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumDocStatusFieldUpdateOperationsInput | $Enums.DocStatus
+    currency?: StringFieldUpdateOperationsInput | string
+    soId?: NullableStringFieldUpdateOperationsInput | string | null
+    totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    paymentState?: StringFieldUpdateOperationsInput | string
+    portalVisible?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lines?: CustomerInvoiceLineUncheckedUpdateManyWithoutInvoiceNestedInput
+  }
+
+  export type PaymentUpsertWithoutInvoicePaymentsInput = {
+    update: XOR<PaymentUpdateWithoutInvoicePaymentsInput, PaymentUncheckedUpdateWithoutInvoicePaymentsInput>
+    create: XOR<PaymentCreateWithoutInvoicePaymentsInput, PaymentUncheckedCreateWithoutInvoicePaymentsInput>
+    where?: PaymentWhereInput
+  }
+
+  export type PaymentUpdateToOneWithWhereWithoutInvoicePaymentsInput = {
+    where?: PaymentWhereInput
+    data: XOR<PaymentUpdateWithoutInvoicePaymentsInput, PaymentUncheckedUpdateWithoutInvoicePaymentsInput>
+  }
+
+  export type PaymentUpdateWithoutInvoicePaymentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    direction?: EnumPaymentDirectionFieldUpdateOperationsInput | $Enums.PaymentDirection
+    paymentDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutPaymentsNestedInput
+    contact?: ContactUpdateOneRequiredWithoutPaymentsNestedInput
+    allocations?: PaymentAllocationUpdateManyWithoutPaymentNestedInput
+    billPayments?: VendorBillPaymentUpdateManyWithoutPaymentNestedInput
+  }
+
+  export type PaymentUncheckedUpdateWithoutInvoicePaymentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    direction?: EnumPaymentDirectionFieldUpdateOperationsInput | $Enums.PaymentDirection
+    contactId?: StringFieldUpdateOperationsInput | string
+    paymentDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    allocations?: PaymentAllocationUncheckedUpdateManyWithoutPaymentNestedInput
+    billPayments?: VendorBillPaymentUncheckedUpdateManyWithoutPaymentNestedInput
+  }
+
+  export type VendorBillCreateWithoutPaymentsInput = {
+    id?: string
+    billNo: string
+    billDate: Date | string
+    dueDate?: Date | string | null
+    status: $Enums.DocStatus
+    currency?: string
+    totalAmount?: Decimal | DecimalJsLike | number | string
+    paidAmount?: Decimal | DecimalJsLike | number | string
+    paymentState?: string
+    createdAt?: Date | string
+    company: CompanyCreateNestedOneWithoutVendorBillsInput
+    vendor: ContactCreateNestedOneWithoutVendorBillsInput
+    po?: PurchaseOrderCreateNestedOneWithoutBillsInput
+    lines?: VendorBillLineCreateNestedManyWithoutBillInput
+  }
+
+  export type VendorBillUncheckedCreateWithoutPaymentsInput = {
+    id?: string
+    companyId: string
+    billNo: string
+    vendorId: string
+    billDate: Date | string
+    dueDate?: Date | string | null
+    status: $Enums.DocStatus
+    currency?: string
+    poId?: string | null
+    totalAmount?: Decimal | DecimalJsLike | number | string
+    paidAmount?: Decimal | DecimalJsLike | number | string
+    paymentState?: string
+    createdAt?: Date | string
+    lines?: VendorBillLineUncheckedCreateNestedManyWithoutBillInput
+  }
+
+  export type VendorBillCreateOrConnectWithoutPaymentsInput = {
+    where: VendorBillWhereUniqueInput
+    create: XOR<VendorBillCreateWithoutPaymentsInput, VendorBillUncheckedCreateWithoutPaymentsInput>
+  }
+
+  export type PaymentCreateWithoutBillPaymentsInput = {
+    id?: string
+    direction: $Enums.PaymentDirection
+    paymentDate: Date | string
+    method: $Enums.PaymentMethod
+    reference?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    status: $Enums.PaymentStatus
+    createdAt?: Date | string
+    company: CompanyCreateNestedOneWithoutPaymentsInput
+    contact: ContactCreateNestedOneWithoutPaymentsInput
+    allocations?: PaymentAllocationCreateNestedManyWithoutPaymentInput
+    invoicePayments?: CustomerInvoicePaymentCreateNestedManyWithoutPaymentInput
+  }
+
+  export type PaymentUncheckedCreateWithoutBillPaymentsInput = {
+    id?: string
+    companyId: string
+    direction: $Enums.PaymentDirection
+    contactId: string
+    paymentDate: Date | string
+    method: $Enums.PaymentMethod
+    reference?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    status: $Enums.PaymentStatus
+    createdAt?: Date | string
+    allocations?: PaymentAllocationUncheckedCreateNestedManyWithoutPaymentInput
+    invoicePayments?: CustomerInvoicePaymentUncheckedCreateNestedManyWithoutPaymentInput
+  }
+
+  export type PaymentCreateOrConnectWithoutBillPaymentsInput = {
+    where: PaymentWhereUniqueInput
+    create: XOR<PaymentCreateWithoutBillPaymentsInput, PaymentUncheckedCreateWithoutBillPaymentsInput>
+  }
+
+  export type VendorBillUpsertWithoutPaymentsInput = {
+    update: XOR<VendorBillUpdateWithoutPaymentsInput, VendorBillUncheckedUpdateWithoutPaymentsInput>
+    create: XOR<VendorBillCreateWithoutPaymentsInput, VendorBillUncheckedCreateWithoutPaymentsInput>
+    where?: VendorBillWhereInput
+  }
+
+  export type VendorBillUpdateToOneWithWhereWithoutPaymentsInput = {
+    where?: VendorBillWhereInput
+    data: XOR<VendorBillUpdateWithoutPaymentsInput, VendorBillUncheckedUpdateWithoutPaymentsInput>
+  }
+
+  export type VendorBillUpdateWithoutPaymentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    billNo?: StringFieldUpdateOperationsInput | string
+    billDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumDocStatusFieldUpdateOperationsInput | $Enums.DocStatus
+    currency?: StringFieldUpdateOperationsInput | string
+    totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    paymentState?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutVendorBillsNestedInput
+    vendor?: ContactUpdateOneRequiredWithoutVendorBillsNestedInput
+    po?: PurchaseOrderUpdateOneWithoutBillsNestedInput
+    lines?: VendorBillLineUpdateManyWithoutBillNestedInput
+  }
+
+  export type VendorBillUncheckedUpdateWithoutPaymentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    billNo?: StringFieldUpdateOperationsInput | string
+    vendorId?: StringFieldUpdateOperationsInput | string
+    billDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumDocStatusFieldUpdateOperationsInput | $Enums.DocStatus
+    currency?: StringFieldUpdateOperationsInput | string
+    poId?: NullableStringFieldUpdateOperationsInput | string | null
+    totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    paymentState?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lines?: VendorBillLineUncheckedUpdateManyWithoutBillNestedInput
+  }
+
+  export type PaymentUpsertWithoutBillPaymentsInput = {
+    update: XOR<PaymentUpdateWithoutBillPaymentsInput, PaymentUncheckedUpdateWithoutBillPaymentsInput>
+    create: XOR<PaymentCreateWithoutBillPaymentsInput, PaymentUncheckedCreateWithoutBillPaymentsInput>
+    where?: PaymentWhereInput
+  }
+
+  export type PaymentUpdateToOneWithWhereWithoutBillPaymentsInput = {
+    where?: PaymentWhereInput
+    data: XOR<PaymentUpdateWithoutBillPaymentsInput, PaymentUncheckedUpdateWithoutBillPaymentsInput>
+  }
+
+  export type PaymentUpdateWithoutBillPaymentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    direction?: EnumPaymentDirectionFieldUpdateOperationsInput | $Enums.PaymentDirection
+    paymentDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutPaymentsNestedInput
+    contact?: ContactUpdateOneRequiredWithoutPaymentsNestedInput
+    allocations?: PaymentAllocationUpdateManyWithoutPaymentNestedInput
+    invoicePayments?: CustomerInvoicePaymentUpdateManyWithoutPaymentNestedInput
+  }
+
+  export type PaymentUncheckedUpdateWithoutBillPaymentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    direction?: EnumPaymentDirectionFieldUpdateOperationsInput | $Enums.PaymentDirection
+    contactId?: StringFieldUpdateOperationsInput | string
+    paymentDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    allocations?: PaymentAllocationUncheckedUpdateManyWithoutPaymentNestedInput
+    invoicePayments?: CustomerInvoicePaymentUncheckedUpdateManyWithoutPaymentNestedInput
   }
 
   export type CompanyCreateWithoutDocumentFilesInput = {
@@ -54318,6 +64359,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryCreateNestedManyWithoutCompanyInput
     products?: ProductCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountCreateNestedManyWithoutCompanyInput
@@ -54337,6 +64379,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     contacts?: ContactUncheckedCreateNestedManyWithoutCompanyInput
+    contactTags?: ContactTagUncheckedCreateNestedManyWithoutCompanyInput
     productCategories?: ProductCategoryUncheckedCreateNestedManyWithoutCompanyInput
     products?: ProductUncheckedCreateNestedManyWithoutCompanyInput
     analyticAccounts?: AnalyticAccountUncheckedCreateNestedManyWithoutCompanyInput
@@ -54372,6 +64415,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUpdateManyWithoutCompanyNestedInput
     products?: ProductUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUpdateManyWithoutCompanyNestedInput
@@ -54391,6 +64435,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contacts?: ContactUncheckedUpdateManyWithoutCompanyNestedInput
+    contactTags?: ContactTagUncheckedUpdateManyWithoutCompanyNestedInput
     productCategories?: ProductCategoryUncheckedUpdateManyWithoutCompanyNestedInput
     products?: ProductUncheckedUpdateManyWithoutCompanyNestedInput
     analyticAccounts?: AnalyticAccountUncheckedUpdateManyWithoutCompanyNestedInput
@@ -54427,6 +64472,7 @@ export namespace Prisma {
     payments?: PaymentCreateNestedManyWithoutContactInput
     journalLines?: JournalLineCreateNestedManyWithoutContactInput
     autoAnalyticRules?: AutoAnalyticRuleCreateNestedManyWithoutContactInput
+    contactTags?: ContactTagAssignmentCreateNestedManyWithoutContactInput
   }
 
   export type ContactUncheckedCreateWithoutUsersInput = {
@@ -54451,6 +64497,7 @@ export namespace Prisma {
     payments?: PaymentUncheckedCreateNestedManyWithoutContactInput
     journalLines?: JournalLineUncheckedCreateNestedManyWithoutContactInput
     autoAnalyticRules?: AutoAnalyticRuleUncheckedCreateNestedManyWithoutContactInput
+    contactTags?: ContactTagAssignmentUncheckedCreateNestedManyWithoutContactInput
   }
 
   export type ContactCreateOrConnectWithoutUsersInput = {
@@ -54519,6 +64566,7 @@ export namespace Prisma {
     payments?: PaymentUpdateManyWithoutContactNestedInput
     journalLines?: JournalLineUpdateManyWithoutContactNestedInput
     autoAnalyticRules?: AutoAnalyticRuleUpdateManyWithoutContactNestedInput
+    contactTags?: ContactTagAssignmentUpdateManyWithoutContactNestedInput
   }
 
   export type ContactUncheckedUpdateWithoutUsersInput = {
@@ -54543,6 +64591,7 @@ export namespace Prisma {
     payments?: PaymentUncheckedUpdateManyWithoutContactNestedInput
     journalLines?: JournalLineUncheckedUpdateManyWithoutContactNestedInput
     autoAnalyticRules?: AutoAnalyticRuleUncheckedUpdateManyWithoutContactNestedInput
+    contactTags?: ContactTagAssignmentUncheckedUpdateManyWithoutContactNestedInput
   }
 
   export type AuditLogUpsertWithWhereUniqueWithoutUserInput = {
@@ -54656,6 +64705,12 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type ContactTagCreateManyCompanyInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
   }
 
   export type ProductCategoryCreateManyCompanyInput = {
@@ -54827,6 +64882,7 @@ export namespace Prisma {
     payments?: PaymentUpdateManyWithoutContactNestedInput
     journalLines?: JournalLineUpdateManyWithoutContactNestedInput
     autoAnalyticRules?: AutoAnalyticRuleUpdateManyWithoutContactNestedInput
+    contactTags?: ContactTagAssignmentUpdateManyWithoutContactNestedInput
     users?: UserUpdateManyWithoutContactNestedInput
   }
 
@@ -54851,6 +64907,7 @@ export namespace Prisma {
     payments?: PaymentUncheckedUpdateManyWithoutContactNestedInput
     journalLines?: JournalLineUncheckedUpdateManyWithoutContactNestedInput
     autoAnalyticRules?: AutoAnalyticRuleUncheckedUpdateManyWithoutContactNestedInput
+    contactTags?: ContactTagAssignmentUncheckedUpdateManyWithoutContactNestedInput
     users?: UserUncheckedUpdateManyWithoutContactNestedInput
   }
 
@@ -54868,6 +64925,28 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContactTagUpdateWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contacts?: ContactTagAssignmentUpdateManyWithoutTagNestedInput
+    autoAnalyticRules?: AutoAnalyticRuleUpdateManyWithoutContactTagNestedInput
+  }
+
+  export type ContactTagUncheckedUpdateWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contacts?: ContactTagAssignmentUncheckedUpdateManyWithoutTagNestedInput
+    autoAnalyticRules?: AutoAnalyticRuleUncheckedUpdateManyWithoutContactTagNestedInput
+  }
+
+  export type ContactTagUncheckedUpdateManyWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ProductCategoryUpdateWithoutCompanyInput = {
@@ -55112,6 +65191,10 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     rules?: AutoAnalyticRuleUpdateManyWithoutModelNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUpdateManyWithoutAutoModelNestedInput
+    salesOrderLines?: SalesOrderLineUpdateManyWithoutAutoModelNestedInput
+    vendorBillLines?: VendorBillLineUpdateManyWithoutAutoModelNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUpdateManyWithoutAutoModelNestedInput
   }
 
   export type AutoAnalyticModelUncheckedUpdateWithoutCompanyInput = {
@@ -55121,6 +65204,10 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     rules?: AutoAnalyticRuleUncheckedUpdateManyWithoutModelNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUncheckedUpdateManyWithoutAutoModelNestedInput
+    salesOrderLines?: SalesOrderLineUncheckedUpdateManyWithoutAutoModelNestedInput
+    vendorBillLines?: VendorBillLineUncheckedUpdateManyWithoutAutoModelNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedUpdateManyWithoutAutoModelNestedInput
   }
 
   export type AutoAnalyticModelUncheckedUpdateManyWithoutCompanyInput = {
@@ -55225,6 +65312,7 @@ export namespace Prisma {
     vendor?: ContactUpdateOneRequiredWithoutVendorBillsNestedInput
     po?: PurchaseOrderUpdateOneWithoutBillsNestedInput
     lines?: VendorBillLineUpdateManyWithoutBillNestedInput
+    payments?: VendorBillPaymentUpdateManyWithoutBillNestedInput
   }
 
   export type VendorBillUncheckedUpdateWithoutCompanyInput = {
@@ -55241,6 +65329,7 @@ export namespace Prisma {
     paymentState?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lines?: VendorBillLineUncheckedUpdateManyWithoutBillNestedInput
+    payments?: VendorBillPaymentUncheckedUpdateManyWithoutBillNestedInput
   }
 
   export type VendorBillUncheckedUpdateManyWithoutCompanyInput = {
@@ -55273,6 +65362,7 @@ export namespace Prisma {
     customer?: ContactUpdateOneRequiredWithoutCustomerInvoicesNestedInput
     so?: SalesOrderUpdateOneWithoutInvoicesNestedInput
     lines?: CustomerInvoiceLineUpdateManyWithoutInvoiceNestedInput
+    payments?: CustomerInvoicePaymentUpdateManyWithoutInvoiceNestedInput
   }
 
   export type CustomerInvoiceUncheckedUpdateWithoutCompanyInput = {
@@ -55290,6 +65380,7 @@ export namespace Prisma {
     portalVisible?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lines?: CustomerInvoiceLineUncheckedUpdateManyWithoutInvoiceNestedInput
+    payments?: CustomerInvoicePaymentUncheckedUpdateManyWithoutInvoiceNestedInput
   }
 
   export type CustomerInvoiceUncheckedUpdateManyWithoutCompanyInput = {
@@ -55319,6 +65410,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contact?: ContactUpdateOneRequiredWithoutPaymentsNestedInput
     allocations?: PaymentAllocationUpdateManyWithoutPaymentNestedInput
+    invoicePayments?: CustomerInvoicePaymentUpdateManyWithoutPaymentNestedInput
+    billPayments?: VendorBillPaymentUpdateManyWithoutPaymentNestedInput
   }
 
   export type PaymentUncheckedUpdateWithoutCompanyInput = {
@@ -55332,6 +65425,8 @@ export namespace Prisma {
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     allocations?: PaymentAllocationUncheckedUpdateManyWithoutPaymentNestedInput
+    invoicePayments?: CustomerInvoicePaymentUncheckedUpdateManyWithoutPaymentNestedInput
+    billPayments?: VendorBillPaymentUncheckedUpdateManyWithoutPaymentNestedInput
   }
 
   export type PaymentUncheckedUpdateManyWithoutCompanyInput = {
@@ -55460,9 +65555,16 @@ export namespace Prisma {
     docType: $Enums.AutoDocType
     matchProductId?: string | null
     matchCategoryId?: string | null
+    matchContactTagId?: string | null
     assignAnalyticAccountId: string
     rulePriority?: number
     isActive?: boolean
+  }
+
+  export type ContactTagAssignmentCreateManyContactInput = {
+    id?: string
+    tagId: string
+    createdAt?: Date | string
   }
 
   export type UserCreateManyContactInput = {
@@ -55571,6 +65673,7 @@ export namespace Prisma {
     company?: CompanyUpdateOneRequiredWithoutVendorBillsNestedInput
     po?: PurchaseOrderUpdateOneWithoutBillsNestedInput
     lines?: VendorBillLineUpdateManyWithoutBillNestedInput
+    payments?: VendorBillPaymentUpdateManyWithoutBillNestedInput
   }
 
   export type VendorBillUncheckedUpdateWithoutVendorInput = {
@@ -55587,6 +65690,7 @@ export namespace Prisma {
     paymentState?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lines?: VendorBillLineUncheckedUpdateManyWithoutBillNestedInput
+    payments?: VendorBillPaymentUncheckedUpdateManyWithoutBillNestedInput
   }
 
   export type VendorBillUncheckedUpdateManyWithoutVendorInput = {
@@ -55619,6 +65723,7 @@ export namespace Prisma {
     company?: CompanyUpdateOneRequiredWithoutCustomerInvoicesNestedInput
     so?: SalesOrderUpdateOneWithoutInvoicesNestedInput
     lines?: CustomerInvoiceLineUpdateManyWithoutInvoiceNestedInput
+    payments?: CustomerInvoicePaymentUpdateManyWithoutInvoiceNestedInput
   }
 
   export type CustomerInvoiceUncheckedUpdateWithoutCustomerInput = {
@@ -55636,6 +65741,7 @@ export namespace Prisma {
     portalVisible?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lines?: CustomerInvoiceLineUncheckedUpdateManyWithoutInvoiceNestedInput
+    payments?: CustomerInvoicePaymentUncheckedUpdateManyWithoutInvoiceNestedInput
   }
 
   export type CustomerInvoiceUncheckedUpdateManyWithoutCustomerInput = {
@@ -55665,6 +65771,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutPaymentsNestedInput
     allocations?: PaymentAllocationUpdateManyWithoutPaymentNestedInput
+    invoicePayments?: CustomerInvoicePaymentUpdateManyWithoutPaymentNestedInput
+    billPayments?: VendorBillPaymentUpdateManyWithoutPaymentNestedInput
   }
 
   export type PaymentUncheckedUpdateWithoutContactInput = {
@@ -55678,6 +65786,8 @@ export namespace Prisma {
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     allocations?: PaymentAllocationUncheckedUpdateManyWithoutPaymentNestedInput
+    invoicePayments?: CustomerInvoicePaymentUncheckedUpdateManyWithoutPaymentNestedInput
+    billPayments?: VendorBillPaymentUncheckedUpdateManyWithoutPaymentNestedInput
   }
 
   export type PaymentUncheckedUpdateManyWithoutContactInput = {
@@ -55733,7 +65843,12 @@ export namespace Prisma {
     model?: AutoAnalyticModelUpdateOneRequiredWithoutRulesNestedInput
     product?: ProductUpdateOneWithoutAutoAnalyticRulesNestedInput
     category?: ProductCategoryUpdateOneWithoutAutoAnalyticRulesNestedInput
+    contactTag?: ContactTagUpdateOneWithoutAutoAnalyticRulesNestedInput
     assignAnalytic?: AnalyticAccountUpdateOneRequiredWithoutAutoAnalyticRulesNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUpdateManyWithoutAutoRuleNestedInput
+    salesOrderLines?: SalesOrderLineUpdateManyWithoutAutoRuleNestedInput
+    vendorBillLines?: VendorBillLineUpdateManyWithoutAutoRuleNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUpdateManyWithoutAutoRuleNestedInput
   }
 
   export type AutoAnalyticRuleUncheckedUpdateWithoutContactInput = {
@@ -55742,9 +65857,14 @@ export namespace Prisma {
     docType?: EnumAutoDocTypeFieldUpdateOperationsInput | $Enums.AutoDocType
     matchProductId?: NullableStringFieldUpdateOperationsInput | string | null
     matchCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactTagId?: NullableStringFieldUpdateOperationsInput | string | null
     assignAnalyticAccountId?: StringFieldUpdateOperationsInput | string
     rulePriority?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    purchaseOrderLines?: PurchaseOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    salesOrderLines?: SalesOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    vendorBillLines?: VendorBillLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedUpdateManyWithoutAutoRuleNestedInput
   }
 
   export type AutoAnalyticRuleUncheckedUpdateManyWithoutContactInput = {
@@ -55753,9 +65873,28 @@ export namespace Prisma {
     docType?: EnumAutoDocTypeFieldUpdateOperationsInput | $Enums.AutoDocType
     matchProductId?: NullableStringFieldUpdateOperationsInput | string | null
     matchCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactTagId?: NullableStringFieldUpdateOperationsInput | string | null
     assignAnalyticAccountId?: StringFieldUpdateOperationsInput | string
     rulePriority?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type ContactTagAssignmentUpdateWithoutContactInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tag?: ContactTagUpdateOneRequiredWithoutContactsNestedInput
+  }
+
+  export type ContactTagAssignmentUncheckedUpdateWithoutContactInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContactTagAssignmentUncheckedUpdateManyWithoutContactInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUpdateWithoutContactInput = {
@@ -55796,6 +65935,86 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ContactTagAssignmentCreateManyTagInput = {
+    id?: string
+    contactId: string
+    createdAt?: Date | string
+  }
+
+  export type AutoAnalyticRuleCreateManyContactTagInput = {
+    id?: string
+    modelId: string
+    docType: $Enums.AutoDocType
+    matchProductId?: string | null
+    matchCategoryId?: string | null
+    matchContactId?: string | null
+    assignAnalyticAccountId: string
+    rulePriority?: number
+    isActive?: boolean
+  }
+
+  export type ContactTagAssignmentUpdateWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contact?: ContactUpdateOneRequiredWithoutContactTagsNestedInput
+  }
+
+  export type ContactTagAssignmentUncheckedUpdateWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContactTagAssignmentUncheckedUpdateManyWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutoAnalyticRuleUpdateWithoutContactTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docType?: EnumAutoDocTypeFieldUpdateOperationsInput | $Enums.AutoDocType
+    rulePriority?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    model?: AutoAnalyticModelUpdateOneRequiredWithoutRulesNestedInput
+    product?: ProductUpdateOneWithoutAutoAnalyticRulesNestedInput
+    category?: ProductCategoryUpdateOneWithoutAutoAnalyticRulesNestedInput
+    contact?: ContactUpdateOneWithoutAutoAnalyticRulesNestedInput
+    assignAnalytic?: AnalyticAccountUpdateOneRequiredWithoutAutoAnalyticRulesNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUpdateManyWithoutAutoRuleNestedInput
+    salesOrderLines?: SalesOrderLineUpdateManyWithoutAutoRuleNestedInput
+    vendorBillLines?: VendorBillLineUpdateManyWithoutAutoRuleNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUpdateManyWithoutAutoRuleNestedInput
+  }
+
+  export type AutoAnalyticRuleUncheckedUpdateWithoutContactTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    modelId?: StringFieldUpdateOperationsInput | string
+    docType?: EnumAutoDocTypeFieldUpdateOperationsInput | $Enums.AutoDocType
+    matchProductId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    assignAnalyticAccountId?: StringFieldUpdateOperationsInput | string
+    rulePriority?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    purchaseOrderLines?: PurchaseOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    salesOrderLines?: SalesOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    vendorBillLines?: VendorBillLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+  }
+
+  export type AutoAnalyticRuleUncheckedUpdateManyWithoutContactTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    modelId?: StringFieldUpdateOperationsInput | string
+    docType?: EnumAutoDocTypeFieldUpdateOperationsInput | $Enums.AutoDocType
+    matchProductId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    assignAnalyticAccountId?: StringFieldUpdateOperationsInput | string
+    rulePriority?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+  }
+
   export type ProductCategoryCreateManyParentInput = {
     id?: string
     companyId: string
@@ -55821,6 +66040,7 @@ export namespace Prisma {
     docType: $Enums.AutoDocType
     matchProductId?: string | null
     matchContactId?: string | null
+    matchContactTagId?: string | null
     assignAnalyticAccountId: string
     rulePriority?: number
     isActive?: boolean
@@ -55909,7 +66129,12 @@ export namespace Prisma {
     model?: AutoAnalyticModelUpdateOneRequiredWithoutRulesNestedInput
     product?: ProductUpdateOneWithoutAutoAnalyticRulesNestedInput
     contact?: ContactUpdateOneWithoutAutoAnalyticRulesNestedInput
+    contactTag?: ContactTagUpdateOneWithoutAutoAnalyticRulesNestedInput
     assignAnalytic?: AnalyticAccountUpdateOneRequiredWithoutAutoAnalyticRulesNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUpdateManyWithoutAutoRuleNestedInput
+    salesOrderLines?: SalesOrderLineUpdateManyWithoutAutoRuleNestedInput
+    vendorBillLines?: VendorBillLineUpdateManyWithoutAutoRuleNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUpdateManyWithoutAutoRuleNestedInput
   }
 
   export type AutoAnalyticRuleUncheckedUpdateWithoutCategoryInput = {
@@ -55918,9 +66143,14 @@ export namespace Prisma {
     docType?: EnumAutoDocTypeFieldUpdateOperationsInput | $Enums.AutoDocType
     matchProductId?: NullableStringFieldUpdateOperationsInput | string | null
     matchContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactTagId?: NullableStringFieldUpdateOperationsInput | string | null
     assignAnalyticAccountId?: StringFieldUpdateOperationsInput | string
     rulePriority?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    purchaseOrderLines?: PurchaseOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    salesOrderLines?: SalesOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    vendorBillLines?: VendorBillLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedUpdateManyWithoutAutoRuleNestedInput
   }
 
   export type AutoAnalyticRuleUncheckedUpdateManyWithoutCategoryInput = {
@@ -55929,6 +66159,7 @@ export namespace Prisma {
     docType?: EnumAutoDocTypeFieldUpdateOperationsInput | $Enums.AutoDocType
     matchProductId?: NullableStringFieldUpdateOperationsInput | string | null
     matchContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactTagId?: NullableStringFieldUpdateOperationsInput | string | null
     assignAnalyticAccountId?: StringFieldUpdateOperationsInput | string
     rulePriority?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
@@ -55938,6 +66169,9 @@ export namespace Prisma {
     id?: string
     purchaseOrderId: string
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -55949,6 +66183,9 @@ export namespace Prisma {
     id?: string
     salesOrderId: string
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -55960,6 +66197,9 @@ export namespace Prisma {
     id?: string
     vendorBillId: string
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     glAccountId?: string | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
@@ -55972,6 +66212,9 @@ export namespace Prisma {
     id?: string
     customerInvoiceId: string
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     glAccountId?: string | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
@@ -55997,6 +66240,7 @@ export namespace Prisma {
     docType: $Enums.AutoDocType
     matchCategoryId?: string | null
     matchContactId?: string | null
+    matchContactTagId?: string | null
     assignAnalyticAccountId: string
     rulePriority?: number
     isActive?: boolean
@@ -56004,6 +66248,7 @@ export namespace Prisma {
 
   export type PurchaseOrderLineUpdateWithoutProductInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56011,12 +66256,17 @@ export namespace Prisma {
     lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     purchaseOrder?: PurchaseOrderUpdateOneRequiredWithoutLinesNestedInput
     analytic?: AnalyticAccountUpdateOneWithoutPoLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutPurchaseOrderLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutPurchaseOrderLinesNestedInput
   }
 
   export type PurchaseOrderLineUncheckedUpdateWithoutProductInput = {
     id?: StringFieldUpdateOperationsInput | string
     purchaseOrderId?: StringFieldUpdateOperationsInput | string
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56028,6 +66278,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     purchaseOrderId?: StringFieldUpdateOperationsInput | string
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56037,6 +66290,7 @@ export namespace Prisma {
 
   export type SalesOrderLineUpdateWithoutProductInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56044,12 +66298,17 @@ export namespace Prisma {
     lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     salesOrder?: SalesOrderUpdateOneRequiredWithoutLinesNestedInput
     analytic?: AnalyticAccountUpdateOneWithoutSoLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutSalesOrderLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutSalesOrderLinesNestedInput
   }
 
   export type SalesOrderLineUncheckedUpdateWithoutProductInput = {
     id?: StringFieldUpdateOperationsInput | string
     salesOrderId?: StringFieldUpdateOperationsInput | string
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56061,6 +66320,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     salesOrderId?: StringFieldUpdateOperationsInput | string
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56070,6 +66332,7 @@ export namespace Prisma {
 
   export type VendorBillLineUpdateWithoutProductInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56078,12 +66341,17 @@ export namespace Prisma {
     bill?: VendorBillUpdateOneRequiredWithoutLinesNestedInput
     analytic?: AnalyticAccountUpdateOneWithoutBillLinesNestedInput
     gl?: GLAccountUpdateOneWithoutBillLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutVendorBillLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutVendorBillLinesNestedInput
   }
 
   export type VendorBillLineUncheckedUpdateWithoutProductInput = {
     id?: StringFieldUpdateOperationsInput | string
     vendorBillId?: StringFieldUpdateOperationsInput | string
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56096,6 +66364,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     vendorBillId?: StringFieldUpdateOperationsInput | string
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56106,6 +66377,7 @@ export namespace Prisma {
 
   export type CustomerInvoiceLineUpdateWithoutProductInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56114,12 +66386,17 @@ export namespace Prisma {
     invoice?: CustomerInvoiceUpdateOneRequiredWithoutLinesNestedInput
     analytic?: AnalyticAccountUpdateOneWithoutInvLinesNestedInput
     gl?: GLAccountUpdateOneWithoutInvLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutCustomerInvoiceLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutCustomerInvoiceLinesNestedInput
   }
 
   export type CustomerInvoiceLineUncheckedUpdateWithoutProductInput = {
     id?: StringFieldUpdateOperationsInput | string
     customerInvoiceId?: StringFieldUpdateOperationsInput | string
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56132,6 +66409,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     customerInvoiceId?: StringFieldUpdateOperationsInput | string
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56181,7 +66461,12 @@ export namespace Prisma {
     model?: AutoAnalyticModelUpdateOneRequiredWithoutRulesNestedInput
     category?: ProductCategoryUpdateOneWithoutAutoAnalyticRulesNestedInput
     contact?: ContactUpdateOneWithoutAutoAnalyticRulesNestedInput
+    contactTag?: ContactTagUpdateOneWithoutAutoAnalyticRulesNestedInput
     assignAnalytic?: AnalyticAccountUpdateOneRequiredWithoutAutoAnalyticRulesNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUpdateManyWithoutAutoRuleNestedInput
+    salesOrderLines?: SalesOrderLineUpdateManyWithoutAutoRuleNestedInput
+    vendorBillLines?: VendorBillLineUpdateManyWithoutAutoRuleNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUpdateManyWithoutAutoRuleNestedInput
   }
 
   export type AutoAnalyticRuleUncheckedUpdateWithoutProductInput = {
@@ -56190,9 +66475,14 @@ export namespace Prisma {
     docType?: EnumAutoDocTypeFieldUpdateOperationsInput | $Enums.AutoDocType
     matchCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
     matchContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactTagId?: NullableStringFieldUpdateOperationsInput | string | null
     assignAnalyticAccountId?: StringFieldUpdateOperationsInput | string
     rulePriority?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    purchaseOrderLines?: PurchaseOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    salesOrderLines?: SalesOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    vendorBillLines?: VendorBillLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedUpdateManyWithoutAutoRuleNestedInput
   }
 
   export type AutoAnalyticRuleUncheckedUpdateManyWithoutProductInput = {
@@ -56201,6 +66491,7 @@ export namespace Prisma {
     docType?: EnumAutoDocTypeFieldUpdateOperationsInput | $Enums.AutoDocType
     matchCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
     matchContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactTagId?: NullableStringFieldUpdateOperationsInput | string | null
     assignAnalyticAccountId?: StringFieldUpdateOperationsInput | string
     rulePriority?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
@@ -56237,6 +66528,9 @@ export namespace Prisma {
     id?: string
     purchaseOrderId: string
     productId: string
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -56248,6 +66542,9 @@ export namespace Prisma {
     id?: string
     salesOrderId: string
     productId: string
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -56259,6 +66556,9 @@ export namespace Prisma {
     id?: string
     vendorBillId: string
     productId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     glAccountId?: string | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
@@ -56271,6 +66571,9 @@ export namespace Prisma {
     id?: string
     customerInvoiceId: string
     productId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     glAccountId?: string | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
@@ -56286,6 +66589,7 @@ export namespace Prisma {
     matchProductId?: string | null
     matchCategoryId?: string | null
     matchContactId?: string | null
+    matchContactTagId?: string | null
     rulePriority?: number
     isActive?: boolean
   }
@@ -56389,6 +66693,7 @@ export namespace Prisma {
 
   export type PurchaseOrderLineUpdateWithoutAnalyticInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56396,12 +66701,17 @@ export namespace Prisma {
     lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     purchaseOrder?: PurchaseOrderUpdateOneRequiredWithoutLinesNestedInput
     product?: ProductUpdateOneRequiredWithoutPoLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutPurchaseOrderLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutPurchaseOrderLinesNestedInput
   }
 
   export type PurchaseOrderLineUncheckedUpdateWithoutAnalyticInput = {
     id?: StringFieldUpdateOperationsInput | string
     purchaseOrderId?: StringFieldUpdateOperationsInput | string
     productId?: StringFieldUpdateOperationsInput | string
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56413,6 +66723,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     purchaseOrderId?: StringFieldUpdateOperationsInput | string
     productId?: StringFieldUpdateOperationsInput | string
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56422,6 +66735,7 @@ export namespace Prisma {
 
   export type SalesOrderLineUpdateWithoutAnalyticInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56429,12 +66743,17 @@ export namespace Prisma {
     lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     salesOrder?: SalesOrderUpdateOneRequiredWithoutLinesNestedInput
     product?: ProductUpdateOneRequiredWithoutSoLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutSalesOrderLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutSalesOrderLinesNestedInput
   }
 
   export type SalesOrderLineUncheckedUpdateWithoutAnalyticInput = {
     id?: StringFieldUpdateOperationsInput | string
     salesOrderId?: StringFieldUpdateOperationsInput | string
     productId?: StringFieldUpdateOperationsInput | string
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56446,6 +66765,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     salesOrderId?: StringFieldUpdateOperationsInput | string
     productId?: StringFieldUpdateOperationsInput | string
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56455,6 +66777,7 @@ export namespace Prisma {
 
   export type VendorBillLineUpdateWithoutAnalyticInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56463,12 +66786,17 @@ export namespace Prisma {
     bill?: VendorBillUpdateOneRequiredWithoutLinesNestedInput
     product?: ProductUpdateOneWithoutBillLinesNestedInput
     gl?: GLAccountUpdateOneWithoutBillLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutVendorBillLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutVendorBillLinesNestedInput
   }
 
   export type VendorBillLineUncheckedUpdateWithoutAnalyticInput = {
     id?: StringFieldUpdateOperationsInput | string
     vendorBillId?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56481,6 +66809,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     vendorBillId?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56491,6 +66822,7 @@ export namespace Prisma {
 
   export type CustomerInvoiceLineUpdateWithoutAnalyticInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56499,12 +66831,17 @@ export namespace Prisma {
     invoice?: CustomerInvoiceUpdateOneRequiredWithoutLinesNestedInput
     product?: ProductUpdateOneWithoutInvLinesNestedInput
     gl?: GLAccountUpdateOneWithoutInvLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutCustomerInvoiceLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutCustomerInvoiceLinesNestedInput
   }
 
   export type CustomerInvoiceLineUncheckedUpdateWithoutAnalyticInput = {
     id?: StringFieldUpdateOperationsInput | string
     customerInvoiceId?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56517,6 +66854,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     customerInvoiceId?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56534,6 +66874,11 @@ export namespace Prisma {
     product?: ProductUpdateOneWithoutAutoAnalyticRulesNestedInput
     category?: ProductCategoryUpdateOneWithoutAutoAnalyticRulesNestedInput
     contact?: ContactUpdateOneWithoutAutoAnalyticRulesNestedInput
+    contactTag?: ContactTagUpdateOneWithoutAutoAnalyticRulesNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUpdateManyWithoutAutoRuleNestedInput
+    salesOrderLines?: SalesOrderLineUpdateManyWithoutAutoRuleNestedInput
+    vendorBillLines?: VendorBillLineUpdateManyWithoutAutoRuleNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUpdateManyWithoutAutoRuleNestedInput
   }
 
   export type AutoAnalyticRuleUncheckedUpdateWithoutAssignAnalyticInput = {
@@ -56543,8 +66888,13 @@ export namespace Prisma {
     matchProductId?: NullableStringFieldUpdateOperationsInput | string | null
     matchCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
     matchContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactTagId?: NullableStringFieldUpdateOperationsInput | string | null
     rulePriority?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    purchaseOrderLines?: PurchaseOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    salesOrderLines?: SalesOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    vendorBillLines?: VendorBillLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedUpdateManyWithoutAutoRuleNestedInput
   }
 
   export type AutoAnalyticRuleUncheckedUpdateManyWithoutAssignAnalyticInput = {
@@ -56554,6 +66904,7 @@ export namespace Prisma {
     matchProductId?: NullableStringFieldUpdateOperationsInput | string | null
     matchCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
     matchContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactTagId?: NullableStringFieldUpdateOperationsInput | string | null
     rulePriority?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
   }
@@ -56581,6 +66932,9 @@ export namespace Prisma {
     vendorBillId: string
     productId?: string | null
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -56593,6 +66947,9 @@ export namespace Prisma {
     customerInvoiceId: string
     productId?: string | null
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -56656,6 +67013,7 @@ export namespace Prisma {
 
   export type VendorBillLineUpdateWithoutGlInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56664,6 +67022,8 @@ export namespace Prisma {
     bill?: VendorBillUpdateOneRequiredWithoutLinesNestedInput
     product?: ProductUpdateOneWithoutBillLinesNestedInput
     analytic?: AnalyticAccountUpdateOneWithoutBillLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutVendorBillLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutVendorBillLinesNestedInput
   }
 
   export type VendorBillLineUncheckedUpdateWithoutGlInput = {
@@ -56671,6 +67031,9 @@ export namespace Prisma {
     vendorBillId?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56683,6 +67046,9 @@ export namespace Prisma {
     vendorBillId?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56692,6 +67058,7 @@ export namespace Prisma {
 
   export type CustomerInvoiceLineUpdateWithoutGlInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56700,6 +67067,8 @@ export namespace Prisma {
     invoice?: CustomerInvoiceUpdateOneRequiredWithoutLinesNestedInput
     product?: ProductUpdateOneWithoutInvLinesNestedInput
     analytic?: AnalyticAccountUpdateOneWithoutInvLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutCustomerInvoiceLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutCustomerInvoiceLinesNestedInput
   }
 
   export type CustomerInvoiceLineUncheckedUpdateWithoutGlInput = {
@@ -56707,6 +67076,9 @@ export namespace Prisma {
     customerInvoiceId?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56719,6 +67091,9 @@ export namespace Prisma {
     customerInvoiceId?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56838,9 +67213,68 @@ export namespace Prisma {
     matchProductId?: string | null
     matchCategoryId?: string | null
     matchContactId?: string | null
+    matchContactTagId?: string | null
     assignAnalyticAccountId: string
     rulePriority?: number
     isActive?: boolean
+  }
+
+  export type PurchaseOrderLineCreateManyAutoModelInput = {
+    id?: string
+    purchaseOrderId: string
+    productId: string
+    analyticAccountId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
+    description?: string | null
+    qty: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+  }
+
+  export type SalesOrderLineCreateManyAutoModelInput = {
+    id?: string
+    salesOrderId: string
+    productId: string
+    analyticAccountId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
+    description?: string | null
+    qty: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+  }
+
+  export type VendorBillLineCreateManyAutoModelInput = {
+    id?: string
+    vendorBillId: string
+    productId?: string | null
+    analyticAccountId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
+    glAccountId?: string | null
+    description?: string | null
+    qty?: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+  }
+
+  export type CustomerInvoiceLineCreateManyAutoModelInput = {
+    id?: string
+    customerInvoiceId: string
+    productId?: string | null
+    analyticAccountId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
+    glAccountId?: string | null
+    description?: string | null
+    qty?: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
   }
 
   export type AutoAnalyticRuleUpdateWithoutModelInput = {
@@ -56851,7 +67285,12 @@ export namespace Prisma {
     product?: ProductUpdateOneWithoutAutoAnalyticRulesNestedInput
     category?: ProductCategoryUpdateOneWithoutAutoAnalyticRulesNestedInput
     contact?: ContactUpdateOneWithoutAutoAnalyticRulesNestedInput
+    contactTag?: ContactTagUpdateOneWithoutAutoAnalyticRulesNestedInput
     assignAnalytic?: AnalyticAccountUpdateOneRequiredWithoutAutoAnalyticRulesNestedInput
+    purchaseOrderLines?: PurchaseOrderLineUpdateManyWithoutAutoRuleNestedInput
+    salesOrderLines?: SalesOrderLineUpdateManyWithoutAutoRuleNestedInput
+    vendorBillLines?: VendorBillLineUpdateManyWithoutAutoRuleNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUpdateManyWithoutAutoRuleNestedInput
   }
 
   export type AutoAnalyticRuleUncheckedUpdateWithoutModelInput = {
@@ -56860,9 +67299,14 @@ export namespace Prisma {
     matchProductId?: NullableStringFieldUpdateOperationsInput | string | null
     matchCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
     matchContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactTagId?: NullableStringFieldUpdateOperationsInput | string | null
     assignAnalyticAccountId?: StringFieldUpdateOperationsInput | string
     rulePriority?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    purchaseOrderLines?: PurchaseOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    salesOrderLines?: SalesOrderLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    vendorBillLines?: VendorBillLineUncheckedUpdateManyWithoutAutoRuleNestedInput
+    customerInvoiceLines?: CustomerInvoiceLineUncheckedUpdateManyWithoutAutoRuleNestedInput
   }
 
   export type AutoAnalyticRuleUncheckedUpdateManyWithoutModelInput = {
@@ -56871,15 +67315,425 @@ export namespace Prisma {
     matchProductId?: NullableStringFieldUpdateOperationsInput | string | null
     matchCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
     matchContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchContactTagId?: NullableStringFieldUpdateOperationsInput | string | null
     assignAnalyticAccountId?: StringFieldUpdateOperationsInput | string
     rulePriority?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type PurchaseOrderLineUpdateWithoutAutoModelInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    purchaseOrder?: PurchaseOrderUpdateOneRequiredWithoutLinesNestedInput
+    product?: ProductUpdateOneRequiredWithoutPoLinesNestedInput
+    analytic?: AnalyticAccountUpdateOneWithoutPoLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutPurchaseOrderLinesNestedInput
+  }
+
+  export type PurchaseOrderLineUncheckedUpdateWithoutAutoModelInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    purchaseOrderId?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type PurchaseOrderLineUncheckedUpdateManyWithoutAutoModelInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    purchaseOrderId?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type SalesOrderLineUpdateWithoutAutoModelInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    salesOrder?: SalesOrderUpdateOneRequiredWithoutLinesNestedInput
+    product?: ProductUpdateOneRequiredWithoutSoLinesNestedInput
+    analytic?: AnalyticAccountUpdateOneWithoutSoLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutSalesOrderLinesNestedInput
+  }
+
+  export type SalesOrderLineUncheckedUpdateWithoutAutoModelInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    salesOrderId?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type SalesOrderLineUncheckedUpdateManyWithoutAutoModelInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    salesOrderId?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type VendorBillLineUpdateWithoutAutoModelInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bill?: VendorBillUpdateOneRequiredWithoutLinesNestedInput
+    product?: ProductUpdateOneWithoutBillLinesNestedInput
+    analytic?: AnalyticAccountUpdateOneWithoutBillLinesNestedInput
+    gl?: GLAccountUpdateOneWithoutBillLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutVendorBillLinesNestedInput
+  }
+
+  export type VendorBillLineUncheckedUpdateWithoutAutoModelInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vendorBillId?: StringFieldUpdateOperationsInput | string
+    productId?: NullableStringFieldUpdateOperationsInput | string | null
+    analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type VendorBillLineUncheckedUpdateManyWithoutAutoModelInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vendorBillId?: StringFieldUpdateOperationsInput | string
+    productId?: NullableStringFieldUpdateOperationsInput | string | null
+    analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type CustomerInvoiceLineUpdateWithoutAutoModelInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    invoice?: CustomerInvoiceUpdateOneRequiredWithoutLinesNestedInput
+    product?: ProductUpdateOneWithoutInvLinesNestedInput
+    analytic?: AnalyticAccountUpdateOneWithoutInvLinesNestedInput
+    gl?: GLAccountUpdateOneWithoutInvLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutCustomerInvoiceLinesNestedInput
+  }
+
+  export type CustomerInvoiceLineUncheckedUpdateWithoutAutoModelInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    customerInvoiceId?: StringFieldUpdateOperationsInput | string
+    productId?: NullableStringFieldUpdateOperationsInput | string | null
+    analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type CustomerInvoiceLineUncheckedUpdateManyWithoutAutoModelInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    customerInvoiceId?: StringFieldUpdateOperationsInput | string
+    productId?: NullableStringFieldUpdateOperationsInput | string | null
+    analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type PurchaseOrderLineCreateManyAutoRuleInput = {
+    id?: string
+    purchaseOrderId: string
+    productId: string
+    analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    matchedFieldsCount?: number | null
+    description?: string | null
+    qty: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+  }
+
+  export type SalesOrderLineCreateManyAutoRuleInput = {
+    id?: string
+    salesOrderId: string
+    productId: string
+    analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    matchedFieldsCount?: number | null
+    description?: string | null
+    qty: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+  }
+
+  export type VendorBillLineCreateManyAutoRuleInput = {
+    id?: string
+    vendorBillId: string
+    productId?: string | null
+    analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    matchedFieldsCount?: number | null
+    glAccountId?: string | null
+    description?: string | null
+    qty?: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+  }
+
+  export type CustomerInvoiceLineCreateManyAutoRuleInput = {
+    id?: string
+    customerInvoiceId: string
+    productId?: string | null
+    analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    matchedFieldsCount?: number | null
+    glAccountId?: string | null
+    description?: string | null
+    qty?: Decimal | DecimalJsLike | number | string
+    unitPrice: Decimal | DecimalJsLike | number | string
+    taxRate?: Decimal | DecimalJsLike | number | string
+    lineTotal: Decimal | DecimalJsLike | number | string
+  }
+
+  export type PurchaseOrderLineUpdateWithoutAutoRuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    purchaseOrder?: PurchaseOrderUpdateOneRequiredWithoutLinesNestedInput
+    product?: ProductUpdateOneRequiredWithoutPoLinesNestedInput
+    analytic?: AnalyticAccountUpdateOneWithoutPoLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutPurchaseOrderLinesNestedInput
+  }
+
+  export type PurchaseOrderLineUncheckedUpdateWithoutAutoRuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    purchaseOrderId?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type PurchaseOrderLineUncheckedUpdateManyWithoutAutoRuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    purchaseOrderId?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type SalesOrderLineUpdateWithoutAutoRuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    salesOrder?: SalesOrderUpdateOneRequiredWithoutLinesNestedInput
+    product?: ProductUpdateOneRequiredWithoutSoLinesNestedInput
+    analytic?: AnalyticAccountUpdateOneWithoutSoLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutSalesOrderLinesNestedInput
+  }
+
+  export type SalesOrderLineUncheckedUpdateWithoutAutoRuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    salesOrderId?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type SalesOrderLineUncheckedUpdateManyWithoutAutoRuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    salesOrderId?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type VendorBillLineUpdateWithoutAutoRuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bill?: VendorBillUpdateOneRequiredWithoutLinesNestedInput
+    product?: ProductUpdateOneWithoutBillLinesNestedInput
+    analytic?: AnalyticAccountUpdateOneWithoutBillLinesNestedInput
+    gl?: GLAccountUpdateOneWithoutBillLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutVendorBillLinesNestedInput
+  }
+
+  export type VendorBillLineUncheckedUpdateWithoutAutoRuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vendorBillId?: StringFieldUpdateOperationsInput | string
+    productId?: NullableStringFieldUpdateOperationsInput | string | null
+    analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type VendorBillLineUncheckedUpdateManyWithoutAutoRuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vendorBillId?: StringFieldUpdateOperationsInput | string
+    productId?: NullableStringFieldUpdateOperationsInput | string | null
+    analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type CustomerInvoiceLineUpdateWithoutAutoRuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    invoice?: CustomerInvoiceUpdateOneRequiredWithoutLinesNestedInput
+    product?: ProductUpdateOneWithoutInvLinesNestedInput
+    analytic?: AnalyticAccountUpdateOneWithoutInvLinesNestedInput
+    gl?: GLAccountUpdateOneWithoutInvLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutCustomerInvoiceLinesNestedInput
+  }
+
+  export type CustomerInvoiceLineUncheckedUpdateWithoutAutoRuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    customerInvoiceId?: StringFieldUpdateOperationsInput | string
+    productId?: NullableStringFieldUpdateOperationsInput | string | null
+    analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type CustomerInvoiceLineUncheckedUpdateManyWithoutAutoRuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    customerInvoiceId?: StringFieldUpdateOperationsInput | string
+    productId?: NullableStringFieldUpdateOperationsInput | string | null
+    analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type PurchaseOrderLineCreateManyPurchaseOrderInput = {
     id?: string
     productId: string
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -56904,6 +67758,7 @@ export namespace Prisma {
 
   export type PurchaseOrderLineUpdateWithoutPurchaseOrderInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56911,12 +67766,17 @@ export namespace Prisma {
     lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     product?: ProductUpdateOneRequiredWithoutPoLinesNestedInput
     analytic?: AnalyticAccountUpdateOneWithoutPoLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutPurchaseOrderLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutPurchaseOrderLinesNestedInput
   }
 
   export type PurchaseOrderLineUncheckedUpdateWithoutPurchaseOrderInput = {
     id?: StringFieldUpdateOperationsInput | string
     productId?: StringFieldUpdateOperationsInput | string
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56928,6 +67788,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     productId?: StringFieldUpdateOperationsInput | string
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -56949,6 +67812,7 @@ export namespace Prisma {
     company?: CompanyUpdateOneRequiredWithoutVendorBillsNestedInput
     vendor?: ContactUpdateOneRequiredWithoutVendorBillsNestedInput
     lines?: VendorBillLineUpdateManyWithoutBillNestedInput
+    payments?: VendorBillPaymentUpdateManyWithoutBillNestedInput
   }
 
   export type VendorBillUncheckedUpdateWithoutPoInput = {
@@ -56965,6 +67829,7 @@ export namespace Prisma {
     paymentState?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lines?: VendorBillLineUncheckedUpdateManyWithoutBillNestedInput
+    payments?: VendorBillPaymentUncheckedUpdateManyWithoutBillNestedInput
   }
 
   export type VendorBillUncheckedUpdateManyWithoutPoInput = {
@@ -56986,6 +67851,9 @@ export namespace Prisma {
     id?: string
     productId: string
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     description?: string | null
     qty: Decimal | DecimalJsLike | number | string
     unitPrice: Decimal | DecimalJsLike | number | string
@@ -57011,6 +67879,7 @@ export namespace Prisma {
 
   export type SalesOrderLineUpdateWithoutSalesOrderInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -57018,12 +67887,17 @@ export namespace Prisma {
     lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     product?: ProductUpdateOneRequiredWithoutSoLinesNestedInput
     analytic?: AnalyticAccountUpdateOneWithoutSoLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutSalesOrderLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutSalesOrderLinesNestedInput
   }
 
   export type SalesOrderLineUncheckedUpdateWithoutSalesOrderInput = {
     id?: StringFieldUpdateOperationsInput | string
     productId?: StringFieldUpdateOperationsInput | string
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -57035,6 +67909,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     productId?: StringFieldUpdateOperationsInput | string
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -57057,6 +67934,7 @@ export namespace Prisma {
     company?: CompanyUpdateOneRequiredWithoutCustomerInvoicesNestedInput
     customer?: ContactUpdateOneRequiredWithoutCustomerInvoicesNestedInput
     lines?: CustomerInvoiceLineUpdateManyWithoutInvoiceNestedInput
+    payments?: CustomerInvoicePaymentUpdateManyWithoutInvoiceNestedInput
   }
 
   export type CustomerInvoiceUncheckedUpdateWithoutSoInput = {
@@ -57074,6 +67952,7 @@ export namespace Prisma {
     portalVisible?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lines?: CustomerInvoiceLineUncheckedUpdateManyWithoutInvoiceNestedInput
+    payments?: CustomerInvoicePaymentUncheckedUpdateManyWithoutInvoiceNestedInput
   }
 
   export type CustomerInvoiceUncheckedUpdateManyWithoutSoInput = {
@@ -57096,6 +67975,9 @@ export namespace Prisma {
     id?: string
     productId?: string | null
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     glAccountId?: string | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
@@ -57104,8 +67986,16 @@ export namespace Prisma {
     lineTotal: Decimal | DecimalJsLike | number | string
   }
 
+  export type VendorBillPaymentCreateManyBillInput = {
+    id?: string
+    paymentId: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+  }
+
   export type VendorBillLineUpdateWithoutBillInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -57114,12 +68004,17 @@ export namespace Prisma {
     product?: ProductUpdateOneWithoutBillLinesNestedInput
     analytic?: AnalyticAccountUpdateOneWithoutBillLinesNestedInput
     gl?: GLAccountUpdateOneWithoutBillLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutVendorBillLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutVendorBillLinesNestedInput
   }
 
   export type VendorBillLineUncheckedUpdateWithoutBillInput = {
     id?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -57132,6 +68027,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -57140,10 +68038,34 @@ export namespace Prisma {
     lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
+  export type VendorBillPaymentUpdateWithoutBillInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    payment?: PaymentUpdateOneRequiredWithoutBillPaymentsNestedInput
+  }
+
+  export type VendorBillPaymentUncheckedUpdateWithoutBillInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    paymentId?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VendorBillPaymentUncheckedUpdateManyWithoutBillInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    paymentId?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type CustomerInvoiceLineCreateManyInvoiceInput = {
     id?: string
     productId?: string | null
     analyticAccountId?: string | null
+    autoAnalyticModelId?: string | null
+    autoAnalyticRuleId?: string | null
+    matchedFieldsCount?: number | null
     glAccountId?: string | null
     description?: string | null
     qty?: Decimal | DecimalJsLike | number | string
@@ -57152,8 +68074,16 @@ export namespace Prisma {
     lineTotal: Decimal | DecimalJsLike | number | string
   }
 
+  export type CustomerInvoicePaymentCreateManyInvoiceInput = {
+    id?: string
+    paymentId: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+  }
+
   export type CustomerInvoiceLineUpdateWithoutInvoiceInput = {
     id?: StringFieldUpdateOperationsInput | string
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -57162,12 +68092,17 @@ export namespace Prisma {
     product?: ProductUpdateOneWithoutInvLinesNestedInput
     analytic?: AnalyticAccountUpdateOneWithoutInvLinesNestedInput
     gl?: GLAccountUpdateOneWithoutInvLinesNestedInput
+    autoModel?: AutoAnalyticModelUpdateOneWithoutCustomerInvoiceLinesNestedInput
+    autoRule?: AutoAnalyticRuleUpdateOneWithoutCustomerInvoiceLinesNestedInput
   }
 
   export type CustomerInvoiceLineUncheckedUpdateWithoutInvoiceInput = {
     id?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -57180,6 +68115,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
     analyticAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticModelId?: NullableStringFieldUpdateOperationsInput | string | null
+    autoAnalyticRuleId?: NullableStringFieldUpdateOperationsInput | string | null
+    matchedFieldsCount?: NullableIntFieldUpdateOperationsInput | number | null
     glAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -57188,11 +68126,46 @@ export namespace Prisma {
     lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
+  export type CustomerInvoicePaymentUpdateWithoutInvoiceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    payment?: PaymentUpdateOneRequiredWithoutInvoicePaymentsNestedInput
+  }
+
+  export type CustomerInvoicePaymentUncheckedUpdateWithoutInvoiceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    paymentId?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CustomerInvoicePaymentUncheckedUpdateManyWithoutInvoiceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    paymentId?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type PaymentAllocationCreateManyPaymentInput = {
     id?: string
     targetType: $Enums.AllocationTargetType
     targetId: string
     amount: Decimal | DecimalJsLike | number | string
+  }
+
+  export type CustomerInvoicePaymentCreateManyPaymentInput = {
+    id?: string
+    invoiceId: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+  }
+
+  export type VendorBillPaymentCreateManyPaymentInput = {
+    id?: string
+    billId: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
   }
 
   export type PaymentAllocationUpdateWithoutPaymentInput = {
@@ -57214,6 +68187,48 @@ export namespace Prisma {
     targetType?: EnumAllocationTargetTypeFieldUpdateOperationsInput | $Enums.AllocationTargetType
     targetId?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type CustomerInvoicePaymentUpdateWithoutPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoice?: CustomerInvoiceUpdateOneRequiredWithoutPaymentsNestedInput
+  }
+
+  export type CustomerInvoicePaymentUncheckedUpdateWithoutPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceId?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CustomerInvoicePaymentUncheckedUpdateManyWithoutPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    invoiceId?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VendorBillPaymentUpdateWithoutPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bill?: VendorBillUpdateOneRequiredWithoutPaymentsNestedInput
+  }
+
+  export type VendorBillPaymentUncheckedUpdateWithoutPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    billId?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VendorBillPaymentUncheckedUpdateManyWithoutPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    billId?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AuditLogCreateManyUserInput = {

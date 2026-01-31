@@ -8,8 +8,8 @@ import * as productController from "../controllers/productController.js";
 import * as analyticController from "../controllers/analyticAccountController.js";
 import * as budgetController from "../controllers/budgetController.js";
 import * as autoAnalyticController from "../controllers/autoAnalyticController.js";
-import { createContactSchema, updateContactSchema, listContactSchema, } from "../validators/contactValidators.js";
-import { createProductSchema, updateProductSchema, listProductSchema, } from "../validators/productValidators.js";
+import { createContactSchema, updateContactSchema, listContactSchema, listContactTagSchema, createContactTagSchema, } from "../validators/contactValidators.js";
+import { createProductSchema, updateProductSchema, listProductSchema, listProductCategorySchema, } from "../validators/productValidators.js";
 import { createAnalyticAccountSchema, updateAnalyticAccountSchema, listAnalyticAccountSchema, } from "../validators/analyticAccountValidators.js";
 import { createBudgetSchema, updateBudgetSchema, listBudgetSchema } from "../validators/budgetValidators.js";
 import { createAutoAnalyticSchema, updateAutoAnalyticSchema, listAutoAnalyticSchema, } from "../validators/autoAnalyticValidators.js";
@@ -23,6 +23,15 @@ masterDataRoutes.post("/contacts", validateRequest(createContactSchema), asyncHa
 masterDataRoutes.get("/contacts", validateRequest(listContactSchema), asyncHandler(async (req, res) => {
     const contacts = await contactController.listContacts(req.query.companyId);
     res.json({ success: true, data: contacts });
+}));
+// Contact Tags
+masterDataRoutes.get("/contact-tags", validateRequest(listContactTagSchema), asyncHandler(async (req, res) => {
+    const tags = await contactController.listContactTags(req.query.companyId);
+    res.json({ success: true, data: tags });
+}));
+masterDataRoutes.post("/contact-tags", validateRequest(createContactTagSchema), asyncHandler(async (req, res) => {
+    const tag = await contactController.createContactTag(req.body);
+    res.status(201).json({ success: true, data: tag });
 }));
 masterDataRoutes.get("/contacts/:id", asyncHandler(async (req, res) => {
     const contact = await contactController.getContact(req.params.id);
@@ -44,6 +53,10 @@ masterDataRoutes.post("/products", validateRequest(createProductSchema), asyncHa
 masterDataRoutes.get("/products", validateRequest(listProductSchema), asyncHandler(async (req, res) => {
     const products = await productController.listProducts(req.query.companyId);
     res.json({ success: true, data: products });
+}));
+masterDataRoutes.get("/product-categories", validateRequest(listProductCategorySchema), asyncHandler(async (req, res) => {
+    const categories = await productController.listProductCategories(req.query.companyId);
+    res.json({ success: true, data: categories });
 }));
 masterDataRoutes.get("/products/:id", asyncHandler(async (req, res) => {
     const product = await productController.getProduct(req.params.id);

@@ -28,6 +28,9 @@ export const createPayment = async (data) => {
                 if (!invoice) {
                     throw new ApiError(404, "Invoice not found");
                 }
+                if (invoice.status !== "posted") {
+                    throw new ApiError(400, "Invoice must be posted before applying payment");
+                }
                 const remaining = Number(invoice.totalAmount) - Number(invoice.paidAmount);
                 if (allocation.amount > remaining) {
                     throw new ApiError(400, "Payment allocation exceeds invoice remaining balance");
@@ -39,6 +42,9 @@ export const createPayment = async (data) => {
                 });
                 if (!bill) {
                     throw new ApiError(404, "Vendor bill not found");
+                }
+                if (bill.status !== "posted") {
+                    throw new ApiError(400, "Vendor bill must be posted before applying payment");
                 }
                 const remaining = Number(bill.totalAmount) - Number(bill.paidAmount);
                 if (allocation.amount > remaining) {
@@ -54,9 +60,23 @@ export const createPayment = async (data) => {
                 },
             });
             if (allocation.targetType === "customer_invoice") {
+                await tx.customerInvoicePayment.create({
+                    data: {
+                        invoiceId: allocation.targetId,
+                        paymentId: payment.id,
+                        amount: allocation.amount,
+                    },
+                });
                 await applyPaymentToInvoice(allocation.targetId, allocation.amount, tx);
             }
             else {
+                await tx.vendorBillPayment.create({
+                    data: {
+                        billId: allocation.targetId,
+                        paymentId: payment.id,
+                        amount: allocation.amount,
+                    },
+                });
                 await applyPaymentToBill(allocation.targetId, allocation.amount, tx);
             }
         }

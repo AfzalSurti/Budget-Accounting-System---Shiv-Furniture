@@ -143,6 +143,20 @@ exports.Prisma.ContactScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ContactTagScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  name: 'name',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ContactTagAssignmentScalarFieldEnum = {
+  id: 'id',
+  contactId: 'contactId',
+  tagId: 'tagId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.ProductCategoryScalarFieldEnum = {
   id: 'id',
   companyId: 'companyId',
@@ -257,6 +271,7 @@ exports.Prisma.AutoAnalyticRuleScalarFieldEnum = {
   matchProductId: 'matchProductId',
   matchCategoryId: 'matchCategoryId',
   matchContactId: 'matchContactId',
+  matchContactTagId: 'matchContactTagId',
   assignAnalyticAccountId: 'assignAnalyticAccountId',
   rulePriority: 'rulePriority',
   isActive: 'isActive'
@@ -280,6 +295,9 @@ exports.Prisma.PurchaseOrderLineScalarFieldEnum = {
   purchaseOrderId: 'purchaseOrderId',
   productId: 'productId',
   analyticAccountId: 'analyticAccountId',
+  autoAnalyticModelId: 'autoAnalyticModelId',
+  autoAnalyticRuleId: 'autoAnalyticRuleId',
+  matchedFieldsCount: 'matchedFieldsCount',
   description: 'description',
   qty: 'qty',
   unitPrice: 'unitPrice',
@@ -305,6 +323,9 @@ exports.Prisma.SalesOrderLineScalarFieldEnum = {
   salesOrderId: 'salesOrderId',
   productId: 'productId',
   analyticAccountId: 'analyticAccountId',
+  autoAnalyticModelId: 'autoAnalyticModelId',
+  autoAnalyticRuleId: 'autoAnalyticRuleId',
+  matchedFieldsCount: 'matchedFieldsCount',
   description: 'description',
   qty: 'qty',
   unitPrice: 'unitPrice',
@@ -333,6 +354,9 @@ exports.Prisma.VendorBillLineScalarFieldEnum = {
   vendorBillId: 'vendorBillId',
   productId: 'productId',
   analyticAccountId: 'analyticAccountId',
+  autoAnalyticModelId: 'autoAnalyticModelId',
+  autoAnalyticRuleId: 'autoAnalyticRuleId',
+  matchedFieldsCount: 'matchedFieldsCount',
   glAccountId: 'glAccountId',
   description: 'description',
   qty: 'qty',
@@ -363,6 +387,9 @@ exports.Prisma.CustomerInvoiceLineScalarFieldEnum = {
   customerInvoiceId: 'customerInvoiceId',
   productId: 'productId',
   analyticAccountId: 'analyticAccountId',
+  autoAnalyticModelId: 'autoAnalyticModelId',
+  autoAnalyticRuleId: 'autoAnalyticRuleId',
+  matchedFieldsCount: 'matchedFieldsCount',
   glAccountId: 'glAccountId',
   description: 'description',
   qty: 'qty',
@@ -390,6 +417,22 @@ exports.Prisma.PaymentAllocationScalarFieldEnum = {
   targetType: 'targetType',
   targetId: 'targetId',
   amount: 'amount'
+};
+
+exports.Prisma.CustomerInvoicePaymentScalarFieldEnum = {
+  id: 'id',
+  invoiceId: 'invoiceId',
+  paymentId: 'paymentId',
+  amount: 'amount',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.VendorBillPaymentScalarFieldEnum = {
+  id: 'id',
+  billId: 'billId',
+  paymentId: 'paymentId',
+  amount: 'amount',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.DocumentFileScalarFieldEnum = {
@@ -545,6 +588,8 @@ exports.UserRole = exports.$Enums.UserRole = {
 exports.Prisma.ModelName = {
   Company: 'Company',
   Contact: 'Contact',
+  ContactTag: 'ContactTag',
+  ContactTagAssignment: 'ContactTagAssignment',
   ProductCategory: 'ProductCategory',
   Product: 'Product',
   AnalyticAccount: 'AnalyticAccount',
@@ -566,6 +611,8 @@ exports.Prisma.ModelName = {
   CustomerInvoiceLine: 'CustomerInvoiceLine',
   Payment: 'Payment',
   PaymentAllocation: 'PaymentAllocation',
+  CustomerInvoicePayment: 'CustomerInvoicePayment',
+  VendorBillPayment: 'VendorBillPayment',
   DocumentFile: 'DocumentFile',
   User: 'User',
   AuditLog: 'AuditLog'

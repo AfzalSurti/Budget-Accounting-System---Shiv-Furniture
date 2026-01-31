@@ -6,46 +6,73 @@ type PrismaLike = Prisma.TransactionClient;
 
 export const calculatePaymentStatus = (totalPaid: number, totalAmount: number) => {
   if (totalPaid >= totalAmount) {
-    return "Paid";
+    return "paid";
   }
   if (totalPaid > 0 && totalPaid < totalAmount) {
-    return "Partially Paid";
+    return "partially_paid";
   }
-  return "Not Paid";
+  return "not_paid";
 };
 
-export const applyPaymentToInvoice = async (invoiceId: string, amount: number, client: PrismaLike = prisma) => {
+const sumAmounts = (rows: Array<{ amount: unknown }>) =>
+  rows.reduce((sum, row) => sum + Number(row.amount), 0);
+
+export const recomputeInvoicePaymentState = async (
+  invoiceId: string,
+  client: PrismaLike = prisma
+) => {
   const invoice = await client.customerInvoice.findUnique({ where: { id: invoiceId } });
   if (!invoice) {
     throw new ApiError(404, "Invoice not found");
   }
 
-  const totalPaid = Number(invoice.paidAmount) + amount;
+  const rows = await client.customerInvoicePayment.findMany({
+    where: { invoiceId, payment: { status: "posted" } },
+    select: { amount: true },
+  });
+  const totalPaid = sumAmounts(rows);
   const status = calculatePaymentStatus(totalPaid, Number(invoice.totalAmount));
 
   return client.customerInvoice.update({
     where: { id: invoiceId },
-    data: {
-      paidAmount: totalPaid,
-      paymentState: status,
-    },
+    data: { paidAmount: totalPaid, paymentState: status },
   });
 };
 
-export const applyPaymentToBill = async (billId: string, amount: number, client: PrismaLike = prisma) => {
+export const recomputeBillPaymentState = async (
+  billId: string,
+  client: PrismaLike = prisma
+) => {
   const bill = await client.vendorBill.findUnique({ where: { id: billId } });
   if (!bill) {
     throw new ApiError(404, "Vendor bill not found");
   }
 
-  const totalPaid = Number(bill.paidAmount) + amount;
+  const rows = await client.vendorBillPayment.findMany({
+    where: { billId, payment: { status: "posted" } },
+    select: { amount: true },
+  });
+  const totalPaid = sumAmounts(rows);
   const status = calculatePaymentStatus(totalPaid, Number(bill.totalAmount));
 
   return client.vendorBill.update({
     where: { id: billId },
-    data: {
-      paidAmount: totalPaid,
-      paymentState: status,
-    },
+    data: { paidAmount: totalPaid, paymentState: status },
   });
+};
+
+export const applyPaymentToInvoice = async (
+  invoiceId: string,
+  _amount: number,
+  client: PrismaLike = prisma
+) => {
+  return recomputeInvoicePaymentState(invoiceId, client);
+};
+
+export const applyPaymentToBill = async (
+  billId: string,
+  _amount: number,
+  client: PrismaLike = prisma
+) => {
+  return recomputeBillPaymentState(billId, client);
 };

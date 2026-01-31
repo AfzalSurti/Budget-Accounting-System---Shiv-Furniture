@@ -53,7 +53,10 @@ export declare const listInvoices: (companyId: string) => Promise<({
         id: string;
         analyticAccountId: string | null;
         glAccountId: string | null;
+        matchedFieldsCount: number | null;
         productId: string | null;
+        autoAnalyticModelId: string | null;
+        autoAnalyticRuleId: string | null;
         description: string | null;
         qty: import("@prisma/client-runtime-utils").Decimal;
         unitPrice: import("@prisma/client-runtime-utils").Decimal;
@@ -84,7 +87,7 @@ export declare const listInvoicesTable: (companyId: string) => Promise<{
     amount: string;
     dueDate: string;
     issueDate: string;
-    status: "failed" | "completed" | "pending";
+    status: "failed" | "completed" | "warning" | "pending";
     statusLabel: string;
 }[]>;
 export declare const getInvoice: (id: string) => Promise<{
@@ -92,7 +95,10 @@ export declare const getInvoice: (id: string) => Promise<{
         id: string;
         analyticAccountId: string | null;
         glAccountId: string | null;
+        matchedFieldsCount: number | null;
         productId: string | null;
+        autoAnalyticModelId: string | null;
+        autoAnalyticRuleId: string | null;
         description: string | null;
         qty: import("@prisma/client-runtime-utils").Decimal;
         unitPrice: import("@prisma/client-runtime-utils").Decimal;

@@ -111,6 +111,7 @@ model Company {
   createdAt DateTime @default(now()) @map("created_at")
 
   contacts           Contact[]
+  contactTags        ContactTag[]
   productCategories  ProductCategory[]
   products           Product[]
   analyticAccounts   AnalyticAccount[]
@@ -153,12 +154,42 @@ model Contact {
   payments             Payment[]
   journalLines         JournalLine[]
   autoAnalyticRules    AutoAnalyticRule[]
+  contactTags          ContactTagAssignment[]
   users                User[]
 
   @@unique([companyId, email])
   @@index([companyId, contactType])
   @@index([companyId, isPortalUser])
   @@map("contacts")
+}
+
+model ContactTag {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId String   @map("company_id") @db.Uuid
+  name      String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  company           Company                @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  contacts          ContactTagAssignment[]
+  autoAnalyticRules AutoAnalyticRule[]
+
+  @@unique([companyId, name])
+  @@index([companyId])
+  @@map("contact_tags")
+}
+
+model ContactTagAssignment {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  contactId String   @map("contact_id") @db.Uuid
+  tagId     String   @map("tag_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at")
+
+  contact Contact    @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  tag     ContactTag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([contactId, tagId])
+  @@index([tagId])
+  @@map("contact_tag_assignments")
 }
 
 model ProductCategory {
@@ -364,6 +395,10 @@ model AutoAnalyticModel {
 
   company Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
   rules   AutoAnalyticRule[]
+  purchaseOrderLines PurchaseOrderLine[]
+  salesOrderLines    SalesOrderLine[]
+  vendorBillLines    VendorBillLine[]
+  customerInvoiceLines CustomerInvoiceLine[]
 
   @@map("auto_analytic_models")
 }
@@ -375,6 +410,7 @@ model AutoAnalyticRule {
   matchProductId          String?     @map("match_product_id") @db.Uuid
   matchCategoryId         String?     @map("match_category_id") @db.Uuid
   matchContactId          String?     @map("match_contact_id") @db.Uuid
+  matchContactTagId       String?     @map("match_contact_tag_id") @db.Uuid
   assignAnalyticAccountId String      @map("assign_analytic_account_id") @db.Uuid
   rulePriority            Int         @default(100) @map("rule_priority")
   isActive                Boolean     @default(true) @map("is_active")
@@ -383,7 +419,12 @@ model AutoAnalyticRule {
   product        Product?          @relation(fields: [matchProductId], references: [id])
   category       ProductCategory?  @relation(fields: [matchCategoryId], references: [id])
   contact        Contact?          @relation(fields: [matchContactId], references: [id])
+  contactTag     ContactTag?       @relation(fields: [matchContactTagId], references: [id])
   assignAnalytic AnalyticAccount   @relation(fields: [assignAnalyticAccountId], references: [id])
+  purchaseOrderLines PurchaseOrderLine[]
+  salesOrderLines    SalesOrderLine[]
+  vendorBillLines    VendorBillLine[]
+  customerInvoiceLines CustomerInvoiceLine[]
 
   @@index([docType, isActive, rulePriority])
   @@map("auto_analytic_rules")
@@ -415,6 +456,9 @@ model PurchaseOrderLine {
   purchaseOrderId   String  @map("purchase_order_id") @db.Uuid
   productId         String  @map("product_id") @db.Uuid
   analyticAccountId String? @map("analytic_account_id") @db.Uuid
+  autoAnalyticModelId String? @map("auto_analytic_model_id") @db.Uuid
+  autoAnalyticRuleId  String? @map("auto_analytic_rule_id") @db.Uuid
+  matchedFieldsCount  Int?    @map("matched_fields_count")
   description       String?
   qty               Decimal @db.Decimal(18, 4)
   unitPrice         Decimal @map("unit_price") @db.Decimal(18, 2)
@@ -424,6 +468,8 @@ model PurchaseOrderLine {
   purchaseOrder PurchaseOrder    @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
   product       Product          @relation(fields: [productId], references: [id])
   analytic      AnalyticAccount? @relation(fields: [analyticAccountId], references: [id])
+  autoModel     AutoAnalyticModel? @relation(fields: [autoAnalyticModelId], references: [id])
+  autoRule      AutoAnalyticRule?  @relation(fields: [autoAnalyticRuleId], references: [id])
 
   @@index([purchaseOrderId])
   @@index([analyticAccountId])
@@ -456,6 +502,9 @@ model SalesOrderLine {
   salesOrderId      String  @map("sales_order_id") @db.Uuid
   productId         String  @map("product_id") @db.Uuid
   analyticAccountId String? @map("analytic_account_id") @db.Uuid
+  autoAnalyticModelId String? @map("auto_analytic_model_id") @db.Uuid
+  autoAnalyticRuleId  String? @map("auto_analytic_rule_id") @db.Uuid
+  matchedFieldsCount  Int?    @map("matched_fields_count")
   description       String?
   qty               Decimal @db.Decimal(18, 4)
   unitPrice         Decimal @map("unit_price") @db.Decimal(18, 2)
@@ -465,6 +514,8 @@ model SalesOrderLine {
   salesOrder SalesOrder       @relation(fields: [salesOrderId], references: [id], onDelete: Cascade)
   product    Product          @relation(fields: [productId], references: [id])
   analytic   AnalyticAccount? @relation(fields: [analyticAccountId], references: [id])
+  autoModel  AutoAnalyticModel? @relation(fields: [autoAnalyticModelId], references: [id])
+  autoRule   AutoAnalyticRule?  @relation(fields: [autoAnalyticRuleId], references: [id])
 
   @@index([salesOrderId])
   @@index([analyticAccountId])
@@ -490,6 +541,7 @@ model VendorBill {
   vendor  Contact          @relation("bill_vendor", fields: [vendorId], references: [id])
   po      PurchaseOrder?   @relation(fields: [poId], references: [id])
   lines   VendorBillLine[]
+  payments VendorBillPayment[]
 
   @@unique([companyId, billNo])
   @@index([companyId, vendorId, billDate])
@@ -502,6 +554,9 @@ model VendorBillLine {
   vendorBillId      String  @map("vendor_bill_id") @db.Uuid
   productId         String? @map("product_id") @db.Uuid
   analyticAccountId String? @map("analytic_account_id") @db.Uuid
+  autoAnalyticModelId String? @map("auto_analytic_model_id") @db.Uuid
+  autoAnalyticRuleId  String? @map("auto_analytic_rule_id") @db.Uuid
+  matchedFieldsCount  Int?    @map("matched_fields_count")
   glAccountId       String? @map("gl_account_id") @db.Uuid
   description       String?
   qty               Decimal @default(1) @db.Decimal(18, 4)
@@ -513,6 +568,8 @@ model VendorBillLine {
   product  Product?         @relation(fields: [productId], references: [id])
   analytic AnalyticAccount? @relation(fields: [analyticAccountId], references: [id])
   gl       GLAccount?       @relation(fields: [glAccountId], references: [id])
+  autoModel AutoAnalyticModel? @relation(fields: [autoAnalyticModelId], references: [id])
+  autoRule  AutoAnalyticRule?  @relation(fields: [autoAnalyticRuleId], references: [id])
 
   @@index([vendorBillId])
   @@index([analyticAccountId])
@@ -539,6 +596,7 @@ model CustomerInvoice {
   customer Contact               @relation("inv_customer", fields: [customerId], references: [id])
   so       SalesOrder?           @relation(fields: [soId], references: [id])
   lines    CustomerInvoiceLine[]
+  payments CustomerInvoicePayment[]
 
   @@unique([companyId, invoiceNo])
   @@index([companyId, customerId, invoiceDate])
@@ -551,6 +609,9 @@ model CustomerInvoiceLine {
   customerInvoiceId String  @map("customer_invoice_id") @db.Uuid
   productId         String? @map("product_id") @db.Uuid
   analyticAccountId String? @map("analytic_account_id") @db.Uuid
+  autoAnalyticModelId String? @map("auto_analytic_model_id") @db.Uuid
+  autoAnalyticRuleId  String? @map("auto_analytic_rule_id") @db.Uuid
+  matchedFieldsCount  Int?    @map("matched_fields_count")
   glAccountId       String? @map("gl_account_id") @db.Uuid
   description       String?
   qty               Decimal @default(1) @db.Decimal(18, 4)
@@ -562,6 +623,8 @@ model CustomerInvoiceLine {
   product  Product?         @relation(fields: [productId], references: [id])
   analytic AnalyticAccount? @relation(fields: [analyticAccountId], references: [id])
   gl       GLAccount?       @relation(fields: [glAccountId], references: [id])
+  autoModel AutoAnalyticModel? @relation(fields: [autoAnalyticModelId], references: [id])
+  autoRule  AutoAnalyticRule?  @relation(fields: [autoAnalyticRuleId], references: [id])
 
   @@index([customerInvoiceId])
   @@index([analyticAccountId])
@@ -583,6 +646,8 @@ model Payment {
   company     Company             @relation(fields: [companyId], references: [id], onDelete: Cascade)
   contact     Contact             @relation(fields: [contactId], references: [id])
   allocations PaymentAllocation[]
+  invoicePayments CustomerInvoicePayment[]
+  billPayments    VendorBillPayment[]
 
   @@index([companyId, paymentDate])
   @@index([companyId, contactId])
@@ -601,6 +666,36 @@ model PaymentAllocation {
   @@unique([paymentId, targetType, targetId])
   @@index([targetType, targetId])
   @@map("payment_allocations")
+}
+
+model CustomerInvoicePayment {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  invoiceId  String   @map("invoice_id") @db.Uuid
+  paymentId  String   @map("payment_id") @db.Uuid
+  amount     Decimal  @db.Decimal(18, 2)
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  invoice CustomerInvoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  payment Payment         @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+
+  @@unique([invoiceId, paymentId])
+  @@index([paymentId])
+  @@map("customer_invoice_payments")
+}
+
+model VendorBillPayment {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  billId     String   @map("bill_id") @db.Uuid
+  paymentId  String   @map("payment_id") @db.Uuid
+  amount     Decimal  @db.Decimal(18, 2)
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  bill    VendorBill @relation(fields: [billId], references: [id], onDelete: Cascade)
+  payment Payment    @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+
+  @@unique([billId, paymentId])
+  @@index([paymentId])
+  @@map("vendor_bill_payments")
 }
 
 model DocumentFile {

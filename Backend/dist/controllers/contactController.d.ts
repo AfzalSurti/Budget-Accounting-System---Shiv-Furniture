@@ -8,6 +8,7 @@ export declare const createContact: (data: {
     gstin?: string | null;
     billingAddress?: Prisma.InputJsonValue | null;
     shippingAddress?: Prisma.InputJsonValue | null;
+    tags?: string[];
 }) => Promise<{
     id: string;
     createdAt: Date;
@@ -24,7 +25,21 @@ export declare const createContact: (data: {
     portalUserExternalId: string | null;
     companyId: string;
 }>;
-export declare const listContacts: (companyId: string) => Promise<{
+export declare const listContacts: (companyId: string) => Promise<({
+    contactTags: ({
+        tag: {
+            id: string;
+            createdAt: Date;
+            name: string;
+            companyId: string;
+        };
+    } & {
+        id: string;
+        createdAt: Date;
+        contactId: string;
+        tagId: string;
+    })[];
+} & {
     id: string;
     createdAt: Date;
     email: string | null;
@@ -39,7 +54,22 @@ export declare const listContacts: (companyId: string) => Promise<{
     isPortalUser: boolean;
     portalUserExternalId: string | null;
     companyId: string;
+})[]>;
+export declare const listContactTags: (companyId: string) => Promise<{
+    id: string;
+    createdAt: Date;
+    name: string;
+    companyId: string;
 }[]>;
+export declare const createContactTag: (data: {
+    companyId: string;
+    name: string;
+}) => Promise<{
+    id: string;
+    createdAt: Date;
+    name: string;
+    companyId: string;
+}>;
 export declare const getContact: (id: string) => Promise<{
     id: string;
     createdAt: Date;

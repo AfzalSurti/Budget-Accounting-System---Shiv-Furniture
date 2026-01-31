@@ -7,6 +7,7 @@ export declare const createAutoAnalyticModel: (data: {
         matchProductId?: string | null;
         matchCategoryId?: string | null;
         matchContactId?: string | null;
+        matchContactTagId?: string | null;
         assignAnalyticAccountId: string;
         rulePriority?: number;
     }>;
@@ -22,13 +23,14 @@ export declare const listAutoAnalyticModels: (companyId: string) => Promise<({
     rules: {
         id: string;
         isActive: boolean;
+        modelId: string;
         docType: import("../generated/prisma/index.js").$Enums.AutoDocType;
         matchProductId: string | null;
         matchCategoryId: string | null;
         matchContactId: string | null;
+        matchContactTagId: string | null;
         assignAnalyticAccountId: string;
         rulePriority: number;
-        modelId: string;
     }[];
 } & {
     id: string;
@@ -42,13 +44,14 @@ export declare const getAutoAnalyticModel: (id: string) => Promise<{
     rules: {
         id: string;
         isActive: boolean;
+        modelId: string;
         docType: import("../generated/prisma/index.js").$Enums.AutoDocType;
         matchProductId: string | null;
         matchCategoryId: string | null;
         matchContactId: string | null;
+        matchContactTagId: string | null;
         assignAnalyticAccountId: string;
         rulePriority: number;
-        modelId: string;
     }[];
 } & {
     id: string;

@@ -12,6 +12,7 @@ interface AnalyticAccount {
   id: string;
   name: string;
   code: string;
+  parentId?: string | null;
   status: AnalyticStatus;
 }
 
@@ -19,6 +20,7 @@ interface BackendAnalyticAccount {
   id: string;
   name: string;
   code: string | null;
+  parentId?: string | null;
   isActive: boolean;
 }
 
@@ -30,6 +32,7 @@ const mapAccount = (row: BackendAnalyticAccount): AnalyticAccount => ({
   id: row.id,
   name: row.name,
   code: row.code ?? "",
+  parentId: row.parentId ?? null,
   status: row.isActive ? "confirm" : "archived",
 });
 
@@ -80,6 +83,7 @@ export default function AnalyticsPage() {
         companyId: DEFAULT_COMPANY_ID,
         name: draft.name.trim(),
         code: draft.code.trim() || null,
+        parentId: draft.parentId ?? null,
       });
       await load();
       setDialog(null);
@@ -99,6 +103,7 @@ export default function AnalyticsPage() {
       await apiPut<BackendAnalyticAccount, Record<string, unknown>>(`/analytical-accounts/${id}`, {
         name: draft.name.trim(),
         code: draft.code.trim() || null,
+        parentId: draft.parentId ?? null,
       });
       await load();
       setDialog(null);
@@ -174,6 +179,7 @@ export default function AnalyticsPage() {
           onClose={() => setDialog(null)}
           onSubmit={(d) => (dialog.type === "create" ? create(d) : update(dialog.row!.id, d))}
           isSaving={isSaving}
+          parentOptions={rows}
         />
       )}
     </AppLayout>
@@ -186,14 +192,20 @@ function EditDialog({
   onClose,
   onSubmit,
   isSaving,
+  parentOptions,
 }: {
   mode: "create" | "edit";
   initial: AnalyticAccount | null;
   onClose: () => void;
   onSubmit: (draft: Draft) => void;
   isSaving: boolean;
+  parentOptions: AnalyticAccount[];
 }) {
-  const [form, setForm] = useState<Draft>({ name: initial?.name ?? "", code: initial?.code ?? "" });
+  const [form, setForm] = useState<Draft>({
+    name: initial?.name ?? "",
+    code: initial?.code ?? "",
+    parentId: initial?.parentId ?? null,
+  });
   const handle = (key: keyof Draft, value: string) => setForm((p) => ({ ...p, [key]: value }));
 
   const title = mode === "create" ? "Add Cost Center" : "Edit Cost Center";
@@ -231,6 +243,24 @@ function EditDialog({
               onChange={(e) => handle("code", e.target.value)}
               className="mt-1 w-full border-b border-dashed border-brand-primary bg-transparent px-1 py-2 text-lg focus:border-brand-accent focus:outline-none"
             />
+          </label>
+
+          <label className="block text-xs font-semibold uppercase tracking-[0.4em] text-brand-light">
+            Parent Cost Center (optional)
+            <select
+              value={form.parentId ?? ""}
+              onChange={(e) => setForm((p) => ({ ...p, parentId: e.target.value || null }))}
+              className="mt-1 w-full border-b border-dashed border-brand-primary bg-transparent px-1 py-2 text-lg focus:border-brand-accent focus:outline-none"
+            >
+              <option value="">None</option>
+              {parentOptions
+                .filter((opt) => opt.id !== initial?.id)
+                .map((opt) => (
+                  <option key={opt.id} value={opt.id}>
+                    {opt.name}
+                  </option>
+                ))}
+            </select>
           </label>
 
           <div className="flex gap-3">

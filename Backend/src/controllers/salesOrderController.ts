@@ -1,12 +1,13 @@
 import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/apiError.js";
-import { resolveAnalyticAccountId } from "../services/autoAnalyticService.js";
+import { getContactTagIds, resolveAnalyticAccountId } from "../services/autoAnalyticService.js";
 import {
   formatBadgeLabel,
   formatCurrency,
   formatDate,
   mapOrderStatusToBadge,
 } from "../utils/formatters.js";
+import { assertOrderStatusTransition } from "../utils/workflow.js";
 
 export const createSalesOrder = async (data: {
   companyId: string;
@@ -27,6 +28,7 @@ export const createSalesOrder = async (data: {
   }>;
 }) => {
   return prisma.$transaction(async (tx) => {
+    const contactTagIds = await getContactTagIds(data.customerId);
     const salesOrder = await tx.salesOrder.create({
       data: {
         companyId: data.companyId,
@@ -48,15 +50,16 @@ export const createSalesOrder = async (data: {
         throw new ApiError(400, "Invalid product");
       }
 
-      const resolvedAnalytic =
-        line.analyticAccountId ??
-        (await resolveAnalyticAccountId({
-          companyId: data.companyId,
-          docType: "sales_order",
-          productId: line.productId,
-          categoryId: product.categoryId ?? null,
-          contactId: data.customerId,
-        }));
+      const resolvedAnalytic = line.analyticAccountId
+        ? null
+        : await resolveAnalyticAccountId({
+            companyId: data.companyId,
+            docType: "sales_order",
+            productId: line.productId,
+            categoryId: product.categoryId ?? null,
+            contactId: data.customerId,
+            contactTagIds,
+          });
 
       const taxRate = line.taxRate ?? 0;
       const lineTotal = line.qty * line.unitPrice * (1 + taxRate / 100);
@@ -65,7 +68,10 @@ export const createSalesOrder = async (data: {
         data: {
           salesOrderId: salesOrder.id,
           productId: line.productId,
-          analyticAccountId: resolvedAnalytic ?? null,
+          analyticAccountId: line.analyticAccountId ?? resolvedAnalytic?.analyticAccountId ?? null,
+          autoAnalyticModelId: resolvedAnalytic?.modelId ?? null,
+          autoAnalyticRuleId: resolvedAnalytic?.ruleId ?? null,
+          matchedFieldsCount: resolvedAnalytic?.matchedFieldsCount ?? null,
           description: line.description ?? null,
           qty: line.qty,
           unitPrice: line.unitPrice,
@@ -137,6 +143,13 @@ export const updateSalesOrder = async (
   data: Partial<Record<string, unknown>>,
 ) => {
   try {
+    const current = await prisma.salesOrder.findUnique({ where: { id } });
+    if (!current) {
+      throw new ApiError(404, "Sales order not found");
+    }
+    if (data.status) {
+      assertOrderStatusTransition(current.status, data.status as any);
+    }
     return await prisma.salesOrder.update({ where: { id }, data });
   } catch (error) {
     throw new ApiError(404, "Sales order not found", error);

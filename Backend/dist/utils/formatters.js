@@ -22,8 +22,13 @@ export const formatCurrency = (amount, currency = "INR") => {
 export const mapDocStatusToBadge = (status, paymentState) => {
     if (status === "cancelled")
         return "failed";
-    if (paymentState && paymentState.toLowerCase() === "paid")
+    const normalized = paymentState
+        ? paymentState.toLowerCase().replace(/\s+/g, "_")
+        : null;
+    if (normalized === "paid")
         return "completed";
+    if (normalized === "partially_paid")
+        return "warning";
     if (status === "draft")
         return "pending";
     return "pending";

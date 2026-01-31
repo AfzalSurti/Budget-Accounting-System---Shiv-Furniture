@@ -84,6 +84,12 @@ export const budgetTopOverUnder = async (companyId, start, end, limit, direction
     return sorted.slice(0, limit);
 };
 export const budgetTrend = async (companyId, start, end) => {
+    const toKey = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+    const addMonth = (date) => {
+        const next = new Date(date);
+        next.setMonth(next.getMonth() + 1);
+        return next;
+    };
     const billLines = await prisma.vendorBillLine.findMany({
         where: {
             bill: {
@@ -105,18 +111,63 @@ export const budgetTrend = async (companyId, start, end) => {
         select: { lineTotal: true, invoice: { select: { invoiceDate: true } } },
     });
     const byMonth = new Map();
-    const add = (date, amount) => {
-        const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
-        byMonth.set(key, (byMonth.get(key) ?? 0) + amount);
+    const addActual = (date, amount) => {
+        const key = toKey(date);
+        const current = byMonth.get(key) ?? { actualAmount: 0, budgetedAmount: 0 };
+        current.actualAmount += amount;
+        byMonth.set(key, current);
     };
     for (const line of billLines) {
-        add(line.bill.billDate, Number(line.lineTotal));
+        addActual(line.bill.billDate, Number(line.lineTotal));
     }
     for (const line of invoiceLines) {
-        add(line.invoice.invoiceDate, Number(line.lineTotal));
+        addActual(line.invoice.invoiceDate, Number(line.lineTotal));
+    }
+    const budgets = await prisma.budget.findMany({
+        where: {
+            companyId,
+            periodStart: { lte: end },
+            periodEnd: { gte: start },
+            status: { not: "archived" },
+        },
+        include: {
+            revisions: {
+                include: { lines: true },
+                orderBy: { revisionNo: "desc" },
+                take: 1,
+            },
+        },
+    });
+    for (const budget of budgets) {
+        const latest = budget.revisions[0];
+        if (!latest)
+            continue;
+        const total = latest.lines.reduce((sum, line) => sum + Number(line.amount), 0);
+        if (total === 0)
+            continue;
+        const periodStart = new Date(budget.periodStart);
+        const periodEnd = new Date(budget.periodEnd);
+        const months = [];
+        for (let cursor = new Date(periodStart); cursor <= periodEnd; cursor = addMonth(cursor)) {
+            months.push(new Date(cursor));
+        }
+        const allocation = total / Math.max(months.length, 1);
+        for (const month of months) {
+            if (month < start || month > end)
+                continue;
+            const key = toKey(month);
+            const current = byMonth.get(key) ?? { actualAmount: 0, budgetedAmount: 0 };
+            current.budgetedAmount += allocation;
+            byMonth.set(key, current);
+        }
     }
     return Array.from(byMonth.entries())
         .sort(([a], [b]) => (a < b ? -1 : 1))
-        .map(([period, actualAmount]) => ({ period, actualAmount }));
+        .map(([period, values]) => ({
+        period,
+        actualAmount: values.actualAmount,
+        budgetedAmount: values.budgetedAmount,
+        forecastAmount: values.budgetedAmount,
+    }));
 };
 //# sourceMappingURL=reportService.js.map

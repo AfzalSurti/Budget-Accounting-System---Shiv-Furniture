@@ -31,7 +31,10 @@ export declare const listSalesOrders: (companyId: string) => Promise<({
     lines: {
         id: string;
         analyticAccountId: string | null;
+        matchedFieldsCount: number | null;
         productId: string;
+        autoAnalyticModelId: string | null;
+        autoAnalyticRuleId: string | null;
         description: string | null;
         qty: import("@prisma/client-runtime-utils").Decimal;
         unitPrice: import("@prisma/client-runtime-utils").Decimal;
@@ -65,7 +68,10 @@ export declare const getSalesOrder: (id: string) => Promise<{
     lines: {
         id: string;
         analyticAccountId: string | null;
+        matchedFieldsCount: number | null;
         productId: string;
+        autoAnalyticModelId: string | null;
+        autoAnalyticRuleId: string | null;
         description: string | null;
         qty: import("@prisma/client-runtime-utils").Decimal;
         unitPrice: import("@prisma/client-runtime-utils").Decimal;

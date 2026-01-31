@@ -254,6 +254,24 @@ export const makePortalPayment = async (payload: {
     amount: number;
   }>;
 }) => {
+  for (const allocation of payload.allocations) {
+    if (allocation.targetType === "customer_invoice") {
+      const invoice = await prisma.customerInvoice.findFirst({
+        where: { id: allocation.targetId, customerId: payload.contactId },
+      });
+      if (!invoice) {
+        throw new ApiError(403, "Invoice not accessible for this portal user");
+      }
+    } else {
+      const bill = await prisma.vendorBill.findFirst({
+        where: { id: allocation.targetId, vendorId: payload.contactId },
+      });
+      if (!bill) {
+        throw new ApiError(403, "Vendor bill not accessible for this portal user");
+      }
+    }
+  }
+
   return createPayment({
     companyId: payload.companyId,
     direction: "inbound",

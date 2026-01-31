@@ -41,10 +41,10 @@ export declare const listBudgets: (companyId: string) => Promise<({
     revisions: ({
         lines: {
             id: string;
+            budgetRevisionId: string;
             analyticAccountId: string;
             glAccountId: string | null;
             amount: Prisma.Decimal;
-            budgetRevisionId: string;
         }[];
     } & {
         id: string;
@@ -74,10 +74,10 @@ export declare const getBudget: (id: string) => Promise<{
     revisions: ({
         lines: {
             id: string;
+            budgetRevisionId: string;
             analyticAccountId: string;
             glAccountId: string | null;
             amount: Prisma.Decimal;
-            budgetRevisionId: string;
         }[];
     } & {
         id: string;

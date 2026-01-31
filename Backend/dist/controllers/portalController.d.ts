@@ -3,7 +3,10 @@ export declare const listPortalInvoices: (contactId: string) => Promise<({
         id: string;
         analyticAccountId: string | null;
         glAccountId: string | null;
+        matchedFieldsCount: number | null;
         productId: string | null;
+        autoAnalyticModelId: string | null;
+        autoAnalyticRuleId: string | null;
         description: string | null;
         qty: import("@prisma/client-runtime-utils").Decimal;
         unitPrice: import("@prisma/client-runtime-utils").Decimal;
@@ -33,7 +36,7 @@ export declare const listPortalInvoicesTable: (contactId: string) => Promise<{
     amount: string;
     dueDate: string;
     issueDate: string;
-    status: "failed" | "completed" | "pending";
+    status: "failed" | "completed" | "warning" | "pending";
     statusLabel: string;
 }[]>;
 export declare const listPortalBills: (contactId: string) => Promise<({
@@ -41,7 +44,10 @@ export declare const listPortalBills: (contactId: string) => Promise<({
         id: string;
         analyticAccountId: string | null;
         glAccountId: string | null;
+        matchedFieldsCount: number | null;
         productId: string | null;
+        autoAnalyticModelId: string | null;
+        autoAnalyticRuleId: string | null;
         description: string | null;
         qty: import("@prisma/client-runtime-utils").Decimal;
         unitPrice: import("@prisma/client-runtime-utils").Decimal;
@@ -71,14 +77,17 @@ export declare const listPortalBillsTable: (contactId: string) => Promise<{
     amount: string;
     dueDate: string;
     issueDate: string;
-    status: "failed" | "completed" | "pending";
+    status: "failed" | "completed" | "warning" | "pending";
     statusLabel: string;
 }[]>;
 export declare const listPortalSalesOrders: (contactId: string) => Promise<({
     lines: {
         id: string;
         analyticAccountId: string | null;
+        matchedFieldsCount: number | null;
         productId: string;
+        autoAnalyticModelId: string | null;
+        autoAnalyticRuleId: string | null;
         description: string | null;
         qty: import("@prisma/client-runtime-utils").Decimal;
         unitPrice: import("@prisma/client-runtime-utils").Decimal;
@@ -112,8 +121,11 @@ export declare const listPortalPurchaseOrders: (contactId: string) => Promise<({
     lines: {
         id: string;
         analyticAccountId: string | null;
+        matchedFieldsCount: number | null;
         purchaseOrderId: string;
         productId: string;
+        autoAnalyticModelId: string | null;
+        autoAnalyticRuleId: string | null;
         description: string | null;
         qty: import("@prisma/client-runtime-utils").Decimal;
         unitPrice: import("@prisma/client-runtime-utils").Decimal;

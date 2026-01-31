@@ -2,6 +2,14 @@ import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/apiError.js";
 export const createAutoAnalyticModel = async (data) => {
     return prisma.$transaction(async (tx) => {
+        await tx.company.upsert({
+            where: { id: data.companyId },
+            update: {},
+            create: {
+                id: data.companyId,
+                name: "Shiv Furniture",
+            },
+        });
         const model = await tx.autoAnalyticModel.create({
             data: {
                 companyId: data.companyId,
@@ -17,6 +25,7 @@ export const createAutoAnalyticModel = async (data) => {
                     matchProductId: rule.matchProductId ?? null,
                     matchCategoryId: rule.matchCategoryId ?? null,
                     matchContactId: rule.matchContactId ?? null,
+                    matchContactTagId: rule.matchContactTagId ?? null,
                     assignAnalyticAccountId: rule.assignAnalyticAccountId,
                     rulePriority: rule.rulePriority ?? 100,
                 })),
@@ -44,7 +53,28 @@ export const getAutoAnalyticModel = async (id) => {
 };
 export const updateAutoAnalyticModel = async (id, data) => {
     try {
-        return await prisma.autoAnalyticModel.update({ where: { id }, data });
+        const { rules, ...rest } = data;
+        return await prisma.$transaction(async (tx) => {
+            const model = await tx.autoAnalyticModel.update({ where: { id }, data: rest });
+            if (rules) {
+                await tx.autoAnalyticRule.deleteMany({ where: { modelId: id } });
+                if (rules.length > 0) {
+                    await tx.autoAnalyticRule.createMany({
+                        data: rules.map((rule) => ({
+                            modelId: id,
+                            docType: rule.docType,
+                            matchProductId: rule.matchProductId ?? null,
+                            matchCategoryId: rule.matchCategoryId ?? null,
+                            matchContactId: rule.matchContactId ?? null,
+                            matchContactTagId: rule.matchContactTagId ?? null,
+                            assignAnalyticAccountId: rule.assignAnalyticAccountId,
+                            rulePriority: rule.rulePriority ?? 100,
+                        })),
+                    });
+                }
+            }
+            return model;
+        });
     }
     catch (error) {
         throw new ApiError(404, "Auto analytical model not found", error);

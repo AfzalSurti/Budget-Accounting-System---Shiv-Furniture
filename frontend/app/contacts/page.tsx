@@ -4,12 +4,8 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { DEFAULT_COMPANY_ID } from "@/config";
 import { apiGet, apiPost } from "@/lib/api";
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
-<<<<<<< HEAD
 import { Download, Mail, MapPin, Phone, Plus, UploadCloud, X } from "lucide-react";
-=======
-import { Mail, MapPin, Phone, Plus, UploadCloud, X, Download } from "lucide-react";
 import { exportTableToPDF } from "@/lib/pdf-utils";
->>>>>>> 98d3ddf2623ddef548c6d997fbb6eeadba056635
 
 type ContactStatus = "new" | "confirm" | "archived";
 
@@ -34,6 +30,7 @@ interface ContactRecord {
 
 interface ContactDraft extends Omit<ContactRecord, "id" | "status" | "tags"> {
   contactType: ContactType;
+  partnerTags: string;
 }
 
 interface BackendContact {
@@ -45,6 +42,7 @@ interface BackendContact {
   billingAddress?: unknown;
   shippingAddress?: unknown;
   isActive: boolean;
+  contactTags?: Array<{ tag: { name: string } }>;
 }
 
 const EMPTY_ADDRESS = {
@@ -86,13 +84,14 @@ const toTagLabels = (contactType: ContactType): string[] => {
 
 const mapContact = (contact: BackendContact): ContactRecord => {
   const addressSource = contact.billingAddress ?? contact.shippingAddress;
+  const partnerTags = contact.contactTags?.map((item) => item.tag.name) ?? [];
   return {
     id: contact.id,
     name: contact.displayName,
     email: contact.email ?? "",
     phone: contact.phone ?? "",
     address: toAddress(addressSource),
-    tags: toTagLabels(contact.contactType),
+    tags: [...toTagLabels(contact.contactType), ...partnerTags],
     status: contact.isActive ? "confirm" : "archived",
   };
 };
@@ -145,6 +144,10 @@ export default function ContactsPage() {
         phone: draft.phone.trim() ? draft.phone.trim() : null,
         billingAddress: addressPayload,
         shippingAddress: addressPayload,
+        tags: draft.partnerTags
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter((tag) => tag.length > 0),
       });
       await loadContacts();
       setDialogOpen(false);
@@ -158,62 +161,6 @@ export default function ContactsPage() {
   };
 
   const handleExportPDF = () => {
-<<<<<<< HEAD
-    const rowsHtml = filteredContacts
-      .map((contact) => {
-        const location = [contact.address.city, contact.address.state, contact.address.country]
-          .filter(Boolean)
-          .join(", ");
-        return `
-          <tr>
-            <td>${contact.name}</td>
-            <td>${contact.email}</td>
-            <td>${contact.phone}</td>
-            <td>${location}</td>
-          </tr>
-        `;
-      })
-      .join("");
-
-    const html = `
-      <html>
-        <head>
-          <title>Contacts Export</title>
-          <style>
-            body { font-family: Arial, sans-serif; padding: 24px; color: #0f172a; }
-            h1 { font-size: 20px; margin-bottom: 16px; }
-            table { width: 100%; border-collapse: collapse; }
-            th, td { border: 1px solid #cbd5f5; padding: 8px; text-align: left; font-size: 12px; }
-            th { background: #f8fafc; }
-          </style>
-        </head>
-        <body>
-          <h1>Contacts</h1>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Location</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${rowsHtml}
-            </tbody>
-          </table>
-        </body>
-      </html>
-    `;
-
-    const printWindow = window.open("", "_blank", "width=900,height=700");
-    if (!printWindow) return;
-    printWindow.document.open();
-    printWindow.document.write(html);
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print();
-=======
     exportTableToPDF(
       "Contacts",
       [
@@ -223,7 +170,7 @@ export default function ContactsPage() {
         { header: "Phone", key: "phone" },
         { header: "Status", key: "status" },
       ],
-      filteredContacts.map(row => ({
+      filteredContacts.map((row) => ({
         name: row.name,
         type: row.tags.join(", "),
         email: row.email,
@@ -232,7 +179,6 @@ export default function ContactsPage() {
       })),
       "Contacts.pdf"
     );
->>>>>>> 98d3ddf2623ddef548c6d997fbb6eeadba056635
   };
 
   return (
@@ -312,7 +258,7 @@ export default function ContactsPage() {
                     </div>
                     <div className="flex items-center gap-2">
                       <MapPin className="h-4 w-4 text-brand-primary" />
-                      {`${contact.address.city}, ${contact.address.state} • ${contact.address.country}`}
+                      {`${contact.address.city}, ${contact.address.state} - ${contact.address.country}`}
                     </div>
                   </div>
                 </article>
@@ -353,6 +299,7 @@ function ContactDialog({
     contactType: "customer",
     address: { street: "", city: "", state: "", country: "", postalCode: "" },
     avatarLabel: "",
+    partnerTags: "",
   });
 
   const handleChange = (field: keyof ContactDraft, value: any) => {
@@ -415,6 +362,17 @@ function ContactDialog({
                 onChange={(e) => handleChange("phone", e.target.value)}
                 className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
               />
+            </FormField>
+            <FormField label="Partner Tags">
+              <input
+                value={form.partnerTags}
+                onChange={(e) => handleChange("partnerTags", e.target.value)}
+                placeholder="e.g. wholesale, priority"
+                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
+              />
+              <p className="mt-1 text-xs text-brand-dark/60 dark:text-brand-light/70">
+                Comma-separated tags used for auto-analytical matching.
+              </p>
             </FormField>
             <div className="grid gap-4 md:grid-cols-2">
               <FormField label="Street">
@@ -501,3 +459,4 @@ function FormField({ label, children }: { label: string; children: ReactNode }) 
     </label>
   );
 }
+

@@ -12,6 +12,35 @@ export const createBudget = async (data: {
   lines: Array<{ analyticAccountId: string; glAccountId?: string | null; amount: number }>;
 }) => {
   return prisma.$transaction(async (tx) => {
+    await tx.company.upsert({
+      where: { id: data.companyId },
+      update: {},
+      create: {
+        id: data.companyId,
+        name: "Shiv Furniture",
+      },
+    });
+
+    if (data.lines.length > 0) {
+      const analyticIds = Array.from(new Set(data.lines.map((line) => line.analyticAccountId)));
+      const existingLine = await tx.budgetLine.findFirst({
+        where: {
+          analyticAccountId: { in: analyticIds },
+          revision: {
+            budget: {
+              companyId: data.companyId,
+              periodStart: new Date(data.periodStart),
+              periodEnd: new Date(data.periodEnd),
+            },
+          },
+        },
+        select: { id: true },
+      });
+      if (existingLine) {
+        throw new ApiError(409, "Budget already exists for one or more cost centers in this period");
+      }
+    }
+
     const budget = await tx.budget.create({
       data: {
         companyId: data.companyId,
@@ -104,6 +133,24 @@ export const updateBudget = async (
     });
 
     if (data.lines && data.lines.length > 0) {
+      const analyticIds = Array.from(new Set(data.lines.map((line) => line.analyticAccountId)));
+      const existingLine = await tx.budgetLine.findFirst({
+        where: {
+          analyticAccountId: { in: analyticIds },
+          revision: {
+            budget: {
+              companyId: budget.companyId,
+              periodStart: budget.periodStart,
+              periodEnd: budget.periodEnd,
+            },
+            budgetId: { not: budget.id },
+          },
+        },
+        select: { id: true },
+      });
+      if (existingLine) {
+        throw new ApiError(409, "Budget already exists for one or more cost centers in this period");
+      }
       await tx.budgetLine.createMany({
         data: data.lines.map((line) => ({
           budgetRevisionId: revision.id,
