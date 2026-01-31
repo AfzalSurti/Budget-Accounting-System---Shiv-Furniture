@@ -1,0 +1,1 @@
+{"version":3,"file":"authorizeRole.d.ts","sourceRoot":"","sources":["../../src/middlewares/authorizeRole.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,QAAQ,EAAE,YAAY,EAAE,MAAM,SAAS,CAAC;AAG/D,eAAO,MAAM,aAAa,GACvB,OAAO,KAAK,CAAC,OAAO,GAAG,QAAQ,CAAC,MAChC,KAAK,OAAO,EAAE,MAAM,QAAQ,EAAE,MAAM,YAAY,SAQhD,CAAC"}
