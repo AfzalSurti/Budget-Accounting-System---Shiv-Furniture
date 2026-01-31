@@ -56,9 +56,10 @@ export declare const listSalesOrdersTable: (companyId: string) => Promise<{
     recordId: string;
     customer: string;
     amount: string;
-    date: string | null;
-    deliveryDate: string | null;
+    date: string;
+    deliveryDate: string;
     status: "failed" | "completed" | "pending" | "active";
+    statusLabel: string;
 }[]>;
 export declare const getSalesOrder: (id: string) => Promise<{
     lines: {

@@ -2,7 +2,7 @@ import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/apiError.js";
 import { resolveAnalyticAccountId } from "../services/autoAnalyticService.js";
 import { calculatePaymentStatus } from "../services/paymentService.js";
-import { formatCurrency, formatDate, mapDocStatusToBadge, } from "../utils/formatters.js";
+import { formatBadgeLabel, formatCurrency, formatDate, mapDocStatusToBadge, } from "../utils/formatters.js";
 export const createInvoice = async (data) => {
     return prisma.$transaction(async (tx) => {
         let totalAmount = 0;
@@ -135,9 +135,10 @@ export const listInvoicesTable = async (companyId) => {
         recordId: invoice.id,
         customer: invoice.customer.displayName,
         amount: formatCurrency(Number(invoice.totalAmount), invoice.currency),
-        dueDate: formatDate(invoice.dueDate),
-        issueDate: formatDate(invoice.invoiceDate),
+        dueDate: formatDate(invoice.dueDate) ?? "",
+        issueDate: formatDate(invoice.invoiceDate) ?? "",
         status: mapDocStatusToBadge(invoice.status, invoice.paymentState),
+        statusLabel: formatBadgeLabel(mapDocStatusToBadge(invoice.status, invoice.paymentState)),
     }));
 };
 export const getInvoice = async (id) => {

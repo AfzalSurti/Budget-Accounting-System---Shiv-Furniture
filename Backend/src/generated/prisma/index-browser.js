@@ -217,6 +217,8 @@ exports.Prisma.BudgetScalarFieldEnum = {
   totalBudgeted: 'totalBudgeted',
   totalActual: 'totalActual',
   totalRemaining: 'totalRemaining',
+  totalForecast: 'totalForecast',
+  utilizationPct: 'utilizationPct',
   createdBy: 'createdBy',
   createdAt: 'createdAt',
   approvedAt: 'approvedAt'

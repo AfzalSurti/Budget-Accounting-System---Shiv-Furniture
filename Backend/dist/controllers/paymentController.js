@@ -1,7 +1,7 @@
 import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/apiError.js";
 import { applyPaymentToBill, applyPaymentToInvoice, } from "../services/paymentService.js";
-import { formatCurrency, formatDate, formatPaymentMethod, mapPaymentStatusToBadge, } from "../utils/formatters.js";
+import { formatBadgeLabel, formatCurrency, formatDate, formatPaymentMethod, mapPaymentStatusToBadge, } from "../utils/formatters.js";
 export const createPayment = async (data) => {
     const totalAllocation = data.allocations.reduce((sum, item) => sum + item.amount, 0);
     if (totalAllocation > data.amount) {
@@ -96,9 +96,10 @@ export const listPaymentsTable = async (companyId) => {
             recordId: payment.id,
             description,
             amount: formatCurrency(Number(payment.amount)),
-            date: formatDate(payment.paymentDate),
+            date: formatDate(payment.paymentDate) ?? "",
             method: formatPaymentMethod(payment.method),
             status: mapPaymentStatusToBadge(payment.status),
+            statusLabel: formatBadgeLabel(mapPaymentStatusToBadge(payment.status)),
         };
     });
 };

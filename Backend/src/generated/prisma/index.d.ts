@@ -14422,12 +14422,16 @@ export namespace Prisma {
     totalBudgeted: Decimal | null
     totalActual: Decimal | null
     totalRemaining: Decimal | null
+    totalForecast: Decimal | null
+    utilizationPct: Decimal | null
   }
 
   export type BudgetSumAggregateOutputType = {
     totalBudgeted: Decimal | null
     totalActual: Decimal | null
     totalRemaining: Decimal | null
+    totalForecast: Decimal | null
+    utilizationPct: Decimal | null
   }
 
   export type BudgetMinAggregateOutputType = {
@@ -14440,6 +14444,8 @@ export namespace Prisma {
     totalBudgeted: Decimal | null
     totalActual: Decimal | null
     totalRemaining: Decimal | null
+    totalForecast: Decimal | null
+    utilizationPct: Decimal | null
     createdBy: string | null
     createdAt: Date | null
     approvedAt: Date | null
@@ -14455,6 +14461,8 @@ export namespace Prisma {
     totalBudgeted: Decimal | null
     totalActual: Decimal | null
     totalRemaining: Decimal | null
+    totalForecast: Decimal | null
+    utilizationPct: Decimal | null
     createdBy: string | null
     createdAt: Date | null
     approvedAt: Date | null
@@ -14470,6 +14478,8 @@ export namespace Prisma {
     totalBudgeted: number
     totalActual: number
     totalRemaining: number
+    totalForecast: number
+    utilizationPct: number
     createdBy: number
     createdAt: number
     approvedAt: number
@@ -14481,12 +14491,16 @@ export namespace Prisma {
     totalBudgeted?: true
     totalActual?: true
     totalRemaining?: true
+    totalForecast?: true
+    utilizationPct?: true
   }
 
   export type BudgetSumAggregateInputType = {
     totalBudgeted?: true
     totalActual?: true
     totalRemaining?: true
+    totalForecast?: true
+    utilizationPct?: true
   }
 
   export type BudgetMinAggregateInputType = {
@@ -14499,6 +14513,8 @@ export namespace Prisma {
     totalBudgeted?: true
     totalActual?: true
     totalRemaining?: true
+    totalForecast?: true
+    utilizationPct?: true
     createdBy?: true
     createdAt?: true
     approvedAt?: true
@@ -14514,6 +14530,8 @@ export namespace Prisma {
     totalBudgeted?: true
     totalActual?: true
     totalRemaining?: true
+    totalForecast?: true
+    utilizationPct?: true
     createdBy?: true
     createdAt?: true
     approvedAt?: true
@@ -14529,6 +14547,8 @@ export namespace Prisma {
     totalBudgeted?: true
     totalActual?: true
     totalRemaining?: true
+    totalForecast?: true
+    utilizationPct?: true
     createdBy?: true
     createdAt?: true
     approvedAt?: true
@@ -14631,6 +14651,8 @@ export namespace Prisma {
     totalBudgeted: Decimal
     totalActual: Decimal
     totalRemaining: Decimal
+    totalForecast: Decimal
+    utilizationPct: Decimal
     createdBy: string | null
     createdAt: Date
     approvedAt: Date | null
@@ -14665,6 +14687,8 @@ export namespace Prisma {
     totalBudgeted?: boolean
     totalActual?: boolean
     totalRemaining?: boolean
+    totalForecast?: boolean
+    utilizationPct?: boolean
     createdBy?: boolean
     createdAt?: boolean
     approvedAt?: boolean
@@ -14683,6 +14707,8 @@ export namespace Prisma {
     totalBudgeted?: boolean
     totalActual?: boolean
     totalRemaining?: boolean
+    totalForecast?: boolean
+    utilizationPct?: boolean
     createdBy?: boolean
     createdAt?: boolean
     approvedAt?: boolean
@@ -14699,6 +14725,8 @@ export namespace Prisma {
     totalBudgeted?: boolean
     totalActual?: boolean
     totalRemaining?: boolean
+    totalForecast?: boolean
+    utilizationPct?: boolean
     createdBy?: boolean
     createdAt?: boolean
     approvedAt?: boolean
@@ -14715,12 +14743,14 @@ export namespace Prisma {
     totalBudgeted?: boolean
     totalActual?: boolean
     totalRemaining?: boolean
+    totalForecast?: boolean
+    utilizationPct?: boolean
     createdBy?: boolean
     createdAt?: boolean
     approvedAt?: boolean
   }
 
-  export type BudgetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "companyId" | "name" | "periodStart" | "periodEnd" | "status" | "totalBudgeted" | "totalActual" | "totalRemaining" | "createdBy" | "createdAt" | "approvedAt", ExtArgs["result"]["budget"]>
+  export type BudgetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "companyId" | "name" | "periodStart" | "periodEnd" | "status" | "totalBudgeted" | "totalActual" | "totalRemaining" | "totalForecast" | "utilizationPct" | "createdBy" | "createdAt" | "approvedAt", ExtArgs["result"]["budget"]>
   export type BudgetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     revisions?: boolean | Budget$revisionsArgs<ExtArgs>
@@ -14749,6 +14779,8 @@ export namespace Prisma {
       totalBudgeted: Prisma.Decimal
       totalActual: Prisma.Decimal
       totalRemaining: Prisma.Decimal
+      totalForecast: Prisma.Decimal
+      utilizationPct: Prisma.Decimal
       createdBy: string | null
       createdAt: Date
       approvedAt: Date | null
@@ -15186,6 +15218,8 @@ export namespace Prisma {
     readonly totalBudgeted: FieldRef<"Budget", 'Decimal'>
     readonly totalActual: FieldRef<"Budget", 'Decimal'>
     readonly totalRemaining: FieldRef<"Budget", 'Decimal'>
+    readonly totalForecast: FieldRef<"Budget", 'Decimal'>
+    readonly utilizationPct: FieldRef<"Budget", 'Decimal'>
     readonly createdBy: FieldRef<"Budget", 'String'>
     readonly createdAt: FieldRef<"Budget", 'DateTime'>
     readonly approvedAt: FieldRef<"Budget", 'DateTime'>
@@ -35884,6 +35918,8 @@ export namespace Prisma {
     totalBudgeted: 'totalBudgeted',
     totalActual: 'totalActual',
     totalRemaining: 'totalRemaining',
+    totalForecast: 'totalForecast',
+    utilizationPct: 'utilizationPct',
     createdBy: 'createdBy',
     createdAt: 'createdAt',
     approvedAt: 'approvedAt'
@@ -37209,6 +37245,8 @@ export namespace Prisma {
     totalBudgeted?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
     totalActual?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
     totalRemaining?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
+    totalForecast?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
+    utilizationPct?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
     createdBy?: UuidNullableFilter<"Budget"> | string | null
     createdAt?: DateTimeFilter<"Budget"> | Date | string
     approvedAt?: DateTimeNullableFilter<"Budget"> | Date | string | null
@@ -37226,6 +37264,8 @@ export namespace Prisma {
     totalBudgeted?: SortOrder
     totalActual?: SortOrder
     totalRemaining?: SortOrder
+    totalForecast?: SortOrder
+    utilizationPct?: SortOrder
     createdBy?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     approvedAt?: SortOrderInput | SortOrder
@@ -37246,6 +37286,8 @@ export namespace Prisma {
     totalBudgeted?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
     totalActual?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
     totalRemaining?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
+    totalForecast?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
+    utilizationPct?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
     createdBy?: UuidNullableFilter<"Budget"> | string | null
     createdAt?: DateTimeFilter<"Budget"> | Date | string
     approvedAt?: DateTimeNullableFilter<"Budget"> | Date | string | null
@@ -37263,6 +37305,8 @@ export namespace Prisma {
     totalBudgeted?: SortOrder
     totalActual?: SortOrder
     totalRemaining?: SortOrder
+    totalForecast?: SortOrder
+    utilizationPct?: SortOrder
     createdBy?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     approvedAt?: SortOrderInput | SortOrder
@@ -37286,6 +37330,8 @@ export namespace Prisma {
     totalBudgeted?: DecimalWithAggregatesFilter<"Budget"> | Decimal | DecimalJsLike | number | string
     totalActual?: DecimalWithAggregatesFilter<"Budget"> | Decimal | DecimalJsLike | number | string
     totalRemaining?: DecimalWithAggregatesFilter<"Budget"> | Decimal | DecimalJsLike | number | string
+    totalForecast?: DecimalWithAggregatesFilter<"Budget"> | Decimal | DecimalJsLike | number | string
+    utilizationPct?: DecimalWithAggregatesFilter<"Budget"> | Decimal | DecimalJsLike | number | string
     createdBy?: UuidNullableWithAggregatesFilter<"Budget"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Budget"> | Date | string
     approvedAt?: DateTimeNullableWithAggregatesFilter<"Budget"> | Date | string | null
@@ -39468,6 +39514,8 @@ export namespace Prisma {
     totalBudgeted?: Decimal | DecimalJsLike | number | string
     totalActual?: Decimal | DecimalJsLike | number | string
     totalRemaining?: Decimal | DecimalJsLike | number | string
+    totalForecast?: Decimal | DecimalJsLike | number | string
+    utilizationPct?: Decimal | DecimalJsLike | number | string
     createdBy?: string | null
     createdAt?: Date | string
     approvedAt?: Date | string | null
@@ -39485,6 +39533,8 @@ export namespace Prisma {
     totalBudgeted?: Decimal | DecimalJsLike | number | string
     totalActual?: Decimal | DecimalJsLike | number | string
     totalRemaining?: Decimal | DecimalJsLike | number | string
+    totalForecast?: Decimal | DecimalJsLike | number | string
+    utilizationPct?: Decimal | DecimalJsLike | number | string
     createdBy?: string | null
     createdAt?: Date | string
     approvedAt?: Date | string | null
@@ -39500,6 +39550,8 @@ export namespace Prisma {
     totalBudgeted?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalActual?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalRemaining?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    totalForecast?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    utilizationPct?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -39517,6 +39569,8 @@ export namespace Prisma {
     totalBudgeted?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalActual?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalRemaining?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    totalForecast?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    utilizationPct?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -39533,6 +39587,8 @@ export namespace Prisma {
     totalBudgeted?: Decimal | DecimalJsLike | number | string
     totalActual?: Decimal | DecimalJsLike | number | string
     totalRemaining?: Decimal | DecimalJsLike | number | string
+    totalForecast?: Decimal | DecimalJsLike | number | string
+    utilizationPct?: Decimal | DecimalJsLike | number | string
     createdBy?: string | null
     createdAt?: Date | string
     approvedAt?: Date | string | null
@@ -39547,6 +39603,8 @@ export namespace Prisma {
     totalBudgeted?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalActual?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalRemaining?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    totalForecast?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    utilizationPct?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -39562,6 +39620,8 @@ export namespace Prisma {
     totalBudgeted?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalActual?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalRemaining?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    totalForecast?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    utilizationPct?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -41902,6 +41962,8 @@ export namespace Prisma {
     totalBudgeted?: SortOrder
     totalActual?: SortOrder
     totalRemaining?: SortOrder
+    totalForecast?: SortOrder
+    utilizationPct?: SortOrder
     createdBy?: SortOrder
     createdAt?: SortOrder
     approvedAt?: SortOrder
@@ -41911,6 +41973,8 @@ export namespace Prisma {
     totalBudgeted?: SortOrder
     totalActual?: SortOrder
     totalRemaining?: SortOrder
+    totalForecast?: SortOrder
+    utilizationPct?: SortOrder
   }
 
   export type BudgetMaxOrderByAggregateInput = {
@@ -41923,6 +41987,8 @@ export namespace Prisma {
     totalBudgeted?: SortOrder
     totalActual?: SortOrder
     totalRemaining?: SortOrder
+    totalForecast?: SortOrder
+    utilizationPct?: SortOrder
     createdBy?: SortOrder
     createdAt?: SortOrder
     approvedAt?: SortOrder
@@ -41938,6 +42004,8 @@ export namespace Prisma {
     totalBudgeted?: SortOrder
     totalActual?: SortOrder
     totalRemaining?: SortOrder
+    totalForecast?: SortOrder
+    utilizationPct?: SortOrder
     createdBy?: SortOrder
     createdAt?: SortOrder
     approvedAt?: SortOrder
@@ -41947,6 +42015,8 @@ export namespace Prisma {
     totalBudgeted?: SortOrder
     totalActual?: SortOrder
     totalRemaining?: SortOrder
+    totalForecast?: SortOrder
+    utilizationPct?: SortOrder
   }
 
   export type EnumBudgetStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -46990,6 +47060,8 @@ export namespace Prisma {
     totalBudgeted?: Decimal | DecimalJsLike | number | string
     totalActual?: Decimal | DecimalJsLike | number | string
     totalRemaining?: Decimal | DecimalJsLike | number | string
+    totalForecast?: Decimal | DecimalJsLike | number | string
+    utilizationPct?: Decimal | DecimalJsLike | number | string
     createdBy?: string | null
     createdAt?: Date | string
     approvedAt?: Date | string | null
@@ -47005,6 +47077,8 @@ export namespace Prisma {
     totalBudgeted?: Decimal | DecimalJsLike | number | string
     totalActual?: Decimal | DecimalJsLike | number | string
     totalRemaining?: Decimal | DecimalJsLike | number | string
+    totalForecast?: Decimal | DecimalJsLike | number | string
+    utilizationPct?: Decimal | DecimalJsLike | number | string
     createdBy?: string | null
     createdAt?: Date | string
     approvedAt?: Date | string | null
@@ -47489,6 +47563,8 @@ export namespace Prisma {
     totalBudgeted?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
     totalActual?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
     totalRemaining?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
+    totalForecast?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
+    utilizationPct?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
     createdBy?: UuidNullableFilter<"Budget"> | string | null
     createdAt?: DateTimeFilter<"Budget"> | Date | string
     approvedAt?: DateTimeNullableFilter<"Budget"> | Date | string | null
@@ -50653,6 +50729,8 @@ export namespace Prisma {
     totalBudgeted?: Decimal | DecimalJsLike | number | string
     totalActual?: Decimal | DecimalJsLike | number | string
     totalRemaining?: Decimal | DecimalJsLike | number | string
+    totalForecast?: Decimal | DecimalJsLike | number | string
+    utilizationPct?: Decimal | DecimalJsLike | number | string
     createdBy?: string | null
     createdAt?: Date | string
     approvedAt?: Date | string | null
@@ -50669,6 +50747,8 @@ export namespace Prisma {
     totalBudgeted?: Decimal | DecimalJsLike | number | string
     totalActual?: Decimal | DecimalJsLike | number | string
     totalRemaining?: Decimal | DecimalJsLike | number | string
+    totalForecast?: Decimal | DecimalJsLike | number | string
+    utilizationPct?: Decimal | DecimalJsLike | number | string
     createdBy?: string | null
     createdAt?: Date | string
     approvedAt?: Date | string | null
@@ -50723,6 +50803,8 @@ export namespace Prisma {
     totalBudgeted?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalActual?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalRemaining?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    totalForecast?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    utilizationPct?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -50739,6 +50821,8 @@ export namespace Prisma {
     totalBudgeted?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalActual?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalRemaining?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    totalForecast?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    utilizationPct?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -54630,6 +54714,8 @@ export namespace Prisma {
     totalBudgeted?: Decimal | DecimalJsLike | number | string
     totalActual?: Decimal | DecimalJsLike | number | string
     totalRemaining?: Decimal | DecimalJsLike | number | string
+    totalForecast?: Decimal | DecimalJsLike | number | string
+    utilizationPct?: Decimal | DecimalJsLike | number | string
     createdBy?: string | null
     createdAt?: Date | string
     approvedAt?: Date | string | null
@@ -54978,6 +55064,8 @@ export namespace Prisma {
     totalBudgeted?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalActual?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalRemaining?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    totalForecast?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    utilizationPct?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -54993,6 +55081,8 @@ export namespace Prisma {
     totalBudgeted?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalActual?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalRemaining?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    totalForecast?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    utilizationPct?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -55008,6 +55098,8 @@ export namespace Prisma {
     totalBudgeted?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalActual?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     totalRemaining?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    totalForecast?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    utilizationPct?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

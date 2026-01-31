@@ -82,9 +82,10 @@ export declare const listInvoicesTable: (companyId: string) => Promise<{
     recordId: string;
     customer: string;
     amount: string;
-    dueDate: string | null;
-    issueDate: string | null;
+    dueDate: string;
+    issueDate: string;
     status: "failed" | "completed" | "pending";
+    statusLabel: string;
 }[]>;
 export declare const getInvoice: (id: string) => Promise<{
     lines: {

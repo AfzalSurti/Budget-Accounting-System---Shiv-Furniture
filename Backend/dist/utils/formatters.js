@@ -44,6 +44,13 @@ export const mapPaymentStatusToBadge = (status) => {
         return "completed";
     return "pending";
 };
+export const formatBadgeLabel = (value) => {
+    if (!value)
+        return "";
+    return value
+        .replace(/_/g, " ")
+        .replace(/\b\w/g, (match) => match.toUpperCase());
+};
 export const formatPaymentMethod = (method) => {
     const map = {
         cash: "Cash",

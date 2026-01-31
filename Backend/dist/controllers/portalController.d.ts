@@ -31,9 +31,10 @@ export declare const listPortalInvoicesTable: (contactId: string) => Promise<{
     id: string;
     recordId: string;
     amount: string;
-    dueDate: string | null;
-    issueDate: string | null;
+    dueDate: string;
+    issueDate: string;
     status: "failed" | "completed" | "pending";
+    statusLabel: string;
 }[]>;
 export declare const listPortalBills: (contactId: string) => Promise<({
     lines: {
@@ -68,9 +69,10 @@ export declare const listPortalBillsTable: (contactId: string) => Promise<{
     recordId: string;
     vendor: string;
     amount: string;
-    dueDate: string | null;
-    issueDate: string | null;
+    dueDate: string;
+    issueDate: string;
     status: "failed" | "completed" | "pending";
+    statusLabel: string;
 }[]>;
 export declare const listPortalSalesOrders: (contactId: string) => Promise<({
     lines: {
@@ -101,9 +103,10 @@ export declare const listPortalSalesOrdersTable: (contactId: string) => Promise<
     recordId: string;
     customer: string;
     amount: string;
-    issueDate: string | null;
-    deliveryDate: string | null;
+    issueDate: string;
+    deliveryDate: string;
     status: "failed" | "completed" | "pending" | "active";
+    statusLabel: string;
 }[]>;
 export declare const listPortalPurchaseOrders: (contactId: string) => Promise<({
     lines: {
@@ -134,9 +137,10 @@ export declare const listPortalPurchaseOrdersTable: (contactId: string) => Promi
     recordId: string;
     vendor: string;
     amount: string;
-    issueDate: string | null;
-    deliveryDate: string | null;
+    issueDate: string;
+    deliveryDate: string;
     status: "failed" | "completed" | "pending" | "active";
+    statusLabel: string;
 }[]>;
 export declare const listPortalPayments: (contactId: string) => Promise<({
     allocations: {
@@ -163,9 +167,10 @@ export declare const listPortalPaymentsTable: (contactId: string) => Promise<{
     recordId: string;
     description: string;
     amount: string;
-    date: string | null;
+    date: string;
     method: string;
     status: "failed" | "completed" | "pending";
+    statusLabel: string;
 }[]>;
 export declare const downloadInvoicePdf: (invoiceId: string, contactId: string) => Promise<{
     invoiceId: string;

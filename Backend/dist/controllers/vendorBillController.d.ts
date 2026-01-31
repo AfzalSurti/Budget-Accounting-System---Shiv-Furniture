@@ -79,9 +79,10 @@ export declare const listVendorBillsTable: (companyId: string) => Promise<{
     recordId: string;
     vendor: string;
     amount: string;
-    dueDate: string | null;
-    date: string | null;
+    dueDate: string;
+    date: string;
     status: "failed" | "completed" | "pending";
+    statusLabel: string;
 }[]>;
 export declare const getVendorBill: (id: string) => Promise<{
     lines: {

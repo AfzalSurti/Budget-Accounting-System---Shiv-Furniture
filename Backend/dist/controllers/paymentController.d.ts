@@ -49,9 +49,10 @@ export declare const listPaymentsTable: (companyId: string) => Promise<{
     recordId: string;
     description: string;
     amount: string;
-    date: string | null;
+    date: string;
     method: string;
     status: "failed" | "completed" | "pending";
+    statusLabel: string;
 }[]>;
 export declare const getPayment: (id: string) => Promise<{
     allocations: {

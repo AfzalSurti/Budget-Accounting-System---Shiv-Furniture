@@ -23,6 +23,8 @@ export declare const createBudget: (data: {
         totalBudgeted: Prisma.Decimal;
         totalActual: Prisma.Decimal;
         totalRemaining: Prisma.Decimal;
+        totalForecast: Prisma.Decimal;
+        utilizationPct: Prisma.Decimal;
         createdBy: string | null;
         approvedAt: Date | null;
     };
@@ -63,6 +65,8 @@ export declare const listBudgets: (companyId: string) => Promise<({
     totalBudgeted: Prisma.Decimal;
     totalActual: Prisma.Decimal;
     totalRemaining: Prisma.Decimal;
+    totalForecast: Prisma.Decimal;
+    utilizationPct: Prisma.Decimal;
     createdBy: string | null;
     approvedAt: Date | null;
 })[]>;
@@ -94,6 +98,8 @@ export declare const getBudget: (id: string) => Promise<{
     totalBudgeted: Prisma.Decimal;
     totalActual: Prisma.Decimal;
     totalRemaining: Prisma.Decimal;
+    totalForecast: Prisma.Decimal;
+    utilizationPct: Prisma.Decimal;
     createdBy: string | null;
     approvedAt: Date | null;
 }>;
@@ -121,6 +127,8 @@ export declare const updateBudget: (id: string, data: {
         totalBudgeted: Prisma.Decimal;
         totalActual: Prisma.Decimal;
         totalRemaining: Prisma.Decimal;
+        totalForecast: Prisma.Decimal;
+        utilizationPct: Prisma.Decimal;
         createdBy: string | null;
         approvedAt: Date | null;
     };
@@ -144,6 +152,8 @@ export declare const archiveBudget: (id: string) => Promise<{
     totalBudgeted: Prisma.Decimal;
     totalActual: Prisma.Decimal;
     totalRemaining: Prisma.Decimal;
+    totalForecast: Prisma.Decimal;
+    utilizationPct: Prisma.Decimal;
     createdBy: string | null;
     approvedAt: Date | null;
 }>;

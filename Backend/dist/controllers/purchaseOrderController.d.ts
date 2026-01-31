@@ -56,9 +56,10 @@ export declare const listPurchaseOrdersTable: (companyId: string) => Promise<{
     recordId: string;
     vendor: string;
     amount: string;
-    date: string | null;
-    deliveryDate: string | null;
+    date: string;
+    deliveryDate: string;
     status: "failed" | "completed" | "pending" | "active";
+    statusLabel: string;
 }[]>;
 export declare const getPurchaseOrder: (id: string) => Promise<{
     lines: {

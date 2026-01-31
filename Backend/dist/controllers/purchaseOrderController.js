@@ -1,7 +1,7 @@
 import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/apiError.js";
 import { resolveAnalyticAccountId } from "../services/autoAnalyticService.js";
-import { formatCurrency, formatDate, mapOrderStatusToBadge, } from "../utils/formatters.js";
+import { formatBadgeLabel, formatCurrency, formatDate, mapOrderStatusToBadge, } from "../utils/formatters.js";
 export const createPurchaseOrder = async (data) => {
     return prisma.$transaction(async (tx) => {
         const purchaseOrder = await tx.purchaseOrder.create({
@@ -78,9 +78,10 @@ export const listPurchaseOrdersTable = async (companyId) => {
             recordId: order.id,
             vendor: order.vendor.displayName,
             amount: formatCurrency(totalAmount, order.currency),
-            date: formatDate(order.orderDate),
-            deliveryDate: formatDate(order.deliveryDate),
+            date: formatDate(order.orderDate) ?? "",
+            deliveryDate: formatDate(order.deliveryDate) ?? "",
             status: mapOrderStatusToBadge(order.status),
+            statusLabel: formatBadgeLabel(mapOrderStatusToBadge(order.status)),
         };
     });
 };

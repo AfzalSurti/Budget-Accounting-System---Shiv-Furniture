@@ -1,7 +1,7 @@
 import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/apiError.js";
 import { createPayment } from "./paymentController.js";
-import { formatCurrency, formatDate, formatPaymentMethod, mapDocStatusToBadge, mapOrderStatusToBadge, mapPaymentStatusToBadge, } from "../utils/formatters.js";
+import { formatBadgeLabel, formatCurrency, formatDate, formatPaymentMethod, mapDocStatusToBadge, mapOrderStatusToBadge, mapPaymentStatusToBadge, } from "../utils/formatters.js";
 export const listPortalInvoices = async (contactId) => {
     return prisma.customerInvoice.findMany({
         where: { customerId: contactId },
@@ -28,9 +28,10 @@ export const listPortalInvoicesTable = async (contactId) => {
         id: invoice.invoiceNo,
         recordId: invoice.id,
         amount: formatCurrency(Number(invoice.totalAmount), invoice.currency),
-        dueDate: formatDate(invoice.dueDate),
-        issueDate: formatDate(invoice.invoiceDate),
+        dueDate: formatDate(invoice.dueDate) ?? "",
+        issueDate: formatDate(invoice.invoiceDate) ?? "",
         status: mapDocStatusToBadge(invoice.status, invoice.paymentState),
+        statusLabel: formatBadgeLabel(mapDocStatusToBadge(invoice.status, invoice.paymentState)),
     }));
 };
 export const listPortalBills = async (contactId) => {
@@ -61,9 +62,10 @@ export const listPortalBillsTable = async (contactId) => {
         recordId: bill.id,
         vendor: bill.vendor.displayName,
         amount: formatCurrency(Number(bill.totalAmount), bill.currency),
-        dueDate: formatDate(bill.dueDate),
-        issueDate: formatDate(bill.billDate),
+        dueDate: formatDate(bill.dueDate) ?? "",
+        issueDate: formatDate(bill.billDate) ?? "",
         status: mapDocStatusToBadge(bill.status, bill.paymentState),
+        statusLabel: formatBadgeLabel(mapDocStatusToBadge(bill.status, bill.paymentState)),
     }));
 };
 export const listPortalSalesOrders = async (contactId) => {
@@ -95,9 +97,10 @@ export const listPortalSalesOrdersTable = async (contactId) => {
             recordId: order.id,
             customer: order.customer.displayName,
             amount: formatCurrency(totalAmount, order.currency),
-            issueDate: formatDate(order.orderDate),
-            deliveryDate: formatDate(order.deliveryDate),
+            issueDate: formatDate(order.orderDate) ?? "",
+            deliveryDate: formatDate(order.deliveryDate) ?? "",
             status: mapOrderStatusToBadge(order.status),
+            statusLabel: formatBadgeLabel(mapOrderStatusToBadge(order.status)),
         };
     });
 };
@@ -130,9 +133,10 @@ export const listPortalPurchaseOrdersTable = async (contactId) => {
             recordId: order.id,
             vendor: order.vendor.displayName,
             amount: formatCurrency(totalAmount, order.currency),
-            issueDate: formatDate(order.orderDate),
-            deliveryDate: formatDate(order.deliveryDate),
+            issueDate: formatDate(order.orderDate) ?? "",
+            deliveryDate: formatDate(order.deliveryDate) ?? "",
             status: mapOrderStatusToBadge(order.status),
+            statusLabel: formatBadgeLabel(mapOrderStatusToBadge(order.status)),
         };
     });
 };
@@ -169,9 +173,10 @@ export const listPortalPaymentsTable = async (contactId) => {
             recordId: payment.id,
             description,
             amount: formatCurrency(Number(payment.amount)),
-            date: formatDate(payment.paymentDate),
+            date: formatDate(payment.paymentDate) ?? "",
             method: formatPaymentMethod(payment.method),
             status: mapPaymentStatusToBadge(payment.status),
+            statusLabel: formatBadgeLabel(mapPaymentStatusToBadge(payment.status)),
         };
     });
 };
