@@ -1,109 +1,225 @@
-import { PrismaClient } from '@prisma/client';
+import "dotenv/config";
+import bcrypt from "bcryptjs";
+import { PrismaClient } from "../src/generated/prisma/index.js";
 
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('Seeding database...');
+  console.log("🚀 Starting unified seed process...");
 
-  // Create Company
-  const company = await prisma.company.create({
-    data: {
-      name: 'Shiv Furniture',
-      currency: 'INR',
-    },
-  });
+  try {
+    // 1. Create or Get Company (Preserves existing data)
+    const company = await prisma.company.upsert({
+      where: { id: "c304b575-8044-4c82-8462-0fea93570c00" }, // Standard ID for your environment
+      update: { name: "Shiv Furniture" },
+      create: {
+        id: "c304b575-8044-4c82-8462-0fea93570c00",
+        name: "Shiv Furniture",
+      },
+    });
 
-  console.log('Created company:', company);
+    // 2. GL Accounts, Categories, and Products (Using upsert to prevent duplicates)
+    const glSales = await prisma.gLAccount.upsert({
+      where: { companyId_code: { companyId: company.id, code: "ACC001" } },
+      update: {},
+      create: {
+        companyId: company.id,
+        code: "ACC001",
+        name: "Sales Revenue",
+        accountType: "income",
+      },
+    });
 
-  // Create GL Accounts
-  const glAccount1 = await prisma.gLAccount.create({
-    data: {
-      companyId: company.id,
-      code: 'ACC001',
-      name: 'Sales Revenue',
-      accountType: 'income',
-    },
-  });
+    const catWooden = await prisma.productCategory.upsert({
+      where: {
+        companyId_name: { companyId: company.id, name: "Wooden Furniture" },
+      },
+      update: {},
+      create: { companyId: company.id, name: "Wooden Furniture" },
+    });
 
-  const glAccount2 = await prisma.gLAccount.create({
-    data: {
-      companyId: company.id,
-      code: 'ACC002',
-      name: 'Cost of Goods',
-      accountType: 'expense',
-    },
-  });
+    const prodChair = await prisma.product.upsert({
+      where: { companyId_sku: { companyId: company.id, sku: "WF001" } },
+      update: { categoryId: catWooden.id, name: "Chair" },
+      create: {
+        companyId: company.id,
+        categoryId: catWooden.id,
+        sku: "WF001",
+        name: "Chair",
+        costPrice: 2500,
+        salePrice: 4500,
+      },
+    });
 
-  console.log('Created GL Accounts');
+    // 3. Seed All 9 Specific Analytic Accounts (Cost Centers) using exact UUIDs
+    const manufacturingAccount = await prisma.analyticAccount.upsert({
+      where: { id: "c304b575-8044-4c82-8462-0fea93570c00" },
+      update: { name: "Manufacturing", code: "CC-100" },
+      create: {
+        id: "c304b575-8044-4c82-8462-0fea93570c00",
+        name: "Manufacturing",
+        code: "CC-100",
+        companyId: company.id,
+      },
+    });
 
-  // Create Product Category
-  const category = await prisma.productCategory.create({
-    data: {
-      companyId: company.id,
-      name: 'Wooden Furniture',
-    },
-  });
+    const salesAccount = await prisma.analyticAccount.upsert({
+      where: { id: "b16e2e58-7fc1-4aad-99aa-2e3dda3cb836" },
+      update: { name: "Sales", code: "CC-200" },
+      create: {
+        id: "b16e2e58-7fc1-4aad-99aa-2e3dda3cb836",
+        name: "Sales",
+        code: "CC-200",
+        companyId: company.id,
+      },
+    });
 
-  console.log('Created category:', category);
+    await prisma.analyticAccount.upsert({
+      where: { id: "a9845e81-b97d-4ee4-8df2-966c7d535aeb" },
+      update: { name: "Admin", code: "CC-300" },
+      create: {
+        id: "a9845e81-b97d-4ee4-8df2-966c7d535aeb",
+        name: "Admin",
+        code: "CC-300",
+        companyId: company.id,
+      },
+    });
 
-  // Create Product
-  const product = await prisma.product.create({
-    data: {
-      companyId: company.id,
-      categoryId: category.id,
-      sku: 'WF001',
-      name: 'Sheesham Wood Chair',
-      description: 'Premium sheesham wood chair',
-      costPrice: 2500,
-      sellingPrice: 4500,
-    },
-  });
+    await prisma.analyticAccount.upsert({
+      where: { id: "8b9113dc-7356-43af-bed9-ce2b752e70f4" },
+      update: { name: "Operations", code: "CC-400" },
+      create: {
+        id: "8b9113dc-7356-43af-bed9-ce2b752e70f4",
+        name: "Operations",
+        code: "CC-400",
+        companyId: company.id,
+      },
+    });
 
-  console.log('Created product:', product);
+    await prisma.analyticAccount.upsert({
+      where: { id: "17c320fa-ac50-4d5a-91a5-e80d07aa20c2" },
+      update: { name: "Capital", code: "CC-500" },
+      create: {
+        id: "17c320fa-ac50-4d5a-91a5-e80d07aa20c2",
+        name: "Capital",
+        code: "CC-500",
+        companyId: company.id,
+      },
+    });
 
-  // Create Contact (Vendor)
-  const vendor = await prisma.contact.create({
-    data: {
-      companyId: company.id,
-      type: 'vendor',
-      name: 'Sharma Timber Suppliers',
-      email: 'vendor@sharmatimber.in',
-    },
-  });
+    await prisma.analyticAccount.upsert({
+      where: { id: "48de9859-a745-40cb-b8c3-6623a90bb322" },
+      update: { name: "Furniture Expo 2027", code: "CSR-231" },
+      create: {
+        id: "48de9859-a745-40cb-b8c3-6623a90bb322",
+        name: "Furniture Expo 2027",
+        code: "CSR-231",
+        companyId: company.id,
+      },
+    });
 
-  console.log('Created vendor:', vendor);
+    await prisma.analyticAccount.upsert({
+      where: { id: "1b1b9207-b95f-47c0-8045-3154ef9224e4" },
+      update: { name: "Marketing", code: "CR-231" },
+      create: {
+        id: "1b1b9207-b95f-47c0-8045-3154ef9224e4",
+        name: "Marketing",
+        code: "CR-231",
+        companyId: company.id,
+      },
+    });
 
-  // Create Contact (Customer)
-  const customer = await prisma.contact.create({
-    data: {
-      companyId: company.id,
-      type: 'customer',
-      name: 'Rahul Verma',
-      email: 'rahul.verma@example.in',
-    },
-  });
+    await prisma.analyticAccount.upsert({
+      where: { id: "7867a3d1-8496-48c5-9f0d-15762aa93505" },
+      update: { name: "Social Media", code: "CS123" },
+      create: {
+        id: "7867a3d1-8496-48c5-9f0d-15762aa93505",
+        name: "Social Media",
+        code: "CS123",
+        companyId: company.id,
+      },
+    });
 
-  console.log('Created customer:', customer);
+    await prisma.analyticAccount.upsert({
+      where: { id: "d980f93d-9ff2-41dd-91b8-08e7c22f9726" },
+      update: { name: "Summer Sale", code: "001" },
+      create: {
+        id: "d980f93d-9ff2-41dd-91b8-08e7c22f9726",
+        name: "Summer Sale",
+        code: "001",
+        companyId: company.id,
+      },
+    });
 
-  // Create Analytic Account
-  const analytic = await prisma.analyticAccount.create({
-    data: {
-      companyId: company.id,
-      code: 'AA001',
-      name: 'Department A',
-    },
-  });
+    // 4. Create Auto-Analytic Model & Mapping Rules
+    // Check if the model exists by finding any record for this company with this name
+    let analyticModel = await prisma.autoAnalyticModel.findFirst({
+      where: { companyId: company.id, name: "Standard Business Logic" },
+    });
 
-  console.log('Created analytic account:', analytic);
+    if (!analyticModel) {
+      analyticModel = await prisma.autoAnalyticModel.create({
+        data: {
+          companyId: company.id,
+          name: "Standard Business Logic",
+          isActive: true,
+        },
+      });
+    } else if (!analyticModel.isActive) {
+      analyticModel = await prisma.autoAnalyticModel.update({
+        where: { id: analyticModel.id },
+        data: { isActive: true },
+      });
+    }
 
-  console.log('✅ Seeding completed!');
+    const vendorBillRule = await prisma.autoAnalyticRule.findFirst({
+      where: {
+        modelId: analyticModel.id,
+        docType: "vendor_bill",
+        matchCategoryId: catWooden.id,
+        assignAnalyticAccountId: manufacturingAccount.id,
+      },
+    });
+
+    if (!vendorBillRule) {
+      await prisma.autoAnalyticRule.create({
+        data: {
+          modelId: analyticModel.id,
+          docType: "vendor_bill",
+          matchCategoryId: catWooden.id,
+          assignAnalyticAccountId: manufacturingAccount.id,
+        },
+      });
+    }
+
+    const customerInvoiceRule = await prisma.autoAnalyticRule.findFirst({
+      where: {
+        modelId: analyticModel.id,
+        docType: "customer_invoice",
+        matchProductId: prodChair.id,
+        assignAnalyticAccountId: salesAccount.id,
+      },
+    });
+
+    if (!customerInvoiceRule) {
+      await prisma.autoAnalyticRule.create({
+        data: {
+          modelId: analyticModel.id,
+          docType: "customer_invoice",
+          matchProductId: prodChair.id,
+          assignAnalyticAccountId: salesAccount.id,
+        },
+      });
+    }
+
+    console.log(
+      "\n✅ All data preserved and Analytical Model added successfully!",
+    );
+  } catch (e) {
+    console.error("❌ Seed Error:", e);
+  } finally {
+    await prisma.$disconnect();
+  }
 }
 
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+main();
