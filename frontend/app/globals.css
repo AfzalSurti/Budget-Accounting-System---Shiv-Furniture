@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 255 255 255;
+    --foreground: 3 4 94;
+    
+    --brand-dark: 3 4 94;
+    --brand-primary: 0 119 182;
+    --brand-accent: 0 180 216;
+    --brand-light: 144 224 239;
+    --brand-lighter: 202 240 248;
+  }
+
+  .dark {
+    --background: 15 23 42;
+    --foreground: 241 245 249;
+    
+    --brand-dark: 3 4 94;
+    --brand-primary: 0 119 182;
+    --brand-accent: 0 180 216;
+    --brand-light: 144 224 239;
+    --brand-lighter: 30 41 59;
+  }
+}
+
+@layer components {
+  /* Premium buttons */
+  .btn-primary {
+    @apply px-4 py-2 bg-brand-primary text-white rounded-md font-medium hover:opacity-90 transition-opacity duration-200;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 bg-brand-light text-brand-dark rounded-md font-medium hover:bg-brand-accent transition-colors duration-200;
+  }
+
+  .btn-ghost {
+    @apply px-4 py-2 text-brand-primary hover:bg-brand-lighter rounded-md font-medium transition-colors duration-200;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow duration-200;
+  }
+
+  /* Page container */
+  .page-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8;
+  }
+
+  /* Section heading */
+  .section-heading {
+    @apply text-3xl font-serif font-bold text-brand-dark dark:text-white mb-8;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white dark:bg-slate-950 text-foreground transition-colors duration-300;
+}
+
+/* Smooth transitions for theme */
+* {
+  @apply transition-colors duration-300;
+}
