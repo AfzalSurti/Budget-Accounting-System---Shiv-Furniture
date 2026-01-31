@@ -399,6 +399,7 @@ exports.Prisma.DocumentFileScalarFieldEnum = {
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
+  loginId: 'loginId',
   passwordHash: 'passwordHash',
   role: 'role',
   contactId: 'contactId',
