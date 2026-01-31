@@ -1,0 +1,21 @@
+{
+  "name": "shiv-furniture-erp-monorepo",
+  "version": "1.0.0",
+  "description": "Shiv Furniture Budget Accounting System - Monorepo",
+  "private": true,
+  "workspaces": [
+    "Backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev:backend": "cd Backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "build": "npm run build -w Backend && npm run build -w frontend",
+    "start": "npm start -w Backend",
+    "lint": "npm run lint -w Backend && npm run lint -w frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

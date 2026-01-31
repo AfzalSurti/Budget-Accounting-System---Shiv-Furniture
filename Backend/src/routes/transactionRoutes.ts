@@ -9,6 +9,7 @@ import * as vendorBillController from "../controllers/vendorBillController.js";
 import * as salesController from "../controllers/salesOrderController.js";
 import * as invoiceController from "../controllers/invoiceController.js";
 import * as paymentController from "../controllers/paymentController.js";
+import * as transactionController from "../controllers/transactionController.js";
 
 import {
   createPurchaseOrderSchema,
@@ -249,4 +250,47 @@ transactionRoutes.get(
     const payment = await paymentController.getPayment(req.params.id!);
     res.json({ success: true, data: payment });
   })
+);
+
+// Transactions (Journal Entries)
+transactionRoutes.post(
+  "/transactions",
+  asyncHandler(async (req, res) => {
+    const transaction = await transactionController.createTransaction(
+      (req as any).user.id,
+      req.body
+    );
+    res.status(201).json({ success: true, data: transaction });
+  }) as any
+);
+
+transactionRoutes.get(
+  "/transactions",
+  asyncHandler(async (req, res) => {
+    const companyId = req.query.companyId as string;
+    const limit = parseInt((req.query.limit as string) || "50", 10);
+    const offset = parseInt((req.query.offset as string) || "0", 10);
+    const result = await transactionController.getTransactions(
+      companyId,
+      limit,
+      offset
+    );
+    res.json({ success: true, data: result });
+  }) as any
+);
+
+transactionRoutes.get(
+  "/transactions/:id",
+  asyncHandler(async (req, res) => {
+    const companyId = req.query.companyId as string;
+    const transaction = await transactionController.getTransactionById(
+      req.params.id!,
+      companyId
+    );
+    if (!transaction) {
+      res.status(404).json({ success: false, message: "Transaction not found" });
+    } else {
+      res.json({ success: true, data: transaction });
+    }
+  }) as any
 );

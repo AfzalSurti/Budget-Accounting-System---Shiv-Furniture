@@ -8,6 +8,7 @@ import * as vendorBillController from "../controllers/vendorBillController.js";
 import * as salesController from "../controllers/salesOrderController.js";
 import * as invoiceController from "../controllers/invoiceController.js";
 import * as paymentController from "../controllers/paymentController.js";
+import * as transactionController from "../controllers/transactionController.js";
 import { createPurchaseOrderSchema, updatePurchaseOrderSchema, listPurchaseOrderSchema, } from "../validators/purchaseOrderValidators.js";
 import { createVendorBillSchema, updateVendorBillSchema, listVendorBillSchema, convertVendorBillSchema, } from "../validators/vendorBillValidators.js";
 import { createSalesOrderSchema, updateSalesOrderSchema, listSalesOrderSchema, } from "../validators/salesOrderValidators.js";
@@ -111,5 +112,27 @@ transactionRoutes.get("/payments", validateRequest(listPaymentSchema), asyncHand
 transactionRoutes.get("/payments/:id", asyncHandler(async (req, res) => {
     const payment = await paymentController.getPayment(req.params.id);
     res.json({ success: true, data: payment });
+}));
+// Transactions (Journal Entries)
+transactionRoutes.post("/transactions", asyncHandler(async (req, res) => {
+    const transaction = await transactionController.createTransaction(req.user.id, req.body);
+    res.status(201).json({ success: true, data: transaction });
+}));
+transactionRoutes.get("/transactions", asyncHandler(async (req, res) => {
+    const companyId = req.query.companyId;
+    const limit = parseInt(req.query.limit || "50", 10);
+    const offset = parseInt(req.query.offset || "0", 10);
+    const result = await transactionController.getTransactions(companyId, limit, offset);
+    res.json({ success: true, data: result });
+}));
+transactionRoutes.get("/transactions/:id", asyncHandler(async (req, res) => {
+    const companyId = req.query.companyId;
+    const transaction = await transactionController.getTransactionById(req.params.id, companyId);
+    if (!transaction) {
+        res.status(404).json({ success: false, message: "Transaction not found" });
+    }
+    else {
+        res.json({ success: true, data: transaction });
+    }
 }));
 //# sourceMappingURL=transactionRoutes.js.map
