@@ -2,16 +2,18 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Lock, Shield, ArrowRight, Building, User } from "lucide-react";
+import { Lock, Shield, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import type { UserRole } from "@/lib/types/user";
 
 export default function SignupPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [userType, setUserType] = useState<"admin" | "customer">("admin");
+  const [selectedRole, setSelectedRole] = useState<UserRole>("PORTAL");
   const [email, setEmail] = useState("");
+  const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -24,14 +26,17 @@ export default function SignupPage() {
     setError(null);
 
     try {
-      if (userType === "admin") {
+      if (selectedRole === "ADMIN") {
         throw new Error("Admin signup is restricted. Please contact your administrator.");
+      }
+      if (loginId.length !== 6) {
+        throw new Error("Login ID must be exactly 6 characters.");
       }
       if (password !== confirmPassword) {
         throw new Error("Passwords do not match.");
       }
 
-      const user = await register(email, password, "PORTAL");
+      const user = await register({ email, loginId, password, role: selectedRole });
       if (user.role === "ADMIN") {
         router.push("/admin/dashboard");
       } else {
@@ -43,6 +48,11 @@ export default function SignupPage() {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleLoginIdChange = (value: string) => {
+    const sanitized = value.replace(/[^a-zA-Z0-9]/g, "").toUpperCase().slice(0, 6);
+    setLoginId(sanitized);
   };
 
   return (
@@ -146,34 +156,24 @@ export default function SignupPage() {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
-                  Account Type
+                  Role
                 </label>
-                <div className="grid grid-cols-2 gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setUserType("admin")}
-                    className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
-                      userType === "admin"
-                        ? "border-brand-primary bg-brand-primary/5 text-brand-primary"
-                        : "border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-600"
-                    }`}
+                <div className="relative">
+                  <select
+                    value={selectedRole}
+                    onChange={(e) => setSelectedRole(e.target.value as UserRole)}
+                    className="w-full appearance-none px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary/40 focus:border-brand-primary pr-10"
                   >
-                    <Building className="w-5 h-5" />
-                    <span className="font-medium">Admin</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setUserType("customer")}
-                    className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
-                      userType === "customer"
-                        ? "border-brand-primary bg-brand-primary/5 text-brand-primary"
-                        : "border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-600"
-                    }`}
-                  >
-                    <User className="w-5 h-5" />
-                    <span className="font-medium">Customer</span>
-                  </button>
+                    <option value="PORTAL">Portal User</option>
+                    <option value="ADMIN">Admin</option>
+                  </select>
+                  <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-slate-400">
+                    <ArrowRight className="w-4 h-4 rotate-90" />
+                  </span>
                 </div>
+                <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
+                  Choose the portal role for self-service access. Admin signup requires approval.
+                </p>
               </div>
 
               <div>
@@ -190,6 +190,25 @@ export default function SignupPage() {
 
               <div>
                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                  Login ID
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={loginId}
+                  minLength={6}
+                  maxLength={6}
+                  onChange={(e) => handleLoginIdChange(e.target.value)}
+                  className="w-full px-4 py-3 uppercase border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-primary/40 focus:border-brand-primary transition-all duration-200"
+                  placeholder="Choose 6 letters or numbers"
+                />
+                <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
+                  Exactly 6 alphanumeric characters (e.g., SHVF01).
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                   Email Address
                 </label>
                 <input
@@ -202,7 +221,7 @@ export default function SignupPage() {
                 />
               </div>
 
-              {userType === "admin" && (
+              {selectedRole === "ADMIN" && (
                 <div>
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                     Company Name

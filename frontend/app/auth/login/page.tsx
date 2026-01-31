@@ -10,7 +10,7 @@ import { useAuth } from "@/context/AuthContext";
 
 export default function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [email, setEmail] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
   const { login } = useAuth();
@@ -20,7 +20,7 @@ export default function LoginPage() {
     setIsSubmitting(true);
     
     try {
-      const user = await login(email, password);
+      const user = await login(identifier, password);
       if (user.role === 'ADMIN') {
         router.push('/admin/dashboard');
       } else {
@@ -140,18 +140,18 @@ export default function LoginPage() {
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-5">
-              {/* Email Field */}
+              {/* Identifier Field */}
               <div>
                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                  Email Address
+                  Email or Login ID
                 </label>
                 <input
-                  type="email"
+                  type="text"
                   required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={identifier}
+                  onChange={(e) => setIdentifier(e.target.value)}
                   className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-primary/40 focus:border-brand-primary transition-all duration-200"
-                  placeholder="name@company.com"
+                  placeholder="name@company.com or SHVF01"
                 />
               </div>
 

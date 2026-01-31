@@ -3,6 +3,7 @@ export type UserRole = 'ADMIN' | 'PORTAL';
 export interface User {
   id: string;
   email: string;
+  loginId: string;
   role: UserRole;
   contactId?: string | null;
 }

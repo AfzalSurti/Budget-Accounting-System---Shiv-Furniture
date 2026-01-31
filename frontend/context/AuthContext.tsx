@@ -5,13 +5,20 @@ import { User, AuthState, UserRole } from '@/lib/types/user';
 import { API_V1, getStoredToken, setStoredToken } from '@/config';
 
 interface AuthContextType extends AuthState {
-  login: (email: string, password: string) => Promise<User>;
-  register: (email: string, password: string, role: UserRole) => Promise<User>;
+  login: (identifier: string, password: string) => Promise<User>;
+  register: (payload: RegisterPayload) => Promise<User>;
   logout: () => void;
   setUser: (user: User) => void;
   hasRole: (role: UserRole) => boolean;
   isAdmin: () => boolean;
   isCustomer: () => boolean;
+}
+
+interface RegisterPayload {
+  email: string;
+  loginId: string;
+  password: string;
+  role: UserRole;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -51,13 +58,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     checkAuth();
   }, []);
 
-  const login = async (email: string, password: string): Promise<User> => {
+  const login = async (identifier: string, password: string): Promise<User> => {
     setIsLoading(true);
     try {
       const res = await fetch(`${API_V1}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ identifier, password }),
       });
       if (!res.ok) {
         const error = await res.json().catch(() => ({}));
@@ -78,13 +85,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const register = async (email: string, password: string, role: UserRole): Promise<User> => {
+  const register = async ({ email, loginId, password, role }: RegisterPayload): Promise<User> => {
     setIsLoading(true);
     try {
       const res = await fetch(`${API_V1}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password, role }),
+        body: JSON.stringify({ email, loginId, password, role }),
       });
       if (!res.ok) {
         const error = await res.json().catch(() => ({}));
