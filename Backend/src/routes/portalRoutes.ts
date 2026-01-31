@@ -106,7 +106,12 @@ portalRoutes.get(
       req.params.id!,
       req.user.contactId,
     );
-    res.json({ success: true, data });
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${data.filename}"`,
+    );
+    res.send(data.buffer);
   }),
 );
 
@@ -120,7 +125,12 @@ portalRoutes.get(
       req.params.id!,
       req.user.contactId,
     );
-    res.json({ success: true, data });
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${data.filename}"`,
+    );
+    res.send(data.buffer);
   }),
 );
 

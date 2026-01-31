@@ -66,6 +66,7 @@ export const apiPut = async <T, U = unknown>(path: string, body: U): Promise<T> 
   return payload?.data as T;
 };
 
+ HEAD
 export const apiUpload = async <T>(path: string, formData: FormData): Promise<T> => {
   const res = await fetch(`${API_V1}${path}`, {
     method: "POST",
@@ -79,4 +80,24 @@ export const apiUpload = async <T>(path: string, formData: FormData): Promise<T>
   }
   const payload = await res.json();
   return payload?.data as T;
+
+export const apiDownload = async (path: string, filename: string) => {
+  const res = await fetch(`${API_V1}${path}`, {
+    headers: buildHeaders(),
+  });
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({}));
+    const message = error?.message || "Download failed";
+    throw new Error(message);
+  }
+  const blob = await res.blob();
+  const url = window.URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.URL.revokeObjectURL(url);
+ d7eacf692879cba0615b86fee951e807c3b30eb6
 };

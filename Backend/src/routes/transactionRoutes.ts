@@ -77,6 +77,19 @@ transactionRoutes.get(
   }),
 );
 
+transactionRoutes.get(
+  "/po/:id/pdf",
+  asyncHandler(async (req, res) => {
+    const result = await purchaseController.getPurchaseOrderPdf(req.params.id!);
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${result.filename}"`,
+    );
+    res.send(result.buffer);
+  }),
+);
+
 transactionRoutes.put(
   "/purchase-orders/:id",
   validateRequest(updatePurchaseOrderSchema),
@@ -145,6 +158,19 @@ transactionRoutes.get(
   }),
 );
 
+transactionRoutes.get(
+  "/vendor-bills/:id/pdf",
+  asyncHandler(async (req, res) => {
+    const result = await vendorBillController.getVendorBillPdf(req.params.id!);
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${result.filename}"`,
+    );
+    res.send(result.buffer);
+  }),
+);
+
 transactionRoutes.put(
   "/vendor-bills/:id",
   validateRequest(updateVendorBillSchema),
@@ -187,6 +213,19 @@ transactionRoutes.get(
   asyncHandler(async (req, res) => {
     const so = await salesController.getSalesOrder(req.params.id!);
     res.json({ success: true, data: so });
+  }),
+);
+
+transactionRoutes.get(
+  "/so/:id/pdf",
+  asyncHandler(async (req, res) => {
+    const result = await salesController.getSalesOrderPdf(req.params.id!);
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${result.filename}"`,
+    );
+    res.send(result.buffer);
   }),
 );
 
@@ -253,20 +292,28 @@ transactionRoutes.get(
   }),
 );
 
+transactionRoutes.get(
+  "/invoices/:id/pdf",
+  asyncHandler(async (req, res) => {
+    const result = await invoiceController.getInvoicePdf(req.params.id!);
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${result.filename}"`,
+    );
+    res.send(result.buffer);
+  }),
+);
+
 transactionRoutes.put(
   "/invoices/:id",
   validateRequest(updateInvoiceSchema),
   asyncHandler(async (req, res) => {
-    const view = (req.query.view as string | undefined) ?? "raw";
-    const data =
-      view === "table"
-        ? await vendorBillController.listVendorBillsTable(
-            req.query.companyId as string,
-          )
-        : await vendorBillController.listVendorBills(
-            req.query.companyId as string,
-          );
-    res.json({ success: true, data });
+    const invoice = await invoiceController.updateInvoice(
+      req.params.id!,
+      req.body,
+    );
+    res.json({ success: true, data: invoice });
   }),
 );
 
