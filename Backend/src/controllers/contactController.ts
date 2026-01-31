@@ -8,6 +8,7 @@ export const createContact = async (data: {
   displayName: string;
   email?: string | null;
   phone?: string | null;
+  imgUrl?: string | null;
   gstin?: string | null;
   billingAddress?: Prisma.InputJsonValue | null;
   shippingAddress?: Prisma.InputJsonValue | null;
@@ -30,6 +31,7 @@ export const createContact = async (data: {
 
   if (data.email !== undefined) createData.email = data.email;
   if (data.phone !== undefined) createData.phone = data.phone;
+  if (data.imgUrl !== undefined) createData.imgUrl = data.imgUrl;
   if (data.gstin !== undefined) createData.gstin = data.gstin;
   if (data.billingAddress !== undefined) {
     createData.billingAddress = data.billingAddress === null ? Prisma.JsonNull : data.billingAddress;

@@ -5,6 +5,7 @@ const contactBody = Joi.object({
     displayName: Joi.string().required(),
     email: Joi.string().email().allow(null, ""),
     phone: Joi.string().allow(null, ""),
+    imgUrl: Joi.string().uri().allow(null, ""),
     gstin: Joi.string().allow(null, ""),
     billingAddress: Joi.any().optional(),
     shippingAddress: Joi.any().optional(),

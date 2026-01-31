@@ -2,7 +2,7 @@
 
 import { AppLayout } from "@/components/layout/app-layout";
 import { DEFAULT_COMPANY_ID } from "@/config";
-import { apiGet, apiPost } from "@/lib/api";
+import { apiGet, apiPost, apiUpload } from "@/lib/api";
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { Download, Mail, MapPin, Phone, Plus, UploadCloud, X } from "lucide-react";
 import { exportTableToPDF } from "@/lib/pdf-utils";
@@ -16,6 +16,7 @@ interface ContactRecord {
   name: string;
   email: string;
   phone: string;
+  imgUrl?: string | null;
   address: {
     street: string;
     city: string;
@@ -39,6 +40,7 @@ interface BackendContact {
   displayName: string;
   email: string | null;
   phone: string | null;
+  imgUrl?: string | null;
   billingAddress?: unknown;
   shippingAddress?: unknown;
   isActive: boolean;
@@ -90,6 +92,7 @@ const mapContact = (contact: BackendContact): ContactRecord => {
     name: contact.displayName,
     email: contact.email ?? "",
     phone: contact.phone ?? "",
+    imgUrl: contact.imgUrl ?? null,
     address: toAddress(addressSource),
     tags: [...toTagLabels(contact.contactType), ...partnerTags],
     status: contact.isActive ? "confirm" : "archived",
@@ -142,6 +145,7 @@ export default function ContactsPage() {
         displayName: draft.name,
         email: draft.email.trim() ? draft.email.trim() : null,
         phone: draft.phone.trim() ? draft.phone.trim() : null,
+        imgUrl: draft.imgUrl ?? null,
         billingAddress: addressPayload,
         shippingAddress: addressPayload,
         tags: draft.partnerTags
@@ -232,9 +236,24 @@ export default function ContactsPage() {
                   className="rounded-3xl border border-slate-200/60 bg-white/80 px-5 py-4 shadow-sm dark:border-slate-700 dark:bg-slate-800/70"
                 >
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.4em] text-brand-accent">{contact.id}</p>
-                      <h3 className="text-xl font-semibold text-slate-900 dark:text-white">{contact.name}</h3>
+                    <div className="flex items-center gap-4">
+                      <div className="h-14 w-14 overflow-hidden rounded-2xl border border-brand-primary/30 bg-brand-primary/10">
+                        {contact.imgUrl ? (
+                          <img
+                            src={contact.imgUrl}
+                            alt={contact.name}
+                            className="h-full w-full object-cover"
+                          />
+                        ) : (
+                          <div className="flex h-full w-full items-center justify-center text-sm font-semibold text-brand-primary">
+                            {contact.name.slice(0, 2).toUpperCase()}
+                          </div>
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.4em] text-brand-accent">{contact.id}</p>
+                        <h3 className="text-xl font-semibold text-slate-900 dark:text-white">{contact.name}</h3>
+                      </div>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {contact.tags.map((tag) => (
@@ -296,11 +315,14 @@ function ContactDialog({
     name: "",
     email: "",
     phone: "",
+    imgUrl: null,
     contactType: "customer",
     address: { street: "", city: "", state: "", country: "", postalCode: "" },
     avatarLabel: "",
     partnerTags: "",
   });
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
 
   const handleChange = (field: keyof ContactDraft, value: any) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -313,6 +335,27 @@ function ContactDialog({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(form);
+  };
+
+  const handleFileUpload = async (file?: File) => {
+    if (!file) return;
+    setIsUploading(true);
+    setUploadError(null);
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+      const payload = await apiUpload<{ url: string }>("/uploads/contact-image", formData);
+      setForm((prev) => ({
+        ...prev,
+        imgUrl: payload.url,
+        avatarLabel: file.name,
+      }));
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Upload failed";
+      setUploadError(message);
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -422,10 +465,24 @@ function ContactDialog({
                   type="file"
                   className="hidden"
                   accept="image/*"
-                  onChange={(e) => handleChange("avatarLabel", e.target.files?.[0]?.name ?? "")}
+                  onChange={(e) => handleFileUpload(e.target.files?.[0])}
                 />
-                {form.avatarLabel ? form.avatarLabel : "Select File"}
+                {isUploading ? "Uploading..." : form.avatarLabel ? form.avatarLabel : "Select File"}
               </label>
+              {form.imgUrl && (
+                <div className="mt-4 flex justify-center">
+                  <img
+                    src={form.imgUrl}
+                    alt="Uploaded"
+                    className="h-24 w-24 rounded-2xl object-cover"
+                  />
+                </div>
+              )}
+              {uploadError && (
+                <p className="mt-3 rounded-2xl border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
+                  {uploadError}
+                </p>
+              )}
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
               <button

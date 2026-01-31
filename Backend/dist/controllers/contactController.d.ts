@@ -5,6 +5,7 @@ export declare const createContact: (data: {
     displayName: string;
     email?: string | null;
     phone?: string | null;
+    imgUrl?: string | null;
     gstin?: string | null;
     billingAddress?: Prisma.InputJsonValue | null;
     shippingAddress?: Prisma.InputJsonValue | null;
@@ -18,6 +19,7 @@ export declare const createContact: (data: {
     contactType: import("../generated/prisma/index.js").$Enums.ContactType;
     displayName: string;
     phone: string | null;
+    imgUrl: string | null;
     gstin: string | null;
     billingAddress: Prisma.JsonValue | null;
     shippingAddress: Prisma.JsonValue | null;
@@ -48,6 +50,7 @@ export declare const listContacts: (companyId: string) => Promise<({
     contactType: import("../generated/prisma/index.js").$Enums.ContactType;
     displayName: string;
     phone: string | null;
+    imgUrl: string | null;
     gstin: string | null;
     billingAddress: Prisma.JsonValue | null;
     shippingAddress: Prisma.JsonValue | null;
@@ -79,6 +82,7 @@ export declare const getContact: (id: string) => Promise<{
     contactType: import("../generated/prisma/index.js").$Enums.ContactType;
     displayName: string;
     phone: string | null;
+    imgUrl: string | null;
     gstin: string | null;
     billingAddress: Prisma.JsonValue | null;
     shippingAddress: Prisma.JsonValue | null;
@@ -95,6 +99,7 @@ export declare const updateContact: (id: string, data: Partial<Record<string, un
     contactType: import("../generated/prisma/index.js").$Enums.ContactType;
     displayName: string;
     phone: string | null;
+    imgUrl: string | null;
     gstin: string | null;
     billingAddress: Prisma.JsonValue | null;
     shippingAddress: Prisma.JsonValue | null;
@@ -111,6 +116,7 @@ export declare const archiveContact: (id: string) => Promise<{
     contactType: import("../generated/prisma/index.js").$Enums.ContactType;
     displayName: string;
     phone: string | null;
+    imgUrl: string | null;
     gstin: string | null;
     billingAddress: Prisma.JsonValue | null;
     shippingAddress: Prisma.JsonValue | null;

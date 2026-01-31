@@ -9,6 +9,9 @@ const schema = Joi.object({
     JWT_SECRET: Joi.string().required(),
     JWT_EXPIRES_IN: Joi.string().default("1d"),
     CORS_ORIGIN: Joi.string().default("http://localhost:3000"),
+    CLOUD_NAME: Joi.string().required(),
+    API_KEY: Joi.string().required(),
+    API_SECRET: Joi.string().required(),
 }).unknown(true);
 const { value, error } = schema.validate(process.env, { abortEarly: false });
 if (error) {

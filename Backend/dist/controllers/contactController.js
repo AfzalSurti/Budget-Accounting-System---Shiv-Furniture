@@ -19,6 +19,8 @@ export const createContact = async (data) => {
         createData.email = data.email;
     if (data.phone !== undefined)
         createData.phone = data.phone;
+    if (data.imgUrl !== undefined)
+        createData.imgUrl = data.imgUrl;
     if (data.gstin !== undefined)
         createData.gstin = data.gstin;
     if (data.billingAddress !== undefined) {

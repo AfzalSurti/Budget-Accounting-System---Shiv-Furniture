@@ -13,6 +13,7 @@ import { transactionRoutes } from "./routes/transactionRoutes.js";
 import { reportRoutes } from "./routes/reportRoutes.js";
 import { portalRoutes } from "./routes/portalRoutes.js";
 import { aiInsightsRoutes } from "./routes/aiInsightsRoutes.js";
+import { uploadsRoutes } from "./routes/uploadsRoutes.js";
 import { swaggerUi, swaggerSpec } from "./docs/swagger.js";
 export const app = express();
 app.use(helmet());
@@ -57,6 +58,7 @@ app.use("/api/v1", transactionRoutes);
 app.use("/api/v1/reports", reportRoutes);
 app.use("/api/v1/portal", portalRoutes);
 app.use("/api/v1/ai-insights", aiInsightsRoutes);
+app.use("/api/v1", uploadsRoutes);
 app.use(notFoundHandler);
 app.use(errorHandler);
 //# sourceMappingURL=app.js.map

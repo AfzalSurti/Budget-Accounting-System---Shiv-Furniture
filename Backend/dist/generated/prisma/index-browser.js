@@ -133,6 +133,7 @@ exports.Prisma.ContactScalarFieldEnum = {
   displayName: 'displayName',
   email: 'email',
   phone: 'phone',
+  imgUrl: 'imgUrl',
   gstin: 'gstin',
   billingAddress: 'billingAddress',
   shippingAddress: 'shippingAddress',

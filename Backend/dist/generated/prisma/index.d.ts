@@ -6182,6 +6182,7 @@ export namespace Prisma {
     displayName: string | null
     email: string | null
     phone: string | null
+    imgUrl: string | null
     gstin: string | null
     isPortalUser: boolean | null
     portalUserExternalId: string | null
@@ -6197,6 +6198,7 @@ export namespace Prisma {
     displayName: string | null
     email: string | null
     phone: string | null
+    imgUrl: string | null
     gstin: string | null
     isPortalUser: boolean | null
     portalUserExternalId: string | null
@@ -6212,6 +6214,7 @@ export namespace Prisma {
     displayName: number
     email: number
     phone: number
+    imgUrl: number
     gstin: number
     billingAddress: number
     shippingAddress: number
@@ -6231,6 +6234,7 @@ export namespace Prisma {
     displayName?: true
     email?: true
     phone?: true
+    imgUrl?: true
     gstin?: true
     isPortalUser?: true
     portalUserExternalId?: true
@@ -6246,6 +6250,7 @@ export namespace Prisma {
     displayName?: true
     email?: true
     phone?: true
+    imgUrl?: true
     gstin?: true
     isPortalUser?: true
     portalUserExternalId?: true
@@ -6261,6 +6266,7 @@ export namespace Prisma {
     displayName?: true
     email?: true
     phone?: true
+    imgUrl?: true
     gstin?: true
     billingAddress?: true
     shippingAddress?: true
@@ -6351,6 +6357,7 @@ export namespace Prisma {
     displayName: string
     email: string | null
     phone: string | null
+    imgUrl: string | null
     gstin: string | null
     billingAddress: JsonValue | null
     shippingAddress: JsonValue | null
@@ -6385,6 +6392,7 @@ export namespace Prisma {
     displayName?: boolean
     email?: boolean
     phone?: boolean
+    imgUrl?: boolean
     gstin?: boolean
     billingAddress?: boolean
     shippingAddress?: boolean
@@ -6413,6 +6421,7 @@ export namespace Prisma {
     displayName?: boolean
     email?: boolean
     phone?: boolean
+    imgUrl?: boolean
     gstin?: boolean
     billingAddress?: boolean
     shippingAddress?: boolean
@@ -6431,6 +6440,7 @@ export namespace Prisma {
     displayName?: boolean
     email?: boolean
     phone?: boolean
+    imgUrl?: boolean
     gstin?: boolean
     billingAddress?: boolean
     shippingAddress?: boolean
@@ -6449,6 +6459,7 @@ export namespace Prisma {
     displayName?: boolean
     email?: boolean
     phone?: boolean
+    imgUrl?: boolean
     gstin?: boolean
     billingAddress?: boolean
     shippingAddress?: boolean
@@ -6459,7 +6470,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type ContactOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "companyId" | "contactType" | "displayName" | "email" | "phone" | "gstin" | "billingAddress" | "shippingAddress" | "isPortalUser" | "portalUserExternalId" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["contact"]>
+  export type ContactOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "companyId" | "contactType" | "displayName" | "email" | "phone" | "imgUrl" | "gstin" | "billingAddress" | "shippingAddress" | "isPortalUser" | "portalUserExternalId" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["contact"]>
   export type ContactInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     vendorPurchaseOrders?: boolean | Contact$vendorPurchaseOrdersArgs<ExtArgs>
@@ -6501,6 +6512,7 @@ export namespace Prisma {
       displayName: string
       email: string | null
       phone: string | null
+      imgUrl: string | null
       gstin: string | null
       billingAddress: Prisma.JsonValue | null
       shippingAddress: Prisma.JsonValue | null
@@ -6948,6 +6960,7 @@ export namespace Prisma {
     readonly displayName: FieldRef<"Contact", 'String'>
     readonly email: FieldRef<"Contact", 'String'>
     readonly phone: FieldRef<"Contact", 'String'>
+    readonly imgUrl: FieldRef<"Contact", 'String'>
     readonly gstin: FieldRef<"Contact", 'String'>
     readonly billingAddress: FieldRef<"Contact", 'Json'>
     readonly shippingAddress: FieldRef<"Contact", 'Json'>
@@ -41543,6 +41556,7 @@ export namespace Prisma {
     displayName: 'displayName',
     email: 'email',
     phone: 'phone',
+    imgUrl: 'imgUrl',
     gstin: 'gstin',
     billingAddress: 'billingAddress',
     shippingAddress: 'shippingAddress',
@@ -42399,6 +42413,7 @@ export namespace Prisma {
     displayName?: StringFilter<"Contact"> | string
     email?: StringNullableFilter<"Contact"> | string | null
     phone?: StringNullableFilter<"Contact"> | string | null
+    imgUrl?: StringNullableFilter<"Contact"> | string | null
     gstin?: StringNullableFilter<"Contact"> | string | null
     billingAddress?: JsonNullableFilter<"Contact">
     shippingAddress?: JsonNullableFilter<"Contact">
@@ -42426,6 +42441,7 @@ export namespace Prisma {
     displayName?: SortOrder
     email?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
+    imgUrl?: SortOrderInput | SortOrder
     gstin?: SortOrderInput | SortOrder
     billingAddress?: SortOrderInput | SortOrder
     shippingAddress?: SortOrderInput | SortOrder
@@ -42457,6 +42473,7 @@ export namespace Prisma {
     displayName?: StringFilter<"Contact"> | string
     email?: StringNullableFilter<"Contact"> | string | null
     phone?: StringNullableFilter<"Contact"> | string | null
+    imgUrl?: StringNullableFilter<"Contact"> | string | null
     gstin?: StringNullableFilter<"Contact"> | string | null
     billingAddress?: JsonNullableFilter<"Contact">
     shippingAddress?: JsonNullableFilter<"Contact">
@@ -42484,6 +42501,7 @@ export namespace Prisma {
     displayName?: SortOrder
     email?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
+    imgUrl?: SortOrderInput | SortOrder
     gstin?: SortOrderInput | SortOrder
     billingAddress?: SortOrderInput | SortOrder
     shippingAddress?: SortOrderInput | SortOrder
@@ -42507,6 +42525,7 @@ export namespace Prisma {
     displayName?: StringWithAggregatesFilter<"Contact"> | string
     email?: StringNullableWithAggregatesFilter<"Contact"> | string | null
     phone?: StringNullableWithAggregatesFilter<"Contact"> | string | null
+    imgUrl?: StringNullableWithAggregatesFilter<"Contact"> | string | null
     gstin?: StringNullableWithAggregatesFilter<"Contact"> | string | null
     billingAddress?: JsonNullableWithAggregatesFilter<"Contact">
     shippingAddress?: JsonNullableWithAggregatesFilter<"Contact">
@@ -44994,6 +45013,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -45021,6 +45041,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -45046,6 +45067,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -45073,6 +45095,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -45099,6 +45122,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -45115,6 +45139,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -45132,6 +45157,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -47907,6 +47933,7 @@ export namespace Prisma {
     displayName?: SortOrder
     email?: SortOrder
     phone?: SortOrder
+    imgUrl?: SortOrder
     gstin?: SortOrder
     billingAddress?: SortOrder
     shippingAddress?: SortOrder
@@ -47924,6 +47951,7 @@ export namespace Prisma {
     displayName?: SortOrder
     email?: SortOrder
     phone?: SortOrder
+    imgUrl?: SortOrder
     gstin?: SortOrder
     isPortalUser?: SortOrder
     portalUserExternalId?: SortOrder
@@ -47939,6 +47967,7 @@ export namespace Prisma {
     displayName?: SortOrder
     email?: SortOrder
     phone?: SortOrder
+    imgUrl?: SortOrder
     gstin?: SortOrder
     isPortalUser?: SortOrder
     portalUserExternalId?: SortOrder
@@ -54521,6 +54550,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -54546,6 +54576,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -55131,6 +55162,7 @@ export namespace Prisma {
     displayName?: StringFilter<"Contact"> | string
     email?: StringNullableFilter<"Contact"> | string | null
     phone?: StringNullableFilter<"Contact"> | string | null
+    imgUrl?: StringNullableFilter<"Contact"> | string | null
     gstin?: StringNullableFilter<"Contact"> | string | null
     billingAddress?: JsonNullableFilter<"Contact">
     shippingAddress?: JsonNullableFilter<"Contact">
@@ -56408,6 +56440,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -56434,6 +56467,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -56495,6 +56529,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -56521,6 +56556,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -58588,6 +58624,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -58614,6 +58651,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -58812,6 +58850,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -58838,6 +58877,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -59858,6 +59898,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -59884,6 +59925,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -60255,6 +60297,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -60281,6 +60324,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -60486,6 +60530,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -60512,6 +60557,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -60685,6 +60731,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -60711,6 +60758,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -61208,6 +61256,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -61234,6 +61283,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -61409,6 +61459,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -61435,6 +61486,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -61932,6 +61984,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -61958,6 +62011,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -62146,6 +62200,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -62172,6 +62227,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -62795,6 +62851,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -62821,6 +62878,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -63009,6 +63067,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -63035,6 +63094,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -63662,6 +63722,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -63688,6 +63749,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -63851,6 +63913,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -63877,6 +63940,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -64456,6 +64520,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -64482,6 +64547,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -64550,6 +64616,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -64576,6 +64643,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -64697,6 +64765,7 @@ export namespace Prisma {
     displayName: string
     email?: string | null
     phone?: string | null
+    imgUrl?: string | null
     gstin?: string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -64867,6 +64936,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -64892,6 +64962,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
@@ -64917,6 +64988,7 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: NullableStringFieldUpdateOperationsInput | string | null
     gstin?: NullableStringFieldUpdateOperationsInput | string | null
     billingAddress?: NullableJsonNullValueInput | InputJsonValue
     shippingAddress?: NullableJsonNullValueInput | InputJsonValue
