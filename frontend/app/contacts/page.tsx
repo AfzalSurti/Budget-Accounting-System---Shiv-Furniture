@@ -4,7 +4,7 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { DEFAULT_COMPANY_ID } from "@/config";
 import { apiGet, apiPost } from "@/lib/api";
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
-import { Mail, MapPin, Phone, Plus, UploadCloud, X } from "lucide-react";
+import { Download, Mail, MapPin, Phone, Plus, UploadCloud, X } from "lucide-react";
 
 type ContactStatus = "new" | "confirm" | "archived";
 
@@ -150,6 +150,63 @@ export default function ContactsPage() {
     } finally {
       setIsSaving(false);
     }
+  };
+
+  const handleExportPDF = () => {
+    const rowsHtml = filteredContacts
+      .map((contact) => {
+        const location = [contact.address.city, contact.address.state, contact.address.country]
+          .filter(Boolean)
+          .join(", ");
+        return `
+          <tr>
+            <td>${contact.name}</td>
+            <td>${contact.email}</td>
+            <td>${contact.phone}</td>
+            <td>${location}</td>
+          </tr>
+        `;
+      })
+      .join("");
+
+    const html = `
+      <html>
+        <head>
+          <title>Contacts Export</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 24px; color: #0f172a; }
+            h1 { font-size: 20px; margin-bottom: 16px; }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid #cbd5f5; padding: 8px; text-align: left; font-size: 12px; }
+            th { background: #f8fafc; }
+          </style>
+        </head>
+        <body>
+          <h1>Contacts</h1>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Location</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rowsHtml}
+            </tbody>
+          </table>
+        </body>
+      </html>
+    `;
+
+    const printWindow = window.open("", "_blank", "width=900,height=700");
+    if (!printWindow) return;
+    printWindow.document.open();
+    printWindow.document.write(html);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
   };
 
   return (
