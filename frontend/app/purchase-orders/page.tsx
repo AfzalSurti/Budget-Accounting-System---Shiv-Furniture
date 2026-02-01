@@ -7,7 +7,13 @@ import { DEFAULT_COMPANY_ID } from "@/config";
 import { apiDownload, apiGet, apiPost, apiPut } from "@/lib/api";
 import { exportTableToPDF } from "@/lib/pdf-utils";
 import { Download, Plus } from "lucide-react";
-import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 type StatusType =
   | "active"
@@ -54,6 +60,7 @@ interface LineDraft {
   unitPrice: number;
   taxRate: number;
   analyticAccountId: string;
+  analyticAccountMode: "auto" | "manual";
   description: string;
 }
 
@@ -78,7 +85,10 @@ export default function PurchaseOrdersPage() {
   const [error, setError] = useState<string | null>(null);
 
   const vendors = useMemo(
-    () => contacts.filter((row) => row.contactType === "vendor" || row.contactType === "both"),
+    () =>
+      contacts.filter(
+        (row) => row.contactType === "vendor" || row.contactType === "both",
+      ),
     [contacts],
   );
 
@@ -98,7 +108,9 @@ export default function PurchaseOrdersPage() {
       const [contactsData, productsData, centersData] = await Promise.all([
         apiGet<BackendContact[]>(`/contacts?companyId=${DEFAULT_COMPANY_ID}`),
         apiGet<BackendProduct[]>(`/products?companyId=${DEFAULT_COMPANY_ID}`),
-        apiGet<CostCenter[]>(`/analytical-accounts?companyId=${DEFAULT_COMPANY_ID}`),
+        apiGet<CostCenter[]>(
+          `/analytical-accounts?companyId=${DEFAULT_COMPANY_ID}`,
+        ),
       ]);
       setContacts(contactsData ?? []);
       setProducts(productsData ?? []);
@@ -128,13 +140,85 @@ export default function PurchaseOrdersPage() {
       status: row.statusLabel ?? row.status,
     }));
 
-    exportTableToPDF("Purchase Orders", columns, processedData, "purchase-orders.pdf");
+    exportTableToPDF(
+      "Purchase Orders",
+      columns,
+      processedData,
+      "purchase-orders.pdf",
+    );
+  };
+
+  const resolveAutoCostCenter = async (
+    vendorId: string,
+    productId: string,
+  ): Promise<{
+    analyticAccountId: string;
+    analyticAccountName: string;
+  } | null> => {
+    try {
+      const response = await apiPost<{
+        analyticAccountId: string;
+        analyticAccountName: string;
+        mode: string;
+      }>("/purchase-orders/resolve-cost-center", {
+        companyId: DEFAULT_COMPANY_ID,
+        vendorId,
+        productId,
+      });
+      console.log("Auto cost center resolved:", response);
+      return response;
+    } catch (err) {
+      console.error("Failed to resolve auto cost center:", err);
+      return null;
+    }
   };
 
   const handleCreatePurchaseOrder = async (draft: PurchaseOrderDraft) => {
     setIsSaving(true);
     setError(null);
     try {
+      const linesWithCostCenters = await Promise.all(
+        draft.lines.map(async (line) => {
+          let finalAnalyticAccountId = line.analyticAccountId;
+          const mode = line.analyticAccountMode;
+
+          if (mode === "auto" && line.productId) {
+            const resolved = await resolveAutoCostCenter(
+              draft.vendorId,
+              line.productId,
+            );
+            if (resolved) {
+              finalAnalyticAccountId = resolved.analyticAccountId;
+            }
+          }
+
+          const product = products.find((p) => p.id === line.productId);
+          const costCenter = costCenters.find(
+            (c) => c.id === finalAnalyticAccountId,
+          );
+
+          return {
+            ...line,
+            finalAnalyticAccountId,
+            productName: product?.name,
+            costCenterName: costCenter?.name,
+            mode,
+          };
+        }),
+      );
+
+      console.log("=== Purchase Order Lines ===");
+      console.table(
+        linesWithCostCenters.map((line, idx) => ({
+          line: idx + 1,
+          mode: line.mode,
+          analyticAccountId: line.finalAnalyticAccountId,
+          analyticAccountName: line.costCenterName || "N/A",
+          productId: line.productId,
+          productName: line.productName || "N/A",
+        })),
+      );
+
       await apiPost("/purchase-orders", {
         companyId: DEFAULT_COMPANY_ID,
         vendorId: draft.vendorId,
@@ -144,9 +228,9 @@ export default function PurchaseOrdersPage() {
         status: draft.status,
         currency: draft.currency || "INR",
         notes: draft.notes ? draft.notes : null,
-        lines: draft.lines.map((line) => ({
+        lines: linesWithCostCenters.map((line) => ({
           productId: line.productId,
-          analyticAccountId: line.analyticAccountId || null,
+          analyticAccountId: line.finalAnalyticAccountId || null,
           description: line.description || null,
           qty: Number(line.qty),
           unitPrice: Number(line.unitPrice),
@@ -157,7 +241,9 @@ export default function PurchaseOrdersPage() {
       setDialogOpen(false);
     } catch (createError) {
       const message =
-        createError instanceof Error ? createError.message : "Failed to create purchase order";
+        createError instanceof Error
+          ? createError.message
+          : "Failed to create purchase order";
       setError(message);
       console.error("Failed to create purchase order:", createError);
     } finally {
@@ -165,14 +251,19 @@ export default function PurchaseOrdersPage() {
     }
   };
 
-  const handleUpdateStatus = async (row: PurchaseOrderRow, status: "confirmed" | "done") => {
+  const handleUpdateStatus = async (
+    row: PurchaseOrderRow,
+    status: "confirmed" | "done",
+  ) => {
     if (!row.recordId) return;
     try {
       await apiPut(`/purchase-orders/${row.recordId}`, { status });
       await loadOrders();
     } catch (updateError) {
       const message =
-        updateError instanceof Error ? updateError.message : "Failed to update status";
+        updateError instanceof Error
+          ? updateError.message
+          : "Failed to update status";
       setError(message);
     }
   };
@@ -182,8 +273,10 @@ export default function PurchaseOrdersPage() {
     const billNo = window.prompt("Enter Vendor Bill Number");
     if (!billNo) return;
     const billDate =
-      window.prompt("Bill Date (YYYY-MM-DD)", new Date().toISOString().slice(0, 10)) ??
-      "";
+      window.prompt(
+        "Bill Date (YYYY-MM-DD)",
+        new Date().toISOString().slice(0, 10),
+      ) ?? "";
     if (!billDate) return;
     try {
       await apiPost(`/vendor-bills/from-po/${row.recordId}`, {
@@ -193,7 +286,9 @@ export default function PurchaseOrdersPage() {
       await loadOrders();
     } catch (createError) {
       const message =
-        createError instanceof Error ? createError.message : "Failed to generate vendor bill";
+        createError instanceof Error
+          ? createError.message
+          : "Failed to generate vendor bill";
       setError(message);
     }
   };
@@ -204,7 +299,9 @@ export default function PurchaseOrdersPage() {
       await apiDownload(`/po/${row.recordId}/pdf`, `${row.id}.pdf`);
     } catch (downloadError) {
       const message =
-        downloadError instanceof Error ? downloadError.message : "Failed to download PDF";
+        downloadError instanceof Error
+          ? downloadError.message
+          : "Failed to download PDF";
       setError(message);
     }
   };
@@ -346,6 +443,7 @@ function PurchaseOrderDialog({
 }) {
   const [form, setForm] = useState<PurchaseOrderDraft>({
     vendorId: "",
+    vendorId: "",
     poNo: "",
     orderDate: new Date().toISOString().slice(0, 10),
     deliveryDate: "",
@@ -359,6 +457,7 @@ function PurchaseOrderDialog({
         unitPrice: products[0]?.costPrice ?? 0,
         taxRate: 0,
         analyticAccountId: "",
+        analyticAccountMode: "auto",
         description: "",
       },
     ],
@@ -393,7 +492,11 @@ function PurchaseOrderDialog({
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleLineChange = (index: number, field: keyof LineDraft, value: string | number) => {
+  const handleLineChange = (
+    index: number,
+    field: keyof LineDraft,
+    value: string | number,
+  ) => {
     setForm((prev) => {
       const lines = [...prev.lines];
       lines[index] = { ...lines[index], [field]: value };
@@ -412,6 +515,7 @@ function PurchaseOrderDialog({
           unitPrice: products[0]?.costPrice ?? 0,
           taxRate: 0,
           analyticAccountId: "",
+          analyticAccountMode: "auto",
           description: "",
         },
       ],
@@ -448,8 +552,10 @@ function PurchaseOrderDialog({
     if (!form.lines.length) return "Add at least one line.";
     for (const [index, line] of form.lines.entries()) {
       if (!line.productId) return `Select a product on line ${index + 1}.`;
-      if (!line.qty || Number(line.qty) <= 0) return `Qty must be > 0 on line ${index + 1}.`;
-      if (Number(line.unitPrice) < 0) return `Unit price must be >= 0 on line ${index + 1}.`;
+      if (!line.qty || Number(line.qty) <= 0)
+        return `Qty must be > 0 on line ${index + 1}.`;
+      if (Number(line.unitPrice) < 0)
+        return `Unit price must be >= 0 on line ${index + 1}.`;
     }
     return null;
   };
@@ -470,7 +576,10 @@ function PurchaseOrderDialog({
       <div className="w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-[36px] border border-brand-primary/30 bg-white p-8 text-brand-dark shadow-[0_25px_120px_rgba(15,23,42,0.18)] dark:border-brand-primary/40 dark:bg-slate-900 dark:text-brand-light">
         <div className="flex items-center justify-between border-b border-brand-primary/20 pb-4">
           <h2 className="text-2xl font-semibold">Create Purchase Order</h2>
-          <button onClick={onClose} className="rounded-full border border-brand-primary/40 p-2 hover:bg-brand-primary/10">
+          <button
+            onClick={onClose}
+            className="rounded-full border border-brand-primary/40 p-2 hover:bg-brand-primary/10"
+          >
             X
           </button>
         </div>
@@ -487,7 +596,7 @@ function PurchaseOrderDialog({
                   {vendors.length ? "Select vendor" : "No vendors found"}
                 </option>
                 {vendors.map((v) => (
-                  <option key={v.id} value={v.id} className="bg-white text-brand-dark dark:bg-slate-900 dark:text-brand-light">
+                  <option key={v.id} value={v.id}>
                     {v.displayName}{v.isPortalUser ? " (Portal)" : ""}
                   </option>
                 ))}
@@ -522,7 +631,7 @@ function PurchaseOrderDialog({
               <select
                 value={form.status}
                 onChange={(e) => handleChange("status", e.target.value as PurchaseOrderDraft["status"])}
-                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 text-brand-dark focus:border-brand-primary focus:outline-none dark:text-brand-light"
+                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none"
               >
                 <option value="draft" className="bg-white text-brand-dark dark:bg-slate-900 dark:text-brand-light">Draft</option>
                 <option value="confirmed" className="bg-white text-brand-dark dark:bg-slate-900 dark:text-brand-light">Confirmed</option>
@@ -563,14 +672,17 @@ function PurchaseOrderDialog({
               </div>
             )}
             {form.lines.map((line, index) => (
-              <div key={index} className="grid gap-3 rounded-2xl border border-brand-primary/20 p-4 md:grid-cols-6">
+              <div
+                key={index}
+                className="grid gap-3 rounded-2xl border border-brand-primary/20 p-4 md:grid-cols-6"
+              >
                 <div className="md:col-span-2">
-                  <label className="text-xs uppercase tracking-widest text-brand-dark/60 dark:text-brand-light/60">Product</label>
+                  <label className="text-xs uppercase tracking-widest text-brand-dark/60">Product</label>
                   <select
                     required
                     value={line.productId}
                     onChange={(e) => handleLineChange(index, "productId", e.target.value)}
-                    className="mt-1 w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 text-brand-dark focus:border-brand-primary focus:outline-none dark:text-brand-light"
+                    className="mt-1 w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none"
                   >
                     <option value="" disabled className="bg-white text-brand-dark dark:bg-slate-900 dark:text-brand-light">
                       {products.length ? "Select product" : "No products found"}
@@ -583,41 +695,41 @@ function PurchaseOrderDialog({
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs uppercase tracking-widest text-brand-dark/60 dark:text-brand-light/60">Qty</label>
+                  <label className="text-xs uppercase tracking-widest text-brand-dark/60">Qty</label>
                   <input
                     type="number"
                     min={1}
                     value={line.qty}
                     onChange={(e) => handleLineChange(index, "qty", Number(e.target.value))}
-                    className="mt-1 w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 text-brand-dark focus:border-brand-primary focus:outline-none dark:text-brand-light"
+                    className="mt-1 w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="text-xs uppercase tracking-widest text-brand-dark/60 dark:text-brand-light/60">Unit Price</label>
+                  <label className="text-xs uppercase tracking-widest text-brand-dark/60">Unit Price</label>
                   <input
                     type="number"
                     min={0}
                     value={line.unitPrice}
                     onChange={(e) => handleLineChange(index, "unitPrice", Number(e.target.value))}
-                    className="mt-1 w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 text-brand-dark focus:border-brand-primary focus:outline-none dark:text-brand-light"
+                    className="mt-1 w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="text-xs uppercase tracking-widest text-brand-dark/60 dark:text-brand-light/60">Tax %</label>
+                  <label className="text-xs uppercase tracking-widest text-brand-dark/60">Tax %</label>
                   <input
                     type="number"
                     min={0}
                     value={line.taxRate}
                     onChange={(e) => handleLineChange(index, "taxRate", Number(e.target.value))}
-                    className="mt-1 w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 text-brand-dark focus:border-brand-primary focus:outline-none dark:text-brand-light"
+                    className="mt-1 w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="text-xs uppercase tracking-widest text-brand-dark/60 dark:text-brand-light/60">Cost Center</label>
+                  <label className="text-xs uppercase tracking-widest text-brand-dark/60">Cost Center</label>
                   <select
                     value={line.analyticAccountId}
                     onChange={(e) => handleLineChange(index, "analyticAccountId", e.target.value)}
-                    className="mt-1 w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 text-brand-dark focus:border-brand-primary focus:outline-none dark:text-brand-light"
+                    className="mt-1 w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none"
                   >
                     <option value="" className="bg-white text-brand-dark dark:bg-slate-900 dark:text-brand-light">Auto</option>
                     {costCenters.map((c) => (
@@ -626,21 +738,30 @@ function PurchaseOrderDialog({
                       </option>
                     ))}
                   </select>
+                  {line.analyticAccountMode === "auto" && (
+                    <div className="mt-1 text-[10px] text-brand-dark/50">
+                      Will be auto-assigned based on product & vendor
+                    </div>
+                  )}
                 </div>
                 <div className="md:col-span-6">
-                  <label className="text-xs uppercase tracking-widest text-brand-dark/60 dark:text-brand-light/60">Description</label>
+                  <label className="text-xs uppercase tracking-widest text-brand-dark/60">Description</label>
                   <input
                     value={line.description}
                     onChange={(e) => handleLineChange(index, "description", e.target.value)}
-                    className="mt-1 w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 text-brand-dark focus:border-brand-primary focus:outline-none dark:text-brand-light"
+                    className="mt-1 w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none"
                   />
                 </div>
-                <div className="md:col-span-6 text-right text-xs uppercase tracking-widest text-brand-dark/60 dark:text-brand-light/60">
+                <div className="md:col-span-6 text-right text-xs uppercase tracking-widest text-brand-dark/60">
                   Line total: {lineTotals[index].toFixed(2)} {form.currency || "INR"}
                 </div>
                 {form.lines.length > 1 && (
                   <div className="md:col-span-6 text-right">
-                    <button type="button" onClick={() => removeLine(index)} className="text-xs text-red-600">
+                    <button
+                      type="button"
+                      onClick={() => removeLine(index)}
+                      className="text-xs text-red-600"
+                    >
                       Remove line
                     </button>
                   </div>
@@ -651,7 +772,9 @@ function PurchaseOrderDialog({
 
           <div className="flex items-center justify-between rounded-2xl border border-brand-primary/20 px-4 py-3 text-sm font-semibold">
             <span>Order Total</span>
-            <span>{orderTotal.toFixed(2)} {form.currency || "INR"}</span>
+            <span>
+              {orderTotal.toFixed(2)} {form.currency || "INR"}
+            </span>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row">
@@ -677,7 +800,13 @@ function PurchaseOrderDialog({
   );
 }
 
-function FormField({ label, children }: { label: string; children: ReactNode }) {
+function FormField({
+  label,
+  children,
+}: {
+  label: string;
+  children: ReactNode;
+}) {
   return (
     <label className="block text-xs font-semibold uppercase tracking-[0.4em] text-brand-dark/70 dark:text-brand-light/70">
       {label}
@@ -685,4 +814,3 @@ function FormField({ label, children }: { label: string; children: ReactNode }) 
     </label>
   );
 }
-

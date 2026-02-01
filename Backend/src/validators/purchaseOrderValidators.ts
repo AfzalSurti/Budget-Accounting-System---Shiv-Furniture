@@ -54,3 +54,13 @@ export const listPurchaseOrderSchema = Joi.object({
     view: Joi.string().valid("table", "raw").optional(),
   }),
 });
+
+export const resolvePurchaseOrderCostCenterSchema = Joi.object({
+  body: Joi.object({
+    companyId: Joi.string().uuid().required(),
+    vendorId: Joi.string().uuid().required(),
+    productId: Joi.string().uuid().required(),
+  }),
+  params: Joi.object({}),
+  query: Joi.object({}),
+});

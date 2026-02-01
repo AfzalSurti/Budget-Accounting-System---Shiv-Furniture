@@ -15,6 +15,7 @@ import {
   createPurchaseOrderSchema,
   updatePurchaseOrderSchema,
   listPurchaseOrderSchema,
+  resolvePurchaseOrderCostCenterSchema,
 } from "../validators/purchaseOrderValidators.js";
 import {
   createVendorBillSchema,
@@ -87,6 +88,17 @@ transactionRoutes.get(
       `attachment; filename="${result.filename}"`,
     );
     res.send(result.buffer);
+  }),
+);
+
+transactionRoutes.post(
+  "/purchase-orders/resolve-cost-center",
+  validateRequest(resolvePurchaseOrderCostCenterSchema),
+  asyncHandler(async (req, res) => {
+    const result = await invoiceController.resolvePurchaseOrderCostCenter(
+      req.body,
+    );
+    res.json({ success: true, data: result });
   }),
 );
 
