@@ -68,10 +68,10 @@ app.get("/health", (_req, res) => {
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/portal", portalRoutes);
 app.use("/api/v1", masterDataRoutes);
 app.use("/api/v1", transactionRoutes);
 app.use("/api/v1/reports", reportRoutes);
-app.use("/api/v1/portal", portalRoutes);
 app.use("/api/v1/ai-insights", aiInsightsRoutes);
 app.use("/api/v1", uploadsRoutes);
 

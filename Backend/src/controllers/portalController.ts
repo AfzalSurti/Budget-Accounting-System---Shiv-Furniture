@@ -43,13 +43,24 @@ export const listPortalInvoicesTable = async (contactId: string) => {
     totalAmount: Number(invoice.totalAmount),
     paidAmount: Number(invoice.paidAmount ?? 0),
     paymentState: invoice.paymentState,
+    docStatus: invoice.status,
     amount: formatCurrency(Number(invoice.totalAmount), invoice.currency),
     dueDate: formatDate(invoice.dueDate) ?? "",
     issueDate: formatDate(invoice.invoiceDate) ?? "",
-    status: mapDocStatusToBadge(invoice.status, invoice.paymentState),
-    statusLabel: formatBadgeLabel(
-      mapDocStatusToBadge(invoice.status, invoice.paymentState),
-    ),
+    status:
+      invoice.status === "posted" &&
+      invoice.paymentState !== "paid" &&
+      invoice.paymentState !== "partially_paid"
+        ? "active"
+        : mapDocStatusToBadge(invoice.status, invoice.paymentState),
+    statusLabel:
+      invoice.status === "posted" &&
+      invoice.paymentState !== "paid" &&
+      invoice.paymentState !== "partially_paid"
+        ? "Posted"
+        : formatBadgeLabel(
+            mapDocStatusToBadge(invoice.status, invoice.paymentState),
+          ),
   }));
 };
 

@@ -74,7 +74,9 @@ export default function CustomerInvoicesPage() {
     },
   ];
 
-  return (      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+  return (
+    <AppLayout>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
         <div>
           <h1 className="section-heading mb-2">Customer Invoices</h1>
           <p className="text-slate-600 dark:text-slate-400">Manage and track customer invoices</p>
@@ -85,5 +87,7 @@ export default function CustomerInvoicesPage() {
         </button>
       </div>
 
-      <DataTable columns={columns} data={invoicesData} />  );
+      <DataTable columns={columns} data={invoicesData} />
+    </AppLayout>
+  );
 }

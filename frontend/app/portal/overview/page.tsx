@@ -154,22 +154,6 @@ export default function PortalDashboard() {
       priority: "high",
     },
     {
-      href: "/portal/bills",
-      icon: IndianRupee,
-      title: "My Bills",
-      description: "Review and pay outstanding bills",
-      actionText: "View Bills",
-      priority: "high",
-    },
-    {
-      href: "/portal/purchase-orders",
-      icon: ShoppingCart,
-      title: "Purchase Orders",
-      description: "Track your orders and delivery status",
-      actionText: "View Orders",
-      priority: "medium",
-    },
-    {
       href: "/portal/payments",
       icon: CreditCard,
       title: "Payment History",
@@ -189,7 +173,7 @@ export default function PortalDashboard() {
               Welcome to Your Portal
             </h1>
             <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
-              View your invoices, bills, and payment history in one place. Everything you need to manage your account.
+              View your invoices and payment history in one place. Everything you need to manage your account.
             </p>
           </div>
         </div>

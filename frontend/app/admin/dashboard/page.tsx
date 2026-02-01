@@ -266,6 +266,23 @@ export default function DashboardPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.35 }}
+          className="card p-6 hover:shadow-xl transition-shadow duration-300"
+        >
+          <h3 className="text-lg font-semibold text-brand-dark dark:text-white mb-4">Quick Access</h3>
+          <p className="text-sm text-slate-600 dark:text-slate-400 mb-5">
+            Jump directly to invoices to post and manage customer billing.
+          </p>
+          <Link
+            href="/admin/invoices"
+            className="inline-flex items-center gap-2 rounded-lg bg-brand-primary px-4 py-2 text-sm font-semibold text-white hover:bg-brand-primary/90 transition-colors"
+          >
+            Open Invoices
+          </Link>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           className="card p-6 hover:shadow-xl transition-shadow duration-300"
         >

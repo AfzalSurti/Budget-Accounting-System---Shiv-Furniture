@@ -30,7 +30,17 @@ export const createInvoiceSchema = Joi.object({
 
 export const updateInvoiceSchema = Joi.object({
   body: invoiceBody.fork(
-    ["companyId", "customerId", "invoiceNo", "invoiceDate", "status", "lines"],
+    [
+      "companyId",
+      "customerId",
+      "invoiceNo",
+      "invoiceDate",
+      "dueDate",
+      "status",
+      "currency",
+      "soId",
+      "lines",
+    ],
     (schema) => schema.optional(),
   ),
   params: Joi.object({ id: Joi.string().uuid().required() }),

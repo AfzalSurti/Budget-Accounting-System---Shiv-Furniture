@@ -22,8 +22,6 @@ export const adminRoutes: Route[] = [
 export const portalRoutes: Route[] = [
   { path: '/portal/overview', label: 'Overview' },
   { path: '/portal/invoices', label: 'My Invoices' },
-  { path: '/portal/bills', label: 'My Bills' },
   { path: '/portal/sales-orders', label: 'Sales Orders' },
-  { path: '/portal/purchase-orders', label: 'Purchase Orders' },
   { path: '/portal/payments', label: 'Payments' },
 ];

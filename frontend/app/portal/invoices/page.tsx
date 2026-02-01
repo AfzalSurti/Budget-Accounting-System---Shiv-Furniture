@@ -24,6 +24,7 @@ interface PortalInvoiceRow {
   totalAmount?: number;
   paidAmount?: number;
   paymentState?: string;
+  docStatus?: string;
   paidPercent?: string;
   remainingAmount?: string;
   actions?: string;
@@ -75,6 +76,23 @@ export default function PortalInvoicesPage() {
     const total = row.totalAmount ?? 0;
     const paid = row.paidAmount ?? 0;
     return Math.max(0, total - paid);
+  };
+
+  const resolveStatusBadge = (row: PortalInvoiceRow) => {
+    if (
+      row.docStatus === "posted" &&
+      row.paymentState !== "paid" &&
+      row.paymentState !== "partially_paid"
+    ) {
+      return { status: "active" as StatusType, label: "Posted" };
+    }
+    if (row.docStatus === "draft") {
+      return { status: "pending" as StatusType, label: "Draft" };
+    }
+    if (row.docStatus === "cancelled") {
+      return { status: "failed" as StatusType, label: "Cancelled" };
+    }
+    return { status: row.status, label: row.statusLabel ?? row.status };
   };
 
   const handleDownloadPdf = async (row: PortalInvoiceRow) => {
@@ -192,29 +210,45 @@ export default function PortalInvoicesPage() {
     {
       key: "status" as const,
       label: "Status",
-      render: (value: string, row: PortalInvoiceRow) => (
-        <StatusBadge status={value as any} label={row.statusLabel ?? value} />
-      ),
+      render: (_value: string, row: PortalInvoiceRow) => {
+        const badge = resolveStatusBadge(row);
+        return <StatusBadge status={badge.status as any} label={badge.label} />;
+      },
     },
     {
       key: "actions" as const,
       label: "Actions",
-      render: (_value: string | undefined, row: PortalInvoiceRow) => (
-        <div className="flex flex-wrap gap-2">
-          <button
-            onClick={() => openPayment(row)}
-            className="text-xs font-semibold text-brand-primary hover:underline"
-          >
-            Pay
-          </button>
-          <button
-            onClick={() => handleDownloadPdf(row)}
-            className="text-xs font-semibold text-slate-600 hover:underline"
-          >
-            PDF
-          </button>
-        </div>
-      ),
+      render: (_value: string | undefined, row: PortalInvoiceRow) => {
+        const isPayable = row.docStatus === "posted" && remainingFor(row) > 0;
+        return (
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => openPayment(row)}
+              disabled={!isPayable}
+              className={`text-xs font-semibold ${
+                isPayable
+                  ? "text-brand-primary hover:underline cursor-pointer"
+                  : "text-slate-400 cursor-not-allowed"
+              }`}
+              title={
+                !isPayable && row.docStatus !== "posted"
+                  ? "Invoice must be posted to make payment"
+                  : !isPayable && remainingFor(row) <= 0
+                  ? "Invoice fully paid"
+                  : "Make payment"
+              }
+            >
+              Pay
+            </button>
+            <button
+              onClick={() => handleDownloadPdf(row)}
+              className="text-xs font-semibold text-slate-600 hover:underline"
+            >
+              PDF
+            </button>
+          </div>
+        );
+      },
     },
   ];
 

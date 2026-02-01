@@ -23,6 +23,8 @@ export const mapDocStatusToBadge = (
   paymentState?: string | null,
 ) => {
   if (status === "cancelled") return "failed" as const;
+  if (status === "draft") return "pending" as const;
+  
   const normalized = paymentState
     ? paymentState.toLowerCase().replace(/\s+/g, "_")
     : null;
@@ -30,7 +32,9 @@ export const mapDocStatusToBadge = (
     return "completed" as const;
   if (normalized === "partially_paid")
     return "warning" as const;
-  if (status === "draft") return "pending" as const;
+  
+  // Posted but not paid yet
+  if (status === "posted") return "active" as const;
   return "pending" as const;
 };
 

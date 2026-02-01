@@ -11,11 +11,14 @@ export const portalListSchema = Joi.object({
 export const portalPaymentSchema = Joi.object({
   body: Joi.object({
     companyId: Joi.string().uuid().required(),
-    paymentDate: Joi.date().required(),
+    paymentDate: Joi.alternatives().try(
+      Joi.date(),
+      Joi.string().isoDate()
+    ).required(),
     method: Joi.string()
       .valid("cash", "bank", "upi", "card", "online", "other")
       .required(),
-    reference: Joi.string().allow(null, ""),
+    reference: Joi.string().allow(null, "").optional(),
     amount: Joi.number().required(),
     allocations: Joi.array()
       .items(

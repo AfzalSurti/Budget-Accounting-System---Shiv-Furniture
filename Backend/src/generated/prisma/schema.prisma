@@ -720,7 +720,7 @@ model User {
   email        String   @unique
   loginId      String   @unique @map("login_id") @db.Char(6)
   passwordHash String   @map("password_hash")
-  role         UserRole @default(ADMIN)
+  role         UserRole @default(PORTAL)
   contactId    String?  @map("contact_id") @db.Uuid
   isActive     Boolean  @default(true) @map("is_active")
   tokenVersion Int      @default(0) @map("token_version")
