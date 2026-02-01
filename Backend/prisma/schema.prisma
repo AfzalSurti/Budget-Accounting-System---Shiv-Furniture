@@ -50,6 +50,8 @@ enum JournalSourceType {
   vendor_bill
   customer_invoice
   payment
+  sales_order
+  purchase_order
   manual
 }
 

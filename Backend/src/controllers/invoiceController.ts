@@ -13,6 +13,7 @@ import {
 } from "../utils/formatters.js";
 import { assertDocStatusTransition } from "../utils/workflow.js";
 import { renderDocumentPdf } from "../utils/pdf.js";
+import { createInvoiceJournalEntry } from "../services/journalService.js";
 
 export const createInvoice = async (data: {
   companyId: string;
@@ -115,13 +116,29 @@ export const createInvoice = async (data: {
         await tx.customerInvoiceLine.createMany({ data: linePayloads });
       }
 
-      return tx.customerInvoice.update({
+      const updated = await tx.customerInvoice.update({
         where: { id: invoice.id },
         data: {
           totalAmount,
           paymentState: calculatePaymentStatus(0, totalAmount),
         },
       });
+      if (data.status === "posted") {
+        await createInvoiceJournalEntry(tx, {
+          companyId: data.companyId,
+          invoiceId: updated.id,
+          invoiceDate: new Date(data.invoiceDate),
+          customerId: data.customerId,
+          lines: linePayloads.map((line) => ({
+            lineTotal: Number(line.lineTotal),
+            analyticAccountId: line.analyticAccountId ?? null,
+            productId: line.productId ?? null,
+            description: line.description ?? null,
+            glAccountId: line.glAccountId ?? null,
+          })),
+        });
+      }
+      return updated;
     },
     { timeout: 15000 },
   );
@@ -171,13 +188,29 @@ export const createInvoiceFromSO = async (
       });
     }
 
-    return tx.customerInvoice.update({
+    const updated = await tx.customerInvoice.update({
       where: { id: invoice.id },
       data: {
         totalAmount,
         paymentState: calculatePaymentStatus(0, totalAmount),
       },
     });
+    if (updated.status === "posted") {
+      await createInvoiceJournalEntry(tx, {
+        companyId: updated.companyId,
+        invoiceId: updated.id,
+        invoiceDate: updated.invoiceDate,
+        customerId: updated.customerId,
+        lines: so.lines.map((line) => ({
+          lineTotal: Number(line.lineTotal),
+          analyticAccountId: line.analyticAccountId ?? null,
+          productId: line.productId ?? null,
+          description: line.description ?? null,
+          glAccountId: null,
+        })),
+      });
+    }
+    return updated;
   });
 };
 
@@ -241,18 +274,39 @@ export const updateInvoice = async (
   data: Partial<Record<string, unknown>>,
 ) => {
   try {
-    const current = await prisma.customerInvoice.findUnique({ where: { id } });
-    if (!current) {
-      throw new ApiError(404, "Invoice not found");
-    }
-    if (data.status) {
-      assertDocStatusTransition(current.status, data.status as any);
-    }
-    const { totalAmount, paidAmount, paymentState, ...rest } = data as Record<
-      string,
-      unknown
-    >;
-    return await prisma.customerInvoice.update({ where: { id }, data: rest });
+    return await prisma.$transaction(async (tx) => {
+      const current = await tx.customerInvoice.findUnique({ where: { id } });
+      if (!current) {
+        throw new ApiError(404, "Invoice not found");
+      }
+      if (data.status) {
+        assertDocStatusTransition(current.status, data.status as any);
+      }
+      const { totalAmount, paidAmount, paymentState, ...rest } = data as Record<
+        string,
+        unknown
+      >;
+      const updated = await tx.customerInvoice.update({ where: { id }, data: rest });
+      if (current.status !== "posted" && updated.status === "posted") {
+        const lines = await tx.customerInvoiceLine.findMany({
+          where: { customerInvoiceId: id },
+        });
+        await createInvoiceJournalEntry(tx, {
+          companyId: updated.companyId,
+          invoiceId: updated.id,
+          invoiceDate: updated.invoiceDate,
+          customerId: updated.customerId,
+          lines: lines.map((line) => ({
+            lineTotal: Number(line.lineTotal),
+            analyticAccountId: line.analyticAccountId ?? null,
+            productId: line.productId ?? null,
+            description: line.description ?? null,
+            glAccountId: line.glAccountId ?? null,
+          })),
+        });
+      }
+      return updated;
+    });
   } catch (error) {
     throw new ApiError(404, "Invoice not found", error);
   }

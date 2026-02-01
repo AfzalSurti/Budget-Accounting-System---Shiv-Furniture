@@ -251,7 +251,6 @@ export default function ContactsPage() {
                         )}
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-[0.4em] text-brand-accent">{contact.id}</p>
                         <h3 className="text-xl font-semibold text-slate-900 dark:text-white">{contact.name}</h3>
                       </div>
                     </div>

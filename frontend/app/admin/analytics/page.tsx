@@ -58,7 +58,6 @@ export default function AnalyticsPage() {
               <article key={row.id} className="rounded-3xl border border-slate-200/60 bg-white/80 px-5 py-4 shadow-sm dark:border-slate-700 dark:bg-slate-800/70">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <p className="text-xs uppercase tracking-[0.4em] text-brand-primary">{row.id}</p>
                     <h3 className="text-xl font-semibold text-slate-900 dark:text-white">{row.name}</h3>
                     <p className="text-xs text-brand-accent">Code: {row.code}</p>
                   </div>

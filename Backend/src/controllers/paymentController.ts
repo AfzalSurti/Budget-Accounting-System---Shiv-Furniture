@@ -4,6 +4,7 @@ import {
   applyPaymentToBill,
   applyPaymentToInvoice,
 } from "../services/paymentService.js";
+import { createPaymentJournalEntry } from "../services/journalService.js";
 import {
   formatBadgeLabel,
   formatCurrency,
@@ -115,6 +116,18 @@ export const createPayment = async (data: {
         });
         await applyPaymentToBill(allocation.targetId, allocation.amount, tx);
       }
+    }
+
+    if (payment.status === "posted") {
+      await createPaymentJournalEntry(tx, {
+        companyId: payment.companyId,
+        paymentId: payment.id,
+        paymentDate: payment.paymentDate,
+        contactId: payment.contactId,
+        direction: payment.direction,
+        amount: Number(payment.amount),
+        memo: payment.reference ?? null,
+      });
     }
 
     return payment;

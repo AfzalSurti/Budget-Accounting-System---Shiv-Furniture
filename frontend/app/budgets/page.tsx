@@ -104,6 +104,8 @@ export default function BudgetsPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [reviseOf, setReviseOf] = useState<BudgetView | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [statusFilter, setStatusFilter] = useState<"all" | BudgetStatus>("all");
+  const [costCenterFilter, setCostCenterFilter] = useState<string>("all");
 
   const loadCostCenters = useCallback(async () => {
     const data = await apiGet<BackendCostCenter[]>(
@@ -251,15 +253,26 @@ export default function BudgetsPage() {
     }
   };
 
+  const filteredBudgets = useMemo(() => {
+    return budgets.filter((budget) => {
+      const statusOk = statusFilter === "all" || budget.status === statusFilter;
+      const costCenterOk =
+        costCenterFilter === "all"
+          ? true
+          : budget.lines.some((line) => line.analyticAccountId === costCenterFilter);
+      return statusOk && costCenterOk;
+    });
+  }, [budgets, statusFilter, costCenterFilter]);
+
   const chartData = useMemo(
     () =>
-      budgets.map((budget) => ({
+      filteredBudgets.map((budget) => ({
         name: budget.name,
         allocated: budget.allocated,
         spent: budget.spent,
         remaining: budget.remaining,
       })),
-    [budgets]
+    [filteredBudgets]
   );
 
   const handleExportPDF = () => {
@@ -275,7 +288,7 @@ export default function BudgetsPage() {
       { header: "Period", key: "period" },
     ];
 
-    const pdfData = budgets.map((budget) => ({
+    const pdfData = filteredBudgets.map((budget) => ({
       id: budget.id,
       name: budget.name,
       costCenter: budget.costCenterLabel,
@@ -323,11 +336,42 @@ export default function BudgetsPage() {
         transition={{ duration: 0.4 }}
         className="card p-8 mb-8"
       >
-        <div className="mb-6">
-          <h3 className="text-lg font-semibold text-brand-dark dark:text-white mb-1.5">Budget Overview</h3>
-          <p className="text-sm text-slate-500 dark:text-slate-400">Allocated vs Spent per budget (actual data)</p>
+        <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <h3 className="text-lg font-semibold text-brand-dark dark:text-white mb-1.5">Budget Overview</h3>
+            <p className="text-sm text-slate-500 dark:text-slate-400">Allocated vs Spent per budget (actual data)</p>
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <div>
+              <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Status</label>
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value as "all" | BudgetStatus)}
+                className="px-3 py-2.5 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-900 text-sm text-slate-900 dark:text-white"
+              >
+                <option value="all">All</option>
+                <option value="draft">Draft</option>
+                <option value="approved">Approved</option>
+                <option value="archived">Archived</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Cost Center</label>
+              <select
+                value={costCenterFilter}
+                onChange={(e) => setCostCenterFilter(e.target.value)}
+                className="px-3 py-2.5 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-900 text-sm text-slate-900 dark:text-white"
+              >
+                <option value="all">All</option>
+                {costCenters.map((center) => (
+                  <option key={center.id} value={center.id}>
+                    {center.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
-
         <ResponsiveContainer width="100%" height={380}>
           <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.5} />
@@ -407,7 +451,7 @@ export default function BudgetsPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200/70 dark:divide-slate-700">
-                {budgets.map((budget, idx) => {
+                {filteredBudgets.map((budget, idx) => {
                   const utilization = budget.utilization;
                   const isHighUtilization = utilization > 85;
                   const isMediumUtilization = utilization >= 70 && utilization <= 85;

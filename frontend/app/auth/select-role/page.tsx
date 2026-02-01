@@ -49,7 +49,7 @@ export default function SelectRolePage() {
     // Redirect based on role
     setTimeout(() => {
       if (selectedRole === 'ADMIN') {
-        router.push('/admin/dashboard');
+        router.push('/dashboard');
       } else {
         router.push('/portal/overview');
       }
