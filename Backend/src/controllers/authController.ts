@@ -78,11 +78,19 @@ export const register = async (payload: {
       );
 
       if (contactId) {
+        // Verify the contact exists and update it
+        const existingContact = await tx.contact.findUnique({
+          where: { id: contactId },
+        });
+        if (!existingContact) {
+          throw new ApiError(404, `Contact with ID ${contactId} not found`);
+        }
         await tx.contact.update({
           where: { id: contactId },
           data: { isPortalUser: true },
         });
       } else {
+        // Try to find existing contact by email first
         const existingContact = await tx.contact.findFirst({
           where: { companyId: resolvedCompanyId, email: normalizedEmail },
         });
@@ -94,6 +102,7 @@ export const register = async (payload: {
             data: { isPortalUser: true },
           });
         } else {
+          // Create new contact for this portal user
           const displayName =
             payload.fullName?.trim() ||
             normalizedEmail.split("@")[0] ||
@@ -110,6 +119,11 @@ export const register = async (payload: {
           contactId = contact.id;
         }
       }
+    }
+
+    // Ensure PORTAL users always have a contactId
+    if (role === "PORTAL" && !contactId) {
+      throw new ApiError(400, "Portal user must be linked to a contact");
     }
 
     return tx.user.create({

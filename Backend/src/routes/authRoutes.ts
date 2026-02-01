@@ -89,3 +89,51 @@ authRoutes.post(
     res.status(201).json({ success: true, data: result });
   })
 );
+authRoutes.post(
+  "/link-contact",
+  authenticateToken,
+  authorizeRole(["ADMIN"]),
+  asyncHandler(async (req, res) => {
+    const { userId, contactId } = req.body;
+
+    if (!userId || !contactId) {
+      throw new ApiError(400, "userId and contactId are required");
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new ApiError(404, "User not found");
+    }
+
+    if (user.role !== "PORTAL") {
+      throw new ApiError(400, "Can only link portal users to contacts");
+    }
+
+    const contact = await prisma.contact.findUnique({
+      where: { id: contactId },
+    });
+
+    if (!contact) {
+      throw new ApiError(404, "Contact not found");
+    }
+
+    // Update the user with the new contactId
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: { contactId },
+      select: {
+        id: true,
+        email: true,
+        loginId: true,
+        role: true,
+        contactId: true,
+        isActive: true,
+      },
+    });
+
+    res.json({ success: true, data: updatedUser });
+  })
+);

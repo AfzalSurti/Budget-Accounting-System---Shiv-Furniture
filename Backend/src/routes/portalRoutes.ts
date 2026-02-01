@@ -19,7 +19,10 @@ portalRoutes.get(
   validateRequest(portalListSchema),
   asyncHandler(async (req, res) => {
     if (!req.user?.contactId) {
-      throw new ApiError(403, "Portal user not linked to a contact");
+      throw new ApiError(
+        403,
+        "Your portal account is not yet linked to a contact. Please contact your system administrator to set up your portal access."
+      );
     }
     const view = (req.query.view as string | undefined) ?? "raw";
     const data =
@@ -35,7 +38,10 @@ portalRoutes.get(
   validateRequest(portalListSchema),
   asyncHandler(async (req, res) => {
     if (!req.user?.contactId) {
-      throw new ApiError(403, "Portal user not linked to a contact");
+      throw new ApiError(
+        403,
+        "Your portal account is not yet linked to a contact. Please contact your system administrator to set up your portal access."
+      );
     }
     const view = (req.query.view as string | undefined) ?? "raw";
     const data =
@@ -51,7 +57,10 @@ portalRoutes.get(
   validateRequest(portalListSchema),
   asyncHandler(async (req, res) => {
     if (!req.user?.contactId) {
-      throw new ApiError(403, "Portal user not linked to a contact");
+      throw new ApiError(
+        403,
+        "Your portal account is not yet linked to a contact. Please contact your system administrator to set up your portal access."
+      );
     }
     const view = (req.query.view as string | undefined) ?? "raw";
     const data =
@@ -67,7 +76,10 @@ portalRoutes.get(
   validateRequest(portalListSchema),
   asyncHandler(async (req, res) => {
     if (!req.user?.contactId) {
-      throw new ApiError(403, "Portal user not linked to a contact");
+      throw new ApiError(
+        403,
+        "Your portal account is not yet linked to a contact. Please contact your system administrator to set up your portal access."
+      );
     }
     const view = (req.query.view as string | undefined) ?? "raw";
     const data =
@@ -85,7 +97,10 @@ portalRoutes.get(
   validateRequest(portalListSchema),
   asyncHandler(async (req, res) => {
     if (!req.user?.contactId) {
-      throw new ApiError(403, "Portal user not linked to a contact");
+      throw new ApiError(
+        403,
+        "Your portal account is not yet linked to a contact. Please contact your system administrator to set up your portal access."
+      );
     }
     const view = (req.query.view as string | undefined) ?? "raw";
     const data =
@@ -100,7 +115,10 @@ portalRoutes.get(
   "/invoices/:id/pdf",
   asyncHandler(async (req, res) => {
     if (!req.user?.contactId) {
-      throw new ApiError(403, "Portal user not linked to a contact");
+      throw new ApiError(
+        403,
+        "Your portal account is not yet linked to a contact. Please contact your system administrator to set up your portal access."
+      );
     }
     const data = await portalController.downloadInvoicePdf(
       req.params.id!,
@@ -119,7 +137,10 @@ portalRoutes.get(
   "/bills/:id/pdf",
   asyncHandler(async (req, res) => {
     if (!req.user?.contactId) {
-      throw new ApiError(403, "Portal user not linked to a contact");
+      throw new ApiError(
+        403,
+        "Your portal account is not yet linked to a contact. Please contact your system administrator to set up your portal access."
+      );
     }
     const data = await portalController.downloadBillPdf(
       req.params.id!,
@@ -139,7 +160,10 @@ portalRoutes.post(
   validateRequest(portalPaymentSchema),
   asyncHandler(async (req, res) => {
     if (!req.user?.contactId) {
-      throw new ApiError(403, "Portal user not linked to a contact");
+      throw new ApiError(
+        403,
+        "Your portal account is not yet linked to a contact. Please contact your system administrator to set up your portal access."
+      );
     }
     const payment = await portalController.makePortalPayment({
       companyId: req.body.companyId,
