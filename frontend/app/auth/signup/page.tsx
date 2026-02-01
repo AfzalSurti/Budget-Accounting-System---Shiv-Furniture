@@ -44,9 +44,9 @@ export default function SignupPage() {
         companyId: DEFAULT_COMPANY_ID,
       });
       if (user?.role === "ADMIN") {
-        router.push("/admin/dashboard");
+        router.push("/dashboard");
       } else if (createdUser.role === "ADMIN") {
-        router.push("/admin/dashboard");
+        router.push("/dashboard");
       } else {
         router.push("/portal/overview");
       }

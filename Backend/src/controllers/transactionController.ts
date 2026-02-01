@@ -1,4 +1,5 @@
 import { prisma } from "../config/prisma.js";
+import { backfillOrderJournals } from "../services/journalService.js";
 
 export interface CreateTransactionPayload {
   entryDate: string;
@@ -20,6 +21,7 @@ export interface TransactionResponse {
   status: string;
   memo?: string;
   createdAt: string;
+  sourceType?: string;
   lines: Array<{
     id: string;
     description?: string;
@@ -29,6 +31,10 @@ export interface TransactionResponse {
       id: string;
       name: string;
     };
+    contact?: {
+      id: string;
+      displayName: string;
+    } | null;
   }>;
 }
 
@@ -83,6 +89,9 @@ export async function createTransaction(
             gl: {
               select: { id: true, name: true },
             },
+            contact: {
+              select: { id: true, displayName: true },
+            },
           },
         },
       },
@@ -100,6 +109,7 @@ export async function getTransactions(
   limit: number = 50,
   offset: number = 0
 ): Promise<{ transactions: TransactionResponse[]; total: number }> {
+  await backfillOrderJournals(companyId);
   const [entries, total] = await Promise.all([
     prisma.journalEntry.findMany({
       where: { companyId },
@@ -108,6 +118,9 @@ export async function getTransactions(
           include: {
             gl: {
               select: { id: true, name: true },
+            },
+            contact: {
+              select: { id: true, displayName: true },
             },
           },
         },
@@ -137,6 +150,9 @@ export async function getTransactionById(
           gl: {
             select: { id: true, name: true },
           },
+          contact: {
+            select: { id: true, displayName: true },
+          },
         },
       },
     },
@@ -146,12 +162,25 @@ export async function getTransactionById(
 }
 
 function formatTransactionResponse(entry: any): TransactionResponse {
+  const rawMemo = entry.memo ?? undefined;
+  const contactName =
+    entry.lines?.find((line: any) => line.contact?.displayName)?.contact?.displayName ?? null;
+  const memo =
+    rawMemo && contactName
+      ? rawMemo.startsWith("Sales Order ")
+        ? `Sales Order - ${contactName}`
+        : rawMemo.startsWith("Purchase Order ")
+          ? `Purchase Order - ${contactName}`
+          : rawMemo
+      : rawMemo;
+
   return {
     id: entry.id,
     entryDate: entry.entryDate.toISOString().split("T")[0],
     status: entry.status,
-    memo: entry.memo,
+    memo,
     createdAt: entry.createdAt.toISOString(),
+    sourceType: entry.sourceType,
     lines: entry.lines.map((line: any) => ({
       id: line.id,
       description: line.description,
@@ -161,6 +190,12 @@ function formatTransactionResponse(entry: any): TransactionResponse {
         id: line.gl.id,
         name: line.gl.name,
       },
+      contact: line.contact
+        ? {
+            id: line.contact.id,
+            displayName: line.contact.displayName,
+          }
+        : null,
     })),
   };
 }

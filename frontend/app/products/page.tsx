@@ -145,7 +145,6 @@ export default function ProductsPage() {
                 {filteredProducts.map((product) => (
                   <article key={product.id} className="grid gap-4 px-8 py-5 text-sm md:grid-cols-4">
                     <div>
-                      <p className="text-xs uppercase tracking-[0.4em] text-brand-accent">{product.id}</p>
                       <p className="text-lg font-semibold">{product.name}</p>
                       <p className="text-xs text-brand-light/80">Category: {product.category}</p>
                     </div>
@@ -270,7 +269,11 @@ function ProductDialog({
                 className="w-full rounded-full border border-brand-primary/40 bg-transparent px-4 py-2 text-sm focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
               >
                 {categoryOptions.map((option) => (
-                  <option key={option} value={option} className="bg-slate-900">
+                  <option
+                    key={option}
+                    value={option}
+                    className="bg-white text-brand-dark dark:bg-slate-900 dark:text-brand-light"
+                  >
                     {option}
                   </option>
                 ))}

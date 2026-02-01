@@ -520,6 +520,8 @@ exports.JournalSourceType = exports.$Enums.JournalSourceType = {
   vendor_bill: 'vendor_bill',
   customer_invoice: 'customer_invoice',
   payment: 'payment',
+  sales_order: 'sales_order',
+  purchase_order: 'purchase_order',
   manual: 'manual'
 };
 

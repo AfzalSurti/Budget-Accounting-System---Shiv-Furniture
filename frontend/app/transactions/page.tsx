@@ -108,23 +108,39 @@ export default function TransactionsPage() {
     }
   };
 
-  const totalAmount = transactions.reduce((sum, txn) => {
-    const txnTotal = txn.lines.reduce((lineSum, line) => lineSum + (line.debit - line.credit), 0);
-    return sum + txnTotal;
-  }, 0);
+  const filteredRows = transactions.flatMap((txn) =>
+    txn.lines.map((line) => {
+      const amount = Number(line.credit || 0) - Number(line.debit || 0);
+      return { txn, line, amount };
+    }),
+  ).filter(({ txn, line, amount }) => {
+    const search = searchTerm.trim().toLowerCase();
+    const matchesSearch =
+      !search
+      || txn.id.toLowerCase().includes(search)
+      || (txn.memo ?? "").toLowerCase().includes(search)
+      || (line.description ?? "").toLowerCase().includes(search)
+      || (line.glAccount?.name ?? "").toLowerCase().includes(search);
+
+    const matchesStatus = statusFilter === "All Status" || txn.status === statusFilter;
+    const matchesType =
+      typeFilter === "All Types"
+        || (typeFilter === "Income" && amount > 0)
+        || (typeFilter === "Expense" && amount < 0);
+
+    return matchesSearch && matchesStatus && matchesType;
+  });
 
   const handleExportPDF = () => {
-    const formattedData = transactions.flatMap((txn) => 
-      txn.lines.map((line) => ({
-        date: txn.entryDate,
-        transactionNumber: txn.id,
-        type: line.debit > 0 ? "Debit" : "Credit",
-        description: line.description || txn.memo || "—",
-        amount: line.debit > 0 ? `₹${line.debit.toFixed(2)}` : `₹${line.credit.toFixed(2)}`,
-        status: txn.status,
-        statusLabel: txn.status,
-      }))
-    );
+    const formattedData = filteredRows.map(({ txn, line, amount }) => ({
+      date: txn.entryDate,
+      transactionNumber: txn.id,
+      type: amount >= 0 ? "Income" : "Expense",
+      description: line.description || txn.memo || "—",
+      amount: `₹${Math.abs(amount).toFixed(2)}`,
+      status: txn.status,
+      statusLabel: txn.status,
+    }));
 
     const columns = [
       { header: "Date", key: "date" },
@@ -332,7 +348,7 @@ export default function TransactionsPage() {
       >
         {loading ? (
           <div className="p-8 text-center text-slate-500">Loading transactions...</div>
-        ) : transactions.length === 0 ? (
+        ) : filteredRows.length === 0 ? (
           <div className="p-8 text-center text-slate-500">No transactions found</div>
         ) : (
           <div className="overflow-x-auto">
@@ -384,13 +400,11 @@ export default function TransactionsPage() {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right">
-                        <span className="text-sm font-semibold font-mono text-emerald-600">
-                          {line.debit > 0 ? `₹${line.debit.toFixed(2)}` : "—"}
+                        <span className="text-sm font-semibold font-mono text-red-600">{line.debit > 0 ? `₹${line.debit.toFixed(2)}` : "—"}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right">
-                        <span className="text-sm font-semibold font-mono text-red-600">
-                          {line.credit > 0 ? `₹${line.credit.toFixed(2)}` : "—"}
+                        <span className="text-sm font-semibold font-mono text-emerald-600">{line.credit > 0 ? `₹${line.credit.toFixed(2)}` : "—"}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -413,4 +427,7 @@ export default function TransactionsPage() {
     </AppLayout>
   );
 }
+
+
+
 

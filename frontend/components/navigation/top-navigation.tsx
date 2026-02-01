@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -27,11 +27,21 @@ export function TopNavigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const isActive = (href: string) => pathname?.startsWith(href);
 
   // Use resolvedTheme to handle 'system' preference correctly
   const currentTheme = resolvedTheme || theme;
+  const logoSrc = !mounted
+    ? "/logo_dark.png"
+    : currentTheme === "dark"
+      ? "/logo_light.png"
+      : "/logo_dark.png";
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <nav className="sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm">
@@ -40,7 +50,7 @@ export function TopNavigation() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 flex-shrink-0">
             <Image
-              src={currentTheme === "dark" ? "/logo_light.png" : "/logo_dark.png"}
+              src={logoSrc}
               alt="Shiv Furniture ERP"
               width={220}
               height={80}

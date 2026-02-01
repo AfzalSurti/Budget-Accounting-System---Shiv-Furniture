@@ -4,8 +4,6 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { DEFAULT_COMPANY_ID } from "@/config";
 import { apiGet } from "@/lib/api";
 import {
-  BarChart,
-  Bar,
   LineChart,
   Line,
   PieChart,
@@ -42,7 +40,6 @@ interface TrendRow {
   period: string;
   actualAmount: number;
   budgetedAmount: number;
-  forecastAmount: number;
 }
 
 interface BudgetVsActualRow {
@@ -56,6 +53,25 @@ interface CostCenter {
   name: string;
 }
 
+interface TransactionLine {
+  debit: number;
+  credit: number;
+  description?: string;
+  glAccount: { name: string };
+}
+
+interface TransactionEntry {
+  id: string;
+  entryDate: string;
+  memo?: string;
+  status: string;
+  lines: TransactionLine[];
+}
+
+interface TransactionResponse {
+  transactions: TransactionEntry[];
+}
+
 const COLOR_PALETTE = ["#0077B6", "#00B4D8", "#90E0EF", "#CAF0F8", "#48CAE4", "#ADE8F4"];
 
 const formatINR = (value: number) => `Rs ${value.toLocaleString("en-IN", { maximumFractionDigits: 2 })}`;
@@ -65,6 +81,7 @@ export default function DashboardPage() {
   const [trendData, setTrendData] = useState<TrendRow[]>([]);
   const [costCenters, setCostCenters] = useState<CostCenter[]>([]);
   const [costCenterData, setCostCenterData] = useState<Array<{ name: string; value: number; fill: string }>>([]);
+  const [recentTransactions, setRecentTransactions] = useState<TransactionEntry[]>([]);
 
   useEffect(() => {
     const load = async () => {
@@ -73,16 +90,18 @@ export default function DashboardPage() {
       const startIso = start.toISOString();
       const endIso = end.toISOString();
 
-      const [summaryRow, trends, budgetRows, centers] = await Promise.all([
+      const [summaryRow, trends, budgetRows, centers, txnResponse] = await Promise.all([
         apiGet<SummaryRow>(`/reports/dashboard/summary?companyId=${DEFAULT_COMPANY_ID}&start=${encodeURIComponent(startIso)}&end=${encodeURIComponent(endIso)}`),
         apiGet<TrendRow[]>(`/reports/dashboard/trends?companyId=${DEFAULT_COMPANY_ID}&start=${encodeURIComponent(startIso)}&end=${encodeURIComponent(endIso)}`),
         apiGet<BudgetVsActualRow[]>(`/reports/budget-vs-actual?companyId=${DEFAULT_COMPANY_ID}&start=${encodeURIComponent(startIso)}&end=${encodeURIComponent(endIso)}`),
         apiGet<CostCenter[]>(`/analytical-accounts?companyId=${DEFAULT_COMPANY_ID}`),
+        apiGet<TransactionResponse>(`/transactions?companyId=${DEFAULT_COMPANY_ID}&limit=5&offset=0`),
       ]);
 
       setSummary(summaryRow ?? null);
       setTrendData(trends ?? []);
       setCostCenters(centers ?? []);
+      setRecentTransactions(txnResponse?.transactions ?? []);
 
       const totalBudgeted = (budgetRows ?? []).reduce((sum, row) => sum + Number(row.budgetedAmount || 0), 0);
       const distribution = (budgetRows ?? []).map((row, idx) => {
@@ -107,10 +126,30 @@ export default function DashboardPage() {
         month: label,
         budget: Number(row.budgetedAmount || 0),
         actual: Number(row.actualAmount || 0),
-        forecast: Number(row.forecastAmount || row.budgetedAmount || 0),
       };
     });
   }, [trendData]);
+
+  const recentTransactionRows = useMemo(() => {
+    return recentTransactions.map((txn) => {
+      const totals = txn.lines.reduce(
+        (acc, line) => {
+          acc.debit += Number(line.debit || 0);
+          acc.credit += Number(line.credit || 0);
+          return acc;
+        },
+        { debit: 0, credit: 0 },
+      );
+      const net = totals.credit - totals.debit;
+      const description = txn.memo || txn.lines[0]?.description || txn.lines[0]?.glAccount?.name || "Transaction";
+      return {
+        id: txn.id,
+        date: txn.entryDate,
+        description,
+        amount: net,
+      };
+    });
+  }, [recentTransactions]);
 
   const keyMetrics = useMemo(() => {
     const totalBudget = summary?.budgeted ?? 0;
@@ -311,15 +350,6 @@ export default function DashboardPage() {
                 dot={{ fill: "#0077B6", r: 5 }}
                 name="Actual Spend"
               />
-              <Line
-                type="monotone"
-                dataKey="forecast"
-                stroke="#00B4D8"
-                strokeWidth={2}
-                strokeDasharray="3 3"
-                dot={{ fill: "#00B4D8", r: 4 }}
-                name="Forecast"
-              />
             </LineChart>
           </ResponsiveContainer>
         </motion.div>
@@ -388,18 +418,19 @@ export default function DashboardPage() {
         >
           <h3 className="text-lg font-semibold text-brand-dark dark:text-white mb-4">Recent Transactions</h3>
           <div className="space-y-3">
-            {[
-              { desc: "Office Supplies", amount: "-Rs 2,450", date: "Today" },
-              { desc: "Equipment Lease", amount: "-Rs 5,000", date: "Yesterday" },
-              { desc: "Client Invoice", amount: "+Rs 12,500", date: "2 days ago" },
-            ].map((item, idx) => (
-              <div key={idx} className="flex justify-between items-center p-3 rounded-lg bg-slate-50/80 dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors cursor-pointer border border-transparent hover:border-slate-200 dark:hover:border-slate-700">
+            {recentTransactionRows.length === 0 && (
+              <div className="p-3 rounded-lg bg-slate-50/80 dark:bg-slate-800/40 text-sm text-slate-500">
+                No recent transactions yet.
+              </div>
+            )}
+            {recentTransactionRows.map((item) => (
+              <div key={item.id} className="flex justify-between items-center p-3 rounded-lg bg-slate-50/80 dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors cursor-pointer border border-transparent hover:border-slate-200 dark:hover:border-slate-700">
                 <div>
-                  <p className="font-medium text-brand-dark dark:text-white">{item.desc}</p>
+                  <p className="font-medium text-brand-dark dark:text-white">{item.description}</p>
                   <p className="text-xs text-slate-500 dark:text-slate-400">{item.date}</p>
                 </div>
-                <p className={`font-bold font-mono text-sm ${item.amount.startsWith("+") ? "text-emerald-600" : "text-slate-700 dark:text-slate-300"}`}>
-                  {item.amount}
+                <p className={`font-bold font-mono text-sm ${item.amount >= 0 ? "text-emerald-600" : "text-slate-700 dark:text-slate-300"}`}>
+                  {item.amount >= 0 ? "+" : "-"}{formatINR(Math.abs(item.amount))}
                 </p>
               </div>
             ))}

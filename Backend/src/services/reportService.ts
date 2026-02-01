@@ -1,4 +1,5 @@
 import { prisma } from "../config/prisma.js";
+import { supportsOrderJournalSourceTypes } from "./journalService.js";
 
 const toKey = (analyticAccountId: string | null) => analyticAccountId ?? "unassigned";
 
@@ -52,6 +53,52 @@ export const budgetVsActual = async (companyId: string, start: Date, end: Date) 
     select: { analyticAccountId: true, lineTotal: true },
   });
 
+  const includeOrders = await supportsOrderJournalSourceTypes();
+  const includeManualOrders = !includeOrders;
+  const [postedInvoiceSo, postedBillPo] = includeOrders
+    ? await Promise.all([
+        prisma.customerInvoice.findMany({
+          where: { companyId, status: "posted", soId: { not: null } },
+          select: { soId: true },
+        }),
+        prisma.vendorBill.findMany({
+          where: { companyId, status: "posted", poId: { not: null } },
+          select: { poId: true },
+        }),
+      ])
+    : [[], []];
+
+  const postedSoIds = new Set(postedInvoiceSo.map((row) => row.soId).filter(Boolean));
+  const postedPoIds = new Set(postedBillPo.map((row) => row.poId).filter(Boolean));
+
+  const journalLines = includeOrders || includeManualOrders
+    ? await prisma.journalLine.findMany({
+        where: {
+          analyticAccountId: { not: null },
+          entry: {
+            companyId,
+            status: "posted",
+            entryDate: { gte: start, lte: end },
+            sourceType: includeOrders ? { in: ["sales_order", "purchase_order"] } : "manual",
+            ...(includeManualOrders
+              ? {
+                  OR: [
+                    { memo: { startsWith: "Sales Order " } },
+                    { memo: { startsWith: "Purchase Order " } },
+                  ],
+                }
+              : {}),
+          },
+        },
+        select: {
+          analyticAccountId: true,
+          debit: true,
+          credit: true,
+          entry: { select: { sourceType: true, sourceId: true, memo: true } },
+        },
+      })
+    : [];
+
   const actualMap = new Map<string, number>();
   for (const line of billLines) {
     const key = toKey(line.analyticAccountId);
@@ -60,6 +107,21 @@ export const budgetVsActual = async (companyId: string, start: Date, end: Date) 
   for (const line of invoiceLines) {
     const key = toKey(line.analyticAccountId);
     actualMap.set(key, (actualMap.get(key) ?? 0) + Number(line.lineTotal));
+  }
+
+  for (const line of journalLines) {
+    const memo = line.entry.memo ?? "";
+    const isSalesOrder = line.entry.sourceType === "sales_order" || memo.startsWith("Sales Order ");
+    const isPurchaseOrder = line.entry.sourceType === "purchase_order" || memo.startsWith("Purchase Order ");
+    if (isSalesOrder && line.entry.sourceId) {
+      if (postedSoIds.has(line.entry.sourceId)) continue;
+    }
+    if (isPurchaseOrder && line.entry.sourceId) {
+      if (postedPoIds.has(line.entry.sourceId)) continue;
+    }
+    const key = toKey(line.analyticAccountId);
+    const amount = Number(line.debit) - Number(line.credit);
+    actualMap.set(key, (actualMap.get(key) ?? 0) + amount);
   }
 
   const keys = new Set([...budgetMap.keys(), ...actualMap.keys()]);
@@ -136,6 +198,50 @@ export const budgetTrend = async (companyId: string, start: Date, end: Date) => 
     select: { lineTotal: true, invoice: { select: { invoiceDate: true } } },
   });
 
+  const includeOrders = await supportsOrderJournalSourceTypes();
+  const includeManualOrders = !includeOrders;
+  const [postedInvoiceSo, postedBillPo] = includeOrders
+    ? await Promise.all([
+        prisma.customerInvoice.findMany({
+          where: { companyId, status: "posted", soId: { not: null } },
+          select: { soId: true },
+        }),
+        prisma.vendorBill.findMany({
+          where: { companyId, status: "posted", poId: { not: null } },
+          select: { poId: true },
+        }),
+      ])
+    : [[], []];
+
+  const postedSoIds = new Set(postedInvoiceSo.map((row) => row.soId).filter(Boolean));
+  const postedPoIds = new Set(postedBillPo.map((row) => row.poId).filter(Boolean));
+
+  const journalLines = includeOrders || includeManualOrders
+    ? await prisma.journalLine.findMany({
+        where: {
+          entry: {
+            companyId,
+            status: "posted",
+            entryDate: { gte: start, lte: end },
+            sourceType: includeOrders ? { in: ["sales_order", "purchase_order"] } : "manual",
+            ...(includeManualOrders
+              ? {
+                  OR: [
+                    { memo: { startsWith: "Sales Order " } },
+                    { memo: { startsWith: "Purchase Order " } },
+                  ],
+                }
+              : {}),
+          },
+        },
+        select: {
+          debit: true,
+          credit: true,
+          entry: { select: { entryDate: true, sourceType: true, sourceId: true, memo: true } },
+        },
+      })
+    : [];
+
   const byMonth = new Map<string, { actualAmount: number; budgetedAmount: number }>();
 
   const addActual = (date: Date, amount: number) => {
@@ -150,6 +256,20 @@ export const budgetTrend = async (companyId: string, start: Date, end: Date) => 
   }
   for (const line of invoiceLines) {
     addActual(line.invoice.invoiceDate, Number(line.lineTotal));
+  }
+
+  for (const line of journalLines) {
+    const sourceId = line.entry.sourceId ?? null;
+    const memo = line.entry.memo ?? "";
+    const isSalesOrder = line.entry.sourceType === "sales_order" || memo.startsWith("Sales Order ");
+    const isPurchaseOrder = line.entry.sourceType === "purchase_order" || memo.startsWith("Purchase Order ");
+    if (isSalesOrder && sourceId) {
+      if (postedSoIds.has(sourceId)) continue;
+    }
+    if (isPurchaseOrder && sourceId) {
+      if (postedPoIds.has(sourceId)) continue;
+    }
+    addActual(line.entry.entryDate, Number(line.debit) - Number(line.credit));
   }
 
   const budgets = await prisma.budget.findMany({

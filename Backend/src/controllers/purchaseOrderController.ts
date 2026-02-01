@@ -9,6 +9,7 @@ import {
 } from "../utils/formatters.js";
 import { assertOrderStatusTransition } from "../utils/workflow.js";
 import { renderDocumentPdf } from "../utils/pdf.js";
+import { createPurchaseOrderJournalEntry } from "../services/journalService.js";
 
 export const createPurchaseOrder = async (data: {
   companyId: string;
@@ -97,6 +98,22 @@ export const createPurchaseOrder = async (data: {
 
       await tx.purchaseOrderLine.createMany({ data: linePayloads });
 
+      if (data.status === "confirmed" || data.status === "done") {
+        await createPurchaseOrderJournalEntry(tx, {
+          companyId: data.companyId,
+          purchaseOrderId: purchaseOrder.id,
+          orderDate: new Date(data.orderDate),
+          vendorId: data.vendorId,
+          lines: linePayloads.map((line) => ({
+            lineTotal: Number(line.lineTotal),
+            analyticAccountId: line.analyticAccountId ?? null,
+            productId: line.productId ?? null,
+            description: line.description ?? null,
+            glAccountId: null,
+          })),
+        });
+      }
+
       return purchaseOrder;
     },
     { timeout: 15000 },
@@ -162,14 +179,39 @@ export const updatePurchaseOrder = async (
   data: Partial<Record<string, unknown>>,
 ) => {
   try {
-    const current = await prisma.purchaseOrder.findUnique({ where: { id } });
-    if (!current) {
-      throw new ApiError(404, "Purchase order not found");
-    }
-    if (data.status) {
-      assertOrderStatusTransition(current.status, data.status as any);
-    }
-    return await prisma.purchaseOrder.update({ where: { id }, data });
+    return await prisma.$transaction(async (tx) => {
+      const current = await tx.purchaseOrder.findUnique({ where: { id } });
+      if (!current) {
+        throw new ApiError(404, "Purchase order not found");
+      }
+      if (data.status) {
+        assertOrderStatusTransition(current.status, data.status as any);
+      }
+      const updated = await tx.purchaseOrder.update({ where: { id }, data });
+      const movingToConfirmed =
+        (updated.status === "confirmed" || updated.status === "done") &&
+        current.status !== "confirmed" &&
+        current.status !== "done";
+      if (movingToConfirmed) {
+        const lines = await tx.purchaseOrderLine.findMany({
+          where: { purchaseOrderId: id },
+        });
+        await createPurchaseOrderJournalEntry(tx, {
+          companyId: updated.companyId,
+          purchaseOrderId: updated.id,
+          orderDate: updated.orderDate,
+          vendorId: updated.vendorId,
+          lines: lines.map((line) => ({
+            lineTotal: Number(line.lineTotal),
+            analyticAccountId: line.analyticAccountId ?? null,
+            productId: line.productId ?? null,
+            description: line.description ?? null,
+            glAccountId: null,
+          })),
+        });
+      }
+      return updated;
+    });
   } catch (error) {
     throw new ApiError(404, "Purchase order not found", error);
   }

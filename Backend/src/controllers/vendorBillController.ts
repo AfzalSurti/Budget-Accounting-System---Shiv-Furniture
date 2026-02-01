@@ -13,6 +13,7 @@ import {
 } from "../utils/formatters.js";
 import { assertDocStatusTransition } from "../utils/workflow.js";
 import { renderDocumentPdf } from "../utils/pdf.js";
+import { createBillJournalEntry } from "../services/journalService.js";
 
 export const createVendorBill = async (data: {
   companyId: string;
@@ -104,13 +105,29 @@ export const createVendorBill = async (data: {
         });
       }
 
-      return tx.vendorBill.update({
+      const updated = await tx.vendorBill.update({
         where: { id: bill.id },
         data: {
           totalAmount,
           paymentState: calculatePaymentStatus(0, totalAmount),
         },
       });
+      if (data.status === "posted") {
+        await createBillJournalEntry(tx, {
+          companyId: data.companyId,
+          billId: updated.id,
+          billDate: new Date(data.billDate),
+          vendorId: data.vendorId,
+          lines: data.lines.map((line) => ({
+            lineTotal: line.qty * line.unitPrice * (1 + (line.taxRate ?? 0) / 100),
+            analyticAccountId: line.analyticAccountId ?? null,
+            productId: line.productId ?? null,
+            description: line.description ?? null,
+            glAccountId: line.glAccountId ?? null,
+          })),
+        });
+      }
+      return updated;
     },
     { timeout: 15000 },
   );
@@ -160,13 +177,29 @@ export const createVendorBillFromPO = async (
       });
     }
 
-    return tx.vendorBill.update({
+    const updated = await tx.vendorBill.update({
       where: { id: bill.id },
       data: {
         totalAmount,
         paymentState: calculatePaymentStatus(0, totalAmount),
       },
     });
+    if (updated.status === "posted") {
+      await createBillJournalEntry(tx, {
+        companyId: updated.companyId,
+        billId: updated.id,
+        billDate: updated.billDate,
+        vendorId: updated.vendorId,
+        lines: po.lines.map((line) => ({
+          lineTotal: Number(line.lineTotal),
+          analyticAccountId: line.analyticAccountId ?? null,
+          productId: line.productId ?? null,
+          description: line.description ?? null,
+          glAccountId: null,
+        })),
+      });
+    }
+    return updated;
   });
 };
 
@@ -230,18 +263,39 @@ export const updateVendorBill = async (
   data: Partial<Record<string, unknown>>,
 ) => {
   try {
-    const current = await prisma.vendorBill.findUnique({ where: { id } });
-    if (!current) {
-      throw new ApiError(404, "Vendor bill not found");
-    }
-    if (data.status) {
-      assertDocStatusTransition(current.status, data.status as any);
-    }
-    const { totalAmount, paidAmount, paymentState, ...rest } = data as Record<
-      string,
-      unknown
-    >;
-    return await prisma.vendorBill.update({ where: { id }, data: rest });
+    return await prisma.$transaction(async (tx) => {
+      const current = await tx.vendorBill.findUnique({ where: { id } });
+      if (!current) {
+        throw new ApiError(404, "Vendor bill not found");
+      }
+      if (data.status) {
+        assertDocStatusTransition(current.status, data.status as any);
+      }
+      const { totalAmount, paidAmount, paymentState, ...rest } = data as Record<
+        string,
+        unknown
+      >;
+      const updated = await tx.vendorBill.update({ where: { id }, data: rest });
+      if (current.status !== "posted" && updated.status === "posted") {
+        const lines = await tx.vendorBillLine.findMany({
+          where: { vendorBillId: id },
+        });
+        await createBillJournalEntry(tx, {
+          companyId: updated.companyId,
+          billId: updated.id,
+          billDate: updated.billDate,
+          vendorId: updated.vendorId,
+          lines: lines.map((line) => ({
+            lineTotal: Number(line.lineTotal),
+            analyticAccountId: line.analyticAccountId ?? null,
+            productId: line.productId ?? null,
+            description: line.description ?? null,
+            glAccountId: line.glAccountId ?? null,
+          })),
+        });
+      }
+      return updated;
+    });
   } catch (error) {
     throw new ApiError(404, "Vendor bill not found", error);
   }
