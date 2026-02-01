@@ -70,7 +70,7 @@ export const createContact = async (data: {
 
 export const listContacts = async (companyId: string) => {
   return prisma.contact.findMany({
-    where: { companyId },
+    where: { companyId, isActive: true, isPortalUser: true },
     include: { contactTags: { include: { tag: true } } },
     orderBy: { createdAt: "desc" },
   });

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Lock, Shield, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 
@@ -12,8 +12,13 @@ export default function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [isClient, setIsClient] = useState(false);
   const router = useRouter();
   const { login } = useAuth();
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,6 +37,15 @@ export default function LoginPage() {
       setIsSubmitting(false);
     }
   };
+
+  if (!isClient) {
+    return (
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex">
+        <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-brand-primary via-brand-accent to-brand-lighter p-12 flex-col justify-between relative overflow-hidden"></div>
+        <div className="flex-1 flex items-center justify-center p-6 lg:p-12"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex">
