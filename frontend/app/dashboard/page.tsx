@@ -265,7 +265,7 @@ export default function DashboardPage() {
         })}
       </motion.div>
 
-      <div className="grid md:grid-cols-2 gap-6 mb-10">
+      <div className="grid md:grid-cols-3 gap-6 mb-10">
         <Link
           href="/sales-orders"
           className="group rounded-2xl border border-brand-primary/20 bg-white/80 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-brand-primary/30 dark:bg-slate-900/70"
@@ -297,6 +297,23 @@ export default function DashboardPage() {
             </div>
             <div className="rounded-full border border-brand-accent/30 bg-brand-accent/10 px-4 py-2 text-xs font-semibold text-brand-accent">
               New PO
+            </div>
+          </div>
+        </Link>
+        <Link
+          href="/invoices"
+          className="group rounded-2xl border border-emerald-200/60 bg-white/80 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-emerald-400/20 dark:bg-slate-900/70"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs uppercase tracking-widest text-brand-dark/60 dark:text-brand-light/70">Quick Access</p>
+              <h3 className="mt-2 text-2xl font-semibold text-brand-dark dark:text-white">Invoices</h3>
+              <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+                Review and post customer invoices.
+              </p>
+            </div>
+            <div className="rounded-full border border-emerald-200/70 bg-emerald-50 px-4 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/30 dark:bg-emerald-500/10 dark:text-emerald-300">
+              View
             </div>
           </div>
         </Link>
@@ -409,75 +426,32 @@ export default function DashboardPage() {
         </motion.div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="card p-6 hover:shadow-xl transition-shadow duration-300"
-        >
-          <h3 className="text-lg font-semibold text-brand-dark dark:text-white mb-4">Recent Transactions</h3>
-          <div className="space-y-3">
-            {recentTransactionRows.length === 0 && (
-              <div className="p-3 rounded-lg bg-slate-50/80 dark:bg-slate-800/40 text-sm text-slate-500">
-                No recent transactions yet.
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+        className="card p-6 hover:shadow-xl transition-shadow duration-300"
+      >
+        <h3 className="text-lg font-semibold text-brand-dark dark:text-white mb-4">Recent Transactions</h3>
+        <div className="space-y-3">
+          {recentTransactionRows.length === 0 && (
+            <div className="p-3 rounded-lg bg-slate-50/80 dark:bg-slate-800/40 text-sm text-slate-500">
+              No recent transactions yet.
+            </div>
+          )}
+          {recentTransactionRows.map((item) => (
+            <div key={item.id} className="flex justify-between items-center p-3 rounded-lg bg-slate-50/80 dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors cursor-pointer border border-transparent hover:border-slate-200 dark:hover:border-slate-700">
+              <div>
+                <p className="font-medium text-brand-dark dark:text-white">{item.description}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">{item.date}</p>
               </div>
-            )}
-            {recentTransactionRows.map((item) => (
-              <div key={item.id} className="flex justify-between items-center p-3 rounded-lg bg-slate-50/80 dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors cursor-pointer border border-transparent hover:border-slate-200 dark:hover:border-slate-700">
-                <div>
-                  <p className="font-medium text-brand-dark dark:text-white">{item.description}</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">{item.date}</p>
-                </div>
-                <p className={`font-bold font-mono text-sm ${item.amount >= 0 ? "text-emerald-600" : "text-slate-700 dark:text-slate-300"}`}>
-                  {item.amount >= 0 ? "+" : "-"}{formatINR(Math.abs(item.amount))}
-                </p>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="card p-6 hover:shadow-xl transition-shadow duration-300"
-        >
-          <h3 className="text-lg font-semibold text-brand-dark dark:text-white mb-4">AI-Powered Insights</h3>
-          <div className="space-y-3">
-            {[
-              { type: "Opportunity", title: "Cost Optimization", desc: "Potential savings identified", color: "emerald" },
-              { type: "Risk", title: "Budget Overage", desc: "Operations exceeding 15%", color: "red" },
-              { type: "Anomaly", title: "Unusual Activity", desc: "Check Q2 vendor payments", color: "amber" },
-            ].map((item, idx) => (
-              <div
-                key={idx}
-                className={`group p-3 rounded-lg border cursor-pointer transition-all hover:shadow-md ${
-                  item.color === "emerald"
-                    ? "bg-emerald-50/50 dark:bg-emerald-900/10 border-emerald-200/50 dark:border-emerald-800/30 hover:border-emerald-300 dark:hover:border-emerald-700"
-                    : item.color === "red"
-                    ? "bg-red-50/50 dark:bg-red-900/10 border-red-200/50 dark:border-red-800/30 hover:border-red-300 dark:hover:border-red-700"
-                    : "bg-amber-50/50 dark:bg-amber-900/10 border-amber-200/50 dark:border-amber-800/30 hover:border-amber-300 dark:hover:border-amber-700"
-                }`}
-              >
-                <div className="flex items-start justify-between mb-1">
-                  <p className="font-medium text-sm text-brand-dark dark:text-white">{item.title}</p>
-                  <span className={`text-xs font-semibold px-2 py-0.5 rounded ${
-                    item.color === "emerald"
-                      ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400"
-                      : item.color === "red"
-                      ? "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400"
-                      : "bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400"
-                  }`}>
-                    {item.type}
-                  </span>
-                </div>
-                <p className="text-xs text-slate-600 dark:text-slate-400">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
+              <p className={`font-bold font-mono text-sm ${item.amount >= 0 ? "text-emerald-600" : "text-slate-700 dark:text-slate-300"}`}>
+                {item.amount >= 0 ? "+" : "-"}{formatINR(Math.abs(item.amount))}
+              </p>
+            </div>
+          ))}
+        </div>
+      </motion.div>
     </AppLayout>
   );
 }

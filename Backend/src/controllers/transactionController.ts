@@ -109,7 +109,11 @@ export async function getTransactions(
   limit: number = 50,
   offset: number = 0
 ): Promise<{ transactions: TransactionResponse[]; total: number }> {
-  await backfillOrderJournals(companyId);
+  try {
+    await backfillOrderJournals(companyId);
+  } catch (error) {
+    console.warn("Skipping order journal backfill due to error:", error);
+  }
   const [entries, total] = await Promise.all([
     prisma.journalEntry.findMany({
       where: { companyId },

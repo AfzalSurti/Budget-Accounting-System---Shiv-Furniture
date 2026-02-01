@@ -305,67 +305,6 @@ export default function DashboardPage() {
             ))}
           </div>
         </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="card p-6 hover:shadow-xl transition-shadow duration-300"
-        >
-          <h3 className="text-lg font-semibold text-brand-dark dark:text-white mb-4">AI-Powered Insights</h3>
-          <div className="space-y-3">
-            {[
-              { type: "Opportunity", title: "Cost Optimization", desc: "Potential savings identified", color: "emerald" },
-              { type: "Risk", title: "Budget Overage", desc: "Operations exceeding 15%", color: "red" },
-              { type: "Anomaly", title: "Unusual Activity", desc: "Check Q2 vendor payments", color: "amber" },
-            ].map((item, idx) => (
-              <div
-                key={idx}
-                className={`group p-3 rounded-lg border cursor-pointer transition-all hover:shadow-md ${
-                  item.color === "emerald" 
-                    ? "bg-emerald-50/50 dark:bg-emerald-900/10 border-emerald-200/50 dark:border-emerald-800/30 hover:border-emerald-300 dark:hover:border-emerald-700"
-                    : item.color === "red"
-                    ? "bg-red-50/50 dark:bg-red-900/10 border-red-200/50 dark:border-red-800/30 hover:border-red-300 dark:hover:border-red-700"
-                    : "bg-amber-50/50 dark:bg-amber-900/10 border-amber-200/50 dark:border-amber-800/30 hover:border-amber-300 dark:hover:border-amber-700"
-                }`}
-              >
-                <div className="flex items-start justify-between mb-1">
-                  <p className="font-medium text-sm text-brand-dark dark:text-white">{item.title}</p>
-                  <span className={`text-xs font-semibold px-2 py-0.5 rounded ${
-                    item.color === "emerald"
-                      ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400"
-                      : item.color === "red"
-                      ? "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400"
-                      : "bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400"
-                  }`}>
-                    {item.type}
-                  </span>
-                </div>
-                <p className="text-xs text-slate-600 dark:text-slate-400">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="card p-6 hover:shadow-xl transition-shadow duration-300"
-        >
-          <div className="mb-3 flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-brand-dark dark:text-white">AI Insights</h3>
-          </div>
-          <p className="text-sm text-slate-600 dark:text-slate-400 mb-5">
-            Explore forecasts, anomalies, and optimization opportunities.
-          </p>
-          <Link
-            href="/admin/ai-insights"
-            className="inline-flex items-center gap-2 rounded-full border border-brand-primary/40 bg-brand-primary/10 px-4 py-2 text-sm font-semibold text-brand-primary transition hover:bg-brand-primary/20 dark:bg-brand-primary/20 dark:text-white dark:hover:bg-brand-primary/30"
-          >
-            Open AI Insights
-          </Link>
-        </motion.div>
       </div>
     </AppLayout>
   );

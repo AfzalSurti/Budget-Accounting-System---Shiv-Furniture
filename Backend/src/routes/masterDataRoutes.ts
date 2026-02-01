@@ -8,6 +8,7 @@ import * as productController from "../controllers/productController.js";
 import * as analyticController from "../controllers/analyticAccountController.js";
 import * as budgetController from "../controllers/budgetController.js";
 import * as autoAnalyticController from "../controllers/autoAnalyticController.js";
+import * as glAccountController from "../controllers/glAccountController.js";
 
 import {
   createContactSchema,
@@ -33,6 +34,7 @@ import {
   updateAutoAnalyticSchema,
   listAutoAnalyticSchema,
 } from "../validators/autoAnalyticValidators.js";
+import { listGlAccountSchema } from "../validators/glAccountValidators.js";
 
 export const masterDataRoutes = Router();
 
@@ -151,6 +153,18 @@ masterDataRoutes.delete(
   asyncHandler(async (req, res) => {
     const product = await productController.archiveProduct(req.params.id!);
     res.json({ success: true, data: product });
+  })
+);
+
+// GL Accounts
+masterDataRoutes.get(
+  "/gl-accounts",
+  validateRequest(listGlAccountSchema),
+  asyncHandler(async (req, res) => {
+    const accounts = await glAccountController.listGlAccounts(
+      req.query.companyId as string,
+    );
+    res.json({ success: true, data: accounts });
   })
 );
 
