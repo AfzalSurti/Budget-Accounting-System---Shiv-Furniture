@@ -36,7 +36,8 @@ export const createPayment = async (data: {
     throw new ApiError(400, "Allocated amount cannot exceed payment amount");
   }
 
-  return prisma.$transaction(async (tx) => {
+  try {
+    return await prisma.$transaction(async (tx) => {
     const payment = await tx.payment.create({
       data: {
         companyId: data.companyId,
@@ -119,19 +120,29 @@ export const createPayment = async (data: {
     }
 
     if (payment.status === "posted") {
-      await createPaymentJournalEntry(tx, {
-        companyId: payment.companyId,
-        paymentId: payment.id,
-        paymentDate: payment.paymentDate,
-        contactId: payment.contactId,
-        direction: payment.direction,
-        amount: Number(payment.amount),
-        memo: payment.reference ?? null,
-      });
+      try {
+        await createPaymentJournalEntry(tx, {
+          companyId: payment.companyId,
+          paymentId: payment.id,
+          paymentDate: payment.paymentDate,
+          contactId: payment.contactId,
+          direction: payment.direction,
+          amount: Number(payment.amount),
+          memo: payment.reference ?? null,
+        });
+      } catch (journalError) {
+        console.error("Warning: Journal entry creation failed, but payment was recorded:", journalError);
+        // Don't fail the payment creation if journal entry fails
+      }
     }
 
     return payment;
-  });
+    }, { timeout: 20000 });
+  } catch (error) {
+    console.error("Payment creation error:", error);
+    if (error instanceof ApiError) throw error;
+    throw new ApiError(500, `Payment creation failed: ${error instanceof Error ? error.message : "Unknown error"}`);
+  }
 };
 
 export const listPayments = async (companyId: string) => {

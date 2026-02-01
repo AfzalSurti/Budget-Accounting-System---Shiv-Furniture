@@ -8,11 +8,16 @@ const ensureAccount = async (
   name: string,
   accountType: "asset" | "liability" | "income" | "expense",
 ) => {
-  return tx.gLAccount.upsert({
-    where: { companyId_code: { companyId, code } },
-    update: { name, accountType },
-    create: { companyId, code, name, accountType, isActive: true },
-  });
+  try {
+    return tx.gLAccount.upsert({
+      where: { companyId_code: { companyId, code } },
+      update: { name, accountType },
+      create: { companyId, code, name, accountType, isActive: true },
+    });
+  } catch (error) {
+    console.error(`Failed to ensure account ${code} for company ${companyId}:`, error);
+    throw error;
+  }
 };
 
 export const ensureDefaultAccounts = async (
