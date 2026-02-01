@@ -265,7 +265,7 @@ export default function DashboardPage() {
         })}
       </motion.div>
 
-      <div className="grid md:grid-cols-2 gap-6 mb-10">
+      <div className="grid md:grid-cols-3 gap-6 mb-10">
         <Link
           href="/sales-orders"
           className="group rounded-2xl border border-brand-primary/20 bg-white/80 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-brand-primary/30 dark:bg-slate-900/70"
@@ -297,6 +297,23 @@ export default function DashboardPage() {
             </div>
             <div className="rounded-full border border-brand-accent/30 bg-brand-accent/10 px-4 py-2 text-xs font-semibold text-brand-accent">
               New PO
+            </div>
+          </div>
+        </Link>
+        <Link
+          href="/invoices"
+          className="group rounded-2xl border border-emerald-200/60 bg-white/80 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-emerald-400/20 dark:bg-slate-900/70"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs uppercase tracking-widest text-brand-dark/60 dark:text-brand-light/70">Quick Access</p>
+              <h3 className="mt-2 text-2xl font-semibold text-brand-dark dark:text-white">Invoices</h3>
+              <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+                Review and post customer invoices.
+              </p>
+            </div>
+            <div className="rounded-full border border-emerald-200/70 bg-emerald-50 px-4 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/30 dark:bg-emerald-500/10 dark:text-emerald-300">
+              View
             </div>
           </div>
         </Link>
