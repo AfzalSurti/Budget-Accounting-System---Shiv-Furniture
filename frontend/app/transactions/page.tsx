@@ -30,12 +30,21 @@ interface Transaction {
   lines: TransactionLine[];
 }
 
+interface GlAccountOption {
+  id: string;
+  code: string;
+  name: string;
+  accountType: string;
+}
+
 export default function TransactionsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [typeFilter, setTypeFilter] = useState("All Types");
   const [statusFilter, setStatusFilter] = useState("All Status");
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
+  const [glAccounts, setGlAccounts] = useState<GlAccountOption[]>([]);
+  const [createError, setCreateError] = useState<string | null>(null);
   const [showNewTransactionModal, setShowNewTransactionModal] = useState(false);
   const [newTransactionData, setNewTransactionData] = useState({
     entryDate: new Date().toISOString().split("T")[0],
@@ -52,6 +61,7 @@ export default function TransactionsPage() {
 
   useEffect(() => {
     fetchTransactions();
+    fetchGlAccounts();
   }, []);
 
   const fetchTransactions = async () => {
@@ -74,8 +84,33 @@ export default function TransactionsPage() {
     }
   };
 
+  const fetchGlAccounts = async () => {
+    try {
+      const token = getStoredToken();
+      const res = await fetch(`${API_V1}/gl-accounts?companyId=${DEFAULT_COMPANY_ID}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.json();
+      if (data.success) {
+        setGlAccounts(data.data || []);
+      }
+    } catch (error) {
+      console.error("Failed to fetch GL accounts:", error);
+    }
+  };
+
   const handleCreateTransaction = async () => {
     try {
+      setCreateError(null);
+      const hasInvalidLine = newTransactionData.lines.some(
+        (line) => !line.glAccountId || (!line.debit && !line.credit),
+      );
+      if (hasInvalidLine) {
+        setCreateError("Select a GL account and enter a debit or credit amount.");
+        return;
+      }
       const token = getStoredToken();
       const res = await fetch(`${API_V1}/transactions`, {
         method: "POST",
@@ -90,6 +125,7 @@ export default function TransactionsPage() {
       if (data.success) {
         setTransactions([data.data, ...transactions]);
         setShowNewTransactionModal(false);
+        setCreateError(null);
         setNewTransactionData({
           entryDate: new Date().toISOString().split("T")[0],
           memo: "",
@@ -102,40 +138,76 @@ export default function TransactionsPage() {
             },
           ],
         });
+      } else {
+        setCreateError(data?.message || "Failed to create transaction.");
       }
     } catch (error) {
       console.error("Failed to create transaction:", error);
+      setCreateError("Failed to create transaction.");
     }
   };
 
-  const filteredRows = transactions.flatMap((txn) =>
-    txn.lines.map((line) => {
-      const amount = Number(line.credit || 0) - Number(line.debit || 0);
-      return { txn, line, amount };
-    }),
-  ).filter(({ txn, line, amount }) => {
-    const search = searchTerm.trim().toLowerCase();
-    const matchesSearch =
-      !search
-      || txn.id.toLowerCase().includes(search)
-      || (txn.memo ?? "").toLowerCase().includes(search)
-      || (line.description ?? "").toLowerCase().includes(search)
-      || (line.glAccount?.name ?? "").toLowerCase().includes(search);
+  const filteredRows = transactions
+    .flatMap((txn) => {
+      const memo = txn.memo ?? "";
+      const isSalesOrder = memo.startsWith("Sales Order");
+      const isPurchaseOrder = memo.startsWith("Purchase Order");
 
-    const matchesStatus = statusFilter === "All Status" || txn.status === statusFilter;
-    const matchesType =
-      typeFilter === "All Types"
-        || (typeFilter === "Income" && amount > 0)
-        || (typeFilter === "Expense" && amount < 0);
+      if (isSalesOrder || isPurchaseOrder) {
+        const totalCredit = txn.lines.reduce((sum, line) => sum + Number(line.credit || 0), 0);
+        const totalDebit = txn.lines.reduce((sum, line) => sum + Number(line.debit || 0), 0);
+        const amount = isSalesOrder ? totalCredit : totalDebit;
+        const type = isSalesOrder ? "Income" : "Expense";
+        const glAccountName = isSalesOrder
+          ? txn.lines.find((line) => Number(line.credit || 0) > 0)?.glAccount?.name ?? "Sales Revenue"
+          : txn.lines.find((line) => Number(line.debit || 0) > 0)?.glAccount?.name ?? "Operating Expense";
 
-    return matchesSearch && matchesStatus && matchesType;
-  });
+        return [
+          {
+            txn,
+            line: {
+              id: `${txn.id}-summary`,
+              description: isSalesOrder ? "Sales Order" : "Purchase Order",
+              debit: isSalesOrder ? 0 : amount,
+              credit: isSalesOrder ? amount : 0,
+              glAccount: { id: "summary", name: glAccountName },
+            },
+            amount: isSalesOrder ? amount : -amount,
+            type,
+            isSummary: true,
+          },
+        ];
+      }
+
+      return txn.lines.map((line) => {
+        const amount = Number(line.credit || 0) - Number(line.debit || 0);
+        const type = amount >= 0 ? "Income" : "Expense";
+        return { txn, line, amount, type, isSummary: false };
+      });
+    })
+    .filter(({ txn, line, type }) => {
+      const search = searchTerm.trim().toLowerCase();
+      const matchesSearch =
+        !search
+        || txn.id.toLowerCase().includes(search)
+        || (txn.memo ?? "").toLowerCase().includes(search)
+        || (line.description ?? "").toLowerCase().includes(search)
+        || (line.glAccount?.name ?? "").toLowerCase().includes(search);
+
+      const matchesStatus = statusFilter === "All Status" || txn.status === statusFilter;
+      const matchesType =
+        typeFilter === "All Types"
+          || (typeFilter === "Income" && type === "Income")
+          || (typeFilter === "Expense" && type === "Expense");
+
+      return matchesSearch && matchesStatus && matchesType;
+    });
 
   const handleExportPDF = () => {
-    const formattedData = filteredRows.map(({ txn, line, amount }) => ({
+    const formattedData = filteredRows.map(({ txn, line, amount, type }) => ({
       date: txn.entryDate,
       transactionNumber: txn.id,
-      type: amount >= 0 ? "Income" : "Expense",
+      type,
       description: line.description || txn.memo || "—",
       amount: `₹${Math.abs(amount).toFixed(2)}`,
       status: txn.status,
@@ -247,9 +319,7 @@ export default function TransactionsPage() {
                 <div className="space-y-3 max-h-[300px] overflow-y-auto">
                   {newTransactionData.lines.map((line, idx) => (
                     <div key={idx} className="grid grid-cols-3 gap-2">
-                      <input
-                        type="text"
-                        placeholder="GL Account ID"
+                      <select
                         value={line.glAccountId}
                         onChange={(e) => {
                           const updatedLines = [...newTransactionData.lines];
@@ -257,7 +327,14 @@ export default function TransactionsPage() {
                           setNewTransactionData({ ...newTransactionData, lines: updatedLines });
                         }}
                         className="px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/40"
-                      />
+                      >
+                        <option value="">Select GL Account</option>
+                        {glAccounts.map((account) => (
+                          <option key={account.id} value={account.id}>
+                            {account.code} - {account.name}
+                          </option>
+                        ))}
+                      </select>
                       <input
                         type="number"
                         placeholder="Debit"
@@ -284,6 +361,12 @@ export default function TransactionsPage() {
                   ))}
                 </div>
               </div>
+
+              {createError && (
+                <div className="text-sm text-red-600 bg-red-50 dark:bg-red-900/20 border border-red-200/60 dark:border-red-800/40 rounded-lg px-3 py-2">
+                  {createError}
+                </div>
+              )}
 
               {/* Buttons */}
               <div className="flex gap-3 pt-4">
@@ -362,13 +445,13 @@ export default function TransactionsPage() {
                     <span className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">Memo</span>
                   </th>
                   <th className="px-6 py-4 text-left">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">Type</span>
+                  </th>
+                  <th className="px-6 py-4 text-left">
                     <span className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">GL Account</span>
                   </th>
                   <th className="px-6 py-4 text-right">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">Debit</span>
-                  </th>
-                  <th className="px-6 py-4 text-right">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">Credit</span>
+                    <span className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">Amount</span>
                   </th>
                   <th className="px-6 py-4 text-left">
                     <span className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">Status</span>
@@ -376,49 +459,45 @@ export default function TransactionsPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200/70 dark:divide-slate-700">
-                {transactions.map((txn, txnIdx) =>
-                  txn.lines.map((line, lineIdx) => (
-                    <motion.tr
-                      key={`${txn.id}-${lineIdx}`}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: txnIdx * 0.05 }}
-                      className="group cursor-pointer hover:bg-slate-50/80 dark:hover:bg-slate-800/30 transition-all duration-200"
-                    >
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm text-slate-600 dark:text-slate-400">{txn.entryDate}</span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className="text-sm font-medium text-brand-dark dark:text-white group-hover:text-brand-primary transition-colors">
-                          {txn.memo || "—"}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div>
-                          <span className="text-sm font-medium text-slate-900 dark:text-slate-100">{line.glAccount.name}</span>
-                          <div className="text-xs text-slate-500 dark:text-slate-400">{line.description || "—"}</div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right">
-                        <span className="text-sm font-semibold font-mono text-red-600">{line.debit > 0 ? `₹${line.debit.toFixed(2)}` : "—"}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right">
-                        <span className="text-sm font-semibold font-mono text-emerald-600">{line.credit > 0 ? `₹${line.credit.toFixed(2)}` : "—"}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
-                          txn.status === "posted"
-                            ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border border-emerald-200/50 dark:border-emerald-800/30"
-                            : "bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 border border-amber-200/50 dark:border-amber-800/30"
-                        }`}>
-                          {txn.status}
-                        </span>
-                      </td>
-                    </motion.tr>
-                  ))
-                )}
+                {filteredRows.map(({ txn, line, amount, type }, rowIdx) => (
+                  <motion.tr
+                    key={`${txn.id}-${line.id}`}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: rowIdx * 0.02 }}
+                    className="group cursor-pointer hover:bg-slate-50/80 dark:hover:bg-slate-800/30 transition-all duration-200"
+                  >
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className="text-sm text-slate-600 dark:text-slate-400">{txn.entryDate}</span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="text-sm font-medium text-brand-dark dark:text-white group-hover:text-brand-primary transition-colors">
+                        {txn.memo || "—"}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className={`text-sm font-semibold ${type === "Income" ? "text-emerald-600" : "text-red-600"}`}>{type}</span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div>
+                        <span className="text-sm font-medium text-slate-900 dark:text-slate-100">{line.glAccount.name}</span>
+                        <div className="text-xs text-slate-500 dark:text-slate-400">{line.description || "—"}</div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right">
+                      <span className={`text-sm font-semibold font-mono ${amount >= 0 ? "text-emerald-600" : "text-red-600"}`}>{`₹${Math.abs(amount).toFixed(2)}`}</span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                        txn.status === "posted"
+                          ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border border-emerald-200/50 dark:border-emerald-800/30"
+                          : "bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 border border-amber-200/50 dark:border-amber-800/30"
+                      }`}>
+                        {txn.status}
+                      </span>
+                    </td>
+                  </motion.tr>
+                ))}
               </tbody>
             </table>
           </div>

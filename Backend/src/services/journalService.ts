@@ -375,7 +375,8 @@ export const backfillOrderJournals = async (companyId: string) => {
 
   for (const so of salesOrders) {
     if (existingSo.has(so.id)) continue;
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(
+      async (tx) => {
       await createSalesOrderJournalEntry(tx, {
         companyId: so.companyId,
         salesOrderId: so.id,
@@ -389,12 +390,15 @@ export const backfillOrderJournals = async (companyId: string) => {
           glAccountId: null,
         })),
       });
-    });
+      },
+      { timeout: 20000, maxWait: 5000 },
+    );
   }
 
   for (const po of purchaseOrders) {
     if (existingPo.has(po.id)) continue;
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(
+      async (tx) => {
       await createPurchaseOrderJournalEntry(tx, {
         companyId: po.companyId,
         purchaseOrderId: po.id,
@@ -408,6 +412,8 @@ export const backfillOrderJournals = async (companyId: string) => {
           glAccountId: null,
         })),
       });
-    });
+      },
+      { timeout: 20000, maxWait: 5000 },
+    );
   }
 };
