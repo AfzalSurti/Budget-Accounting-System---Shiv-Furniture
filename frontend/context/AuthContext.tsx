@@ -127,15 +127,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         throw new Error(message);
       }
       const payload = await res.json();
-      const user = payload?.data?.user as User;
+      const createdUser = payload?.data?.user as User;
       const token = payload?.data?.token as string;
-      
+
+      if (user?.role === "ADMIN") {
+        toast.success('Portal user created successfully!');
+        return createdUser;
+      }
+
       if (token) {
         setStoredToken(token);
-        setStoredUser(user);
-        setUser(user);
+        setStoredUser(createdUser);
+        setUser(createdUser);
         toast.success('Account created successfully!');
-        return user;
+        return createdUser;
       }
       throw new Error('No token received');
     } catch (error) {

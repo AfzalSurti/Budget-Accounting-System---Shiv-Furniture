@@ -345,7 +345,7 @@ function PurchaseOrderDialog({
   isSaving: boolean;
 }) {
   const [form, setForm] = useState<PurchaseOrderDraft>({
-    vendorId: vendors[0]?.id ?? "",
+    vendorId: "",
     poNo: "",
     orderDate: new Date().toISOString().slice(0, 10),
     deliveryDate: "",
@@ -354,7 +354,7 @@ function PurchaseOrderDialog({
     notes: "",
     lines: [
       {
-        productId: products[0]?.id ?? "",
+        productId: "",
         qty: 1,
         unitPrice: products[0]?.costPrice ?? 0,
         taxRate: 0,
@@ -364,6 +364,30 @@ function PurchaseOrderDialog({
     ],
   });
   const [formError, setFormError] = useState<string | null>(null);
+  const defaultProductId = products[0]?.id ?? "";
+  const defaultProductPrice = products[0]?.costPrice ?? 0;
+
+  useEffect(() => {
+    if (!form.vendorId && vendors.length > 0) {
+      setForm((prev) => ({ ...prev, vendorId: vendors[0].id }));
+    }
+  }, [vendors, form.vendorId]);
+
+  useEffect(() => {
+    if (!defaultProductId) return;
+    setForm((prev) => ({
+      ...prev,
+      lines: prev.lines.map((line) =>
+        line.productId
+          ? line
+          : {
+              ...line,
+              productId: defaultProductId,
+              unitPrice: defaultProductPrice,
+            },
+      ),
+    }));
+  }, [defaultProductId, defaultProductPrice]);
 
   const handleChange = (field: keyof PurchaseOrderDraft, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -459,6 +483,9 @@ function PurchaseOrderDialog({
                 onChange={(e) => handleChange("vendorId", e.target.value)}
                 className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 text-brand-dark placeholder:text-brand-dark/40 focus:border-brand-primary focus:outline-none dark:text-brand-light dark:placeholder:text-brand-light/40"
               >
+                <option value="" disabled className="bg-white text-brand-dark dark:bg-slate-900 dark:text-brand-light">
+                  {vendors.length ? "Select vendor" : "No vendors found"}
+                </option>
                 {vendors.map((v) => (
                   <option key={v.id} value={v.id} className="bg-white text-brand-dark dark:bg-slate-900 dark:text-brand-light">
                     {v.displayName}{v.isPortalUser ? " (Portal)" : ""}
@@ -545,6 +572,9 @@ function PurchaseOrderDialog({
                     onChange={(e) => handleLineChange(index, "productId", e.target.value)}
                     className="mt-1 w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 text-brand-dark focus:border-brand-primary focus:outline-none dark:text-brand-light"
                   >
+                    <option value="" disabled className="bg-white text-brand-dark dark:bg-slate-900 dark:text-brand-light">
+                      {products.length ? "Select product" : "No products found"}
+                    </option>
                     {products.map((p) => (
                       <option key={p.id} value={p.id} className="bg-white text-brand-dark dark:bg-slate-900 dark:text-brand-light">
                         {p.name}

@@ -20,7 +20,7 @@ export default function SignupPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
-  const { register } = useAuth();
+  const { register, user } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,7 +35,7 @@ export default function SignupPage() {
         throw new Error("Passwords do not match.");
       }
 
-      const user = await register({
+      const createdUser = await register({
         email,
         loginId,
         password,
@@ -43,7 +43,9 @@ export default function SignupPage() {
         fullName,
         companyId: DEFAULT_COMPANY_ID,
       });
-      if (user.role === "ADMIN") {
+      if (user?.role === "ADMIN") {
+        router.push("/admin/dashboard");
+      } else if (createdUser.role === "ADMIN") {
         router.push("/admin/dashboard");
       } else {
         router.push("/portal/overview");
