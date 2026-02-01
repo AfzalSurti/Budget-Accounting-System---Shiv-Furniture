@@ -60,6 +60,7 @@ interface BudgetView {
   viewStatus: ViewStatus;
   costCenterLabel: string;
   lines: BudgetLineView[];
+  spentByCostCenter: Record<string, number>;
 }
 
 interface BudgetDraftLine {
@@ -106,6 +107,7 @@ export default function BudgetsPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [statusFilter, setStatusFilter] = useState<"all" | BudgetStatus>("all");
   const [costCenterFilter, setCostCenterFilter] = useState<string>("all");
+  const [chartType, setChartType] = useState<"all" | "allocated" | "spent" | "remaining">("all");
 
   const loadCostCenters = useCallback(async () => {
     const data = await apiGet<BackendCostCenter[]>(
@@ -116,19 +118,26 @@ export default function BudgetsPage() {
 
   const loadSpentForBudget = useCallback(async (budget: BackendBudget) => {
     const latest = getLatestRevision(budget);
-    if (!latest || latest.lines.length === 0) return 0;
+    if (!latest || latest.lines.length === 0) {
+      return { total: 0, byCostCenter: {} as Record<string, number> };
+    }
     const start = new Date(budget.periodStart).toISOString();
     const end = new Date(budget.periodEnd).toISOString();
     const rows = await apiGet<ReportRow[]>(
       `/reports/budget-vs-actual?companyId=${DEFAULT_COMPANY_ID}&start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}`,
     );
     const ids = new Set(latest.lines.map((line) => line.analyticAccountId));
-    return (rows ?? []).reduce((acc, row) => {
+    const byCostCenter: Record<string, number> = {};
+    let total = 0;
+    (rows ?? []).forEach((row) => {
       if (row.analyticAccountId && ids.has(row.analyticAccountId)) {
-        return acc + Number(row.actualAmount || 0);
+        const amount = Number(row.actualAmount || 0);
+        total += amount;
+        byCostCenter[row.analyticAccountId] =
+          (byCostCenter[row.analyticAccountId] ?? 0) + amount;
       }
-      return acc;
-    }, 0);
+    });
+    return { total, byCostCenter };
   }, []);
 
   const loadBudgets = useCallback(async (centers: BackendCostCenter[]) => {
@@ -143,7 +152,7 @@ export default function BudgetsPage() {
         budgetsData.map(async (budget) => ({
           id: budget.id,
           spent: await loadSpentForBudget(budget),
-        }))
+        })),
       );
       const spentMap = new Map(spentEntries.map((entry) => [entry.id, entry.spent]));
 
@@ -159,7 +168,9 @@ export default function BudgetsPage() {
           };
         });
         const allocated = lines.reduce((acc, line) => acc + Number(line.amount), 0);
-        const spent = spentMap.get(budget.id) ?? 0;
+        const spentEntry = spentMap.get(budget.id);
+        const spent = spentEntry?.total ?? 0;
+        const spentByCostCenter = spentEntry?.byCostCenter ?? {};
         const remaining = Math.max(allocated - spent, 0);
         const utilization = allocated === 0 ? 0 : (spent / allocated) * 100;
         const status: ViewStatus =
@@ -188,6 +199,7 @@ export default function BudgetsPage() {
           viewStatus: status,
           costCenterLabel,
           lines,
+          spentByCostCenter,
         };
       });
 
@@ -254,15 +266,45 @@ export default function BudgetsPage() {
   };
 
   const filteredBudgets = useMemo(() => {
-    return budgets.filter((budget) => {
-      const statusOk = statusFilter === "all" || budget.status === statusFilter;
-      const costCenterOk =
-        costCenterFilter === "all"
-          ? true
-          : budget.lines.some((line) => line.analyticAccountId === costCenterFilter);
-      return statusOk && costCenterOk;
-    });
-  }, [budgets, statusFilter, costCenterFilter]);
+    const statusFiltered = budgets.filter((budget) =>
+      statusFilter === "all" ? true : budget.status === statusFilter,
+    );
+
+    if (costCenterFilter === "all") {
+      return statusFiltered;
+    }
+
+    return statusFiltered
+      .map((budget) => {
+        const lines = budget.lines.filter((line) => line.analyticAccountId === costCenterFilter);
+        if (lines.length === 0) return null;
+
+        const allocated = lines.reduce((acc, line) => acc + Number(line.amount), 0);
+        const spent = budget.spentByCostCenter[costCenterFilter] ?? 0;
+        const remaining = Math.max(allocated - spent, 0);
+        const utilization = allocated === 0 ? 0 : (spent / allocated) * 100;
+        const viewStatus: ViewStatus =
+          budget.status === "archived"
+            ? "archived"
+            : utilization > 85
+            ? "warning"
+            : "active";
+        const selectedName =
+          costCenters.find((center) => center.id === costCenterFilter)?.name ?? "Selected";
+
+        return {
+          ...budget,
+          allocated,
+          spent,
+          remaining,
+          utilization,
+          viewStatus,
+          costCenterLabel: selectedName,
+          lines,
+        };
+      })
+      .filter((budget): budget is BudgetView => Boolean(budget));
+  }, [budgets, statusFilter, costCenterFilter, costCenters]);
 
   const chartData = useMemo(
     () =>
@@ -370,6 +412,19 @@ export default function BudgetsPage() {
                 ))}
               </select>
             </div>
+            <div>
+              <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Chart Type</label>
+              <select
+                value={chartType}
+                onChange={(e) => setChartType(e.target.value as "all" | "allocated" | "spent" | "remaining")}
+                className="px-3 py-2.5 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-900 text-sm text-slate-900 dark:text-white"
+              >
+                <option value="all">Allocated vs Spent vs Remaining</option>
+                <option value="allocated">Allocated</option>
+                <option value="spent">Spent</option>
+                <option value="remaining">Remaining</option>
+              </select>
+            </div>
           </div>
         </div>
         <ResponsiveContainer width="100%" height={380}>
@@ -398,9 +453,15 @@ export default function BudgetsPage() {
               ]}
             />
             <Legend wrapperStyle={{ paddingTop: "20px" }} iconType="circle" />
-            <Bar dataKey="allocated" fill="#94a3b8" name="Allocated" radius={[6, 6, 0, 0]} maxBarSize={60} />
-            <Bar dataKey="spent" fill="#0077B6" name="Spent" radius={[6, 6, 0, 0]} maxBarSize={60} />
-            <Bar dataKey="remaining" fill="#90E0EF" name="Remaining" radius={[6, 6, 0, 0]} maxBarSize={60} opacity={0.7} />
+            {(chartType === "all" || chartType === "allocated") && (
+              <Bar dataKey="allocated" fill="#94a3b8" name="Allocated" radius={[6, 6, 0, 0]} maxBarSize={60} />
+            )}
+            {(chartType === "all" || chartType === "spent") && (
+              <Bar dataKey="spent" fill="#0077B6" name="Spent" radius={[6, 6, 0, 0]} maxBarSize={60} />
+            )}
+            {(chartType === "all" || chartType === "remaining") && (
+              <Bar dataKey="remaining" fill="#90E0EF" name="Remaining" radius={[6, 6, 0, 0]} maxBarSize={60} opacity={0.7} />
+            )}
           </BarChart>
         </ResponsiveContainer>
       </motion.div>

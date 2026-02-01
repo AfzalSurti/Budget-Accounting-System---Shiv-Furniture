@@ -31,7 +31,6 @@ interface ContactRecord {
 
 interface ContactDraft extends Omit<ContactRecord, "id" | "status" | "tags"> {
   contactType: ContactType;
-  partnerTags: string;
 }
 
 interface BackendContact {
@@ -148,10 +147,6 @@ export default function ContactsPage() {
         imgUrl: draft.imgUrl ?? null,
         billingAddress: addressPayload,
         shippingAddress: addressPayload,
-        tags: draft.partnerTags
-          .split(",")
-          .map((tag) => tag.trim())
-          .filter((tag) => tag.length > 0),
       });
       await loadContacts();
       setDialogOpen(false);
@@ -318,7 +313,6 @@ function ContactDialog({
     contactType: "customer",
     address: { street: "", city: "", state: "", country: "", postalCode: "" },
     avatarLabel: "",
-    partnerTags: "",
   });
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
@@ -404,17 +398,6 @@ function ContactDialog({
                 onChange={(e) => handleChange("phone", e.target.value)}
                 className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
               />
-            </FormField>
-            <FormField label="Partner Tags">
-              <input
-                value={form.partnerTags}
-                onChange={(e) => handleChange("partnerTags", e.target.value)}
-                placeholder="e.g. wholesale, priority"
-                className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
-              />
-              <p className="mt-1 text-xs text-brand-dark/60 dark:text-brand-light/70">
-                Comma-separated tags used for auto-analytical matching.
-              </p>
             </FormField>
             <div className="grid gap-4 md:grid-cols-2">
               <FormField label="Street">
