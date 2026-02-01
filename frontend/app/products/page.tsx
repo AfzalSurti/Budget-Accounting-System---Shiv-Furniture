@@ -4,7 +4,7 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { DEFAULT_COMPANY_ID } from "@/config";
 import { apiGet, apiPost } from "@/lib/api";
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
-import { Plus, UploadCloud, X } from "lucide-react";
+import { Plus, X } from "lucide-react";
 
 type ProductStatus = "new" | "confirm" | "archived";
 
@@ -313,15 +313,6 @@ function ProductDialog({
                 className="w-full border-b border-dashed border-brand-primary/60 bg-transparent px-1 py-2 text-lg focus:border-brand-primary focus:outline-none dark:focus:border-brand-light"
               />
             </FormField>
-          </div>
-          <div className="rounded-3xl border border-brand-primary/40 p-6 text-center">
-            <p className="text-xs uppercase tracking-[0.4em] text-brand-dark/70 dark:text-brand-light/80">Upload image</p>
-            <p className="mt-2 text-xs text-brand-dark/60 dark:text-brand-light/70">Optional reference render</p>
-            <label className="mt-4 inline-flex items-center gap-2 rounded-full border border-brand-primary/60 px-5 py-2 text-sm font-semibold">
-              <UploadCloud className="h-4 w-4" />
-              <input type="file" className="hidden" accept="image/*" />
-              Attach File
-            </label>
           </div>
           <p className="text-xs text-brand-dark/60 dark:text-brand-light/70">
             *Category can be created and saved on the fly (many-to-one). All product creations flow through this dialog to keep master data curated.

@@ -140,13 +140,25 @@ export default function DashboardPage() {
         },
         { debit: 0, credit: 0 },
       );
-      const net = totals.credit - totals.debit;
-      const description = txn.memo || txn.lines[0]?.description || txn.lines[0]?.glAccount?.name || "Transaction";
+      const memo = txn.memo ?? "";
+      const isSales = memo.startsWith("Sales Order") || memo.startsWith("Invoice");
+      const isPurchase = memo.startsWith("Purchase Order") || memo.startsWith("Vendor Bill");
+      const isPayment = memo.startsWith("Payment");
+      const amount = isSales
+        ? totals.credit
+        : isPurchase
+          ? totals.debit
+          : isPayment
+            ? totals.debit > 0
+              ? totals.debit
+              : totals.credit
+            : totals.credit - totals.debit;
+      const description = memo || txn.lines[0]?.description || txn.lines[0]?.glAccount?.name || "Transaction";
       return {
         id: txn.id,
         date: txn.entryDate,
         description,
-        amount: net,
+        amount,
       };
     });
   }, [recentTransactions]);

@@ -20,7 +20,7 @@ const upload = multer({
   },
 });
 
-const uploadToCloudinary = (file: Request["file"]) =>
+const uploadToCloudinary = (file: Request["file"], folder: string) =>
   new Promise<string>((resolve, reject) => {
     if (!file) {
       reject(new ApiError(400, "Image file is required"));
@@ -29,7 +29,7 @@ const uploadToCloudinary = (file: Request["file"]) =>
 
     const stream = cloudinary.uploader.upload_stream(
       {
-        folder: "shiv-furniture/contacts",
+        folder,
         resource_type: "image",
       },
       (err, result) => {
@@ -51,7 +51,26 @@ router.post(
   upload.single("image"),
   async (req, res, next) => {
     try {
-      const url = await uploadToCloudinary(req.file);
+    const url = await uploadToCloudinary(req.file, "shiv-furniture/contacts");
+    res.status(201).json({ data: { url } });
+    } catch (error) {
+      if (error instanceof ApiError) {
+        next(error);
+        return;
+      }
+      next(new ApiError(500, "Image upload failed", error));
+    }
+  },
+);
+
+router.post(
+  "/uploads/product-image",
+  authenticateToken,
+  authorizeRole(["ADMIN"]),
+  upload.single("image"),
+  async (req, res, next) => {
+    try {
+      const url = await uploadToCloudinary(req.file, "shiv-furniture/products");
       res.status(201).json({ data: { url } });
     } catch (error) {
       if (error instanceof ApiError) {
